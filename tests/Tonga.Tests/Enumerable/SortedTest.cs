@@ -16,7 +16,7 @@ namespace Tonga.Enumerable.Test
                     new Enumerable.Mapped<int, string>(
                         i => i.ToString(),
                         new Sorted<int>(
-                            new ManyOf<int>(3, 2, 10, 44, -6, 0)
+                            Params.Of(3, 2, 10, 44, -6, 0)
                         )
                     )
                 ).AsString() == "-6, 0, 2, 3, 10, 44",
@@ -30,10 +30,11 @@ namespace Tonga.Enumerable.Test
                 new Text.Joined(", ",
                     new Sorted<string>(
                         IReverseCompare<string>.Default,
-                        new ManyOf<string>(
+                        Params.Of(
                             "a", "c", "hello", "dude", "Friend"
                         )
-                    )).AsString() == "hello, Friend, dude, c, a",
+                    )
+                ).AsString() == "hello, Friend, dude, c, a",
                 "Can't sort an enumerable with a custom comparator");
         }
 
@@ -41,9 +42,10 @@ namespace Tonga.Enumerable.Test
         public void SortsAnEmptyArray()
         {
             Assert.Empty(
-                new Sorted<int>(
-                    new ManyOf<int>()
-                ));
+                new Sorted<string>(
+                    new None()
+                )
+            );
         }
     }
 }

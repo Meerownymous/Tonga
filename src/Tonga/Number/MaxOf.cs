@@ -16,7 +16,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params int[] src) : this(
-            new ManyOf<int>(src))
+            Params.Of(src))
         { }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params double[] src) : this(
-            new ManyOf<double>(src))
+            Params.Of(src))
         { }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params long[] src) : this(
-            new ManyOf<long>(src))
+            Params.Of(src))
         { }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MaxOf(params float[] src) : this(
-            new ManyOf<float>(src))
+            Params.Of(src))
         { }
 
         /// <summary>

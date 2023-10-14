@@ -406,7 +406,7 @@ namespace Tonga.Swap
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
         public SwapSwitch(params IKvp<ISwap<TInput, TOutput>>[] swaps) : this(
-            new ManyOf<IKvp<ISwap<TInput, TOutput>>>(swaps)
+            Params.Of(swaps)
         )
         { }
 
@@ -414,7 +414,7 @@ namespace Tonga.Swap
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
         public SwapSwitch(Func<string, TInput, TOutput> fallback, params IKvp<ISwap<TInput, TOutput>>[] swaps) : this(
-            new ManyOf<IKvp<ISwap<TInput, TOutput>>>(swaps),
+            Params.Of(swaps),
             fallback
         )
         { }
@@ -847,7 +847,7 @@ namespace Tonga.Swap
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
         public SwapSwitch(Func<string, TInput1, TInput2, TOutput> fallback, params IKvp<ISwap<TInput1, TInput2, TOutput>>[] swaps) : this(
-            new ManyOf<IKvp<ISwap<TInput1, TInput2, TOutput>>>(swaps),
+            Params.Of(swaps),
             fallback
         )
         { }
@@ -856,7 +856,7 @@ namespace Tonga.Swap
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
         public SwapSwitch(params IKvp<ISwap<TInput1, TInput2, TOutput>>[] swaps) : this(
-            new ManyOf<IKvp<ISwap<TInput1, TInput2, TOutput>>>(swaps)
+            Params.Of(swaps)
         )
         { }
 
@@ -1291,7 +1291,7 @@ namespace Tonga.Swap
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
         public SwapSwitch(Func<TKey, TInput1, TInput2, TOutput> fallback, params IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>[] swaps) : this(
-            new ManyOf<IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>>(swaps),
+            Params.Of(swaps),
             fallback
         )
         { }
@@ -1300,7 +1300,7 @@ namespace Tonga.Swap
         /// A set of conversions where the desired is selected by its name.
         /// </summary>
         public SwapSwitch(params IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>[] swaps) : this(
-            new ManyOf<IKvp<TKey, ISwap<TInput1, TInput2, TOutput>>>(swaps)
+            Params.Of(swaps)
         )
         { }
 

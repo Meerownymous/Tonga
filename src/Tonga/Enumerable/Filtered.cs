@@ -28,7 +28,7 @@ namespace Tonga.Enumerable
             fnc,
             new Joined<T>(
                 live: true,
-                new LiveMany<T>(
+                new Transit<T>(
                     item1,
                     item2
                 ),
@@ -49,7 +49,7 @@ namespace Tonga.Enumerable
             fnc,
             new Joined<T>(
                 live: true,
-                new LiveMany<T>(
+                new Transit<T>(
                     item1,
                     item2
                 ),
@@ -71,7 +71,7 @@ namespace Tonga.Enumerable
             this.fnc = fnc;
             this.result =
                 new Ternary<T>(
-                    new LiveMany<T>(Produced),
+                    new Transit<T>(Produced),
                     new Sticky<T>(Produced),
                     live
                 );
@@ -88,7 +88,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             foreach (var item in this.src)
             {

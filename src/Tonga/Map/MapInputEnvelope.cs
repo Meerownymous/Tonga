@@ -34,7 +34,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp[] kvps) : this(
-            new LiveMany<IKvp>(kvps)
+            new Transit<IKvp>(kvps)
         )
         { }
 
@@ -108,7 +108,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp<Value>[] kvps) : this(
-            new LiveMany<IKvp<Value>>(kvps)
+            new Transit<IKvp<Value>>(kvps)
         )
         { }
 
@@ -182,7 +182,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp<Key, Value>[] kvps) : this(
-            new LiveMany<IKvp<Key, Value>>(kvps)
+            new Transit<IKvp<Key, Value>>(kvps)
         )
         { }
 

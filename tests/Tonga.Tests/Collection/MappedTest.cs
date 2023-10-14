@@ -18,7 +18,7 @@ namespace Tonga.Collection.Tests
                 0,
                 new Mapped<int, int>(
                     i => i + 1,
-                    new ManyOf<int>(-1, 1, 2)
+                    Params.Of(-1, 1, 2)
                 ));
         }
 
@@ -30,7 +30,7 @@ namespace Tonga.Collection.Tests
                 new Mapped<string, string>(
                     input =>
                     input.ToUpper(),
-                    new ManyOf<string>("hello", "world", "друг")
+                    Params.Of("hello", "world", "друг")
                 )
             );
         }
@@ -42,7 +42,8 @@ namespace Tonga.Collection.Tests
                 new Mapped<String, IText>(
                     input => new Upper(new LiveText(input)),
                     new List<string>()
-                ));
+                )
+            );
         }
 
     }

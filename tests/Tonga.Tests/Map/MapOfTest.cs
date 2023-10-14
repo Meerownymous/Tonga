@@ -68,7 +68,7 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 "B",
                 new MapOf(
-                    new ManyOf<string>(
+                    Params.Of(
                         "A", "B",
                         "C", "D"
                     )
@@ -81,7 +81,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new MapOf(
-                    new ManyOf<string>(
+                    Params.Of(
                         "A", "B",
                         "C"
                     )
@@ -294,7 +294,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void WorksWithEmptyList()
         {
-            var map = new MapOf(new ManyOf());
+            var map = new MapOf(new None());
             Assert.Equal(0, map.Keys.Count);
         }
 

@@ -17,7 +17,7 @@ namespace Tonga.Enumerable.Test
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
                         input => new Upper(new LiveText(input)),
-                        new ManyOf<string>("hello", "world", "damn")),
+                        Params.Of("hello", "world", "damn")),
                     0
                 ).Value().AsString()
             );
@@ -34,7 +34,7 @@ namespace Tonga.Enumerable.Test
                         mappings++;
                         return new Upper(new LiveText(input));
                     },
-                    new ManyOf<string>("hello", "world", "damn")
+                    Params.Of("hello", "world", "damn")
                 );
 
             var enm1 = mapping.GetEnumerator();
@@ -56,7 +56,7 @@ namespace Tonga.Enumerable.Test
                         mappings++;
                         return input;
                     },
-                    new ManyOf<string>("hello", "world", "damn"),
+                    Params.Of("hello", "world", "damn"),
                     live: true
                 );
 
@@ -75,7 +75,7 @@ namespace Tonga.Enumerable.Test
                 new LengthOf(
                     new Enumerable.Mapped<String, IText>(
                         input => new Upper(new LiveText(input)),
-                        new ManyOf<string>()
+                        new None()
                     )
                 ).Value() == 0
             );
@@ -89,7 +89,7 @@ namespace Tonga.Enumerable.Test
                 new ItemAt<IText>(
                     new Enumerable.Mapped<String, IText>(
                         (input, index) => new Upper(new LiveText(input + index)),
-                        new ManyOf<string>("hello", "world", "damn")
+                        Params.Of("hello", "world", "damn")
                         ),
                     1
                 ).Value().AsString()
@@ -106,11 +106,9 @@ namespace Tonga.Enumerable.Test
             var list =
                 new Mapped<string, string>(
                     item => item,
-                    new ManyOf<string>(
-                        new Logging<string>(
-                            origin,
-                            idx => advances++
-                        )
+                    new Logging<string>(
+                        origin,
+                        idx => advances++
                     )
                 );
 
@@ -129,11 +127,9 @@ namespace Tonga.Enumerable.Test
             var list =
                 new Mapped<string, string>(
                     item => item,
-                    new ManyOf<string>(
-                        new Logging<string>(
-                            origin,
-                            idx => advances++
-                        )
+                    new Logging<string>(
+                        origin,
+                        idx => advances++
                     )
                 );
             list.GetEnumerator();

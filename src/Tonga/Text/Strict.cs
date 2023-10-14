@@ -19,7 +19,7 @@ namespace Tonga.Text
         /// <param name="valid">The valid texts</param>
         public Strict(string candidate, params string[] valid) : this(
             candidate,
-            new LiveMany<string>(valid)
+            new Transit<string>(valid)
         )
         { }
 
@@ -42,7 +42,7 @@ namespace Tonga.Text
         /// <param name="ignoreCase">Ignore case in the canidate and valid texts</param>
         /// <param name="valid">The valid texts</param>
         public Strict(string candidate, bool ignoreCase, params string[] valid) : this(
-            candidate, ignoreCase, new ManyOf<string>(valid)
+            candidate, ignoreCase, Params.Of(valid)
         )
         { }
 
@@ -97,7 +97,7 @@ namespace Tonga.Text
         public Strict(IText candidate, bool ignoreCase, params IText[] valid) : this(
             candidate,
             ignoreCase,
-            new LiveMany<IText>(valid)
+            new Transit<IText>(valid)
         )
         { }
 

@@ -13,7 +13,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new LengthOf(
-                    new ManyOf(
+                    Params.Of(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -26,7 +26,7 @@ namespace Tonga.Enumerable.Test
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new ManyOf(() =>
+                    Params.Of(() =>
                     {
                         lst.Add("something");
                         return lst;
@@ -43,7 +43,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new LengthOf(
-                    new ManyOf<string>(
+                    Params.Of(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -55,7 +55,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new LengthOf(
-                    new ManyOf<IText>(
+                    Params.Of(
                         new LiveText("a"), new LiveText("b"), new LiveText("c")
                     )
                 ).Value() == 3,
@@ -68,7 +68,7 @@ namespace Tonga.Enumerable.Test
             var lst = new List<string>();
             var length =
                 new LengthOf(
-                    new ManyOf<string>(() =>
+                    Params.Of(() =>
                     {
                         lst.Add("something");
                         return lst.GetEnumerator();
@@ -85,7 +85,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 new List<string>() { "one", "two", "eight" },
-                new ManyOf("one", "two", "eight")
+                Params.Of("one", "two", "eight")
             );
         }
 
@@ -93,7 +93,7 @@ namespace Tonga.Enumerable.Test
         public void CanBeEmpty()
         {
             Assert.False(
-                new ManyOf().GetEnumerator().MoveNext()
+                new None().GetEnumerator().MoveNext()
             );
         }
     }

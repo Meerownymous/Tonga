@@ -30,7 +30,7 @@ namespace Tonga.Collection.Tests
             Assert.Contains(
                 -1,
                 new LiveCollection<int>(
-                    new ManyOf<int>(1, 2, 0, -1).GetEnumerator())
+                    Params.Of(1, 2, 0, -1).GetEnumerator())
             );
         }
 
@@ -40,7 +40,7 @@ namespace Tonga.Collection.Tests
             var count = 1;
             var col =
                 new LiveCollection<int>(
-                    new LiveMany<int>(() =>
+                    Transit.Of(() =>
                         new Repeated<int>(
                             () =>
                             {
@@ -48,7 +48,7 @@ namespace Tonga.Collection.Tests
                                 return 0;
                             },
                             count
-                        )
+                        ).GetEnumerator()
                     )
                 );
             Assert.NotEqual(col.Count, col.Count);

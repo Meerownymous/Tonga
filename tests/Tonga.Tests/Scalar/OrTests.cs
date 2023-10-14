@@ -14,7 +14,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new Or(
-                    new ManyOf<IScalar<bool>>(
+                    Params.Of(
                         new Live<bool>(true),
                         new Live<bool>(false)
                     )

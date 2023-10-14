@@ -17,7 +17,7 @@ namespace Tonga.Map
         public MapOf(KeyValuePair<string, string> entry, params KeyValuePair<string, string>[] more) : this(
             new Enumerable.Joined<KeyValuePair<string, string>>(
                 live: true,
-                new LiveMany<KeyValuePair<string, string>>(more),
+                new Transit<KeyValuePair<string, string>>(more),
                 entry
             )
         )
@@ -30,7 +30,7 @@ namespace Tonga.Map
         /// <param name="list">KeyValuePairs to append</param>
         public MapOf(IDictionary<string, string> src, params KeyValuePair<string, string>[] list) : this(
             src,
-            new LiveMany<KeyValuePair<string, string>>(list))
+            new Transit<KeyValuePair<string, string>>(list))
         { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<string, string>> entries) : this(
-            new LiveMany<KeyValuePair<string, string>>(() => entries))
+            new Transit<KeyValuePair<string, string>>(() => entries))
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Tonga.Map
             new LazyDict(
                 new Enumerable.Joined<IKvp>(
                     live: true,
-                    new LiveMany<IKvp>(entry),
+                    new Transit<IKvp>(entry),
                     more
                 )
             ),
@@ -120,7 +120,7 @@ namespace Tonga.Map
         /// A map from string to string.
         /// </summary>
         public MapOf(params string[] pairSequence) : this(
-            new ManyOf(pairSequence)
+            Params.Of(pairSequence)
         )
         { }
 
@@ -130,7 +130,7 @@ namespace Tonga.Map
         public MapOf(string key, string value, params string[] additional) : this(
             new Enumerable.Joined<string>(
                 live: true,
-                new LiveMany<string>(key, value),
+                new Transit<string>(key, value),
                 additional
             )
         )
@@ -173,7 +173,7 @@ namespace Tonga.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput[] inputs) : this(new ManyOf<IMapInput>(inputs))
+        public MapOf(params IMapInput[] inputs) : this(Params.Of(inputs))
         { }
 
         /// <summary>
@@ -1136,7 +1136,7 @@ namespace Tonga.Map
             string key2, Value value2,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2)
             ),
@@ -1153,7 +1153,7 @@ namespace Tonga.Map
             string key3, Value value3,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3)
@@ -1172,7 +1172,7 @@ namespace Tonga.Map
             string key4, Value value4,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1193,7 +1193,7 @@ namespace Tonga.Map
             string key5, Value value5,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1216,7 +1216,7 @@ namespace Tonga.Map
             string key6, Value value6,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1241,7 +1241,7 @@ namespace Tonga.Map
             string key7, Value value7,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1268,7 +1268,7 @@ namespace Tonga.Map
             string key8, Value value8,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1297,7 +1297,7 @@ namespace Tonga.Map
             string key9, Value value9,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1328,7 +1328,7 @@ namespace Tonga.Map
             string key10, Value value10,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1361,7 +1361,7 @@ namespace Tonga.Map
             string key11, Value value11,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1396,7 +1396,7 @@ namespace Tonga.Map
             string key12, Value value12,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1433,7 +1433,7 @@ namespace Tonga.Map
             string key13, Value value13,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1472,7 +1472,7 @@ namespace Tonga.Map
             string key14, Value value14,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1513,7 +1513,7 @@ namespace Tonga.Map
             string key15, Value value15,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1556,7 +1556,7 @@ namespace Tonga.Map
             string key16, Value value16,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Value>>(
+            Params.Of(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1583,7 +1583,7 @@ namespace Tonga.Map
         /// </summary>
         public MapOf(KeyValuePair<string, Value> entry, params KeyValuePair<string, Value>[] more) : this(
             new Enumerable.Joined<KeyValuePair<string, Value>>(
-                new LiveMany<KeyValuePair<string, Value>>(more),
+                new Transit<KeyValuePair<string, Value>>(more),
                 entry
             )
         )
@@ -1594,7 +1594,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<string, Value>> entries) : this(
-            new LiveMany<KeyValuePair<string, Value>>(() => entries))
+            new Transit<KeyValuePair<string, Value>>(() => entries))
         { }
 
         /// <summary>
@@ -1603,7 +1603,7 @@ namespace Tonga.Map
         public MapOf(IKvp<Value> entry, params IKvp<Value>[] more) : base(() =>
             new LazyDict<Value>(
                 new Enumerable.Joined<IKvp<Value>>(
-                    new ManyOf<IKvp<Value>>(entry),
+                    new Single<IKvp<Value>>(entry),
                     more
                 )
             ),
@@ -1652,7 +1652,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="inputs">inputs</param>
         public MapOf(params IMapInput<Value>[] inputs) : this(
-            new ManyOf<IMapInput<Value>>(inputs)
+            Params.Of(inputs)
         )
         { }
 
@@ -1697,7 +1697,7 @@ namespace Tonga.Map
             Key key2, Value value2,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2)
             ),
@@ -1714,7 +1714,7 @@ namespace Tonga.Map
             Key key3, Value value3,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3)
@@ -1733,7 +1733,7 @@ namespace Tonga.Map
             Key key4, Value value4,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1754,7 +1754,7 @@ namespace Tonga.Map
             Key key5, Value value5,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1777,7 +1777,7 @@ namespace Tonga.Map
             Key key6, Value value6,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1802,7 +1802,7 @@ namespace Tonga.Map
             Key key7, Value value7,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1829,7 +1829,7 @@ namespace Tonga.Map
             Key key8, Value value8,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1858,7 +1858,7 @@ namespace Tonga.Map
             Key key9, Value value9,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1889,7 +1889,7 @@ namespace Tonga.Map
             Key key10, Value Key0,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1922,7 +1922,7 @@ namespace Tonga.Map
             Key key11, Value Key1,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1957,7 +1957,7 @@ namespace Tonga.Map
             Key key12, Value Key2,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1994,7 +1994,7 @@ namespace Tonga.Map
             Key key13, Value Key3,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2033,7 +2033,7 @@ namespace Tonga.Map
             Key key14, Value Key4,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2074,7 +2074,7 @@ namespace Tonga.Map
             Key key15, Value Key5,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2117,7 +2117,7 @@ namespace Tonga.Map
             Key key16, Value Key6,
             bool rejectBuildingAllValues = true
         ) : this(
-            new ManyOf<IKvp<Key, Value>>(
+            Params.Of(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2144,7 +2144,7 @@ namespace Tonga.Map
         /// </summary>
         public MapOf(KeyValuePair<Key, Value> item, params KeyValuePair<Key, Value>[] more) : this(
             new Enumerable.Joined<KeyValuePair<Key, Value>>(
-                new ManyOf<KeyValuePair<Key, Value>>(more),
+                Params.Of(more),
                 item
             )
         )
@@ -2157,7 +2157,7 @@ namespace Tonga.Map
         /// <param name="list">KeyValuePairs to append</param>
         public MapOf(IDictionary<Key, Value> src, params KeyValuePair<Key, Value>[] list) : this(
             src,
-            new ManyOf<KeyValuePair<Key, Value>>(list))
+            Params.Of(list))
         { }
 
         /// <summary>
@@ -2169,7 +2169,8 @@ namespace Tonga.Map
             new Enumerable.Joined<KeyValuePair<Key, Value>>(
                 src,
                 list
-            ))
+            )
+        )
         { }
 
         /// <summary>
@@ -2177,7 +2178,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<Key, Value>> entries) : this(
-            new LiveMany<KeyValuePair<Key, Value>>(() => entries))
+            Transit.Of(() => entries))
         { }
 
         /// <summary>
@@ -2186,7 +2187,7 @@ namespace Tonga.Map
         public MapOf(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : base(() =>
              new LazyDict<Key, Value>(
                  new Enumerable.Joined<IKvp<Key, Value>>(
-                     new ManyOf<IKvp<Key, Value>>(entry),
+                     Params.Of(entry),
                      more
                  )
              ),
@@ -2234,7 +2235,7 @@ namespace Tonga.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput<Key, Value>[] inputs) : this(new LiveMany<IMapInput<Key, Value>>(inputs))
+        public MapOf(params IMapInput<Key, Value>[] inputs) : this(new Transit<IMapInput<Key, Value>>(inputs))
         { }
 
         /// <summary>

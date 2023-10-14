@@ -12,59 +12,22 @@ namespace Tonga.Enumerable
     /// </summary>
     public abstract class ManyEnvelope : IEnumerable<string>
     {
-        private readonly Ternary<string> items;
+        private readonly IEnumerable<string> items;
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(IScalar<IEnumerable<string>> fnc) : this(
-            fnc,
-            false
+        public ManyEnvelope(Func<IEnumerable<string>> origin) : this(() =>
+            origin().GetEnumerator()
         )
         { }
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerator<string>> origin) : this(
-            origin,
-            false
-        )
-        { }
-
-        /// <summary>
-        /// Envelope for Enumerable.
-        /// </summary>
-        public ManyEnvelope(IScalar<IEnumerable<string>> fnc, bool live) : this(() =>
-            fnc.Value(),
-            live
-        )
-        { }
-
-        /// <summary>
-        /// Envelope for Enumerable.
-        /// </summary>
-        public ManyEnvelope(Func<IEnumerable<string>> origin, bool live = false) : this(() =>
-            origin().GetEnumerator(),
-            live
-        )
-        { }
-
-        /// <summary>
-        /// Envelope for Enumerable.
-        /// </summary>
-        public ManyEnvelope(Func<IEnumerator<string>> origin, bool live)
+        public ManyEnvelope(Func<IEnumerator<string>> origin)
         {
-            this.items =
-                new Ternary<string>(
-                    new LiveMany<string>(() =>
-                        new EnumeratorAsEnumerable<string>(origin)
-                    ),
-                    new Sticky<string>(
-                        new EnumeratorAsEnumerable<string>(origin)
-                    ),
-                    () => live
-                );
+            this.items = new EnumeratorAsEnumerable<string>(origin);
         }
 
         /// <summary>
@@ -98,26 +61,15 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(IScalar<IEnumerable<T>> fnc, bool live) : this(() => fnc.Value(), live)
-        { }
-
-        /// <summary>
-        /// Envelope for Enumerable.
-        /// </summary>
-        public ManyEnvelope(Func<IEnumerable<T>> origin, bool live) : this(() => origin().GetEnumerator(), live)
+        public ManyEnvelope(Func<IEnumerable<T>> origin) : this(() => origin().GetEnumerator())
         { }
 
         /// <summary>
         /// Envelope for Enumerables.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerator<T>> origin, bool live)
+        public ManyEnvelope(Func<IEnumerator<T>> origin)
         {
-            this.content =
-                new Ternary<T>(
-                    new Sticky<T>(new EnumeratorAsEnumerable<T>(origin)),
-                    new LiveMany<T>(() => new EnumeratorAsEnumerable<T>(origin)),
-                    live
-                );
+            this.content = new EnumeratorAsEnumerable<T>(origin);
         }
 
         /// <summary>

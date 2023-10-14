@@ -12,8 +12,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Empty(
                 new Divergency<string>(
-                    new ManyOf<string>("a", "b"),
-                    new ManyOf<string>("a", "b")
+                    Params.Of("a", "b"),
+                    Params.Of("a", "b")
                 )
             );
         }

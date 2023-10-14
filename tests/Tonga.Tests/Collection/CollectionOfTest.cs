@@ -17,7 +17,8 @@ namespace Tonga.Collection.Tests
             Assert.Contains(
                 -1,
                 new CollectionOf<int>(
-                    new ManyOf<int>(1, 2, 0, -1)));
+                    Params.Of(1, 2, 0, -1))
+                );
         }
 
         [Fact]

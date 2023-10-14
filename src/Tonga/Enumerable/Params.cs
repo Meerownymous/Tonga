@@ -23,7 +23,7 @@ namespace Tonga.Enumerable
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach(var item in this.items)
+            foreach (var item in this.items)
             {
                 yield return item;
             }
@@ -34,5 +34,9 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
     }
-}
 
+    public static class Params
+    {
+        public static IEnumerable<T> Of<T>(params T[] items) => new Params<T>(items);
+    }
+}

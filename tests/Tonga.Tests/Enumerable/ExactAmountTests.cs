@@ -11,7 +11,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new ExactAmount(
                     3,
-                    new ManyOf("a", "b", "c")
+                    Params.Of("a", "b", "c")
                 ).Value()
             );
         }
@@ -22,7 +22,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new ExactAmount(
                     3,
-                    new ManyOf("a", "b")
+                    Params.Of("a", "b")
                 ).Value()
             );
         }
@@ -33,7 +33,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new ExactAmount(
                     3,
-                    new ManyOf("a", "b", "c", "d")
+                    Params.Of("a", "b", "c", "d")
                 ).Value()
             );
         }

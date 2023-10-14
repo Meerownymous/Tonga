@@ -46,8 +46,8 @@ namespace Tonga.Enumerable
             this.comparison = compare;
             this.result =
                 Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                    Transit.Of(Produced),
+                    Sticky.New(Produced),
                     live
                 );
         }
@@ -56,7 +56,7 @@ namespace Tonga.Enumerable
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             var set = new HashSet<T>(this.comparison);
             foreach(var element in this.b)

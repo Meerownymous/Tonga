@@ -21,7 +21,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         public Distinct(params IEnumerable<T>[] enumerables) : this(
-            new LiveMany<IEnumerable<T>>(enumerables)
+            new Transit<IEnumerable<T>>(enumerables)
         )
         { }
 
@@ -46,9 +46,9 @@ namespace Tonga.Enumerable
             this.all = new Joined<T>(enumerables);
             this.comparison = new Comparison<T>(comparison);
             this.result =
-                Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                Ternary.New<T>(
+                    Transit.Of<T>(this.Produced()),
+                    Sticky.New(Produced),
                     live
                 );
         }
@@ -63,7 +63,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             var set = new HashSet<T>(this.comparison);
             foreach (var item in this.all)

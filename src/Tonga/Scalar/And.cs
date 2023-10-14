@@ -12,7 +12,7 @@ namespace Tonga.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new ManyOf<In>(src))
+        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Params.Of(src))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
@@ -24,7 +24,7 @@ namespace Tonga.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, params In[] src) : this(func, new ManyOf<In>(src))
+        public And(IFunc<In, Boolean> func, params In[] src) : this(func, Params.Of(src))
         { }
 
         /// <summary> ctor </summary>
@@ -71,37 +71,45 @@ namespace Tonga.Scalar
     {
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(params Func<bool>[] funcs) : this(new ManyOf<System.Func<bool>>(funcs))
+        public And(params Func<bool>[] funcs) : this(Params.Of(funcs))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(ManyOf<Func<bool>> funcs) : this(
+        public And(IEnumerable<Func<bool>> funcs) : this(
             new Mapped<Func<bool>, IScalar<bool>>(
                 func => new Live<bool>(func),
-                funcs))
+                funcs
+            )
+        )
         { }
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params IScalar<Boolean>[] src) : this(
-            new ManyOf<IScalar<Boolean>>(src))
+            Params.Of(src))
         { }
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params bool[] src) : this(
-            new Mapped<bool, IScalar<bool>>(
+            Mapped.New(
                 tBool => new Live<bool>(tBool),
-                src))
+                src,
+                live: true
+            )
+        )
         { }
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(IEnumerable<bool> src) : this(
-            new Mapped<bool, IScalar<bool>>(
+            Mapped.New(
                 tBool => new Live<bool>(tBool),
-                src))
+                src,
+                live: true
+            )
+        )
         { }
 
         /// <summary> ctor </summary>

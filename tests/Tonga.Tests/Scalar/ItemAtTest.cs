@@ -16,7 +16,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3)
+                    Params.Of(1, 2, 3)
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
             );
@@ -28,7 +28,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3),
+                    Params.Of(1, 2, 3),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
@@ -41,7 +41,7 @@ namespace Tonga.Scalar.Tests
             Assert.Equal(
                 2,
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3),
+                    Params.Of(1, 2, 3),
                     1
                 ).Value()
             );
@@ -52,7 +52,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3),
+                    Params.Of(1, 2, 3),
                     1,
                     4
                 ).Value() == 2,
@@ -76,7 +76,7 @@ namespace Tonga.Scalar.Tests
             String fallback = "fallback";
             Assert.True(
                 new ItemAt<string>(
-                    new ManyOf<string>(),
+                    new None(),
                     12,
                     fallback
                 ).Value() == fallback,
@@ -88,7 +88,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new ItemAt<string>(
-                    new ManyOf<string>(),
+                    new None(),
                     12,
                     (ex, enumerable) => throw ex
                 ).Value()
@@ -100,7 +100,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Throws<NotFiniteNumberException>(() =>
                 new ItemAt<string>(
-                    new ManyOf<string>(),
+                    new None(),
                     12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
@@ -112,7 +112,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Throws<NotFiniteNumberException>(() =>
                 new ItemAt<string>(
-                    new ManyOf<string>(),
+                    new None(),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
             );
@@ -123,7 +123,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Throws<NotFiniteNumberException>(() =>
                 new ItemAt<string>(
-                    new ManyOf<string>(),
+                    new None(),
                     -12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()

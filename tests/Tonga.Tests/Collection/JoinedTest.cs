@@ -14,9 +14,9 @@ namespace Tonga.Collection.Tests
         public void BehavesAsCollection()
         {
             new Joined<int>(
-                new ManyOf<int>(1, -1, 2, 0),
-                new ManyOf<int>(1, -1, 2, 0),
-                new ManyOf<int>(1, -1, 2, 0)
+                Params.Of(1, -1, 2, 0),
+                Params.Of(1, -1, 2, 0),
+                Params.Of(1, -1, 2, 0)
             );
         }
 
@@ -26,9 +26,9 @@ namespace Tonga.Collection.Tests
             Assert.Equal(
                 8,
                 new Joined<String>(
-                    new ManyOf<string>("hello", "world", "друг"),
-                    new ManyOf<string>("how", "are", "you"),
-                    new ManyOf<string>("what's", "up")
+                    Params.Of("hello", "world", "друг"),
+                    Params.Of("how", "are", "you"),
+                    Params.Of("what's", "up")
                 ).Count);
         }
 
@@ -46,8 +46,8 @@ namespace Tonga.Collection.Tests
         {
             Assert.NotEmpty(
                 new Joined<String>(
-                    new ManyOf<string>("1", "2"),
-                    new ManyOf<string>("3", "4")
+                    Params.Of("1", "2"),
+                    Params.Of("3", "4")
                 ));
         }
 
@@ -64,9 +64,9 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
              new Joined<int>(
-                 new ManyOf<int>(1, 2),
-                 new ManyOf<int>(3, 4),
-                 new ManyOf<int>(5, 6)
+                 Params.Of(1, 2),
+                 Params.Of(3, 4),
+                 Params.Of(5, 6)
              ).Add(7));
         }
 
@@ -75,8 +75,8 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new Joined<String>(
-                    new ManyOf<string>("w", "a"),
-                    new ManyOf<string>("b", "c")
+                    Params.Of("w", "a"),
+                    Params.Of("b", "c")
                 ).Remove("t"));
         }
 
@@ -85,8 +85,8 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new Joined<int>(
-                    new ManyOf<int>(10),
-                    new ManyOf<int>(20)
+                    Params.Of(10),
+                    Params.Of(20)
                 ).Clear());
         }
     }

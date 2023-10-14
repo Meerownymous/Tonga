@@ -119,7 +119,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> By<T>(Func<IEnumerable<T>> source) =>
+        public static Sticky<T> New<T>(Func<IEnumerable<T>> source) =>
             new Sticky<T>(source);
 
         /// <summary>

@@ -57,7 +57,7 @@ namespace Tonga.Enumerable.Test
                 new LengthOf(
                     new Filtered<string>(
                         input => input.Length > 1,
-                        new ManyOf<String>()
+                        new None()
                     )
                 ).Value() == 0,
                 "cannot filter empty enumerable"
@@ -75,7 +75,8 @@ namespace Tonga.Enumerable.Test
                     () => new Filtered<string>(
                         filter,
                         new List<string>() { "A", "B", "C" }
-                            )).AsTimeSpan();
+                    )
+                ).AsTimeSpan();
 
             Assert.True((linq - atoms).Duration().Milliseconds < 10);
         }

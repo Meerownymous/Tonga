@@ -21,7 +21,9 @@ namespace Tonga.Enumerable
         public Min(params Func<T>[] items) : this(
             new Enumerable.Mapped<Func<T>, IScalar<T>>(
                 item => new Live<T>(() => item.Invoke()),
-                new ManyOf<Func<T>>(items)))
+                new Params<Func<T>>(items)
+            )
+        )
         { }
 
         /// <summary>
@@ -31,7 +33,9 @@ namespace Tonga.Enumerable
         public Min(IEnumerable<T> items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
                 item => new Live<T>(item),
-                items))
+                items
+            )
+        )
         { }
 
         /// <summary>
@@ -41,14 +45,16 @@ namespace Tonga.Enumerable
         public Min(params T[] items) : this(
             new Enumerable.Mapped<T, IScalar<T>>(
                 item => new Live<T>(item),
-                items))
+                items
+            )
+        )
         { }
 
         /// <summary>
         /// Find the smallest item in the given scalars.
         /// </summary>
         /// <param name="items">items to compare</param>
-        public Min(params IScalar<T>[] items) : this(new ManyOf<IScalar<T>>(items))
+        public Min(params IScalar<T>[] items) : this(Params.Of(items))
         { }
 
         /// <summary>

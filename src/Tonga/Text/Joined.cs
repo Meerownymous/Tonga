@@ -28,7 +28,7 @@ namespace Tonga.Text
         public Joined(String delimit, bool live, params String[] strs) :
             this(
                 delimit,
-                new ManyOf<string>(strs),
+                Params.Of(strs),
                 live
             )
         { }
@@ -64,7 +64,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(IText delimit, bool live, params IText[] txts) : this(delimit, new ManyOf<IText>(txts), live)
+        public Joined(IText delimit, bool live, params IText[] txts) : this(delimit, Params.Of(txts), live)
         { }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Tonga.Text
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Joined(String delimit, bool live, params IText[] txts) : this(
             new LiveText(delimit),
-            () => new LiveMany<IText>(txts),
+            () => new Transit<IText>(txts),
             live
         )
         { }

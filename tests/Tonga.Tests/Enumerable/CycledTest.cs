@@ -13,10 +13,8 @@ namespace Tonga.Enumerable.Test
                 "two",
                 new ItemAt<string>(
                     new Cycled<string>(
-                        new ManyOf<string>(
-                            "one", "two", "three"
-                            )
-                        ),
+                        Params.Of("one", "two", "three")
+                    ),
                     7
                 ).Value()
             );

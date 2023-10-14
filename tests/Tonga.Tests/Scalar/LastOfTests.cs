@@ -13,7 +13,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new LastOf<string>(
-                    new ManyOf(),
+                    new None(),
                     new InvalidOperationException()
                 ).Value()
             );
@@ -25,7 +25,7 @@ namespace Tonga.Scalar.Tests
             Assert.Equal(
                 "gotcha",
                 new LastOf<string>(
-                    new ManyOf(),
+                    new None(),
                     "gotcha"
                 ).Value()
             );
@@ -34,7 +34,7 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void ReturnsLastValue()
         {
-            var list = new ManyOf("hallo", "ich", "heisse", "Max");
+            var list = Params.Of("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "Max",

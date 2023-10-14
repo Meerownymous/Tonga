@@ -13,8 +13,10 @@ namespace Tonga.Enumerable.Test
             Assert.Throws<Exception>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ManyOf<bool>()
-                    )).Value());
+                        new None<bool>()
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
@@ -23,8 +25,10 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ManyOf<bool>(false)
-                    )).Value() == 1);
+                        Params.Of(false)
+                    )
+                ).Value() == 1
+            );
         }
 
         [Fact]
@@ -33,9 +37,11 @@ namespace Tonga.Enumerable.Test
             Assert.Throws<OperationCanceledException>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ManyOf<bool>(),
+                        new None<bool>(),
                         new OperationCanceledException()
-                    )).Value());
+                    )
+                ).Value()
+            );
         }
     }
 }

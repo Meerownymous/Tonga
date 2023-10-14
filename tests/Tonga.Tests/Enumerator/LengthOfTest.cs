@@ -12,8 +12,10 @@ namespace Tonga.Enumerator.Test
         {
             Assert.True(
                 new LengthOf(
-                    new ManyOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
-                "cannot count items");
+                    Params.Of(1, 2, 3, 4, 5).GetEnumerator()
+                ).Value() == 5,
+                "cannot count items"
+            );
         }
     }
 }

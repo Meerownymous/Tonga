@@ -20,7 +20,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list"></param>
         public Synced(KeyValuePair<Key, Value>[] list) : this(
-            new LiveMany<KeyValuePair<Key, Value>>(list)
+            new Transit<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -31,7 +31,7 @@ namespace Tonga.Map
         /// <param name="list">list of entries to merge</param>
         public Synced(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list) : this(
             map,
-            new LiveMany<KeyValuePair<Key, Value>>(list)
+            new Transit<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -51,9 +51,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list">list of entries</param>
         public Synced(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            new ManyOf<KeyValuePair<Key, Value>>(
-                () => list
-            )
+            Transit.Of(() => list)
         )
         { }
 

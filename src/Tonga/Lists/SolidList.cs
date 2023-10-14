@@ -15,7 +15,7 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(params T[] items) : this(new ManyOf<T>(items))
+        public SolidList(params T[] items) : this(Params.Of(items))
         { }
 
         /// <summary>

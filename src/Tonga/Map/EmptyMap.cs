@@ -10,7 +10,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map which is empty.
         /// </summary>
-        public EmptyMap() : base(() => new MapOf(new ManyOf()), false)
+        public EmptyMap() : base(() => new MapOf(new None()), false)
         { }
     }
 

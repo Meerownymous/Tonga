@@ -12,7 +12,7 @@ namespace Tonga.Func.Tests
         [Fact]
         public void RunsFuncMultipleTimes()
         {
-            var iter = new ManyOf<int>(1, 2, 5, 6).GetEnumerator();
+            var iter = Params.Of(1, 2, 5, 6).GetEnumerator();
             var func = new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {

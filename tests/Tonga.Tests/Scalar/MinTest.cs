@@ -12,7 +12,8 @@ namespace Tonga.Scalar.Tests
         public void MinAmongEmptyTest()
         {
             Assert.Throws<ArgumentException>(
-                () => new Min<int>(new ManyOf<int>()).Value());
+                () => new Min<int>(new None<int>()).Value()
+            );
         }
 
         [Fact]

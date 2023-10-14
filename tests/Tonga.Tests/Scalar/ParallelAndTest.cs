@@ -57,7 +57,7 @@ namespace Tonga.Scalar.Tests
             var result =
                 new ParallelAnd<bool>
                 (
-                    new ManyOf<IScalar<bool>>()
+                    new None<IScalar<bool>>()
                 ).Value();
             Assert.True(result);
         }
@@ -70,7 +70,7 @@ namespace Tonga.Scalar.Tests
                 new ParallelAnd<bool>(
                     new Enumerable.Mapped<string, IScalar<bool>>(
                         str => { list.AddLast(str); return new True(); },
-                        new ManyOf<string>("hello", "world")
+                        Params.Of("hello", "world")
                     )
                 ).Value() &&
                 list.Contains("hello") &&
@@ -86,7 +86,7 @@ namespace Tonga.Scalar.Tests
                 new ParallelAnd<bool>(
                     new Enumerable.Mapped<string, IScalar<bool>>(
                         str => { list.AddLast(str); return new True(); },
-                        new ManyOf<string>()
+                        new None()
                     )
                 ).Value() &&
                 !list.Any()

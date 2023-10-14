@@ -19,7 +19,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new ManyOf<In>(src))
+        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Params.Of(src))
         { }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, new ManyOf<In>(src))
+        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, Params.Of(src))
         { }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Tonga.Scalar
         /// were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public Or(params Func<bool>[] funcs) : this(new ManyOf<Func<bool>>(funcs))
+        public Or(params Func<bool>[] funcs) : this(Params.Of(funcs))
         { }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Tonga.Scalar
         /// true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public Or(ManyOf<Func<bool>> funcs) : this(
+        public Or(IEnumerable<Func<bool>> funcs) : this(
             new Mapped<Func<bool>, IScalar<bool>>(
                 func => new Live<bool>(func),
                 funcs))
@@ -130,7 +130,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(params IScalar<Boolean>[] src) : this(
-            new ManyOf<IScalar<Boolean>>(src))
+            Params.Of(src))
         { }
 
         /// <summary>

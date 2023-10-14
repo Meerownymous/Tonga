@@ -12,7 +12,7 @@ namespace Tonga.Scalar.Tests
         public void MaxAmongEmptyTest()
         {
             Assert.Throws<ArgumentException>(
-                () => new Max<int>(new ManyOf<int>()).Value());
+                () => new Max<int>(new None<int>()).Value());
         }
 
         [Fact]

@@ -103,8 +103,8 @@ namespace Tonga.Enumerable
             this.enumerables = items;
             this.result =
                 Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                    Transit.Of(Produced),
+                    Sticky.New(Produced),
                     live
                 );
 
@@ -120,7 +120,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             foreach (var enumerable in this.enumerables)
             {

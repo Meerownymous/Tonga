@@ -60,7 +60,7 @@ namespace Tonga.Text
         public Split(IText text, IText rgx, bool remBlank = true) : base(() =>
             {
                 IEnumerable<string> split =
-                    new LiveMany<string>(
+                    new Transit<string>(
                         new Regex(rgx.AsString()).Split(text.AsString())
                     );
 
@@ -72,8 +72,7 @@ namespace Tonga.Text
                     )
                     :
                     split;
-            },
-            false
+            }
         )
         { }
     }

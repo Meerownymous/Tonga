@@ -13,7 +13,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new MoreThan(
                     3,
-                    new ManyOf("a", "b", "c", "d")
+                    Params.Of("a", "b", "c", "d")
                 ).Value()
             );
         }
@@ -24,7 +24,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new MoreThan(
                     3,
-                    new ManyOf("a", "b")
+                    Params.Of("a", "b")
                 ).Value()
             );
         }
@@ -35,7 +35,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new MoreThan(
                     3,
-                    new ManyOf("a", "b", "c")
+                    Params.Of("a", "b", "c")
                 ).Value()
             );
         }

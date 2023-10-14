@@ -42,8 +42,8 @@ namespace Tonga.Enumerable
             this.limit = limit;
             this.result =
                 Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                    Transit.Of(Produced),
+                    Sticky.New(Produced),
                     live
                 );
         }
@@ -52,7 +52,7 @@ namespace Tonga.Enumerable
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             var limit = this.limit.Value();
             var taken = 0;

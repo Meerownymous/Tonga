@@ -12,7 +12,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new Contains<string>(
-                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
+                    Params.Of("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "cat"
                     ).Value());
         }
@@ -22,7 +22,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.False(
                 new Contains<string>(
-                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
+                    Params.Of("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
                     ).Value());
         }
@@ -31,7 +31,7 @@ namespace Tonga.Enumerable.Test
         public void DoesntFindInEmtyList()
         {
             Assert.False(new Contains<string>(
-                new ManyOf<String>(),
+                new None(),
                 (str) => str == "elephant"
                 ).Value());
         }

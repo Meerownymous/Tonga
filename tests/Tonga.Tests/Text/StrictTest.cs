@@ -52,7 +52,7 @@ namespace Tonga.Text.Test
             Assert.Equal(
                 expected,
                 new Strict(expected,
-                    new ManyOf("NotValid", expected)
+                    Params.Of("NotValid", expected)
                 ).AsString()
             );
         }
@@ -64,7 +64,7 @@ namespace Tonga.Text.Test
             var counter = 0;
             var text =
                 new Strict(new LiveText(() => expected),
-                    new LiveMany<IText>(
+                    new Transit<IText>(
                         new LiveText(() => counter++.ToString()),
                         new TextOf(expected)
                     )
@@ -84,7 +84,7 @@ namespace Tonga.Text.Test
             Assert.Equal(
                 expected,
                 new Strict(new TextOf(expected), false,
-                    new ManyOf<IText>(
+                    Params.Of(
                         new TextOf("Expected"),
                         new TextOf("Not Valid"),
                         new TextOf(expected)
@@ -101,7 +101,7 @@ namespace Tonga.Text.Test
                 expected,
                 new Strict(
                     expected, true,
-                    new ManyOf(
+                    Params.Of(
                         "Not Valid",
                         "As well not valid",
                         "ExpEcteD"

@@ -14,8 +14,8 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        new ManyOf<int>(1, 2, 3),
-                        new ManyOf<int>(10, 2, 30)
+                        Params.Of(1, 2, 3),
+                        Params.Of(10, 2, 30)
                     )
                 ).Value() == 5);
         }
@@ -27,13 +27,13 @@ namespace Tonga.Enumerable.Test
                 5,
                 new LengthOf(
                     new Distinct<INumber>(
-                        new ManyOf<IEnumerable<INumber>>(
-                            new ManyOf<INumber>(
+                        Params.Of(
+                            Params.Of(
                                 new NumberOf(1),
                                 new NumberOf(2),
                                 new NumberOf(3)
                             ),
-                            new ManyOf<INumber>(
+                             Params.Of(
                                 new NumberOf(10),
                                 new NumberOf(2),
                                 new NumberOf(30)
@@ -51,9 +51,9 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        new ManyOf<IEnumerable<int>>(
-                            new ManyOf<int>(1, 2, 3),
-                            new ManyOf<int>(10, 2, 30)
+                        Params.Of(
+                            Params.Of(1, 2, 3),
+                            Params.Of(10, 2, 30)
                         )
                     )
                 ).Value() == 5);
@@ -65,8 +65,8 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Distinct<string>(
-                        new ManyOf<string>(),
-                        new ManyOf<string>()
+                        new None(),
+                        new None()
                     )
                 ).Value() == 0);
         }
@@ -76,11 +76,9 @@ namespace Tonga.Enumerable.Test
         {
             var dst =
                 new Distinct<string>(
-                    new ManyOf<string>("test", "test")
+                    Params.Of("test", "test")
                 );
 
-            var first = string.Join("", dst);
-            var second = string.Join("", dst);
             Assert.Equal(
                 new LengthOf(dst).Value(),
                 new LengthOf(dst).Value()

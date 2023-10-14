@@ -15,8 +15,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Empty(
                 new Union<string>(
-                    new ManyOf<string>("a", "b"),
-                    new ManyOf<string>("c")
+                    Params.Of("a", "b"),
+                    Params.Of("c")
                 )
             );
         }

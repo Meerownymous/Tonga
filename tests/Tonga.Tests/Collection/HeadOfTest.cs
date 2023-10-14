@@ -17,7 +17,7 @@ namespace Tonga.Collection.Tests
             Assert.Contains(
                 new HeadOf<int>(
                     2,
-                    new ManyOf<int>(1, -1, 2, 0)
+                    Params.Of(1, -1, 2, 0)
                 ),
                 predicate => predicate.Equals(-1));
         }
@@ -29,7 +29,7 @@ namespace Tonga.Collection.Tests
                 2,
                 new HeadOf<string>(
                     2,
-                    new ManyOf<string>(
+                    Params.Of(
                         "hello", "world", "друг")
                 ).Count);
         }
@@ -51,7 +51,7 @@ namespace Tonga.Collection.Tests
             Assert.Empty(
                 new HeadOf<string>(
                     0,
-                    new ManyOf<string>("1", "2", "3")
+                    Params.Of("1", "2", "3")
                 )
             );
         }
@@ -62,8 +62,9 @@ namespace Tonga.Collection.Tests
             Assert.NotEmpty(
                 new HeadOf<String>(
                     2,
-                    new ManyOf<string>("first", "second")
-                ));
+                    Params.Of("first", "second")
+                )
+            );
         }
 
         [Fact]
@@ -71,8 +72,10 @@ namespace Tonga.Collection.Tests
         {
             Assert.Empty(
                 new HeadOf<String>(
-                    0, new ManyOf<string>("third", "fourth")
-                ));
+                    0,
+                    Params.Of("third", "fourth")
+                )
+            );
         }
 
         [Fact]
@@ -81,7 +84,7 @@ namespace Tonga.Collection.Tests
             Assert.Throws<InvalidOperationException>(() =>
             new HeadOf<int>(
                 2,
-                new ManyOf<int>(1, 2, 3, 4)
+                Params.Of(1, 2, 3, 4)
             ).Add(6));
         }
 
@@ -91,8 +94,9 @@ namespace Tonga.Collection.Tests
             Assert.Throws<InvalidOperationException>(() =>
                new HeadOf<int>(
                    2,
-                   new ManyOf<int>(1, 2, 3, 4)
-               ).Remove(1));
+                   Params.Of(1, 2, 3, 4)
+               ).Remove(1)
+            );
         }
 
         [Fact]
@@ -100,8 +104,9 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new HeadOf<int>(
-                    2, new ManyOf<int>(1, 2, 3, 4)
-                ).Clear());
+                    2, Params.Of(1, 2, 3, 4)
+                ).Clear()
+            );
         }
     }
 }

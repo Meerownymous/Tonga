@@ -16,7 +16,7 @@ namespace Tonga.Collection
         /// ctor
         /// </summary>
         /// <param name="src"></param>
-        public Reversed(params T[] src) : this(new ManyOf<T>(src))
+        public Reversed(params T[] src) : this(Params.Of(src))
         { }
         public static Reversed<T> New(params T[] src) => new Reversed<T>(src);
 

@@ -28,7 +28,7 @@ namespace Tonga.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(IFunc<In, Out> fnc, params In[] src) : this(
             fnc,
-            new LiveMany<In>(src)
+            new Transit<In>(src)
         )
         { }
 
@@ -39,7 +39,7 @@ namespace Tonga.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(
             fnc,
-            new LiveMany<In>(src)
+            new Transit<In>(src)
         )
         { }
 
@@ -144,8 +144,8 @@ namespace Tonga.Enumerable
             this.src = src;
             this.result =
                 Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                    Transit.Of(Produced),
+                    Sticky.New(Produced),
                     live
                 );
         }
@@ -160,7 +160,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<Out> Produced()
+        private IEnumerator<Out> Produced()
         {
             var index = 0;
             foreach(var item in this.src)

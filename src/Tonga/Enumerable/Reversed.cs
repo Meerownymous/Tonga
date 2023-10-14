@@ -24,8 +24,8 @@ namespace Tonga.Enumerable
             this.src = src;
             this.result =
                 Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                    Transit.Of(Produced),
+                    Sticky.New(Produced),
                     live
                 );
         }
@@ -37,7 +37,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<X> Produced()
+        private IEnumerator<X> Produced()
         {
             foreach(var item in this.src.Reverse())
             {

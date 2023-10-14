@@ -18,7 +18,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source items</param>
-        public Mapped(Func<In, Out> mapping, params In[] src) : this(mapping, new ManyOf<In>(src))
+        public Mapped(Func<In, Out> mapping, params In[] src) : this(mapping, Params.Of(src))
         { }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Tonga.Collection
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : this(
-            mapping, new ManyOf<In>(src))
+            mapping, Transit.Of(src))
         { }
 
         /// <summary>

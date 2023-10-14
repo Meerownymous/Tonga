@@ -16,14 +16,14 @@ namespace Tonga.Collection
         /// Makes a collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public LiveCollection(params T[] array) : this(new LiveMany<T>(array))
+        public LiveCollection(params T[] array) : this(new Transit<T>(array))
         { }
 
         /// <summary>
         /// Makes a collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public LiveCollection(IEnumerator<T> src) : this(new ManyOf<T>(src))
+        public LiveCollection(IEnumerator<T> src) : this(Transit.Of(src))
         { }
 
         /// <summary>

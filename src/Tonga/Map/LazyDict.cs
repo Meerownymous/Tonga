@@ -24,13 +24,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp[] kvps) : this(new LiveMany<IKvp>(kvps), true)
+        public LazyDict(params IKvp[] kvps) : this(new Transit<IKvp>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(new LiveMany<IKvp>(kvps), rejectBuildingAllKeys)
+        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(new Transit<IKvp>(kvps), rejectBuildingAllKeys)
         { }
 
         /// <summary>
@@ -299,13 +299,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Value>[] kvps) : this(new LiveMany<IKvp<Value>>(kvps), true)
+        public LazyDict(params IKvp<Value>[] kvps) : this(new Transit<IKvp<Value>>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(new LiveMany<IKvp<Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(new Transit<IKvp<Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>
@@ -537,13 +537,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Key, Value>[] kvps) : this(new ManyOf<IKvp<Key, Value>>(kvps), true)
+        public LazyDict(params IKvp<Key, Value>[] kvps) : this(Params.Of(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new LiveMany<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new Transit<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>

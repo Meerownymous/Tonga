@@ -19,7 +19,7 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap(() =>
-                    new LiveMany<IKvp>(
+                    new Transit<IKvp>(
                         new KvpOf(() => one),
                         new KvpOf(() => two)
                     )
@@ -34,7 +34,7 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap(() =>
-                    new LiveMany<IKvp>(
+                    new Transit<IKvp>(
                         new KvpOf("key a", "value a"),
                         new KvpOf("key b", () =>
                         {
@@ -96,7 +96,7 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap(() =>
-                    new LiveMany<IKvp>(
+                    new Transit<IKvp>(
                         new KvpOf("key", () => (value++).ToString())
                     )
                 );
@@ -113,7 +113,7 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap<int>(() =>
-                    new LiveMany<IKvp<int>>(
+                    new Transit<IKvp<int>>(
                         new KvpOf<int>(() => one),
                         new KvpOf<int>(() => two)
                     )
@@ -128,7 +128,7 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap<int>(() =>
-                    new LiveMany<IKvp<int>>(
+                    new Transit<IKvp<int>>(
                         new KvpOf<int>("key a", 0),
                         new KvpOf<int>("key b", () =>
                         {
@@ -146,7 +146,7 @@ namespace Tonga.Map.Tests
             var m =
                 new LiveMap<int>(() =>
                     new MapOf<int>(
-                        new ManyOf<KeyValuePair<string, int>>(
+                        Params.Of(
                             new KeyValuePair<string, int>("hello", 0),
                             new KeyValuePair<string, int>("world", 1)
                         )
@@ -191,7 +191,7 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap<int>(() =>
-                    new LiveMany<IKvp<int>>(
+                    new Transit<IKvp<int>>(
                         new KvpOf<int>("key", () => value++)
                     )
                 );
@@ -208,7 +208,7 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap<string, string>(() =>
-                    new LiveMany<IKvp<string, string>>(
+                    new Transit<IKvp<string, string>>(
                         new KvpOf<string, string>(() => one),
                         new KvpOf<string, string>(() => two)
                     )
@@ -223,7 +223,7 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap<int, int>(() =>
-                    new LiveMany<IKvp<int, int>>(
+                    new Transit<IKvp<int, int>>(
                         new KvpOf<int, int>(10, 0),
                         new KvpOf<int, int>(11, () =>
                         {
@@ -284,7 +284,7 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap<int, int>(() =>
-                    new LiveMany<IKvp<int, int>>(
+                    new Transit<IKvp<int, int>>(
                         new KvpOf<int, int>(0, () => value++)
                     )
                 );

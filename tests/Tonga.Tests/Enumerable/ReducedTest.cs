@@ -12,7 +12,7 @@ namespace Tonga.Enumerable.Test
             Assert.Equal(
                 24,
                 new Reduced<int>(
-                    new ManyOf<int>(0, 1, 1, 2, 2, 3, 4, 5, 6),
+                    Params.Of(0, 1, 1, 2, 2, 3, 4, 5, 6),
                     (first, second) => first + second
                 ).Value()
             );

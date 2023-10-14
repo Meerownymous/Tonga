@@ -43,7 +43,8 @@ namespace Tonga.Func
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
         public Each(IAction<In> proc, params In[] src) : this(
-            proc, new ManyOf<In>(src))
+            proc, Params.Of(src)
+            )
         { }
 
 

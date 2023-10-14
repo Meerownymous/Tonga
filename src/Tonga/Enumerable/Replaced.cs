@@ -63,8 +63,8 @@ namespace Tonga.Enumerable
             this.replacement = replacement;
             this.result =
                 Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                    Transit.Of(Produced),
+                    Sticky.New(Produced),
                     live
                 );
         }
@@ -79,7 +79,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             var e = this.origin.GetEnumerator();
 

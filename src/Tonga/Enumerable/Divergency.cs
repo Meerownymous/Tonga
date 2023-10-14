@@ -34,9 +34,9 @@ namespace Tonga.Enumerable
             this.b = new Filtered<T>(match, b, live: true);
             this.match = match;
             this.result =
-                Ternary.New(
-                    Sticky.By(this.Produced),
-                    LiveMany.New(this.Produced),
+                Ternary.New<T>(
+                    Sticky.New<T>(() => this.Produced()),
+                    Transit.Of<T>(() => this.Produced()),
                     live
                 );
         }
@@ -51,7 +51,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             var all1 = new HashSet<T>(EqualityComparer<T>.Default);
             var all2 = new HashSet<T>(EqualityComparer<T>.Default);

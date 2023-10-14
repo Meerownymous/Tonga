@@ -13,7 +13,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new LengthOf(
-                    new ManyOf<string>(
+                    Params.Of(
                         "a", "b", "c"
                     )
                 ).Value() == 3,
@@ -25,7 +25,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new LengthOf(
-                    new ManyOf<IText>(
+                    Params.Of(
                         new LiveText("a"),
                         new LiveText("b"),
                         new LiveText("c")
@@ -39,10 +39,10 @@ namespace Tonga.Enumerable.Test
         {
             var lst = new List<string>();
             var live =
-                new LiveMany<string>(() =>
+                new Transit<string>(() =>
                 {
                     lst.Add("something");
-                    return lst;
+                    return lst.GetEnumerator();
                 });
             Assert.NotEqual(new LengthOf(live).Value(), new LengthOf(live).Value());
         }

@@ -21,10 +21,9 @@ namespace Tonga.Number.Tests
         {
             Assert.True(
                 new SumOf(
-                    new ManyOf<float>(
-                        1.5F, 2.5F, 3.5F
-                    )
-                ).AsFloat() == 7.5F);
+                    Params.Of(1.5F, 2.5F, 3.5F)
+                ).AsFloat() == 7.5F
+            );
         }
     }
 }

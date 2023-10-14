@@ -38,22 +38,24 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void AllFalse()
         {
-            Assert.True(
-                    new And(
-                        new ManyOf<IScalar<Boolean>>(
-                            new False(),
-                            new False(),
-                            new False()
-                        )
-                    ).Value() == false);
+            Assert.False(
+                new And(
+                    Params.Of(
+                        new False(),
+                        new False(),
+                        new False()
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
         public void EmptyIterator()
         {
             Assert.True(
-                    new And(new ManyOf<IScalar<Boolean>>())
-                    .Value() == true);
+                new And(new None<IScalar<Boolean>>())
+                    .Value()
+            );
         }
 
         [Fact]
@@ -63,7 +65,7 @@ namespace Tonga.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        new ManyOf<string>("hello", "world")
+                        Params.Of("hello", "world")
 
                 ).Value() == true);
 
@@ -80,7 +82,7 @@ namespace Tonga.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        new ManyOf<string>()
+                        new None()
                 ).Value() == true,
                 "Can't enumerate a list"
                 );

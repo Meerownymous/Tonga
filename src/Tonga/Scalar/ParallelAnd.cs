@@ -20,7 +20,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src"></param>
         public ParallelAnd(params IScalar<bool>[] src) : this(
-            new ManyOf<IScalar<bool>>(src)
+            Params.Of(src)
         )
         { }
 
@@ -40,7 +40,7 @@ namespace Tonga.Scalar
         /// <param name="func"></param>
         /// <param name="src"></param>
         public ParallelAnd(IFunc<T, bool> func, params T[] src) : this(
-            func, new ManyOf<T>(src)
+            func, Params.Of(src)
         )
         { }
 
@@ -60,10 +60,12 @@ namespace Tonga.Scalar
         /// <param name="func"></param>
         /// <param name="src"></param>
         public ParallelAnd(IFunc<T, bool> func, IEnumerable<T> src) : this(
-            new Mapped<T, IScalar<bool>>(
+            Mapped.New(
                 i => new ScalarOf<bool>(func.Invoke(i)),
-                src)
+                src,
+                live: false
             )
+        )
         { }
 
         /// <summary>

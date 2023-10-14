@@ -1,0 +1,141 @@
+
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Tonga.Enumerable
+{
+    /// <summary>
+    /// Envelope for Enumerable of strings.
+    /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
+    /// </summary>
+    public abstract class ManyEnvelope : IEnumerable<string>
+    {
+        private readonly Ternary<string> items;
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(IScalar<IEnumerable<string>> fnc) : this(
+            fnc,
+            false
+        )
+        { }
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(Func<IEnumerator<string>> origin) : this(
+            origin,
+            false
+        )
+        { }
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(IScalar<IEnumerable<string>> fnc, bool live) : this(() =>
+            fnc.Value(),
+            live
+        )
+        { }
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(Func<IEnumerable<string>> origin, bool live = false) : this(() =>
+            origin().GetEnumerator(),
+            live
+        )
+        { }
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(Func<IEnumerator<string>> origin, bool live)
+        {
+            this.items =
+                new Ternary<string>(
+                    new LiveMany<string>(() =>
+                        new EnumeratorAsEnumerable<string>(origin)
+                    ),
+                    new Sticky<string>(
+                        new EnumeratorAsEnumerable<string>(origin)
+                    ),
+                    () => live
+                );
+        }
+
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        public IEnumerator<string> GetEnumerator()
+        {
+            return this.items.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    /// <summary>
+    /// Envelope for Enumerable.
+    /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class ManyEnvelope<T> : IEnumerable<T>
+    {
+        private readonly IEnumerable<T> content;
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(IScalar<IEnumerable<T>> fnc, bool live) : this(() => fnc.Value(), live)
+        { }
+
+        /// <summary>
+        /// Envelope for Enumerable.
+        /// </summary>
+        public ManyEnvelope(Func<IEnumerable<T>> origin, bool live) : this(() => origin().GetEnumerator(), live)
+        { }
+
+        /// <summary>
+        /// Envelope for Enumerables.
+        /// </summary>
+        public ManyEnvelope(Func<IEnumerator<T>> origin, bool live)
+        {
+            this.content =
+                new Ternary<T>(
+                    new Sticky<T>(new EnumeratorAsEnumerable<T>(origin)),
+                    new LiveMany<T>(() => new EnumeratorAsEnumerable<T>(origin)),
+                    live
+                );
+        }
+
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.content.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Enumerator for this envelope.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+}

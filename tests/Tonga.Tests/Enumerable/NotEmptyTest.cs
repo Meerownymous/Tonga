@@ -1,0 +1,41 @@
+
+
+using System;
+using Xunit;
+
+namespace Tonga.Enumerable.Test
+{
+    public sealed class NotEmptyTest
+    {
+        [Fact]
+        public void EmptyEnumerableThrowsExeption()
+        {
+            Assert.Throws<Exception>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new ManyOf<bool>()
+                    )).Value());
+        }
+
+        [Fact]
+        public void NotEmptyEnumerableThrowsNoExeption()
+        {
+            Assert.True(
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new ManyOf<bool>(false)
+                    )).Value() == 1);
+        }
+
+        [Fact]
+        public void EmptyCollectionThrowsCustomExeption()
+        {
+            Assert.Throws<OperationCanceledException>(() =>
+                new LengthOf(
+                    new NotEmpty<bool>(
+                        new ManyOf<bool>(),
+                        new OperationCanceledException()
+                    )).Value());
+        }
+    }
+}

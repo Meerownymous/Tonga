@@ -26,11 +26,36 @@ namespace Tonga.Enumerable.Test
         }
 
         [Fact]
-        public void CachesFilterResult()
+        public void SensesChanges()
         {
             var filterings = 0;
             var filtered =
                 new Filtered<string>(
+                    (input) =>
+                    {
+                        filterings++;
+                        return input != "B";
+                    },
+                    new List<string>() { "A", "B", "C" }
+                );
+
+            var enm1 = filtered.GetEnumerator();
+            enm1.MoveNext();
+            var current = enm1.Current;
+
+            var enm2 = filtered.GetEnumerator();
+            enm2.MoveNext();
+            var current2 = enm2.Current;
+
+            Assert.Equal(2, filterings);
+        }
+
+        [Fact]
+        public void CanBeSticky()
+        {
+            var filterings = 0;
+            var filtered =
+                Filtered.Sticky(
                     (input) =>
                     {
                         filterings++;
@@ -91,43 +116,6 @@ namespace Tonga.Enumerable.Test
                        "A", "B", "C")
                 ).Value() == 2,
                 "cannot filter items"
-            );
-        }
-
-        [Fact]
-        public void IsSticky()
-        {
-            var calls = 0;
-
-            var enm =
-                new Filtered<string>(
-                    (i) => { Debug.WriteLine("Read"); return true; },
-                    new List<string>() { "A" }
-                );
-
-            var enmr1 = enm.GetEnumerator();
-            var enmr2 = enm.GetEnumerator();
-
-            enmr1.MoveNext();
-            enmr2.MoveNext();
-
-
-            var enumerable =
-                new Filtered<string>(
-                    (input) =>
-                    {
-                        calls++;
-                        return input != "B";
-                    },
-                    new List<string>() { "A", "B", "C" }
-                );
-
-            new LengthOf(enumerable).Value();
-            new LengthOf(enumerable).Value();
-
-            Assert.Equal(
-                3,
-                calls
             );
         }
     }

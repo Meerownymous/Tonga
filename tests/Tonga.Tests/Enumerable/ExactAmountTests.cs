@@ -1,5 +1,6 @@
 using Xunit;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 
 namespace Tonga.Enumerable.Test
 {
@@ -9,8 +10,7 @@ namespace Tonga.Enumerable.Test
         public void DetectsMatch()
         {
             Assert.True(
-                new ExactAmount(
-                    3,
+                new ExactAmount(3,
                     EnumerableOf.Pipe("a", "b", "c")
                 ).Value()
             );
@@ -20,8 +20,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnLess()
         {
             Assert.False(
-                new ExactAmount(
-                    3,
+                new ExactAmount(3,
                     EnumerableOf.Pipe("a", "b")
                 ).Value()
             );
@@ -31,8 +30,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnMore()
         {
             Assert.False(
-                new ExactAmount(
-                    3,
+                new ExactAmount(3,
                     EnumerableOf.Pipe("a", "b", "c", "d")
                 ).Value()
             );

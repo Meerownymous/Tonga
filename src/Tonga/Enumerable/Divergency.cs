@@ -30,8 +30,8 @@ namespace Tonga.Enumerable
             this.result =
                 EnumerableOf.Pipe(() =>
                     this.Produced(
-                        Filtered.New(match, a),
-                        Filtered.New(match, b)
+                        Filtered.Pipe(match, a),
+                        Filtered.Pipe(match, b)
                     )
                 );
         }

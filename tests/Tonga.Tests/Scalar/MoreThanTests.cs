@@ -2,6 +2,7 @@
 
 using Xunit;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 
 namespace Tonga.Enumerable.Test
 {
@@ -22,8 +23,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnLess()
         {
             Assert.False(
-                new MoreThan(
-                    3,
+                new MoreThan(3,
                     EnumerableOf.Pipe("a", "b")
                 ).Value()
             );
@@ -33,8 +33,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnEqual()
         {
             Assert.False(
-                new MoreThan(
-                    3,
+                new MoreThan(3,
                     EnumerableOf.Pipe("a", "b", "c")
                 ).Value()
             );

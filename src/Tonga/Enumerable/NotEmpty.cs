@@ -4,8 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using Tonga.Scalar;
-
 namespace Tonga.Enumerable
 {
     /// <summary>
@@ -14,18 +12,15 @@ namespace Tonga.Enumerable
     /// <typeparam name="T">Type of the enumerable</typeparam>
     public sealed class NotEmpty<T> : IEnumerable<T>
     {
-        private readonly IEnumerable<T> origin;
-        private readonly Exception ex;
-        private readonly Ternary<T> result;
+        private readonly IEnumerable<T> result;
 
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public NotEmpty(IEnumerable<T> origin, bool live = false) : this(
+        public NotEmpty(IEnumerable<T> origin) : this(
             origin,
-            new Exception("Enumerable is empty"),
-            live
+            new Exception("Enumerable is empty")
         )
         { }
 
@@ -34,16 +29,9 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IEnumerable<T> origin, Exception ex, bool live = false)
+        public NotEmpty(IEnumerable<T> origin, Exception ex)
         {
-            this.origin = origin;
-            this.ex = ex;
-            this.result =
-                Ternary.Pipe(
-                    EnumerableOf.Pipe(Produced),
-                    Sticky.New(Produced),
-                    live
-                );
+            this.result = EnumerableOf.Pipe(() => this.Produced(origin, ex));
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -56,17 +44,17 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced()
+        private IEnumerator<T> Produced(IEnumerable<T> origin, Exception ex)
         {
             bool empty = true;
-            foreach (var item in this.origin)
+            foreach (var item in origin)
             {
                 empty = false;
                 yield return item;
             }
             if (empty)
             {
-                throw this.ex;
+                throw ex;
             }
         }
     }
@@ -80,13 +68,13 @@ namespace Tonga.Enumerable
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, bool live = false) => new NotEmpty<T>(origin, live);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> origin) => new NotEmpty<T>(origin);
 
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Exception ex, bool live = false) => new NotEmpty<T>(origin, ex, live);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
     }
 }

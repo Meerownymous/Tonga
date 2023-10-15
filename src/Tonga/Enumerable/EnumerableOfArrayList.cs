@@ -12,7 +12,7 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
     /// </summary>
-    public sealed class ManyOfArrayList : IEnumerable<object>
+    public sealed class EnumerabeOfArrayList : IEnumerable<object>
     {
         private readonly ArrayList src;
 
@@ -20,7 +20,7 @@ namespace Tonga.Enumerable
         /// A ArrayList converted to IEnumerable&lt;object&gt;
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ManyOfArrayList(ArrayList src)
+        public EnumerabeOfArrayList(ArrayList src)
         {
             this.src = src;
         }

@@ -12,22 +12,15 @@ namespace Tonga.Enumerable
     /// <typeparam name="X">type of items in enumerable</typeparam>
     public sealed class Reversed<X> : IEnumerable<X>
     {
-        private readonly IEnumerable<X> src;
-        private readonly Ternary<X> result;
+        private readonly IEnumerable<X> result;
 
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public Reversed(IEnumerable<X> src, bool live = false)
+        public Reversed(IEnumerable<X> src)
         {
-            this.src = src;
-            this.result =
-                Ternary.Pipe(
-                    EnumerableOf.Pipe(Produced),
-                    Sticky.New(Produced),
-                    live
-                );
+            this.result = EnumerableOf.Pipe(() => this.Produced(src));
         }
 
         public IEnumerator<X> GetEnumerator() => this.result.GetEnumerator();
@@ -37,9 +30,9 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<X> Produced()
+        private IEnumerator<X> Produced(IEnumerable<X> source)
         {
-            foreach(var item in this.src.Reverse())
+            foreach(var item in source)
             {
                 yield return item;
             }
@@ -55,6 +48,13 @@ namespace Tonga.Enumerable
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> src) => new Reversed<T>(src);
+
+        /// <summary>
+        /// A reversed <see cref="IEnumerable{T}"/>
+        /// </summary>
+        /// <param name="src">enumerable to reverse</param>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> src) =>
+            Enumerable.Sticky.New(new Reversed<T>(src));
     }
 }

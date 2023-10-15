@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,15 +10,13 @@ namespace Tonga.Enumerable
     /// <typeparam name="T">type of elements</typeparam>
     public sealed class Head<T> : IEnumerable<T>
     {
-        private readonly IEnumerable<T> enumerable;
-        private readonly IScalar<int> limit;
-        private readonly Ternary<T> result;
+        private readonly IEnumerable<T> result;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public Head(IEnumerable<T> enumerable, bool live = false) : this(enumerable, 1, live)
+        public Head(IEnumerable<T> enumerable) : this(enumerable, 1)
         { }
 
         /// <summary>
@@ -25,40 +24,32 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public Head(IEnumerable<T> enumerable, int limit, bool live = false) : this(
+        public Head(IEnumerable<T> enumerable, int limit) : this(
             enumerable,
-            new Scalar.Live<int>(limit),
-            live
+            () => limit
         )
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
+        /// <param name="source">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public Head(IEnumerable<T> enumerable, IScalar<int> limit, bool live = false)
+        public Head(IEnumerable<T> source, Func<int> limit)
         {
-            this.enumerable = enumerable;
-            this.limit = limit;
-            this.result =
-                Ternary.Pipe(
-                    EnumerableOf.Pipe(Produced),
-                    Sticky.New(Produced),
-                    live
-                );
+            this.result = EnumerableOf.Pipe(() => this.Produced(source, limit));
         }
 
         public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerator<T> Produced()
+        private IEnumerator<T> Produced(IEnumerable<T> source, Func<int> limit)
         {
-            var limit = this.limit.Value();
+            var max = limit();
             var taken = 0;
-            var enumerator = this.enumerable.GetEnumerator();
-            while (enumerator.MoveNext() && taken < limit)
+            var enumerator = source.GetEnumerator();
+            while (enumerator.MoveNext() && taken < max)
             {
                 taken++;
                 yield return enumerator.Current;
@@ -75,20 +66,43 @@ namespace Tonga.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new Head<T>(enumerable);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> enumerable) => new Head<T>(enumerable);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, IScalar<int> limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="enumerable">enumerable to limit</param>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable) =>
+            Enumerable.Sticky.New(new Head<T>(enumerable));
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="enumerable">enumerable to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, int limit) =>
+            Enumerable.Sticky.New(new Head<T>(enumerable, limit));
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
+        /// </summary>
+        /// <param name="enumerable">enumerable to limit</param>
+        /// <param name="limit">maximum item count</param>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, Func<int> limit) =>
+            Enumerable.Sticky.New(new Head<T>(enumerable, limit));
     }
 }

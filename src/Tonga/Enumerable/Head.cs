@@ -1,8 +1,5 @@
-
-
 using System.Collections;
 using System.Collections.Generic;
-using Tonga.Scalar;
 
 namespace Tonga.Enumerable
 {
@@ -10,7 +7,7 @@ namespace Tonga.Enumerable
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class HeadOf<T> : IEnumerable<T>
+    public sealed class Head<T> : IEnumerable<T>
     {
         private readonly IEnumerable<T> enumerable;
         private readonly IScalar<int> limit;
@@ -20,7 +17,7 @@ namespace Tonga.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public HeadOf(IEnumerable<T> enumerable, bool live = false) : this(enumerable, 1, live)
+        public Head(IEnumerable<T> enumerable, bool live = false) : this(enumerable, 1, live)
         { }
 
         /// <summary>
@@ -28,7 +25,11 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, int limit, bool live = false) : this(enumerable, new Live<int>(limit), live)
+        public Head(IEnumerable<T> enumerable, int limit, bool live = false) : this(
+            enumerable,
+            new Scalar.Live<int>(limit),
+            live
+        )
         { }
 
         /// <summary>
@@ -36,13 +37,13 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public HeadOf(IEnumerable<T> enumerable, IScalar<int> limit, bool live = false)
+        public Head(IEnumerable<T> enumerable, IScalar<int> limit, bool live = false)
         {
             this.enumerable = enumerable;
             this.limit = limit;
             this.result =
-                Ternary.New(
-                    Transit.Of(Produced),
+                Ternary.Pipe(
+                    EnumerableOf.Pipe(Produced),
                     Sticky.New(Produced),
                     live
                 );
@@ -68,27 +69,26 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
-    public static class HeadOf
+    public static class Head
     {
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new HeadOf<T>(enumerable);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new Head<T>(enumerable);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, int limit) => new HeadOf<T>(enumerable, limit);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, IScalar<int> limit) => new HeadOf<T>(enumerable, limit);
+        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, IScalar<int> limit) => new Head<T>(enumerable, limit);
     }
 }
-

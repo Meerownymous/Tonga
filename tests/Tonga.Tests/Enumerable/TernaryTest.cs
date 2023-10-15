@@ -13,8 +13,8 @@ namespace Tonga.Enumerable.Test
                 "1 a",
                 string.Join(" ",
                     new Ternary<string>(
-                        Params.Of("1", "a"),
-                        Params.Of("2", "b"),
+                        EnumerableOf.Pipe("1", "a"),
+                        EnumerableOf.Pipe("2", "b"),
                         ()=> true
                     )
                 )
@@ -28,8 +28,8 @@ namespace Tonga.Enumerable.Test
                 "2 b",
                 string.Join(" ",
                     new Ternary<string>(
-                        Params.Of("1", "a"),
-                        Params.Of("2", "b"),
+                        EnumerableOf.Pipe("1", "a"),
+                        EnumerableOf.Pipe("2", "b"),
                         () => false
                     )
                 )

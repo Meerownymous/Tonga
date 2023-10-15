@@ -15,7 +15,7 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="items">items to decorate</param>
-        public SolidList(params T[] items) : this(Params.Of(items))
+        public SolidList(params T[] items) : this(EnumerableOf.Pipe(items))
         { }
 
         /// <summary>

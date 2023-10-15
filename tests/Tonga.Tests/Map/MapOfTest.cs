@@ -68,7 +68,7 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 "B",
                 new MapOf(
-                    Params.Of(
+                    Enumerable.EnumerableOf.Pipe(
                         "A", "B",
                         "C", "D"
                     )
@@ -81,7 +81,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new MapOf(
-                    Params.Of(
+                    Enumerable.EnumerableOf.Pipe(
                         "A", "B",
                         "C"
                     )
@@ -119,9 +119,9 @@ namespace Tonga.Map.Tests
             var map =
                 new MapOf(
                     new Repeated<KeyValuePair<string, string>>(
-                        new Live<KeyValuePair<string, string>>(
+                        new Scalar.Live<KeyValuePair<string, string>>(
                             () => new KeyValuePair<string, string>(random.Next() + "", "1")),
-                            new Live<int>(() =>
+                            new Scalar.Live<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -184,9 +184,9 @@ namespace Tonga.Map.Tests
             var map =
                 new MapOf<int>(
                     new Repeated<IKvp<int>>(
-                        new Live<IKvp<int>>(
+                        new Scalar.Live<IKvp<int>>(
                             () => new KvpOf<int>(random.Next() + "", 1)),
-                            new Live<int>(() =>
+                            new Scalar.Live<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -250,9 +250,9 @@ namespace Tonga.Map.Tests
             var map =
                 new MapOf<int, int>(
                     new Repeated<IKvp<int, int>>(
-                        new Live<IKvp<int, int>>(
+                        new Scalar.Live<IKvp<int, int>>(
                             () => new KvpOf<int, int>(random.Next(), 1)),
-                            new Live<int>(() =>
+                            new Scalar.Live<int>(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;

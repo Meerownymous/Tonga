@@ -14,7 +14,7 @@ namespace Tonga.Enumerable.Test
                 new Text.Joined(
                     " ",
                     new Reversed<string>(
-                        Params.Of(
+                        EnumerableOf.Pipe(
                             "hello", "world", "dude"
                         )
                     )

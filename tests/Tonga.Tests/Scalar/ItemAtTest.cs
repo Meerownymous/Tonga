@@ -16,7 +16,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    Params.Of(1, 2, 3)
+                    Enumerable.EnumerableOf.Pipe(1, 2, 3)
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
             );
@@ -28,7 +28,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    Params.Of(1, 2, 3),
+                    Enumerable.EnumerableOf.Pipe(1, 2, 3),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
@@ -41,7 +41,7 @@ namespace Tonga.Scalar.Tests
             Assert.Equal(
                 2,
                 new ItemAt<int>(
-                    Params.Of(1, 2, 3),
+                    Enumerable.EnumerableOf.Pipe(1, 2, 3),
                     1
                 ).Value()
             );
@@ -52,7 +52,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new ItemAt<int>(
-                    Params.Of(1, 2, 3),
+                    Enumerable.EnumerableOf.Pipe(1, 2, 3),
                     1,
                     4
                 ).Value() == 2,

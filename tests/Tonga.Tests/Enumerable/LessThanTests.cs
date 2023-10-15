@@ -13,7 +13,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LessThan(
                     3,
-                    Params.Of("a", "b")
+                    EnumerableOf.Pipe("a", "b")
                 ).Value()
             );
         }
@@ -24,7 +24,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new LessThan(
                     3,
-                    Params.Of("a", "b", "c", "d")
+                    EnumerableOf.Pipe("a", "b", "c", "d")
                 ).Value()
             );
         }
@@ -35,7 +35,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new LessThan(
                     3,
-                    Params.Of("a", "b", "c")
+                    EnumerableOf.Pipe("a", "b", "c")
                 ).Value()
             );
         }

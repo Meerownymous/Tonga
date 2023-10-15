@@ -40,7 +40,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.False(
                 new And(
-                    Params.Of(
+                    Enumerable.EnumerableOf.Pipe(
                         new False(),
                         new False(),
                         new False()
@@ -65,7 +65,7 @@ namespace Tonga.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        Params.Of("hello", "world")
+                        Enumerable.EnumerableOf.Pipe("hello", "world")
 
                 ).Value() == true);
 

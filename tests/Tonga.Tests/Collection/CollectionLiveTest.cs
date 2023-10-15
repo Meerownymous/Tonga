@@ -30,7 +30,7 @@ namespace Tonga.Collection.Tests
             Assert.Contains(
                 -1,
                 new LiveCollection<int>(
-                    Params.Of(1, 2, 0, -1).GetEnumerator())
+                    EnumerableOf.Pipe(1, 2, 0, -1).GetEnumerator())
             );
         }
 
@@ -40,7 +40,7 @@ namespace Tonga.Collection.Tests
             var count = 1;
             var col =
                 new LiveCollection<int>(
-                    Transit.Of(() =>
+                    Enumerable.EnumerableOf.Pipe(() =>
                         new Repeated<int>(
                             () =>
                             {

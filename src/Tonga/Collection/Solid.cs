@@ -15,7 +15,7 @@ namespace Tonga.Collection
         /// ctor
         /// </summary>
         /// <param name="array">source items</param>
-        public Solid(params T[] array) : this(new Transit<T>(array))
+        public Solid(params T[] array) : this(new EnumerableOf<T>(array))
         { }
         public static Solid<T> New(params T[] array) => new Solid<T>(array);
 
@@ -23,7 +23,7 @@ namespace Tonga.Collection
         /// ctor
         /// </summary>
         /// <param name="src">source enumerator</param>
-        public Solid(IEnumerator<T> src) : this(Transit.Of(src))
+        public Solid(IEnumerator<T> src) : this(Enumerable.EnumerableOf.Pipe(src))
         { }
         public static Solid<T> New(IEnumerator<T> src) => new Solid<T>(src);
 

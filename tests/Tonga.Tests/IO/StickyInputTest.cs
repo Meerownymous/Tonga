@@ -28,7 +28,7 @@ namespace Tonga.IO.Tests
                             new MemoryStream(
                                 new BytesOf(
                                     new Text.Joined(lmt,
-                                        new HeadOf<string>(
+                                        new Head<string>(
                                             new Endless<string>(str),
                                             times
                                         )

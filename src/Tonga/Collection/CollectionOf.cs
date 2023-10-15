@@ -15,14 +15,14 @@ namespace Tonga.Collection
         /// A collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public CollectionOf(params T[] array) : this(new Transit<T>(array))
+        public CollectionOf(params T[] array) : this(new EnumerableOf<T>(array))
         { }
 
         /// <summary>
         /// A collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public CollectionOf(IEnumerator<T> src) : this(Transit.Of(src))
+        public CollectionOf(IEnumerator<T> src) : this(Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>

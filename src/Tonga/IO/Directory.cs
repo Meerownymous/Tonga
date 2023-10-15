@@ -35,11 +35,11 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="dir">DirectoryInfo</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(DirectoryInfo dir, bool recursive) : this(new Live<string>(() =>
+        public DirectoryOf(DirectoryInfo dir, bool recursive) : this(new Scalar.Live<string>(() =>
             {
                 return dir.FullName;
             }),
-            new Live<bool>(recursive)
+            new Scalar.Live<bool>(recursive)
         )
         { }
 
@@ -55,7 +55,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="file">File as a uri</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(Uri file, bool recursive) : this(new Live<string>(() =>
+        public DirectoryOf(Uri file, bool recursive) : this(new Scalar.Live<string>(() =>
             {
                 if (file.Scheme != "file")
                 {
@@ -66,7 +66,7 @@ namespace Tonga.IO
                 }
                 return file.AbsolutePath;
             }),
-            new Live<bool>(recursive)
+            new Scalar.Live<bool>(recursive)
         )
         { }
 
@@ -82,7 +82,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="file">File as a path to directory.</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(FileInfo file, bool recursive) : this(new Live<string>(file.Directory.FullName), new Live<bool>(recursive))
+        public DirectoryOf(FileInfo file, bool recursive) : this(new Scalar.Live<string>(file.Directory.FullName), new Scalar.Live<bool>(recursive))
         { }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="path"></param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(string path, bool recursive) : this(new Live<string>(path), new Live<bool>(recursive))
+        public DirectoryOf(string path, bool recursive) : this(new Scalar.Live<string>(path), new Scalar.Live<bool>(recursive))
         { }
 
         /// <summary>

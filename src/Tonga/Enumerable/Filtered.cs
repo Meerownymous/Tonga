@@ -26,13 +26,9 @@ namespace Tonga.Enumerable
         /// <param name="items">other items to filter</param>
         public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
             fnc,
-            new Joined<T>(
-                live: true,
-                new Transit<T>(
-                    item1,
-                    item2
-                ),
-                new Params<T>(items)
+            new Joined<T>(live: true,
+                new EnumerableOf<T>(item1, item2),
+                new EnumerableOf<T>(items)
             ),
             false
         )
@@ -49,11 +45,11 @@ namespace Tonga.Enumerable
             fnc,
             new Joined<T>(
                 live: true,
-                new Transit<T>(
+                new EnumerableOf<T>(
                     item1,
                     item2
                 ),
-                new Params<T>(items)
+                new EnumerableOf<T>(items)
             ),
             live
         )
@@ -71,8 +67,8 @@ namespace Tonga.Enumerable
             this.fnc = fnc;
             this.result =
                 new Ternary<T>(
-                    new Transit<T>(Produced),
-                    new Sticky<T>(Produced),
+                    new EnumerableOf<T>(() => this.Produced()),
+                    new Sticky<T>(() => this.Produced()),
                     live
                 );
 

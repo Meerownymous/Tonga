@@ -21,7 +21,7 @@ namespace Tonga.Enumerable
         /// <param name="elm">function to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(System.Func<T> elm, int cnt) : this(
-            new Live<T>(elm),
+            new Scalar.Live<T>(elm),
             cnt
         )
         { }
@@ -32,7 +32,7 @@ namespace Tonga.Enumerable
         /// <param name="elm">element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(T elm, int cnt) :
-            this(new Live<T>(elm), cnt)
+            this(new Scalar.Live<T>(elm), cnt)
         { }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Tonga.Enumerable
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public Repeated(IScalar<T> elm, int cnt) : this(
-            elm, new Live<int>(cnt)
+            elm, new Scalar.Live<int>(cnt)
         )
         { }
 

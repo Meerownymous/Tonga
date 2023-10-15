@@ -15,7 +15,7 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="array">source array</param>
-        public ListOf(params T[] array) : this(new Transit<T>(array))
+        public ListOf(params T[] array) : this(new EnumerableOf<T>(array))
         { }
 
         /// <summary>

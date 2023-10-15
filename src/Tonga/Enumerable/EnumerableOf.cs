@@ -1,10 +1,6 @@
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Tonga.Scalar;
 
 namespace Tonga.Enumerable
 {
@@ -12,7 +8,7 @@ namespace Tonga.Enumerable
     /// A <see cref="IEnumerable{T}"/> out of other objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Transit<T> : IEnumerable<T>
+    public sealed class EnumerableOf<T> : IEnumerable<T>
     {
         private readonly Func<IEnumerator<T>> origin;
 
@@ -20,8 +16,8 @@ namespace Tonga.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
         /// <param name="items"></param>
-        public Transit(params T[] items) : this(
-            () => new Params<T>(items).GetEnumerator()
+        public EnumerableOf(params T[] items) : this(
+            () => new Enumerator.Array<T>(items)
         )
         { }
 
@@ -29,14 +25,14 @@ namespace Tonga.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public Transit(IEnumerator<T> origin) : this(() => origin)
+        public EnumerableOf(IEnumerator<T> origin) : this(() => origin)
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public Transit(Func<IEnumerator<T>> origin)
+        public EnumerableOf(Func<IEnumerator<T>> origin)
         {
             this.origin = origin;
         }
@@ -56,18 +52,24 @@ namespace Tonga.Enumerable
         }
     }
 
-    public static class Transit
+    public static class EnumerableOf
     {
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public static IEnumerable<T> Of<T>(IEnumerator<T> fnc) => new Transit<T>(fnc);
+        public static IEnumerable<T> Pipe<T>(params T[] items) => new EnumerableOf<T>(items);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public static IEnumerable<T> Of<T>(Func<IEnumerator<T>> fnc) => new Transit<T>(fnc);
+        public static IEnumerable<T> Pipe<T>(IEnumerator<T> fnc) => new EnumerableOf<T>(fnc);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public static IEnumerable<T> Pipe<T>(Func<IEnumerator<T>> fnc) => new EnumerableOf<T>(fnc);
     }
 }

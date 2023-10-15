@@ -19,9 +19,9 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params Func<T>[] items) : this(
-            new Enumerable.Mapped<Func<T>, IScalar<T>>(
-                item => new Live<T>(() => item.Invoke()),
-                Params.Of(items)
+            new Mapped<Func<T>, IScalar<T>>(
+                item => new Scalar.Live<T>(() => item.Invoke()),
+                EnumerableOf.Pipe(items)
             )
         )
         { }
@@ -31,7 +31,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<T> items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(item => new Live<T>(item), items))
+            new Mapped<T, IScalar<T>>(item => new Scalar.Live<T>(item), items))
         { }
 
         /// <summary>
@@ -39,14 +39,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params T[] items) : this(
-            new Enumerable.Mapped<T, IScalar<T>>(item => new Live<T>(item), items))
+            new Mapped<T, IScalar<T>>(item => new Scalar.Live<T>(item), items))
         { }
 
         /// <summary>
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params IScalar<T>[] items) : this(Params.Of(items))
+        public Max(params IScalar<T>[] items) : this(EnumerableOf.Pipe(items))
         { }
 
         /// <summary>

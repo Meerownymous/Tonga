@@ -17,7 +17,7 @@ namespace Tonga.Collection
         /// A list with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
-        public Sorted(params T[] src) : this(new Transit<T>(src))
+        public Sorted(params T[] src) : this(new EnumerableOf<T>(src))
         { }
 
         /// <summary>

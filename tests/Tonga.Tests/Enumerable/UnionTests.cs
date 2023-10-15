@@ -15,8 +15,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Empty(
                 new Union<string>(
-                    Params.Of("a", "b"),
-                    Params.Of("c")
+                    EnumerableOf.Pipe("a", "b"),
+                    EnumerableOf.Pipe("c")
                 )
             );
         }

@@ -13,9 +13,9 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Joined<string>(
-                        Params.Of("hello", "world", "друг"),
-                        Params.Of("how", "are", "you"),
-                        Params.Of("what's", "up")
+                        EnumerableOf.Pipe("hello", "world", "друг"),
+                        EnumerableOf.Pipe("how", "are", "you"),
+                        EnumerableOf.Pipe("what's", "up")
                     )
                 ).Value() == 8,
             "Can't concatenate enumerables together");
@@ -28,8 +28,8 @@ namespace Tonga.Enumerable.Test
                 new LengthOf(
                     new Joined<IEnumerable<string>>(
                         new Mapped<string, IEnumerable<string>>(
-                           str => Params.Of(str),
-                           Params.Of("x")
+                           str => EnumerableOf.Pipe(str),
+                           EnumerableOf.Pipe("x")
                         )
                 )).Value() == 1,
             "cannot join mapped iterables together");
@@ -41,7 +41,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Joined<string>(
-                        Params.Of("hello", "world", "друг"),
+                        EnumerableOf.Pipe("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",

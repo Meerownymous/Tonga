@@ -23,7 +23,7 @@ namespace Tonga.Bytes.Tests
                         new InputOf(
                         String.Join(
                             "",
-                                new HeadOf<string>(
+                                new Head<string>(
                                 new Endless<string>(body),
                                 multiplier
                             )

@@ -84,7 +84,7 @@ namespace Tonga.IO.Tests
                     new InputOf(
                         new Text.Joined(
                             "",
-                            new HeadOf<string>(
+                            new Head<string>(
                                 new Endless<string>(body),
                                 multiplier
                             )

@@ -19,21 +19,21 @@ namespace Tonga.Enumerator
 
         /// In order to allow enumerables to not pre-compute/copy all elements,
         /// this ctor allows injecting and therefore re-using the caching elements.
-        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
         /// Enumerators while the same cache is filled when advancing them.
         public Sticky(IEnumerator<T> origin) : this(() => origin)
         { }
 
         /// In order to allow enumerables to not pre-compute/copy all elements,
         /// this ctor allows injecting and therefore re-using the caching elements.
-        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
         /// Enumerators while the same cache is filled when advancing them.
         public Sticky(Func<IEnumerator<T>> origin) : this(new Cache<T>(origin))
         { }
 
         /// In order to allow enumerables to not pre-compute/copy all elements,
         /// this ctor allows injecting and therefore re-using the caching elements.
-        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
         /// Enumerators while the same cache is filled when advancing them.
         public Sticky(IDictionary<int, T> cache)
         {
@@ -187,19 +187,19 @@ namespace Tonga.Enumerator
     {
         /// In order to allow enumerables to not pre-compute/copy all elements,
         /// this ctor allows injecting and therefore re-using the caching elements.
-        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
         /// Enumerators while the same cache is filled when advancing them.
         public IEnumerator<T> New<T>(IEnumerator<T> origin) => new Sticky<T>(origin);
 
         /// In order to allow enumerables to not pre-compute/copy all elements,
         /// this ctor allows injecting and therefore re-using the caching elements.
-        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
         /// Enumerators while the same cache is filled when advancing them.
         public IEnumerator<T> New<T>(Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
 
         /// In order to allow enumerables to not pre-compute/copy all elements,
         /// this ctor allows injecting and therefore re-using the caching elements.
-        /// An enumerable like <see cref="ManyEnvelope"/> can then issue multiple 
+        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
         /// Enumerators while the same cache is filled when advancing them.
         public IEnumerator<T> New<T>(IDictionary<int, T> cache) => new Sticky<T>(cache);
     }

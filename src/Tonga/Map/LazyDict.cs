@@ -24,13 +24,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp[] kvps) : this(new Transit<IKvp>(kvps), true)
+        public LazyDict(params IKvp[] kvps) : this(new Enumerable.EnumerableOf<IKvp>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(new Transit<IKvp>(kvps), rejectBuildingAllKeys)
+        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(new Enumerable.EnumerableOf<IKvp>(kvps), rejectBuildingAllKeys)
         { }
 
         /// <summary>
@@ -299,13 +299,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Value>[] kvps) : this(new Transit<IKvp<Value>>(kvps), true)
+        public LazyDict(params IKvp<Value>[] kvps) : this(new Enumerable.EnumerableOf<IKvp<Value>>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(new Transit<IKvp<Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(new Enumerable.EnumerableOf<IKvp<Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>
@@ -537,13 +537,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Key, Value>[] kvps) : this(Params.Of(kvps), true)
+        public LazyDict(params IKvp<Key, Value>[] kvps) : this(Enumerable.EnumerableOf.Pipe(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new Transit<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new Enumerable.EnumerableOf<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>

@@ -39,8 +39,8 @@ namespace Tonga.Enumerable
             this.origin = origin;
             this.ex = ex;
             this.result =
-                Ternary.New(
-                    Transit.Of(Produced),
+                Ternary.Pipe(
+                    EnumerableOf.Pipe(Produced),
                     Sticky.New(Produced),
                     live
                 );
@@ -80,13 +80,13 @@ namespace Tonga.Enumerable
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, bool live = false) => new NotEmpty<T>(origin, false);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, bool live = false) => new NotEmpty<T>(origin, live);
 
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Exception ex, bool live = false) => new NotEmpty<T>(origin, ex, false);
+        public static IEnumerable<T> New<T>(IEnumerable<T> origin, Exception ex, bool live = false) => new NotEmpty<T>(origin, ex, live);
     }
 }

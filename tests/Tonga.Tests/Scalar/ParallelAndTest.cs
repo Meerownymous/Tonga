@@ -70,7 +70,7 @@ namespace Tonga.Scalar.Tests
                 new ParallelAnd<bool>(
                     new Enumerable.Mapped<string, IScalar<bool>>(
                         str => { list.AddLast(str); return new True(); },
-                        Params.Of("hello", "world")
+                        Enumerable.EnumerableOf.Pipe("hello", "world")
                     )
                 ).Value() &&
                 list.Contains("hello") &&

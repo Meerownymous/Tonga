@@ -28,7 +28,7 @@ namespace Tonga.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(IFunc<In, Out> fnc, params In[] src) : this(
             fnc,
-            new Transit<In>(src)
+            EnumerableOf.Pipe(src)
         )
         { }
 
@@ -39,7 +39,7 @@ namespace Tonga.Enumerable
         /// <param name="fnc">function used to map</param>
         public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(
             fnc,
-            new Transit<In>(src)
+            EnumerableOf.Pipe(src)
         )
         { }
 
@@ -143,8 +143,8 @@ namespace Tonga.Enumerable
             this.mapping = fnc;
             this.src = src;
             this.result =
-                Ternary.New(
-                    Transit.Of(Produced),
+                Ternary.Pipe(
+                    EnumerableOf.Pipe(Produced),
                     Sticky.New(Produced),
                     live
                 );
@@ -201,14 +201,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out> (fnc, src, false);
+        public static IEnumerable<Out> New<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out> (fnc, src, live);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out>(fnc, src, false);
+        public static IEnumerable<Out> New<In, Out>(IFunc<In, Out> fnc, IEnumerable<In> src, bool live = false) => new Mapped<In, Out>(fnc, src, live);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.

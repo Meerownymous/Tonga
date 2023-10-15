@@ -16,7 +16,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source floats</param>
         public SumOf(params float[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source longs</param>
         public SumOf(params long[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source ints</param>
         public SumOf(params int[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source doubles</param>
         public SumOf(params double[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>

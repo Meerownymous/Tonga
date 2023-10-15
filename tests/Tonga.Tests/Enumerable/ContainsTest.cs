@@ -1,6 +1,9 @@
 
 
 using System;
+using System.Diagnostics;
+using Tonga.Scalar;
+using Tonga.Tests;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -12,7 +15,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new Contains<string>(
-                    Params.Of("Hello", "my", "cat", "is", "missing"),
+                    EnumerableOf.Pipe("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "cat"
                     ).Value());
         }
@@ -22,7 +25,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.False(
                 new Contains<string>(
-                    Params.Of("Hello", "my", "cat", "is", "missing"),
+                    EnumerableOf.Pipe("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
                     ).Value());
         }

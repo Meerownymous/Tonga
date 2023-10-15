@@ -74,9 +74,9 @@ namespace Tonga.List.Tests
             var list =
                 new LiveList<int>(() =>
                     new ListOf<int>(
-                        new HeadOf<int>(
+                        new Head<int>(
                             new Endless<int>(size),
-                            new Live<int>(() =>
+                            new Scalar.Live<int>(() =>
                                 {
                                     return Interlocked.Increment(ref size);
                                 }
@@ -95,9 +95,9 @@ namespace Tonga.List.Tests
             var list =
                 new LiveList<int>(
                     new ListOf<int>(
-                        new HeadOf<int>(
+                        new Head<int>(
                             new Endless<int>(1),
-                            new Live<int>(() =>
+                            new Scalar.Live<int>(() =>
                                 Interlocked.Increment(ref size)
                             )
                         )

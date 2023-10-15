@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Tonga.Scalar;
 
-namespace Tonga.Enumerable
+namespace Tonga.Scalar
 {
     /// <summary>
     /// Lookup if an item is in a enumerable.

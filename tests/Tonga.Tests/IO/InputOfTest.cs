@@ -44,7 +44,7 @@ namespace Tonga.IO.Tests
                         new MemoryStream(
                             new BytesOf(
                                 new Text.Joined("\r\n",
-                                new HeadOf<string>(
+                                new Head<string>(
                                     new Endless<string>(content),
                                     10)
                                 )
@@ -93,7 +93,7 @@ namespace Tonga.IO.Tests
                         new MemoryStream(
                             new BytesOf(
                                 new Text.Joined("\r\n",
-                                    new HeadOf<string>(
+                                    new Head<string>(
                                         new Endless<string>("Hello World"),
                                         10
                                     )
@@ -158,7 +158,7 @@ namespace Tonga.IO.Tests
                             new MemoryStream(
                                 new BytesOf(
                                     new Text.Joined("\r\n",
-                                    new HeadOf<string>(
+                                    new Head<string>(
                                         new Endless<string>("Hello World"),
                                         1000
                                     )

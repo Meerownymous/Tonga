@@ -12,7 +12,7 @@ namespace Tonga.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Params.Of(src))
+        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
@@ -24,7 +24,7 @@ namespace Tonga.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, params In[] src) : this(func, Params.Of(src))
+        public And(IFunc<In, Boolean> func, params In[] src) : this(func, Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary> ctor </summary>
@@ -71,7 +71,7 @@ namespace Tonga.Scalar
     {
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(params Func<bool>[] funcs) : this(Params.Of(funcs))
+        public And(params Func<bool>[] funcs) : this(Enumerable.EnumerableOf.Pipe(funcs))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{Out}"/> were true. </summary>
@@ -87,7 +87,7 @@ namespace Tonga.Scalar
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params IScalar<Boolean>[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary> ctor </summary>

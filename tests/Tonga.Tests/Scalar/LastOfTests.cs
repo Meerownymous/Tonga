@@ -34,7 +34,7 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void ReturnsLastValue()
         {
-            var list = Params.Of("hallo", "ich", "heisse", "Max");
+            var list = Enumerable.EnumerableOf.Pipe("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "Max",

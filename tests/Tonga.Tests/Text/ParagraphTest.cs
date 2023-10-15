@@ -19,7 +19,7 @@ namespace Tonga.Text.Test
         public void BuildsWithITextEnumerable()
         {
             var p = new Paragraph(
-                new Transit<IText>(
+                new EnumerableOf<IText>(
                     new LiveText("a"),
                     new LiveText("b"),
                     new LiveText("c")

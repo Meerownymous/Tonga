@@ -15,9 +15,9 @@ namespace Tonga.List.Tests
             int size = 2;
             var list =
                 new ListOf<int>(
-                    new Tonga.Enumerable.HeadOf<int>(
+                    new Tonga.Enumerable.Head<int>(
                         new Tonga.Enumerable.Endless<int>(1),
-                        new Live<int>(() => Interlocked.Increment(ref size))
+                        new Scalar.Live<int>(() => Interlocked.Increment(ref size))
                 ));
 
             Assert.Equal(

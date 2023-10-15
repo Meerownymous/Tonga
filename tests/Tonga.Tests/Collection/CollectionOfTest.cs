@@ -17,7 +17,7 @@ namespace Tonga.Collection.Tests
             Assert.Contains(
                 -1,
                 new CollectionOf<int>(
-                    Params.Of(1, 2, 0, -1))
+                    Enumerable.EnumerableOf.Pipe(1, 2, 0, -1))
                 );
         }
 
@@ -28,8 +28,8 @@ namespace Tonga.Collection.Tests
             var list =
                 new CollectionOf<int>(
                     new Enumerable.Repeated<int>(
-                        new Live<int>(() => 0),
-                        new Live<int>(() =>
+                        new Scalar.Live<int>(() => 0),
+                        new Scalar.Live<int>(() =>
                         {
                             Interlocked.Increment(ref size);
                             return size;

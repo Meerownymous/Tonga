@@ -10,14 +10,14 @@ namespace Tonga.Enumerable
     /// Envelope for Enumerable of strings.
     /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
     /// </summary>
-    public abstract class ManyEnvelope : IEnumerable<string>
+    public abstract class EnumerableEnvelope : IEnumerable<string>
     {
         private readonly IEnumerable<string> items;
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerable<string>> origin) : this(() =>
+        public EnumerableEnvelope(Func<IEnumerable<string>> origin) : this(() =>
             origin().GetEnumerator()
         )
         { }
@@ -25,7 +25,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerator<string>> origin)
+        public EnumerableEnvelope(Func<IEnumerator<string>> origin)
         {
             this.items = new EnumeratorAsEnumerable<string>(origin);
         }

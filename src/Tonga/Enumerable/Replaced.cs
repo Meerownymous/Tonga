@@ -62,8 +62,8 @@ namespace Tonga.Enumerable
             this.condition = condition;
             this.replacement = replacement;
             this.result =
-                Ternary.New(
-                    Transit.Of(Produced),
+                Ternary.Pipe(
+                    EnumerableOf.Pipe(Produced),
                     Sticky.New(Produced),
                     live
                 );

@@ -19,9 +19,9 @@ namespace Tonga.Text
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
-                    new Transit<string>(head),
+                    new EnumerableOf<string>(head),
                     lines,
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -33,9 +33,9 @@ namespace Tonga.Text
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
-                    new Transit<string>(head1, head2),
+                    new EnumerableOf<string>(head1, head2),
                     lines,
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -47,9 +47,9 @@ namespace Tonga.Text
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
-                    new Transit<string>(head1, head2, head3),
+                    new EnumerableOf<string>(head1, head2, head3),
                     lines,
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -61,9 +61,9 @@ namespace Tonga.Text
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
-                    new Transit<string>(head1, head2, head3, head4),
+                    new EnumerableOf<string>(head1, head2, head3, head4),
                     lines,
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -75,9 +75,9 @@ namespace Tonga.Text
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
-                    new Transit<string>(head1, head2, head3, head4, head5),
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5),
                     lines,
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -89,9 +89,9 @@ namespace Tonga.Text
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
-                    new Transit<string>(head1, head2, head3, head4, head5, head6),
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5, head6),
                     lines,
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -103,9 +103,9 @@ namespace Tonga.Text
             new Mapped<string, IText>(
                 line => new LiveText(line),
                 new Joined<string>(
-                    new Transit<string>(head1, head2, head3, head4, head5, head6, head7),
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5, head6, head7),
                     lines,
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -118,12 +118,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1),
+                new EnumerableOf<IText>(head1),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
                         lines,
-                        new Transit<string>(tail)
+                        new EnumerableOf<string>(tail)
                     )
                 )
             )
@@ -134,12 +134,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2),
+                new EnumerableOf<IText>(head1, head2),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
                         lines,
-                        new Transit<string>(tail)
+                        new EnumerableOf<string>(tail)
                     )
                 )
             )
@@ -150,12 +150,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3),
+                new EnumerableOf<IText>(head1, head2, head3),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
                         lines,
-                        new Transit<string>(tail)
+                        new EnumerableOf<string>(tail)
                     )
                 )
             )
@@ -166,12 +166,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4),
+                new EnumerableOf<IText>(head1, head2, head3, head4),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
                         lines,
-                        new Transit<string>(tail)
+                        new EnumerableOf<string>(tail)
                     )
                 )
             )
@@ -182,12 +182,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
                         lines,
-                        new Transit<string>(tail)
+                        new EnumerableOf<string>(tail)
                     )
                 )
             )
@@ -198,12 +198,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
                         lines,
-                        new Transit<string>(tail)
+                        new EnumerableOf<string>(tail)
                     )
                 )
             )
@@ -214,12 +214,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<string> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6, head7),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6, head7),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
                         lines,
-                        new Transit<string>(tail)
+                        new EnumerableOf<string>(tail)
                     )
                 )
             )
@@ -235,12 +235,12 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head)
+                    new EnumerableOf<string>(head)
                 ),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -252,12 +252,12 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2)
+                    new EnumerableOf<string>(head1, head2)
                 ),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -269,12 +269,12 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3)
+                    new EnumerableOf<string>(head1, head2, head3)
                 ),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -286,12 +286,12 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4)
+                    new EnumerableOf<string>(head1, head2, head3, head4)
                 ),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -303,12 +303,12 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4, head5)
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5)
                 ),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -320,12 +320,12 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4, head5, head6)
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5, head6)
                 ),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -337,12 +337,12 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4, head5, head6, head7)
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5, head6, head7)
                 ),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -355,11 +355,11 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head),
+                new EnumerableOf<IText>(head),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -369,11 +369,11 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2),
+                new EnumerableOf<IText>(head1, head2),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -383,11 +383,11 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3),
+                new EnumerableOf<IText>(head1, head2, head3),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -397,11 +397,11 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4),
+                new EnumerableOf<IText>(head1, head2, head3, head4),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -411,11 +411,11 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -425,11 +425,11 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -439,11 +439,11 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<IText> lines, params string[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6, head7),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6, head7),
                 lines,
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(tail)
+                    new EnumerableOf<string>(tail)
                 )
             )
         )
@@ -459,11 +459,11 @@ namespace Tonga.Text
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
-                        new Transit<string>(head),
+                        new EnumerableOf<string>(head),
                         lines
                     )
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -475,11 +475,11 @@ namespace Tonga.Text
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
-                        new Transit<string>(head1, head2),
+                        new EnumerableOf<string>(head1, head2),
                         lines
                     )
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -491,11 +491,11 @@ namespace Tonga.Text
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
-                        new Transit<string>(head1, head2, head3),
+                        new EnumerableOf<string>(head1, head2, head3),
                         lines
                     )
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -507,11 +507,11 @@ namespace Tonga.Text
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
-                        new Transit<string>(head1, head2, head3, head4),
+                        new EnumerableOf<string>(head1, head2, head3, head4),
                         lines
                     )
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -523,11 +523,11 @@ namespace Tonga.Text
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
-                        new Transit<string>(head1, head2, head3, head4, head5),
+                        new EnumerableOf<string>(head1, head2, head3, head4, head5),
                         lines
                     )
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -539,11 +539,11 @@ namespace Tonga.Text
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
-                        new Transit<string>(head1, head2, head3, head4, head5, head6),
+                        new EnumerableOf<string>(head1, head2, head3, head4, head5, head6),
                         lines
                     )
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -555,11 +555,11 @@ namespace Tonga.Text
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     new Joined<string>(
-                        new Transit<string>(head1, head2, head3, head4, head5, head6, head7),
+                        new EnumerableOf<string>(head1, head2, head3, head4, head5, head6, head7),
                         lines
                     )
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -571,12 +571,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head),
+                new EnumerableOf<IText>(head),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     lines
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -585,12 +585,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2),
+                new EnumerableOf<IText>(head1, head2),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     lines
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -599,12 +599,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3),
+                new EnumerableOf<IText>(head1, head2, head3),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     lines
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -613,12 +613,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4),
+                new EnumerableOf<IText>(head1, head2, head3, head4),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     lines
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -627,12 +627,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     lines
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -641,12 +641,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     lines
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -655,12 +655,12 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<string> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6, head7),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6, head7),
                 new Mapped<string, IText>(
                     line => new LiveText(line),
                     lines
                 ),
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -674,10 +674,10 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head)
+                    new EnumerableOf<string>(head)
                 ),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -688,10 +688,10 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2)
+                    new EnumerableOf<string>(head1, head2)
                 ),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -702,10 +702,10 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3)
+                    new EnumerableOf<string>(head1, head2, head3)
                 ),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -716,10 +716,10 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4)
+                    new EnumerableOf<string>(head1, head2, head3, head4)
                 ),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -730,10 +730,10 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4, head5)
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5)
                 ),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -744,10 +744,10 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4, head5, head6)
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5, head6)
                 ),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -758,10 +758,10 @@ namespace Tonga.Text
             new Joined<IText>(
                 new Mapped<string, IText>(
                     line => new LiveText(line),
-                    new Transit<string>(head1, head2, head3, head4, head5, head6, head7)
+                    new EnumerableOf<string>(head1, head2, head3, head4, head5, head6, head7)
                 ),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -773,9 +773,9 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head),
+                new EnumerableOf<IText>(head),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -784,9 +784,9 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2),
+                new EnumerableOf<IText>(head1, head2),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -795,9 +795,9 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3),
+                new EnumerableOf<IText>(head1, head2, head3),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -806,9 +806,9 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4),
+                new EnumerableOf<IText>(head1, head2, head3, head4),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -817,9 +817,9 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -828,9 +828,9 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -839,9 +839,9 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IText head1, IText head2, IText head3, IText head4, IText head5, IText head6, IText head7, IEnumerable<IText> lines, params IText[] tail) : this(
             new Joined<IText>(
-                new Transit<IText>(head1, head2, head3, head4, head5, head6, head7),
+                new EnumerableOf<IText>(head1, head2, head3, head4, head5, head6, head7),
                 lines,
-                new Transit<IText>(tail)
+                new EnumerableOf<IText>(tail)
             )
         )
         { }
@@ -861,7 +861,7 @@ namespace Tonga.Text
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(params IText[] lines) : this(new Transit<IText>(lines))
+        public Paragraph(params IText[] lines) : this(new EnumerableOf<IText>(lines))
         { }
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.

@@ -21,7 +21,7 @@ namespace Tonga.Enumerable
         /// Items which do only exist in one enumerable.
         /// </summary>
         public Divergency(IEnumerable<T> a, IEnumerable<T> b, bool live = false) : this(
-            a, b, item => true
+            a, b, item => true, live
         )
         { }
 
@@ -34,9 +34,9 @@ namespace Tonga.Enumerable
             this.b = new Filtered<T>(match, b, live: true);
             this.match = match;
             this.result =
-                Ternary.New<T>(
-                    Sticky.New<T>(() => this.Produced()),
-                    Transit.Of<T>(() => this.Produced()),
+                Ternary.Pipe(
+                    Sticky.New(() => this.Produced()),
+                    EnumerableOf.Pipe(() => this.Produced()),
                     live
                 );
         }

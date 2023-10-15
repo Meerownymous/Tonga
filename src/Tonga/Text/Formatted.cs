@@ -36,7 +36,7 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
         public Formatted(String ptn, params object[] arguments) : this(
-            new LiveText(ptn), CultureInfo.InvariantCulture, new Live<object[]>(arguments))
+            new LiveText(ptn), CultureInfo.InvariantCulture, new Scalar.Live<object[]>(arguments))
         { }
 
         /// <summary>

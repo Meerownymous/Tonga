@@ -33,7 +33,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params string[] values) : this(key, () => Params.Of(values))
+        public KvpOfMany(string key, params string[] values) : this(key, () => EnumerableOf.Pipe(values))
         { }
 
         /// <summary>

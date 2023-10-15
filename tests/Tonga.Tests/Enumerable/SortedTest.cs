@@ -13,10 +13,10 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new Text.Joined(", ",
-                    new Enumerable.Mapped<int, string>(
+                    new Mapped<int, string>(
                         i => i.ToString(),
                         new Sorted<int>(
-                            Params.Of(3, 2, 10, 44, -6, 0)
+                            EnumerableOf.Pipe(3, 2, 10, 44, -6, 0)
                         )
                     )
                 ).AsString() == "-6, 0, 2, 3, 10, 44",
@@ -30,7 +30,7 @@ namespace Tonga.Enumerable.Test
                 new Text.Joined(", ",
                     new Sorted<string>(
                         IReverseCompare<string>.Default,
-                        Params.Of(
+                        EnumerableOf.Pipe(
                             "a", "c", "hello", "dude", "Friend"
                         )
                     )

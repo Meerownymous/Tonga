@@ -45,8 +45,8 @@ namespace Tonga.Enumerable
             this.b = b;
             this.comparison = compare;
             this.result =
-                Ternary.New(
-                    Transit.Of(Produced),
+                Ternary.Pipe(
+                    EnumerableOf.Pipe(Produced),
                     Sticky.New(Produced),
                     live
                 );

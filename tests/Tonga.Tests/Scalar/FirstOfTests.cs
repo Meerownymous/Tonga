@@ -12,7 +12,7 @@ namespace Tonga.Scalar.Tests
         public void ThrowsCustomException()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new FirstOf<string>(
+                new First<string>(
                     new None(),
                     new InvalidOperationException()
                 ).Value()
@@ -24,7 +24,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Equal(
                 "gotcha",
-                new FirstOf<string>(
+                new First<string>(
                     new None(), "gotcha").Value()
                 );
         }
@@ -32,22 +32,22 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void ReturnsFirstMatch()
         {
-            var list = Params.Of("hallo", "ich", "heisse", "Max");
+            var list = Enumerable.EnumerableOf.Pipe("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "Max",
-                new FirstOf<string>(item => item.StartsWith("M"), list).Value()
+                new First<string>(item => item.StartsWith("M"), list).Value()
             );
         }
 
         [Fact]
         public void ReturnsFirstValue()
         {
-            var list = Params.Of("hallo", "ich", "heisse", "Max");
+            var list = Enumerable.EnumerableOf.Pipe("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "hallo",
-                new FirstOf<string>(list).Value()
+                new First<string>(list).Value()
             );
         }
     }

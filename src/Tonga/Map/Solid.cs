@@ -19,7 +19,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
         public Solid(Tuple<Key, Value>[] pairs) : this(
-            new Transit<Tuple<Key, Value>>(pairs)
+            new EnumerableOf<Tuple<Key, Value>>(pairs)
         )
         { }
 
@@ -41,7 +41,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list"></param>
         public Solid(params KeyValuePair<Key, Value>[] list) : this(
-            new Transit<KeyValuePair<Key, Value>>(list)
+            new EnumerableOf<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -52,7 +52,7 @@ namespace Tonga.Map
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list) : this(
             map,
-            new Transit<KeyValuePair<Key, Value>>(list)
+            new EnumerableOf<KeyValuePair<Key, Value>>(list)
         )
         { }
 
@@ -72,7 +72,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list">List of values</param>
         public Solid(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            new Transit<KeyValuePair<Key, Value>>(() => list)
+            new EnumerableOf<KeyValuePair<Key, Value>>(() => list)
         )
         { }
 

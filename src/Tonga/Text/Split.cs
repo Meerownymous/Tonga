@@ -12,7 +12,7 @@ namespace Tonga.Text
     /// <summary>
     /// A <see cref="IText"/> which has been splitted at the given string.
     /// </summary>
-    public sealed class Split : ManyEnvelope
+    public sealed class Split : EnumerableEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/> which has been splitted at the given string.
@@ -60,7 +60,7 @@ namespace Tonga.Text
         public Split(IText text, IText rgx, bool remBlank = true) : base(() =>
             {
                 IEnumerable<string> split =
-                    new Transit<string>(
+                    new EnumerableOf<string>(
                         new Regex(rgx.AsString()).Split(text.AsString())
                     );
 

@@ -23,7 +23,7 @@ namespace Tonga.List
         /// </summary>
         public LiveList(IEnumerator<T> src) : this(() =>
             new List<T>(
-                new Transit<T>(() => src)
+                new EnumerableOf<T>(() => src)
             )
         )
         { }

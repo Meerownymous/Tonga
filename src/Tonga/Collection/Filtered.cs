@@ -23,9 +23,9 @@ namespace Tonga.Collection
         public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) :
             this(
                 func,
-                new Transit<T>(() =>
+                new Enumerable.EnumerableOf<T>(() =>
                     new Enumerable.Joined<T>(
-                        new Params<T>(item1, item2),
+                        new Enumerable.EnumerableOf<T>(item1, item2),
                         items
                     ).GetEnumerator()
                 )
@@ -37,7 +37,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
-        public Filtered(Func<T, Boolean> func, IEnumerator<T> src) : this(func, Transit.Of(src))
+        public Filtered(Func<T, Boolean> func, IEnumerator<T> src) : this(func, Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Tonga.Collection
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
         public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
-            new Live<ICollection<T>>(() =>
+            new Scalar.Live<ICollection<T>>(() =>
                 new LiveCollection<T>(
                     new Enumerable.Filtered<T>(
                         func, src

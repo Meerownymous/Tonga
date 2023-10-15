@@ -43,7 +43,7 @@ namespace Tonga.IO
                                         leaveOpen))
                 {
                     var zipEntry =
-                        new FirstOf<ZipArchiveEntry>(
+                        new First<ZipArchiveEntry>(
                             new Filtered<ZipArchiveEntry>(entry =>
                                 Path.GetFullPath(entry.FullName) == Path.GetFullPath(this.filePath),
                                 archive.Entries

@@ -23,8 +23,8 @@ namespace Tonga.Enumerable
         {
             this.src = src;
             this.result =
-                Ternary.New(
-                    Transit.Of(Produced),
+                Ternary.Pipe(
+                    EnumerableOf.Pipe(Produced),
                     Sticky.New(Produced),
                     live
                 );

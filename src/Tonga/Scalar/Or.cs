@@ -19,7 +19,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Params.Of(src))
+        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, Params.Of(src))
+        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Tonga.Scalar
         /// were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public Or(params Func<bool>[] funcs) : this(Params.Of(funcs))
+        public Or(params Func<bool>[] funcs) : this(Enumerable.EnumerableOf.Pipe(funcs))
         { }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(params IScalar<Boolean>[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>

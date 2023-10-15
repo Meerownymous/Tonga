@@ -16,7 +16,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params int[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params double[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params long[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params float[] src) : this(
-            Params.Of(src))
+            Enumerable.EnumerableOf.Pipe(src))
         { }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Tonga.Collection.Tests
                 0,
                 new Mapped<int, int>(
                     i => i + 1,
-                    Params.Of(-1, 1, 2)
+                    EnumerableOf.Pipe(-1, 1, 2)
                 ));
         }
 
@@ -30,7 +30,7 @@ namespace Tonga.Collection.Tests
                 new Mapped<string, string>(
                     input =>
                     input.ToUpper(),
-                    Params.Of("hello", "world", "друг")
+                    EnumerableOf.Pipe("hello", "world", "друг")
                 )
             );
         }

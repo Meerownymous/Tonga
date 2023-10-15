@@ -34,7 +34,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, string>[] dicts) : this(
-            new Transit<IDictionary<string, string>>(dicts)
+            new Enumerable.EnumerableOf<IDictionary<string, string>>(dicts)
         )
         { }
 
@@ -46,8 +46,8 @@ namespace Tonga.Map
                 new LazyDict(
                     new Enumerable.Joined<IKvp>(
                         new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
-                            new Transit<IKvp>(() =>
-                                new Live<IEnumerator<IKvp>>(() =>
+                            new Enumerable.EnumerableOf<IKvp>(() =>
+                                new Scalar.Live<IEnumerator<IKvp>>(() =>
                                 {
                                     IEnumerable<IKvp> list = new None<IKvp>();
                                     foreach (var key in dict.Keys)
@@ -165,7 +165,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(bool live, params IDictionary<string, Value>[] dicts) : this(
-            new Transit<IDictionary<string, Value>>(dicts),
+            new Enumerable.EnumerableOf<IDictionary<string, Value>>(dicts),
             live
         )
         { }
@@ -178,7 +178,7 @@ namespace Tonga.Map
                 new LazyDict<string, Value>(
                     new Enumerable.Joined<IKvp<string, Value>>(
                         new Mapped<IDictionary<string, Value>, IEnumerable<IKvp<string, Value>>>(dict =>
-                            new Transit<IKvp<string, Value>>(() =>
+                            new Enumerable.EnumerableOf<IKvp<string, Value>>(() =>
                                 {
                                     IEnumerable<IKvp<string, Value>> list = new None<IKvp<string, Value>>();
                                     foreach (var key in dict.Keys)
@@ -227,7 +227,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(bool live, params IDictionary<Key, Value>[] dicts) : this(
-            new Transit<IDictionary<Key, Value>>(dicts),
+            new Enumerable.EnumerableOf<IDictionary<Key, Value>>(dicts),
             live
         )
         { }
@@ -236,7 +236,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<Key, Value>[] dicts) : this(
-            new Transit<IDictionary<Key, Value>>(dicts),
+            new Enumerable.EnumerableOf<IDictionary<Key, Value>>(dicts),
             false
         )
         { }
@@ -249,7 +249,7 @@ namespace Tonga.Map
                 new LazyDict<Key, Value>(
                     new Enumerable.Joined<IKvp<Key, Value>>(
                         new Mapped<IDictionary<Key, Value>, IEnumerable<IKvp<Key, Value>>>(dict =>
-                            new Transit<IKvp<Key, Value>>(() =>
+                            new Enumerable.EnumerableOf<IKvp<Key, Value>>(() =>
                                 {
                                     IEnumerable<IKvp<Key, Value>> list = new None<IKvp<Key, Value>>();
                                     foreach (var key in dict.Keys)

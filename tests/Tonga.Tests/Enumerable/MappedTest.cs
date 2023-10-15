@@ -15,9 +15,9 @@ namespace Tonga.Enumerable.Test
             Assert.Equal(
                 "HELLO",
                 new ItemAt<IText>(
-                    new Enumerable.Mapped<String, IText>(
+                    new Mapped<String, IText>(
                         input => new Upper(new LiveText(input)),
-                        Params.Of("hello", "world", "damn")),
+                        EnumerableOf.Pipe("hello", "world", "damn")),
                     0
                 ).Value().AsString()
             );
@@ -28,13 +28,13 @@ namespace Tonga.Enumerable.Test
         {
             var mappings = 0;
             var mapping =
-                new Enumerable.Mapped<String, IText>(
+                new Mapped<String, IText>(
                     input =>
                     {
                         mappings++;
                         return new Upper(new LiveText(input));
                     },
-                    Params.Of("hello", "world", "damn")
+                    EnumerableOf.Pipe("hello", "world", "damn")
                 );
 
             var enm1 = mapping.GetEnumerator();
@@ -50,13 +50,13 @@ namespace Tonga.Enumerable.Test
         {
             var mappings = 0;
             var mapping =
-                new Enumerable.Mapped<string, string>(
+                new Mapped<string, string>(
                     input =>
                     {
                         mappings++;
                         return input;
                     },
-                    Params.Of("hello", "world", "damn"),
+                    EnumerableOf.Pipe("hello", "world", "damn"),
                     live: true
                 );
 
@@ -73,7 +73,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new LengthOf(
-                    new Enumerable.Mapped<String, IText>(
+                    new Mapped<String, IText>(
                         input => new Upper(new LiveText(input)),
                         new None()
                     )
@@ -87,9 +87,9 @@ namespace Tonga.Enumerable.Test
             Assert.Equal(
                 "WORLD1",
                 new ItemAt<IText>(
-                    new Enumerable.Mapped<String, IText>(
+                    new Mapped<String, IText>(
                         (input, index) => new Upper(new LiveText(input + index)),
-                        Params.Of("hello", "world", "damn")
+                        EnumerableOf.Pipe("hello", "world", "damn")
                         ),
                     1
                 ).Value().AsString()

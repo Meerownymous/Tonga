@@ -54,6 +54,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to skip items in</param>
         /// <param name="skip">how many to skip</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable, int skip) => new Skipped<T>(enumerable, skip);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> enumerable, int skip) => new Skipped<T>(enumerable, skip);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
+        /// </summary>
+        /// <param name="enumerable">enumerable to skip items in</param>
+        /// <param name="skip">how many to skip</param>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, int skip) =>
+            Enumerable.Sticky.New(new Skipped<T>(enumerable, skip));
     }
 }

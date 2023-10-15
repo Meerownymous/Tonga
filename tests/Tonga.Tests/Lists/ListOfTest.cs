@@ -17,12 +17,12 @@ namespace Tonga.List.Tests
                 new ListOf<int>(
                     new Tonga.Enumerable.Head<int>(
                         new Tonga.Enumerable.Endless<int>(1),
-                        new Scalar.Live<int>(() => Interlocked.Increment(ref size))
+                        () => Interlocked.Increment(ref size)
                 ));
 
             Assert.Equal(
-                new Enumerable.LengthOf(list).Value(),
-                new Enumerable.LengthOf(list).Value()
+                new Scalar.LengthOf(list).Value(),
+                new Scalar.LengthOf(list).Value()
             );
         }
 

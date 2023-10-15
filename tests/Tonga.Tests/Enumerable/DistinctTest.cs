@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Xunit;
 using Tonga.Number;
+using Tonga.Scalar;
 
 namespace Tonga.Enumerable.Test
 {

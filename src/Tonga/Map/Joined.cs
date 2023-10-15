@@ -44,23 +44,13 @@ namespace Tonga.Map
         public Joined(IEnumerable<IDictionary<string, string>> dicts, bool rejectBuildingAllValues = true) : base(
             () =>
                 new LazyDict(
-                    new Enumerable.Joined<IKvp>(
-                        new Mapped<IDictionary<string, string>, IEnumerable<IKvp>>(dict =>
-                            new Enumerable.EnumerableOf<IKvp>(() =>
-                                new Scalar.Live<IEnumerator<IKvp>>(() =>
-                                {
-                                    IEnumerable<IKvp> list = new None<IKvp>();
-                                    foreach (var key in dict.Keys)
-                                    {
-                                        list = new Enumerable.Joined<IKvp>(list, new KvpOf(key, () => dict[key]));
-                                    }
-                                    return list.GetEnumerator();
-                                }).Value()
+                    Enumerable.Joined.Pipe(
+                        Mapped.Pipe(dict =>
+                            Mapped.Pipe((key) => new KvpOf(key, () => dict[key]),
+                                dict.Keys
                             ),
-                            dicts,
-                            live: false
-                        ),
-                        live: false
+                            dicts
+                        )
                     )
                 ),
                 rejectBuildingAllValues
@@ -176,17 +166,10 @@ namespace Tonga.Map
         public Joined(IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
             () =>
                 new LazyDict<string, Value>(
-                    new Enumerable.Joined<IKvp<string, Value>>(
-                        new Mapped<IDictionary<string, Value>, IEnumerable<IKvp<string, Value>>>(dict =>
-                            new Enumerable.EnumerableOf<IKvp<string, Value>>(() =>
-                                {
-                                    IEnumerable<IKvp<string, Value>> list = new None<IKvp<string, Value>>();
-                                    foreach (var key in dict.Keys)
-                                    {
-                                        list = new Enumerable.Joined<IKvp<string, Value>>(list, new KvpOf<string, Value>(key, () => dict[key]));
-                                    }
-                                    return list.GetEnumerator();
-                                }
+                    Enumerable.Joined.Pipe(
+                        Mapped.Pipe(dict =>
+                            Mapped.Pipe((key) => new KvpOf<string, Value>(key, () => dict[key]),
+                                dict.Keys
                             ),
                             dicts
                         )
@@ -247,23 +230,15 @@ namespace Tonga.Map
         public Joined(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
             () =>
                 new LazyDict<Key, Value>(
-                    new Enumerable.Joined<IKvp<Key, Value>>(
-                        new Mapped<IDictionary<Key, Value>, IEnumerable<IKvp<Key, Value>>>(dict =>
-                            new Enumerable.EnumerableOf<IKvp<Key, Value>>(() =>
-                                {
-                                    IEnumerable<IKvp<Key, Value>> list = new None<IKvp<Key, Value>>();
-                                    foreach (var key in dict.Keys)
-                                    {
-                                        list = new Enumerable.Joined<IKvp<Key, Value>>(list, new KvpOf<Key, Value>(key, () => dict[key]));
-                                    }
-                                    return list.GetEnumerator();
-                                }
+                    Enumerable.Joined.Pipe(
+                        Mapped.Pipe(dict =>
+                            Mapped.Pipe((key) => new KvpOf<Key, Value>(key, () => dict[key]),
+                                dict.Keys
                             ),
                             dicts
                         )
                     )
-                )
-            ,
+                ),
             live
         )
         { }

@@ -1,7 +1,5 @@
-
-
-using System.Linq;
 using Xunit;
+using Tonga.Scalar;
 using Tonga.Enumerable;
 
 namespace Tonga.Text.Test
@@ -11,10 +9,16 @@ namespace Tonga.Text.Test
         [Fact]
         public void SplitText()
         {
-            Assert.True(
-        new Split(
-            "Hello world!", "\\s+"
-        ).Select(s => s == "Hello" || s == "world!").Count() == 2
+            Assert.Equal(
+                2,
+                new LengthOf(
+                    Filtered.Pipe(
+                        s => s == "Hello" || s == "world!",
+                        new Split(
+                            "Hello world!", "\\s+"
+                        )
+                    )
+                ).Value()
             );
         }
 
@@ -30,31 +34,47 @@ namespace Tonga.Text.Test
         [Fact]
         public void SplitStringWithTextRegex()
         {
-            Assert.True(
-                new Split(
-                    "Atoms OOP!",
-                    new LiveText("\\s")
-                ).Select(s => s == "Atoms" || s == "OOP!").Count() == 2,
-                "Can't split an string with text regex");
+            Assert.Equal(
+                2,
+                new LengthOf(
+                    Filtered.Pipe(
+                        s => s == "Atoms" || s == "OOP!",
+                        new Split(
+                            "Atoms OOP!",
+                            new LiveText("\\s")
+                        )
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
         public void SplitTextWithStringRegex()
         {
-            Assert.True(
-            new Split(
-                new LiveText("Atoms4Primitives!"), "\\d+")
-                .Select(s => s == "Atoms" || s == "Primitives!").Count() == 2,
-            "Can't split an text with string regex");
+            Assert.Equal(
+                2,
+                new LengthOf(
+                    Filtered.Pipe(
+                        s => s == "Atoms" || s == "Primitives!",
+                        new Split(
+                            new LiveText("Atoms4Primitives!"), "\\d+")
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
         public void SplitTextWithTextRegex()
         {
-            Assert.True(
-                new Split(new LiveText("Split#OOP!"), "\\W+")
-                .Select(s => s == "Split" || s == "OOP").Count() == 2,
-                "Can't split an text with text regex");
+            Assert.Equal(
+                2,
+                new LengthOf(
+                    Filtered.Pipe(
+                        s => s == "Split" || s == "OOP",
+                        new Split(new LiveText("Split#OOP!"), "\\W+")
+                    )
+                ).Value()
+            );
         }
 
         [Fact]

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using Xunit;
 using Tonga.Tests;
+using Tonga.Scalar;
 
 namespace Tonga.Enumerable.Test
 {

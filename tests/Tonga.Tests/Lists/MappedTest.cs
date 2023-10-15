@@ -4,6 +4,7 @@ using System;
 using Xunit;
 using Tonga.Enumerable;
 using Tonga.Text;
+using Tonga.Scalar;
 
 namespace Tonga.List.Tests
 {

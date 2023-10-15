@@ -15,9 +15,8 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public MapOf(KeyValuePair<string, string> entry, params KeyValuePair<string, string>[] more) : this(
-            new Enumerable.Joined<KeyValuePair<string, string>>(
-                live: true,
-                new EnumerableOf<KeyValuePair<string, string>>(more),
+            Enumerable.Joined.Pipe(
+                EnumerableOf.Pipe(more),
                 entry
             )
         )
@@ -30,7 +29,7 @@ namespace Tonga.Map
         /// <param name="list">KeyValuePairs to append</param>
         public MapOf(IDictionary<string, string> src, params KeyValuePair<string, string>[] list) : this(
             src,
-            new EnumerableOf<KeyValuePair<string, string>>(list))
+            EnumerableOf.Pipe(list))
         { }
 
         /// <summary>
@@ -39,8 +38,7 @@ namespace Tonga.Map
         /// <param name="src"></param>
         /// <param name="list"></param>
         public MapOf(IDictionary<string, string> src, IEnumerable<KeyValuePair<string, string>> list) : this(
-            new Enumerable.Joined<KeyValuePair<string, string>>(
-                live: true,
+            Enumerable.Joined.Pipe(
                 src,
                 list
             )
@@ -52,7 +50,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<string, string>> entries) : this(
-            new EnumerableOf<KeyValuePair<string, string>>(() => entries))
+            EnumerableOf.Pipe(() => entries))
         { }
 
         /// <summary>
@@ -60,9 +58,8 @@ namespace Tonga.Map
         /// </summary>
         public MapOf(IKvp entry, params IKvp[] more) : base(() =>
             new LazyDict(
-                new Enumerable.Joined<IKvp>(
-                    live: true,
-                    new EnumerableOf<IKvp>(entry),
+                Enumerable.Joined.Pipe(
+                    EnumerableOf.Pipe(entry),
                     more
                 )
             ),
@@ -128,9 +125,8 @@ namespace Tonga.Map
         /// A map from string to string.
         /// </summary>
         public MapOf(string key, string value, params string[] additional) : this(
-            new Enumerable.Joined<string>(
-                live: true,
-                new EnumerableOf<string>(key, value),
+            Enumerable.Joined.Pipe(
+                EnumerableOf.Pipe(key, value),
                 additional
             )
         )

@@ -24,7 +24,7 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp[] kvps) : this(new Enumerable.EnumerableOf<IKvp>(kvps), true)
+        public LazyDict(params IKvp[] kvps) : this(EnumerableOf.Pipe(kvps), true)
         { }
 
         /// <summary>

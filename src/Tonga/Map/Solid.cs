@@ -19,7 +19,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
         public Solid(Tuple<Key, Value>[] pairs) : this(
-            new EnumerableOf<Tuple<Key, Value>>(pairs)
+            EnumerableOf.Pipe(pairs)
         )
         { }
 
@@ -28,10 +28,9 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
         public Solid(IEnumerable<Tuple<Key, Value>> pairs) : this(
-            new Mapped<Tuple<Key, Value>, KeyValuePair<Key, Value>>(
+            Mapped.Pipe(
                 tpl => new KeyValuePair<Key, Value>(tpl.Item1, tpl.Item2),
-                pairs,
-                live: true
+                pairs
             )
         )
         { }
@@ -41,7 +40,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list"></param>
         public Solid(params KeyValuePair<Key, Value>[] list) : this(
-            new EnumerableOf<KeyValuePair<Key, Value>>(list)
+            EnumerableOf.Pipe(list)
         )
         { }
 
@@ -52,7 +51,7 @@ namespace Tonga.Map
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list) : this(
             map,
-            new EnumerableOf<KeyValuePair<Key, Value>>(list)
+            EnumerableOf.Pipe(list)
         )
         { }
 
@@ -72,7 +71,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list">List of values</param>
         public Solid(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            new EnumerableOf<KeyValuePair<Key, Value>>(() => list)
+            EnumerableOf.Pipe(() => list)
         )
         { }
 
@@ -84,7 +83,7 @@ namespace Tonga.Map
         public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    new Enumerable.Joined<KeyValuePair<Key, Value>>(live: true, map, list)
+                    Enumerable.Joined.Pipe(map, list)
                 )
             )
         )

@@ -43,7 +43,7 @@ namespace Tonga.Enumerable
             this.result =
                 EnumerableOf.Pipe(() =>
                     this.Produced(
-                        Joined.New(enumerables),
+                        Joined.Pipe(enumerables),
                         new Comparison<T>(comparison)
                     )
                 );

@@ -39,10 +39,9 @@ namespace Tonga.Enumerable
         /// <param name="index">index at which to replace the item</param>
         /// <param name="replacement">item to insert instead</param>
         public Replaced(IEnumerable<T> origin, int index, T replacement, bool live = false) : this(
-            new Mapped<T, T>(
+            Mapped.Pipe(
                 (item, itemIndex) => itemIndex == index ? replacement : item,
-                origin,
-                live: true
+                origin
             ),
             item => false,
             replacement,

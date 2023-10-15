@@ -63,7 +63,7 @@ namespace Tonga.Map
         public Synced(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    new Enumerable.Joined<KeyValuePair<Key, Value>>(live:true, map, list)
+                    Enumerable.Joined.Pipe(map, list)
                 )
             )
         )
@@ -147,7 +147,7 @@ namespace Tonga.Map
         public Sync(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    new Enumerable.Joined<KeyValuePair<Key, Value>>(live: true, map, list)
+                    Enumerable.Joined.Pipe(map, list)
                 )
             )
         )

@@ -12,7 +12,7 @@ namespace Tonga.List.Tests
         {
             Assert.Equal(
                 8,
-                new Enumerable.LengthOf(
+                new Scalar.LengthOf(
                     new Joined<string>(
                         new ListOf<string>("hello", "world", "друг"),
                         new ListOf<string>("how", "are", "you"),
@@ -27,7 +27,7 @@ namespace Tonga.List.Tests
         {
             Assert.Equal(
                 1,
-                new Enumerable.LengthOf(
+                new Scalar.LengthOf(
                     new Joined<string>(
                         new Mapped<string, IList<string>>(
                            str => new ListOf<string>(str),
@@ -43,7 +43,7 @@ namespace Tonga.List.Tests
         {
             Assert.Equal(
                 8,
-                new Enumerable.LengthOf(
+                new Scalar.LengthOf(
                     new Joined<string>(
                         new ListOf<string>("hello", "world", "друг"),
                         "how",

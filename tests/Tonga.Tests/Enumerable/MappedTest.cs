@@ -4,6 +4,7 @@ using System;
 using Xunit;
 using Tonga.List;
 using Tonga.Text;
+using Tonga.Scalar;
 
 namespace Tonga.Enumerable.Test
 {
@@ -24,11 +25,33 @@ namespace Tonga.Enumerable.Test
         }
 
         [Fact]
-        public void MappedResultIsSticky()
+        public void SensesChanges()
         {
             var mappings = 0;
             var mapping =
-                new Mapped<String, IText>(
+                Mapped.Pipe(
+                    input =>
+                    {
+                        mappings++;
+                        return new Upper(new LiveText(input));
+                    },
+                    EnumerableOf.Pipe("hello", "world", "damn")
+                );
+
+            var enm1 = mapping.GetEnumerator();
+            enm1.MoveNext(); var current = enm1.Current;
+            var enm2 = mapping.GetEnumerator();
+            enm2.MoveNext(); var current2 = enm2.Current;
+
+            Assert.Equal(2, mappings);
+        }
+
+        [Fact]
+        public void CanBeSticky()
+        {
+            var mappings = 0;
+            var mapping =
+                Mapped.Sticky(
                     input =>
                     {
                         mappings++;
@@ -56,8 +79,7 @@ namespace Tonga.Enumerable.Test
                         mappings++;
                         return input;
                     },
-                    EnumerableOf.Pipe("hello", "world", "damn"),
-                    live: true
+                    EnumerableOf.Pipe("hello", "world", "damn")
                 );
 
             var enm1 = mapping.GetEnumerator();

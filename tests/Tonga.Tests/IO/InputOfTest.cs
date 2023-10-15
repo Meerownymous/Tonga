@@ -172,7 +172,7 @@ namespace Tonga.IO.Tests
                 ).Value();
 
             Assert.True(
-                new Enumerable.LengthOf(
+                new Scalar.LengthOf(
                     new Split(
                         new LiveText(
                             new BytesOf(

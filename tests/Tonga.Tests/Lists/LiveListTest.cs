@@ -76,11 +76,7 @@ namespace Tonga.List.Tests
                     new ListOf<int>(
                         new Head<int>(
                             new Endless<int>(size),
-                            new Scalar.Live<int>(() =>
-                                {
-                                    return Interlocked.Increment(ref size);
-                                }
-                            )
+                            () => Interlocked.Increment(ref size)
                         )
                     )
                 );
@@ -97,9 +93,7 @@ namespace Tonga.List.Tests
                     new ListOf<int>(
                         new Head<int>(
                             new Endless<int>(1),
-                            new Scalar.Live<int>(() =>
-                                Interlocked.Increment(ref size)
-                            )
+                            () => Interlocked.Increment(ref size)
                         )
                     ).GetEnumerator()
                 );

@@ -60,10 +60,9 @@ namespace Tonga.Scalar
         /// <param name="func"></param>
         /// <param name="src"></param>
         public ParallelAnd(IFunc<T, bool> func, IEnumerable<T> src) : this(
-            Mapped.New(
+            Mapped.Pipe(
                 i => new ScalarOf<bool>(func.Invoke(i)),
-                src,
-                live: false
+                src
             )
         )
         { }

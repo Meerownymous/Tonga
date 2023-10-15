@@ -93,10 +93,9 @@ namespace Tonga.Scalar
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params bool[] src) : this(
-            Mapped.New(
+            Mapped.Pipe(
                 tBool => new Live<bool>(tBool),
-                src,
-                live: true
+                src
             )
         )
         { }
@@ -104,10 +103,9 @@ namespace Tonga.Scalar
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(IEnumerable<bool> src) : this(
-            Mapped.New(
+            Mapped.Pipe(
                 tBool => new Live<bool>(tBool),
-                src,
-                live: true
+                src
             )
         )
         { }

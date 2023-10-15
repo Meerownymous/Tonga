@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using Tonga.Scalar;
 
-namespace Tonga.Enumerable
+namespace Tonga.Scalar
 {
     /// <summary>
     /// Tells if an enumerable has less than the specified items.

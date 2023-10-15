@@ -3,7 +3,7 @@
 using Xunit;
 using Tonga.Enumerable;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Scalar.Test
 {
     public sealed class LessThanTests
     {

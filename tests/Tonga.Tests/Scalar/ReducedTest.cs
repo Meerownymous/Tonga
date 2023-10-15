@@ -1,8 +1,9 @@
 
 
+using Tonga.Enumerable;
 using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Scalar.Test
 {
     public sealed class ReducedTest
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Tonga.Scalar;
 
-namespace Tonga.Enumerable
+namespace Tonga.Scalar
 {
     /// <summary>
     /// <see cref="IEnumerable{T}"/> whose items are reduced to one item using the given function.

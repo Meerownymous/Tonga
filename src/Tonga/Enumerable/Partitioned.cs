@@ -58,6 +58,13 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
-        public static IEnumerable<IEnumerable<T>> New<T>(int size, IEnumerable<T> items) => new Partitioned<T>(size, items);
+        public static IEnumerable<IEnumerable<T>> Pipe<T>(int size, IEnumerable<T> items) =>
+            new Partitioned<T>(size, items);
+
+        /// <summary>
+        /// Enumerable partitioned by a given size.
+        /// </summary>
+        public static IEnumerable<IEnumerable<T>> Sticky<T>(int size, IEnumerable<T> items) =>
+            Enumerable.Sticky.New(new Partitioned<T>(size, items));
     }
 }

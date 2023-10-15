@@ -110,7 +110,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         /// <param name="comparison">comparison to evaluate distinction</param>
-        public static IEnumerable<T> New<T>(IEnumerable<IEnumerable<T>> enumerables, Func<T, T, bool> comparison) =>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<IEnumerable<T>> enumerables, Func<T, T, bool> comparison) =>
             Enumerable.Sticky.New(new Distinct<T>(enumerables, comparison));
 
         /// <summary>

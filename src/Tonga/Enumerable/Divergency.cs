@@ -12,32 +12,29 @@ namespace Tonga.Enumerable
     /// <typeparam name="T"></typeparam>
     public class Divergency<T> : IEnumerable<T>
     {
-        private readonly IEnumerable<T> a;
-        private readonly IEnumerable<T> b;
         private readonly Func<T, bool> match;
-        private readonly Ternary<T> result;
+        private readonly IEnumerable<T> result;
 
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public Divergency(IEnumerable<T> a, IEnumerable<T> b, bool live = false) : this(
-            a, b, item => true, live
+        public Divergency(IEnumerable<T> a, IEnumerable<T> b) : this(
+            a, b, item => true
         )
         { }
 
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match, bool live = false)
+        public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match)
         {
-            this.a = new Filtered<T>(match, a, live: true);
-            this.b = new Filtered<T>(match, b, live: true);
             this.match = match;
             this.result =
-                Ternary.Pipe(
-                    Sticky.New(() => this.Produced()),
-                    EnumerableOf.Pipe(() => this.Produced()),
-                    live
+                EnumerableOf.Pipe(() =>
+                    this.Produced(
+                        Filtered.New(match, a),
+                        Filtered.New(match, b)
+                    )
                 );
         }
 
@@ -51,42 +48,40 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced()
+        private IEnumerator<T> Produced(IEnumerable<T> a, IEnumerable<T> b)
         {
             var all1 = new HashSet<T>(EqualityComparer<T>.Default);
             var all2 = new HashSet<T>(EqualityComparer<T>.Default);
             var notin1 = new HashSet<T>(EqualityComparer<T>.Default);
             var notin2 = new HashSet<T>(EqualityComparer<T>.Default);
 
-            foreach (var element in this.a)
+            foreach (var element in a)
             {
-                if (this.match(element))
-                    all1.Add(element);
+                all1.Add(element);
             }
 
-            foreach (var element in this.b)
+            foreach (var element in b)
             {
-                if (this.match(element))
-                    all2.Add(element);
+                all2.Add(element);
             }
 
-            foreach (var element in this.b)
+            foreach (var element in b)
             {
-                if (this.match(element) && all1.Add(element))
+                if (all1.Add(element))
                 {
                     notin1.Add(element);
                 }
             }
 
-            foreach (var element in this.a)
+            foreach (var element in a)
             {
-                if (this.match(element) && all2.Add(element))
+                if (all2.Add(element))
                 {
                     notin2.Add(element);
                 }
             }
 
-            foreach (var item in new Joined<T>(notin2, notin1))
+            foreach (var item in Joined.Pipe(notin2, notin1))
             {
                 yield return item;
             }

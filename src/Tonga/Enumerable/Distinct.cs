@@ -12,7 +12,6 @@ namespace Tonga.Enumerable
     /// <typeparam name="T"></typeparam>
     public sealed class Distinct<T> : IEnumerable<T>
     {
-        private readonly Comparison<T> comparison;
         private readonly IEnumerable<T> result;
 
         /// <summary>
@@ -41,8 +40,13 @@ namespace Tonga.Enumerable
         /// <param name="comparison">comparison to evaluate distinction</param>
         public Distinct(IEnumerable<IEnumerable<T>> enumerables, Func<T, T, bool> comparison)
         {
-            this.comparison = new Comparison<T>(comparison);
-            this.result = EnumerableOf.Pipe(() => this.Produced(Joined.New(enumerables)));
+            this.result =
+                EnumerableOf.Pipe(() =>
+                    this.Produced(
+                        Joined.New(enumerables),
+                        new Comparison<T>(comparison)
+                    )
+                );
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -55,9 +59,9 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced(IEnumerable<T> source)
+        private IEnumerator<T> Produced(IEnumerable<T> source, Comparison<T> comparison)
         {
-            var set = new HashSet<T>(this.comparison);
+            var set = new HashSet<T>(comparison);
             foreach (var item in source)
             {
                 if (set.Add(item))

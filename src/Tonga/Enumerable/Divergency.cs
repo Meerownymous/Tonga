@@ -12,7 +12,6 @@ namespace Tonga.Enumerable
     /// <typeparam name="T"></typeparam>
     public class Divergency<T> : IEnumerable<T>
     {
-        private readonly Func<T, bool> match;
         private readonly IEnumerable<T> result;
 
         /// <summary>
@@ -28,7 +27,6 @@ namespace Tonga.Enumerable
         /// </summary>
         public Divergency(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match)
         {
-            this.match = match;
             this.result =
                 EnumerableOf.Pipe(() =>
                     this.Produced(
@@ -96,12 +94,24 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
 
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b) => new Divergency<T>(a, b);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> a, IEnumerable<T> b) => new Divergency<T>(a, b);
+
+        /// <summary>
+        /// Items which do only exist in one enumerable.
+        /// </summary>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) =>
+            new Divergency<T>(a, b, match);
+
+        /// <summary>
+        /// Items which do only exist in one enumerable.
+        /// </summary>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> a, IEnumerable<T> b) =>
+            new Divergency<T>(a, b);
 
     }
 }

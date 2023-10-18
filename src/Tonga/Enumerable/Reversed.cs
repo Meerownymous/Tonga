@@ -32,7 +32,9 @@ namespace Tonga.Enumerable
 
         private IEnumerator<X> Produced(IEnumerable<X> source)
         {
-            foreach(var item in source)
+            var items = new List<X>(source);
+            items.Reverse();
+            foreach(var item in items)
             {
                 yield return item;
             }
@@ -48,7 +50,8 @@ namespace Tonga.Enumerable
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public static IEnumerable<T> Pipe<T>(IEnumerable<T> src) => new Reversed<T>(src);
+        public static IEnumerable<T> Pipe<T>(IEnumerable<T> src) =>
+            new Reversed<T>(src);
 
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>

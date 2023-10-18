@@ -155,7 +155,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(bool live, params IDictionary<string, Value>[] dicts) : this(
-            new Enumerable.EnumerableOf<IDictionary<string, Value>>(dicts),
+            new EnumerableOf<IDictionary<string, Value>>(dicts),
             live
         )
         { }

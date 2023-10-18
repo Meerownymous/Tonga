@@ -160,7 +160,7 @@ namespace Tonga.IO
             ).Value();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

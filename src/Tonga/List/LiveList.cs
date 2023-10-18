@@ -8,7 +8,7 @@ namespace Tonga.List
     /// Makes a readonly list.
     /// </summary>
     /// <typeparam name="T">type of items</typeparam>
-    public sealed class LiveList<T> : ListEnvelope<T>
+    public sealed class LiveList<T> : ListEnvelopeOriginal<T>
     {
         /// <summary>
         /// Makes a readonly list.

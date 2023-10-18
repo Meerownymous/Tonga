@@ -8,7 +8,7 @@ using Tonga.Func;
 namespace Tonga.Enumerable
 {
     /// <summary>
-    /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+    /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
     /// </summary>
     /// <typeparam name="T">type of items in enumerable</typeparam>
     public sealed class Replaced<T> : IEnumerable<T>
@@ -16,7 +16,7 @@ namespace Tonga.Enumerable
         private readonly IEnumerable<T> result;
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
@@ -29,7 +29,7 @@ namespace Tonga.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> where an item at a given index is replaced.
+        /// A <see cref="EnumerableEnvelope"/> where an item at a given index is replaced.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="index">index at which to replace the item</param>
@@ -45,7 +45,7 @@ namespace Tonga.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
@@ -84,12 +84,12 @@ namespace Tonga.Enumerable
     }
 
     /// <summary>
-    /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+    /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
     /// </summary>
     public static class Replaced
     {
         /// <summary>
-        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
@@ -98,7 +98,7 @@ namespace Tonga.Enumerable
             new Replaced<T>(origin, condition, replacement);
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> where an item at a given index is replaced.
+        /// A <see cref="EnumerableEnvelope"/> where an item at a given index is replaced.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="index">index at which to replace the item</param>
@@ -107,7 +107,7 @@ namespace Tonga.Enumerable
             new Replaced<T>(origin, index, replacement);
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
@@ -116,7 +116,7 @@ namespace Tonga.Enumerable
             new Replaced<T>(origin, condition, replacement);
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>
@@ -125,7 +125,7 @@ namespace Tonga.Enumerable
             Enumerable.Sticky.New(new Replaced<T>(origin, condition, replacement));
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> where an item at a given index is replaced.
+        /// A <see cref="EnumerableEnvelope"/> where an item at a given index is replaced.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="index">index at which to replace the item</param>
@@ -134,7 +134,7 @@ namespace Tonga.Enumerable
             Enumerable.Sticky.New(new Replaced<T>(origin, index, replacement));
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
+        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
         /// </summary>
         /// <param name="origin">enumerable</param>
         /// <param name="condition">matching condition</param>

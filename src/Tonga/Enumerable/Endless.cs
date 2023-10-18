@@ -14,7 +14,7 @@ namespace Tonga.Enumerable
         private readonly T elm;
 
         /// <summary>
-        /// A <see cref="IEnumerable"/> that repeats one element infinitely.
+        /// A <see cref="EnumerableEnvelope"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         public Endless(T elm)
@@ -39,7 +39,7 @@ namespace Tonga.Enumerable
     public static class Endless
     {
         /// <summary>
-        /// A <see cref="IEnumerable"/> that repeats one element infinitely.
+        /// A <see cref="EnumerableEnvelope"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
         public static IEnumerable<T> New<T>(T elm) => new Endless<T>(elm);

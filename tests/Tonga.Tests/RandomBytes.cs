@@ -11,7 +11,7 @@ namespace Tonga.Tests
     /// <summary>
     /// List of N random bytes.
     /// </summary>
-    public sealed class RandomBytes : ListEnvelope<byte>
+    public sealed class RandomBytes : ListEnvelopeOriginal<byte>
     {
         /// <summary>
         /// List of N random bytes.

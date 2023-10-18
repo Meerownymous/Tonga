@@ -9,7 +9,7 @@ namespace Tonga.List
     /// Multiple lists joined together as one.
     /// </summary>
     /// <typeparam name="T">type of items in list</typeparam>
-    public sealed class Joined<T> : ListEnvelope<T>
+    public sealed class Joined<T> : ListEnvelopeOriginal<T>
     {
         /// <summary>
         /// Multiple <see cref="IList{T}"/> joined together

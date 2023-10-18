@@ -16,59 +16,15 @@ namespace Tonga.List
     public abstract class ListEnvelope<T> : IList<T>
     {
         private readonly InvalidOperationException readOnlyError;
-        private readonly Func<IEnumerator<T>> origin;
-        private readonly bool live;
-        private readonly ScalarOf<IList<T>> fixedList;
+        private readonly IList<T> origin;
 
         /// <summary>
         /// List envelope. Can make a readonly list from a scalar.
         /// </summary>
         /// <param name="live">value is handled live or sticky</param>
-        public ListEnvelope(IScalar<IList<T>> lst, bool live) : this(() =>
-            lst.Value().GetEnumerator(),
-            live
-        )
-        { }
-
-        /// <summary>
-        /// List envelope. Can make a readonly list from a scalar.
-        /// </summary>
-        /// <param name="live">value is handled live or sticky</param>
-        public ListEnvelope(IScalar<IEnumerable<T>> lst, bool live) : this(() =>
-            lst.Value().GetEnumerator(),
-            live
-        )
-        { }
-
-        /// <summary>
-        /// List envelope. Can make a readonly list from a scalar.
-        /// </summary>
-        /// <param name="live">value is handled live or sticky</param>
-        public ListEnvelope(Func<IList<T>> lst, bool live) : this(() =>
-            lst().GetEnumerator(),
-            live
-        )
-        { }
-
-        /// <summary>
-        /// List envelope. Can make a readonly list from a scalar.
-        /// </summary>
-        /// <param name="live">value is handled live or sticky</param>
-        public ListEnvelope(Func<IEnumerator<T>> enumerator, bool live)
+        public ListEnvelope(IList<T> list)
         {
-            this.live = live;
-            this.origin = enumerator;
-            this.fixedList =
-                new ScalarOf<IList<T>>(() =>
-                {
-                    var result = new List<T>();
-                    var enm = enumerator();
-                    while (enm.MoveNext())
-                    {
-                        result.Add(enm.Current);
-                    }
-                    return result;
-                });
+            this.origin = list;
             this.readOnlyError = new InvalidOperationException("The list is readonly.");
         }
 
@@ -77,40 +33,8 @@ namespace Tonga.List
         /// </summary>
         public T this[int index]
         {
-            get
-            {
-                T result;
-                if (this.live)
-                {
-                    if (index < 0)
-                    {
-                        throw new ArgumentOutOfRangeException($"Index of item must be > 0 but is {index}");
-                    }
-                    var enumerator = this.origin();
-                    var idx = -1;
-                    while (index >= 0 && idx < index && enumerator.MoveNext())
-                    {
-                        idx++;
-                    }
-                    if (idx == index)
-                    {
-                        result = enumerator.Current;
-                    }
-                    else
-                    {
-                        throw new ArgumentOutOfRangeException($"Cannot get item at index {index} from list because it has only {idx} items.");
-                    }
-                }
-                else
-                {
-                    result = this.fixedList.Value()[index];
-                }
-                return result;
-            }
-            set
-            {
-                throw this.readOnlyError;
-            }
+            get => this.origin[index];
+            set => throw this.readOnlyError;
         }
 
         /// <summary>
@@ -118,23 +42,7 @@ namespace Tonga.List
         /// </summary>
         public int Count
         {
-            get
-            {
-                int count = 0;
-                if (this.live)
-                {
-                    var enumerator = this.origin();
-                    while (enumerator.MoveNext())
-                    {
-                        count++;
-                    }
-                }
-                else
-                {
-                    count = this.fixedList.Value().Count;
-                }
-                return count;
-            }
+            get => this.origin.Count;
         }
 
         /// <summary>
@@ -142,27 +50,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="item">Item to find</param>
         /// <returns>true if item is found</returns>
-        public bool Contains(T item)
-        {
-            bool result = false;
-            if (this.live)
-            {
-                var enumerator = this.origin();
-                while (enumerator.MoveNext())
-                {
-                    if (enumerator.Current.Equals(item))
-                    {
-                        result = true;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                result = this.fixedList.Value().Contains(item);
-            }
-            return result;
-        }
+        public bool Contains(T item) => this.origin.Contains(item);
 
         /// <summary>
         /// Copy to a target array.
@@ -171,34 +59,13 @@ namespace Tonga.List
         /// <param name="arrayIndex">write start index</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            int idx = 0;
-            if (this.live)
-            {
-                var enumerator = this.origin();
-                while (enumerator.MoveNext())
-                {
-                    array[arrayIndex + idx] = enumerator.Current;
-                    idx++;
-                }
-            }
-            else
-            {
-                var lst = this.fixedList.Value();
-                while (idx < lst.Count)
-                {
-                    array[arrayIndex + idx] = lst[idx];
-                    idx++;
-                }
-            }
+            this.origin.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
         /// Enumerator for this list.
         /// </summary>
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.live ? this.origin() : this.fixedList.Value().GetEnumerator();
-        }
+        public IEnumerator<T> GetEnumerator() => this.origin.GetEnumerator();
 
         /// <summary>
         /// Enumerator for this list.
@@ -211,28 +78,7 @@ namespace Tonga.List
         /// <summary>
         /// Index of given item.
         /// </summary>
-        public int IndexOf(T item)
-        {
-            var result = -1;
-            if (this.live)
-            {
-                var enumerator = this.origin();
-                var idx = -1;
-                while (enumerator.MoveNext())
-                {
-                    idx++;
-                    if (enumerator.Current.Equals(item))
-                    {
-                        result = idx;
-                    }
-                }
-            }
-            else
-            {
-                return this.fixedList.Value().IndexOf(item);
-            }
-            return result;
-        }
+        public int IndexOf(T item) => this.origin.IndexOf(item);
 
         /// <summary>
         /// This is a readonly collection, always true.

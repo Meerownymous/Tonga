@@ -8,7 +8,7 @@ namespace Tonga.List
     /// <summary>
     /// A list which is threadsafe.
     /// </summary>
-    public sealed class SyncList<T> : ListEnvelope<T>
+    public sealed class SyncList<T> : ListEnvelopeOriginal<T>
     {
         /// <summary>
         /// A list which is threadsafe.

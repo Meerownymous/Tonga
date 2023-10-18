@@ -11,7 +11,7 @@ namespace Tonga.List
     /// </summary>
     /// <typeparam name="In">Type of source items</typeparam>
     /// <typeparam name="Out">Type of target items</typeparam>
-    public sealed class Mapped<In, Out> : ListEnvelope<Out>
+    public sealed class Mapped<In, Out> : ListEnvelopeOriginal<Out>
     {
         /// <summary>
         /// ctor

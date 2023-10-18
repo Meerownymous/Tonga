@@ -43,7 +43,7 @@ namespace Tonga.Enumerable
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }

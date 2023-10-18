@@ -9,7 +9,7 @@ namespace Tonga.List
     /// A list that is both sticky and threadsafe.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class SolidList<T> : ListEnvelope<T>
+    public sealed class SolidList<T> : ListEnvelopeOriginal<T>
     {
         /// <summary>
         /// ctor

@@ -12,7 +12,7 @@ namespace Tonga.List
     /// Ensures that <see cref="IList{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the list</typeparam>
-    public sealed class NotEmpty<T> : ListEnvelope<T>
+    public sealed class NotEmpty<T> : ListEnvelopeOriginal<T>
     {
         private readonly IList<T> origin;
         private readonly Exception ex;

@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using Tonga.Enumerable;
 
@@ -9,7 +7,7 @@ namespace Tonga.List
     /// Makes a readonly list.
     /// </summary>
     /// <typeparam name="T">type of items</typeparam>
-    public sealed class ListOf<T> : ListEnvelope<T>
+    public sealed class ListOf<T> : ListEnvelopeOriginal<T>
     {
         /// <summary>
         /// ctor

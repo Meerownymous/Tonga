@@ -10,7 +10,7 @@ namespace Tonga.List.Tests
     public sealed class ListOfTest
     {
         [Fact]
-        public void IgnoresChangesInList()
+        public void SensesChangesInList()
         {
             int size = 2;
             var list =
@@ -20,7 +20,7 @@ namespace Tonga.List.Tests
                         () => Interlocked.Increment(ref size)
                 ));
 
-            Assert.Equal(
+            Assert.NotEqual(
                 new Scalar.LengthOf(list).Value(),
                 new Scalar.LengthOf(list).Value()
             );
@@ -48,12 +48,10 @@ namespace Tonga.List.Tests
 
             var list =
                 new ListOf<string>(
-                    new Enumerator.Sticky<string>(
-                        new Enumerator.Sticky<string>.Cache<string>(() =>
-                            new Logging<string>(
-                                origin,
-                                idx => advances++
-                            ).GetEnumerator()
+                    new Sticky<string>(
+                        new Logging<string>(
+                            origin,
+                            idx => advances++
                         )
                     )
                 );

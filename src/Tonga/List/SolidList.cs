@@ -33,18 +33,6 @@ namespace Tonga.List
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="enumerator">items to decorate</param>
-        public SolidList(IEnumerator<T> enumerator) : base(() =>
-            new SyncList<T>(
-                new ListOf<T>(enumerator)
-            ),
-            false
-        )
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
         /// <param name="list">list to decorate</param>
         public SolidList(ICollection<T> list) : base(() =>
             new SyncList<T>(
@@ -70,13 +58,6 @@ namespace Tonga.List
         /// <param name="items">items to decorate</param>
         public static IList<T> New<T>(IEnumerable<T> items)
             => new SolidList<T>(items);
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="enumerator">items to decorate</param>
-        public static IList<T> New<T>(IEnumerator<T> enumerator)
-            => new SolidList<T>(enumerator);
 
         /// <summary>
         /// ctor

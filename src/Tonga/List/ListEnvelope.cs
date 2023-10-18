@@ -16,13 +16,13 @@ namespace Tonga.List
     public abstract class ListEnvelope<T> : IList<T>
     {
         private readonly InvalidOperationException readOnlyError;
-        private readonly IList<T> origin;
+        private readonly Func<IList<T>> origin;
 
         /// <summary>
         /// List envelope. Can make a readonly list from a scalar.
         /// </summary>
         /// <param name="live">value is handled live or sticky</param>
-        public ListEnvelope(IList<T> list)
+        public ListEnvelope(Func<IList<T>> list)
         {
             this.origin = list;
             this.readOnlyError = new InvalidOperationException("The list is readonly.");
@@ -33,7 +33,7 @@ namespace Tonga.List
         /// </summary>
         public T this[int index]
         {
-            get => this.origin[index];
+            get => this.origin()[index];
             set => throw this.readOnlyError;
         }
 
@@ -42,7 +42,7 @@ namespace Tonga.List
         /// </summary>
         public int Count
         {
-            get => this.origin.Count;
+            get => this.origin().Count;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="item">Item to find</param>
         /// <returns>true if item is found</returns>
-        public bool Contains(T item) => this.origin.Contains(item);
+        public bool Contains(T item) => this.origin().Contains(item);
 
         /// <summary>
         /// Copy to a target array.
@@ -59,13 +59,13 @@ namespace Tonga.List
         /// <param name="arrayIndex">write start index</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            this.origin.CopyTo(array, arrayIndex);
+            this.origin().CopyTo(array, arrayIndex);
         }
 
         /// <summary>
         /// Enumerator for this list.
         /// </summary>
-        public IEnumerator<T> GetEnumerator() => this.origin.GetEnumerator();
+        public IEnumerator<T> GetEnumerator() => this.origin().GetEnumerator();
 
         /// <summary>
         /// Enumerator for this list.
@@ -78,7 +78,7 @@ namespace Tonga.List
         /// <summary>
         /// Index of given item.
         /// </summary>
-        public int IndexOf(T item) => this.origin.IndexOf(item);
+        public int IndexOf(T item) => this.origin().IndexOf(item);
 
         /// <summary>
         /// This is a readonly collection, always true.

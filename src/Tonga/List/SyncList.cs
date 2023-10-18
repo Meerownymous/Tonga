@@ -46,15 +46,6 @@ namespace Tonga.List
         /// <summary>
         /// A list which is threadsafe.
         /// </summary>
-        /// <param name="items">Items to make list from</param>
-        public SyncList(IEnumerator<T> items) : this(
-            new ListOf<T>(items)
-        )
-        { }
-
-        /// <summary>
-        /// A list which is threadsafe.
-        /// </summary>
         /// <param name="lst">Items to make list from</param>
         public SyncList(ICollection<T> lst) : this(
             new ListOf<T>(lst)

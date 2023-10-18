@@ -163,5 +163,18 @@ namespace Tonga.List
             throw new InvalidOperationException("The list is readonly.");
         }
     }
+
+    public static class Sticky
+    {
+        /// <summary>
+        /// List which only advances to the necessary item but remembers it once it has ssen it once.
+        /// </summary>
+        public static Sticky<T> New<T>(IEnumerable<T> origin) => new Sticky<T>(origin);
+
+        /// <summary>
+        /// List which only advances to the necessary item but remembers it once it has ssen it once.
+        /// </summary>
+        public static Sticky<T> New<T>(Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
+    }
 }
 

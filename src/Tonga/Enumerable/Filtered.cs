@@ -39,7 +39,7 @@ namespace Tonga.Enumerable
         /// <param name="live">live or sticky</param>
         public Filtered(Func<T, Boolean> pass, IEnumerable<T> src)
         {
-            this.result = EnumerableOf.Pipe(() => this.Produced(src, pass));
+            this.result = EnumerableOf.Pipe(() => Produced(src, pass));
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -52,7 +52,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced(IEnumerable<T> source, Func<T, Boolean> pass)
+        private static IEnumerator<T> Produced(IEnumerable<T> source, Func<T, Boolean> pass)
         {
             foreach (var item in source)
             {

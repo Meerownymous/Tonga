@@ -14,11 +14,12 @@ namespace Tonga.List.Tests
         {
             int size = 2;
             var list =
-                new ListOf<int>(
-                    new Tonga.Enumerable.Head<int>(
-                        new Tonga.Enumerable.Endless<int>(1),
+                ListOf.Pipe(
+                    Head.Pipe(
+                        Endless.New(1),
                         () => Interlocked.Increment(ref size)
-                ));
+                    )
+                );
 
             Assert.NotEqual(
                 new Scalar.LengthOf(list).Value(),
@@ -44,15 +45,10 @@ namespace Tonga.List.Tests
         public void CountingAdvancesAll()
         {
             var advances = 0;
-            var origin = new ListOf<string>("item1", "item2", "item3");
-
             var list =
-                new ListOf<string>(
-                    new Sticky<string>(
-                        new Logging<string>(
-                            origin,
-                            idx => advances++
-                        )
+                ListOf.Pipe(
+                    Lambda.Pipe(() => advances++,
+                        EnumerableOf.Pipe("item1", "item2", "item3")
                     )
                 );
 
@@ -65,22 +61,20 @@ namespace Tonga.List.Tests
         [Fact]
         public void FindsIndexOf()
         {
-            var lst = new ListOf<string>("item1", "item2", "item3");
-
             Assert.Equal(
                 2,
-                lst.IndexOf("item3")
+                ListOf.Pipe("item1", "item2", "item3")
+                    .IndexOf("item3")
             );
         }
 
         [Fact]
         public void DeliversIndexWhenNoFinding()
         {
-            var lst = new ListOf<string>("item1", "item2", "item3");
-
             Assert.Equal(
                 -1,
-                lst.IndexOf("item100")
+                ListOf.Pipe("item1", "item2", "item3")
+                    .IndexOf("item100")
             );
         }
 
@@ -88,7 +82,7 @@ namespace Tonga.List.Tests
         public void CanCopyTo()
         {
             var array = new string[5];
-            var origin = new ListOf<string>("item1", "item2", "item3");
+            var origin = ListOf.Pipe("item1", "item2", "item3");
             origin.CopyTo(array, 2);
 
             Assert.Equal(
@@ -100,8 +94,10 @@ namespace Tonga.List.Tests
         [Fact]
         public void ContainsWorksWithEmptyList()
         {
-            var list = new ListOf<string>();
-            Assert.DoesNotContain("item", list);
+            Assert.DoesNotContain(
+                "item",
+                ListOf.Pipe()
+            );
         }
     }
 }

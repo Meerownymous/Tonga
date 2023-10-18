@@ -11,9 +11,8 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                new Sticky<string>(
-                    Lambda.Pipe(
-                        () => advances++,
+                Sticky.New(
+                    Lambda.Pipe(() => advances++,
                         EnumerableOf.Pipe("one", "two", "three")
                     )
                 );
@@ -27,9 +26,8 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                new Sticky<string>(
-                    Lambda.Pipe(
-                        () => advances++,
+                Sticky.New(
+                    Lambda.Pipe(() => advances++,
                         EnumerableOf.Pipe("one", "two", "three")
                     )
                 );
@@ -43,9 +41,8 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                new Sticky<string>(
-                    Lambda.Pipe(
-                        () => advances++,
+                Sticky.New(
+                    Lambda.Pipe(() => advances++,
                         EnumerableOf.Pipe("one", "two", "three")
                     )
                 );
@@ -59,7 +56,7 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                new Sticky<string>(
+                Sticky.New(
                     Lambda.Pipe(() => advances++,
                         EnumerableOf.Pipe("one", "two", "three")
                     )
@@ -74,7 +71,7 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                new Sticky<string>(
+                Sticky.New(
                     Lambda.Pipe(() => advances++,
                         EnumerableOf.Pipe("one", "two", "three")
                     )

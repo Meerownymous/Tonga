@@ -31,7 +31,7 @@ namespace Tonga.Enumerable
         /// <param name="ex">Execption to be thrown if empty</param>
         public NotEmpty(IEnumerable<T> origin, Exception ex)
         {
-            this.result = EnumerableOf.Pipe(() => this.Produced(origin, ex));
+            this.result = EnumerableOf.Pipe(() => Produced(origin, ex));
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -44,7 +44,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced(IEnumerable<T> origin, Exception ex)
+        private static IEnumerator<T> Produced(IEnumerable<T> origin, Exception ex)
         {
             bool empty = true;
             foreach (var item in origin)

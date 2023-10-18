@@ -37,14 +37,14 @@ namespace Tonga.Enumerable
         /// <param name="limit">maximum item count</param>
         public Head(IEnumerable<T> source, Func<int> limit)
         {
-            this.result = EnumerableOf.Pipe(() => this.Produced(source, limit));
+            this.result = EnumerableOf.Pipe(() => Produced(source, limit));
         }
 
         public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerator<T> Produced(IEnumerable<T> source, Func<int> limit)
+        private static IEnumerator<T> Produced(IEnumerable<T> source, Func<int> limit)
         {
             var max = limit();
             var taken = 0;

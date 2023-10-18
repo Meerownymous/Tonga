@@ -16,7 +16,7 @@ namespace Tonga.Collection
         /// Makes a collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public LiveCollection(params T[] array) : this(new EnumerableOf<T>(array))
+        public LiveCollection(params T[] items) : this(new EnumerableOf<T>(items))
         { }
 
         /// <summary>

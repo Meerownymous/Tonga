@@ -14,19 +14,6 @@ namespace Tonga.Collection
         /// <summary>
         /// ctor
         /// </summary>
-        public Sync() : this(new object())
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="syncRoot"></param>
-        public Sync(object syncRoot) : this(syncRoot, new LiveCollection<T>())
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
         /// <param name="items">items to make collection from</param>
         public Sync(params T[] items) : this(new LiveCollection<T>(items))
         { }

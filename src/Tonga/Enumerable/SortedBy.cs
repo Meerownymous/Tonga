@@ -14,9 +14,8 @@ namespace Tonga.Enumerable
         where TKey : IComparable<TKey>
     {
         private readonly IEnumerable<T> source;
-        private readonly SortedDictionary<TKey, T> map;
+        private readonly Comparer<TKey> comparer;
         private readonly Func<T, TKey> subjectExtraction;
-        private readonly bool[] sorted;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
@@ -62,19 +61,14 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to sort</param>
         public SortedBy(Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, IEnumerable<T> src)
         {
-            this.map = new SortedDictionary<TKey,T>(cmp);
+            this.comparer = cmp;
             this.subjectExtraction = subjectExtraction;
             this.source = src;
-            this.sorted = new bool[1] { false };
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            if (!this.IsSorted())
-            {
-                this.Sort();
-            }
-            foreach (var item in this.map)
+            foreach (var item in this.Sorted(this.comparer))
             {
                 yield return item.Value;
             }
@@ -85,18 +79,14 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private bool IsSorted()
+        private SortedDictionary<TKey, T> Sorted(Comparer<TKey> cmp)
         {
-            return this.sorted[0];
-        }
-
-        private void Sort()
-        {
-            foreach(var item in this.source)
+            var map = new SortedDictionary<TKey, T>(cmp);
+            foreach (var item in this.source)
             {
-                this.map[this.subjectExtraction.Invoke(item)] = item;
+                map[this.subjectExtraction.Invoke(item)] = item;
             }
-            this.sorted[0] = true;
+            return map;
         }
     }
 
@@ -111,7 +101,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
+        public static IEnumerable<T> Pipe<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 
 
@@ -120,7 +110,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+        public static IEnumerable<T> Pipe<T, TKey>(Func<T, TKey> swap, IEnumerable<T> src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 
         /// <summary>
@@ -129,7 +119,33 @@ namespace Tonga.Enumerable
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> New<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+        public static IEnumerable<T> Pipe<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+            new SortedBy<T, TKey>(swap, cmp, src);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// </summary>
+        /// <param name="swap">func to swap the type to a sortable type</param>
+        /// <param name="src">enumerable to sort</param>
+        public static IEnumerable<T> Sticky<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
+            new SortedBy<T, TKey>(swap, src);
+
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <param name="swap">func to swap the type to a sortable type</param>
+        /// <param name="src">enumerable to sort</param>
+        public static IEnumerable<T> Sticky<T, TKey>(Func<T, TKey> swap, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+            new SortedBy<T, TKey>(swap, src);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <param name="swap">func to swap the type to a sortable type</param>
+        /// <param name="cmp">comparer</param>
+        /// <param name="src">enumerable to sort</param>
+        public static IEnumerable<T> Sticky<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, cmp, src);
     }
 }

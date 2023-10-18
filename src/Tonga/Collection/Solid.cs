@@ -15,7 +15,7 @@ namespace Tonga.Collection
         /// ctor
         /// </summary>
         /// <param name="array">source items</param>
-        public Solid(params T[] array) : this(new EnumerableOf<T>(array))
+        public Solid(params T[] items) : this(new EnumerableOf<T>(items))
         { }
         public static Solid<T> New(params T[] array) => new Solid<T>(array);
 

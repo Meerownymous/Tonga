@@ -20,7 +20,7 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to reverse</param>
         public Reversed(IEnumerable<X> src)
         {
-            this.result = EnumerableOf.Pipe(() => this.Produced(src));
+            this.result = EnumerableOf.Pipe(() => Produced(src));
         }
 
         public IEnumerator<X> GetEnumerator() => this.result.GetEnumerator();
@@ -30,7 +30,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<X> Produced(IEnumerable<X> source)
+        private static IEnumerator<X> Produced(IEnumerable<X> source)
         {
             var items = new List<X>(source);
             items.Reverse();

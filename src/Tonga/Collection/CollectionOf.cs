@@ -15,7 +15,7 @@ namespace Tonga.Collection
         /// A collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public CollectionOf(params T[] array) : this(new EnumerableOf<T>(array))
+        public CollectionOf(params T[] more) : this(new EnumerableOf<T>(more))
         { }
 
         /// <summary>

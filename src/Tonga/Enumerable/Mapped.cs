@@ -94,7 +94,7 @@ namespace Tonga.Enumerable
         /// <param name="live">live or sticky</param>
         public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src)
         {
-            this.result = EnumerableOf.Pipe(() => this.Produced(src, fnc));
+            this.result = EnumerableOf.Pipe(() => Produced(src, fnc));
         }
 
         public IEnumerator<Out> GetEnumerator()
@@ -107,7 +107,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<Out> Produced(IEnumerable<In> source, Func<In, int, Out> mapping)
+        private static IEnumerator<Out> Produced(IEnumerable<In> source, Func<In, int, Out> mapping)
         {
             var index = 0;
             foreach(var item in source)

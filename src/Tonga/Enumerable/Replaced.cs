@@ -52,7 +52,7 @@ namespace Tonga.Enumerable
         /// <param name="replacement">item to insert instead</param>
         public Replaced(IEnumerable<T> origin, Func<T, bool> condition, T replacement)
         {
-            this.result = EnumerableOf.Pipe(() => this.Produced(origin, condition, replacement));
+            this.result = EnumerableOf.Pipe(() => Produced(origin, condition, replacement));
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -65,7 +65,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced(IEnumerable<T> origin, Func<T, bool> condition, T replacement)
+        private static IEnumerator<T> Produced(IEnumerable<T> origin, Func<T, bool> condition, T replacement)
         {
             var e = origin.GetEnumerator();
 

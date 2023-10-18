@@ -20,7 +20,7 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="array">source array</param>
-        public ListOf(params T[] array) : this(new EnumerableOf<T>(array))
+        public ListOf(params T[] items) : this(new EnumerableOf<T>(items))
         { }
 
         /// <summary>
@@ -148,9 +148,9 @@ namespace Tonga.List
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="array">source array</param>
-        public static IList<T> Pipe<T>(params T[] array)
-            => new ListOf<T>(array);
+        /// <param name="src">source enumerable</param>
+        public static IList<string> Pipe(params string[] src)
+            => new ListOf<string>(src);
 
         /// <summary>
         /// ctor

@@ -69,7 +69,7 @@ namespace Tonga.Enumerable
         /// <param name="items">enumerables to join</param>
         public Joined(IEnumerable<IEnumerable<T>> items)
         {
-            this.result = EnumerableOf.Pipe(() => this.Produced(items));
+            this.result = EnumerableOf.Pipe(() => Produced(items));
 
         }
 
@@ -83,7 +83,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced(IEnumerable<IEnumerable<T>> items)
+        private static IEnumerator<T> Produced(IEnumerable<IEnumerable<T>> items)
         {
             foreach (var enumerable in items)
             {

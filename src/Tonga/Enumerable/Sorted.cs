@@ -43,7 +43,7 @@ namespace Tonga.Enumerable
 
         public IEnumerator<T> GetEnumerator()
         {
-            var sorted = this.SortedCopy();
+            var sorted = SortedCopy(this.source, this.comparer);
             foreach(var item in sorted)
             {
                 yield return item;
@@ -55,10 +55,10 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private List<T> SortedCopy()
+        private static List<T> SortedCopy(IList<T> source, Comparer<T> comparer)
         {
-            var result = new List<T>(this.source);
-            result.Sort(this.comparer);
+            var result = new List<T>(source);
+            result.Sort(comparer);
             return result;
         }
     }

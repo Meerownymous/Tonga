@@ -29,7 +29,7 @@ namespace Tonga.Enumerable
         {
             this.result =
                 EnumerableOf.Pipe(() =>
-                    this.Produced(
+                    Produced(
                         Filtered.Pipe(match, a),
                         Filtered.Pipe(match, b)
                     )
@@ -46,7 +46,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerator<T> Produced(IEnumerable<T> a, IEnumerable<T> b)
+        private static IEnumerator<T> Produced(IEnumerable<T> a, IEnumerable<T> b)
         {
             var all1 = new HashSet<T>(EqualityComparer<T>.Default);
             var all2 = new HashSet<T>(EqualityComparer<T>.Default);

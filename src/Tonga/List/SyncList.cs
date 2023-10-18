@@ -13,21 +13,6 @@ namespace Tonga.List
         /// <summary>
         /// A list which is threadsafe.
         /// </summary>
-        public SyncList() : this(new object())
-        { }
-
-        /// <summary>
-        /// A list which is threadsafe.
-        /// </summary>
-        public SyncList(object syncRoot) : this(
-            syncRoot,
-            new ListOf<T>()
-        )
-        { }
-
-        /// <summary>
-        /// A list which is threadsafe.
-        /// </summary>
         /// <param name="items">Items to make list from</param>
         public SyncList(params T[] items) : this(
             new ListOf<T>(items)
@@ -91,18 +76,6 @@ namespace Tonga.List
         /// <summary>
         /// A list which is threadsafe.
         /// </summary>
-        public static IList<T> New<T>()
-            => new SyncList<T>();
-
-        /// <summary>
-        /// A list which is threadsafe.
-        /// </summary>
-        public static IList<T> New<T>(object syncRoot)
-            => new SyncList<T>(syncRoot);
-
-        /// <summary>
-        /// A list which is threadsafe.
-        /// </summary>
         /// <param name="items">Items to make list from</param>
         public static IList<T> New<T>(params T[] items)
             => new SyncList<T>(items);
@@ -112,13 +85,6 @@ namespace Tonga.List
         /// </summary>
         /// <param name="items">Items to make list from</param>
         public static IList<T> New<T>(IEnumerable<T> items)
-            => new SyncList<T>(items);
-
-        /// <summary>
-        /// A list which is threadsafe.
-        /// </summary>
-        /// <param name="items">Items to make list from</param>
-        public static IList<T> New<T>(IEnumerator<T> items)
             => new SyncList<T>(items);
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace Tonga.Scalar
         /// <param name="src"> list of items </param>
         public And(IFunc<In, Boolean> func, IEnumerable<In> src) :
             this(
-                new Enumerable.Mapped<In, IScalar<Boolean>>(
+                Mapped.Pipe(
                     new FuncOf<In, IScalar<Boolean>>((item) =>
                         new Live<Boolean>(func.Invoke(item))),
                     src

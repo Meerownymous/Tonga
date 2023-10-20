@@ -9,16 +9,13 @@ using Tonga.Scalar;
 namespace Tonga.List
 {
     /// <summary>
-    /// Ensures that <see cref="IList{T}" /> is not empty/>
+    /// Ensures that <see cref="IList{T}" /> is not empty
     /// </summary>
     /// <typeparam name="T">Type of the list</typeparam>
-    public sealed class NotEmpty<T> : ListEnvelopeOriginal<T>
+    public sealed class NotEmpty<T> : ListEnvelope<T>
     {
-        private readonly IList<T> origin;
-        private readonly Exception ex;
-
         /// <summary>
-        /// Ensures that <see cref="IList{T}" /> is not empty/>
+        /// Ensures that <see cref="IList{T}" /> is not empty
         /// </summary>
         /// <param name="origin">List</param>
         public NotEmpty(IList<T> origin) : this(
@@ -27,13 +24,12 @@ namespace Tonga.List
         { }
 
         /// <summary>
-        /// Ensures that <see cref="IList{T}" /> is not empty/>
+        /// Ensures that <see cref="IList{T}" /> is not empty
         /// </summary>
         /// <param name="origin">List</param>
         /// <param name="ex">Execption to be thrown if empty</param>
         public NotEmpty(IList<T> origin, Exception ex) : base(() =>
-            new Enumerable.NotEmpty<T>(origin, ex).GetEnumerator(),
-            false
+            ListOf.Pipe(new Enumerable.NotEmpty<T>(origin, ex))
         )
         { }
     }
@@ -44,7 +40,7 @@ namespace Tonga.List
         /// Ensures that <see cref="IList{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">List</param>
-        public static IList<T> New<T>(IList<T> origin)
+        public static IList<T> Pipe<T>(IList<T> origin)
             => new NotEmpty<T>(origin);
 
         /// <summary>
@@ -52,7 +48,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="origin">List</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static IList<T> New<T>(IList<T> origin, Exception ex)
+        public static IList<T> Pipe<T>(IList<T> origin, Exception ex)
             => new NotEmpty<T>(origin, ex);
     }
 }

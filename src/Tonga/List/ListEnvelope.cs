@@ -11,7 +11,7 @@ using Tonga.Scalar;
 namespace Tonga.List
 {
     /// <summary>
-    /// List envelope. Can make a readonly list from a scalar.
+    /// List envelope.
     /// </summary>
     public abstract class ListEnvelope<T> : IList<T>
     {
@@ -19,7 +19,7 @@ namespace Tonga.List
         private readonly Func<IList<T>> origin;
 
         /// <summary>
-        /// List envelope. Can make a readonly list from a scalar.
+        /// List envelope. Not sticky, will enumerate on each access.
         /// </summary>
         /// <param name="live">value is handled live or sticky</param>
         public ListEnvelope(Func<IList<T>> list)

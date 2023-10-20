@@ -13,21 +13,28 @@ namespace Tonga.List
     /// <typeparam name="T">type of items</typeparam>
     public sealed class ListOf<T> : IList<T>
     {
-        private readonly IEnumerable<T> origin;
+        private readonly Func<IEnumerable<T>> origin;
         private readonly InvalidOperationException readOnlyError;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="array">source array</param>
-        public ListOf(params T[] items) : this(new EnumerableOf<T>(items))
+        public ListOf(params T[] items) : this(() => new EnumerableOf<T>(items))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public ListOf(IEnumerable<T> src)
+        public ListOf(IEnumerable<T> src) : this(() => src)
+        { }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        public ListOf(Func<IEnumerable<T>> src)
         {
             this.origin = src;
             this.readOnlyError = new InvalidOperationException("The list is readonly.");
@@ -40,7 +47,8 @@ namespace Tonga.List
                 T result = default(T);
                 var found = false;
                 var current = -1;
-                foreach(var item in this.origin)
+                var items = this.origin();
+                foreach(var item in items)
                 {
                     current++;
                     if(current == index)
@@ -61,7 +69,7 @@ namespace Tonga.List
         {
             get
             {
-                return new LengthOf(this.origin).Value();
+                return new LengthOf(this.origin()).Value();
             }
         }
 
@@ -81,7 +89,7 @@ namespace Tonga.List
         {
             var found = false;
             var current = -1;
-            foreach (var candidate in this.origin)
+            foreach (var candidate in this.origin())
             {
                 current++;
                 if (item.Equals(candidate))
@@ -95,7 +103,7 @@ namespace Tonga.List
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            foreach(var item in this.origin)
+            foreach(var item in this.origin())
             {
                 array[arrayIndex++] = item;
             }
@@ -103,14 +111,14 @@ namespace Tonga.List
 
         public IEnumerator<T> GetEnumerator()
         {
-            return this.origin.GetEnumerator();
+            return this.origin().GetEnumerator();
         }
 
         public int IndexOf(T item)
         {
             var found = false;
             var index = -1;
-            foreach (var candidate in this.origin)
+            foreach (var candidate in this.origin())
             {
                 index++;
                 if (item.Equals(candidate))
@@ -156,8 +164,22 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
+        public static IList<T> Pipe<T>(Func<IEnumerable<T>> src)
+            => new ListOf<T>(src);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source enumerable</param>
         public static IList<T> Pipe<T>(IEnumerable<T> src)
             => new ListOf<T>(src);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="src">source enumerable</param>
+        public static IList<T> Sticky<T>(Func<IEnumerable<T>> src)
+            => List.Sticky.New(new ListOf<T>(src));
 
         /// <summary>
         /// ctor

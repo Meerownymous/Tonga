@@ -13,7 +13,7 @@ namespace Tonga.Enumerable
     /// <typeparam name="T">type of elements</typeparam>
     public sealed class Sorted<T> : IEnumerable<T>
     {
-        private readonly IList<T> source;
+        private readonly IEnumerable<T> source;
         private readonly Comparer<T> comparer;
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to sort</param>
         public Sorted(Comparer<T> cmp, IEnumerable<T> src)
         {
-            this.source = new LiveList<T>(() => new List<T>(src));
+            this.source = src;
             this.comparer = cmp;
         }
 
@@ -55,7 +55,7 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private static List<T> SortedCopy(IList<T> source, Comparer<T> comparer)
+        private static List<T> SortedCopy(IEnumerable<T> source, Comparer<T> comparer)
         {
             var result = new List<T>(source);
             result.Sort(comparer);

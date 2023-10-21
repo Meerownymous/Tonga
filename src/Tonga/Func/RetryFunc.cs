@@ -115,22 +115,14 @@ namespace Tonga.Func
         /// Function that will retry if it fails.
         /// </summary>
         /// <param name="fnc">func to retry</param>
-        public static IFunc<In, Out> New<In, Out>(Func<In, Out> fnc) =>
+        public static IFunc<In, Out> _<In, Out>(Func<In, Out> fnc) =>
             new RetryFunc<In, Out>(fnc);
 
         /// <summary>
         /// Function that will retry if it fails.
         /// </summary>
         /// <param name="fnc">func to retry</param>
-        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc) =>
-            new RetryFunc<In, Out>(fnc);
-
-        /// <summary>
-        /// Function that will retry if it fails.
-        /// </summary>
-        /// <param name="fnc">func to retry</param>
-        /// <param name="attempts">how often to retry</param>
-        public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> fnc, int attempts = 3) =>
+        public static IFunc<In, Out> _<In, Out>(IFunc<In, Out> fnc) =>
             new RetryFunc<In, Out>(fnc);
 
         /// <summary>
@@ -138,7 +130,15 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to retry</param>
         /// <param name="attempts">how often to retry</param>
-        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, int attempts = 3) =>
+        public static IFunc<In, Out> _<In, Out>(System.Func<In, Out> fnc, int attempts = 3) =>
+            new RetryFunc<In, Out>(fnc);
+
+        /// <summary>
+        /// Function that will retry if it fails.
+        /// </summary>
+        /// <param name="fnc">func to retry</param>
+        /// <param name="attempts">how often to retry</param>
+        public static IFunc<In, Out> _<In, Out>(IFunc<In, Out> fnc, int attempts = 3) =>
             new RetryFunc<In, Out>(fnc, attempts);
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to retry</param>
         /// <param name="stopCondition">exit condition</param>
-        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, System.Func<Int32, Boolean> stopCondition) =>
+        public static IFunc<In, Out> _<In, Out>(IFunc<In, Out> fnc, System.Func<Int32, Boolean> stopCondition) =>
             new RetryFunc<In, Out>(fnc, stopCondition);
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to retry</param>
         /// <param name="stopCondition">exit condition</param>
-        public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> fnc, System.Func<Int32, Boolean> stopCondition) =>
+        public static IFunc<In, Out> _<In, Out>(System.Func<In, Out> fnc, System.Func<Int32, Boolean> stopCondition) =>
             new RetryFunc<In, Out>(fnc, stopCondition);
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to retry</param>
         /// <param name="stopCondition">exit condition</param>
-        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Int32, Boolean> stopCondition) =>
+        public static IFunc<In, Out> _<In, Out>(IFunc<In, Out> fnc, IFunc<Int32, Boolean> stopCondition) =>
             new RetryFunc<In, Out>(fnc, stopCondition);
     }
 }

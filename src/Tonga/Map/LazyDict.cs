@@ -24,13 +24,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp[] kvps) : this(AsEnumerable._(kvps), true)
+        public LazyDict(params IPair[] kvps) : this(AsEnumerable._(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(
+        public LazyDict(bool rejectBuildingAllKeys, params IPair[] kvps) : this(
             AsEnumerable._(kvps),
             rejectBuildingAllKeys
         )
@@ -39,7 +39,7 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(IEnumerable<IKvp> kvps, bool rejectBuildingAllValues = true)
+        public LazyDict(IEnumerable<IPair> kvps, bool rejectBuildingAllValues = true)
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
@@ -257,37 +257,37 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Value> New<Value>(params IKvp<Value>[] kvps)
+        public static LazyDict<Value> _<Value>(params IPair<Value>[] kvps)
             => new LazyDict<Value>(kvps);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Value> New<Value>(bool rejectBuildingAllValues, params IKvp<Value>[] kvps)
+        public static LazyDict<Value> _<Value>(bool rejectBuildingAllValues, params IPair<Value>[] kvps)
             => new LazyDict<Value>(kvps);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Value> New<Value>(IEnumerable<IKvp<Value>> kvps, bool rejectBuildingAllValues = true)
+        public static LazyDict<Value> _<Value>(IEnumerable<IPair<Value>> kvps, bool rejectBuildingAllValues = true)
             => new LazyDict<Value>(kvps, rejectBuildingAllValues);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Key, Value> New<Key, Value>(params IKvp<Key, Value>[] kvps)
+        public static LazyDict<Key, Value> _<Key, Value>(params IPair<Key, Value>[] kvps)
             => new LazyDict<Key, Value>(kvps);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Key, Value> New<Key, Value>(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps)
+        public static LazyDict<Key, Value> _<Key, Value>(bool rejectBuildingAllValues, params IPair<Key, Value>[] kvps)
             => new LazyDict<Key, Value>(rejectBuildingAllValues, kvps);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> kvps, bool rejectBuildingAllValues = true)
+        public static LazyDict<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> kvps, bool rejectBuildingAllValues = true)
             => new LazyDict<Key, Value>(kvps, rejectBuildingAllValues);
     }
 
@@ -304,13 +304,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Value>[] kvps) : this(new Enumerable.AsEnumerable<IKvp<Value>>(kvps), true)
+        public LazyDict(params IPair<Value>[] kvps) : this(new Enumerable.AsEnumerable<IPair<Value>>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(
+        public LazyDict(bool rejectBuildingAllValues, params IPair<Value>[] kvps) : this(
             AsEnumerable._(kvps),
             rejectBuildingAllValues
         )
@@ -319,7 +319,7 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(IEnumerable<IKvp<Value>> kvps, bool rejectBuildingAllValues = true)
+        public LazyDict(IEnumerable<IPair<Value>> kvps, bool rejectBuildingAllValues = true)
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
@@ -545,19 +545,19 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Key, Value>[] kvps) : this(Enumerable.AsEnumerable._(kvps), true)
+        public LazyDict(params IPair<Key, Value>[] kvps) : this(Enumerable.AsEnumerable._(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new Enumerable.AsEnumerable<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IPair<Key, Value>[] kvps) : this(new Enumerable.AsEnumerable<IPair<Key, Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(IEnumerable<IKvp<Key, Value>> kvps, bool rejectBuildingAllValues = true)
+        public LazyDict(IEnumerable<IPair<Key, Value>> kvps, bool rejectBuildingAllValues = true)
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =

@@ -7,7 +7,7 @@ namespace Tonga.Map
     /// <summary>
     /// Fake Kvp
     /// </summary>
-    public sealed class FkKvp<TKey, TValue> : IKvp<TKey, TValue>
+    public sealed class FkKvp<TKey, TValue> : IPair<TKey, TValue>
     {
         private readonly System.Func<TKey> keyFunc;
         private readonly System.Func<TValue> valueFunc;

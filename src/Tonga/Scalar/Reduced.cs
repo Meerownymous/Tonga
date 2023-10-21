@@ -54,13 +54,13 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static ScalarEnvelope<T> New<T>(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) => new Reduced<T>(elements, fnc);
+        public static ScalarEnvelope<T> _<T>(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) => new Reduced<T>(elements, fnc);
 
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static ScalarEnvelope<T> New<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new Reduced<T>(elements, fnc);
+        public static ScalarEnvelope<T> _<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new Reduced<T>(elements, fnc);
     }
 }

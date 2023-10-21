@@ -174,7 +174,7 @@ namespace Tonga.List
         /// <summary>
         /// List which only advances to the necessary item but remembers it once it has ssen it once.
         /// </summary>
-        public static Sticky<T> New<T>(System.Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
+        public static Sticky<T> _<T>(System.Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
     }
 }
 

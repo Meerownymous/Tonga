@@ -79,7 +79,7 @@ namespace Tonga.Enumerable
                 }
             }
 
-            foreach (var item in Joined.From(notin2, notin1))
+            foreach (var item in Joined._(notin2, notin1))
             {
                 yield return item;
             }

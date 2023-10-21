@@ -116,7 +116,7 @@ namespace Tonga.Func
         /// Function that has two inputs and an output.
         /// </summary>
         /// <param name="func"></param>
-        public static FuncOf<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
+        public static FuncOf<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
             new FuncOf<In1, In2, Out>(func);
     }
 
@@ -154,7 +154,7 @@ namespace Tonga.Func
         /// Function that has two inputs and an output.
         /// </summary>
         /// <param name="func"></param>
-        public static FuncOf<In1, In2, In3, Out> New<In1, In2, In3, Out>(System.Func<In1, In2, In3, Out> func) =>
+        public static FuncOf<In1, In2, In3, Out> _<In1, In2, In3, Out>(System.Func<In1, In2, In3, Out> func) =>
             new FuncOf<In1, In2, In3, Out>(func);
     }
 
@@ -164,13 +164,13 @@ namespace Tonga.Func
         /// ctor
         /// </summary>
         /// <param name="fnc"></param>
-        public static IFunc<Out> New<Out>(System.Func<Out> fnc) => new FuncOf<Out>(fnc);
+        public static IFunc<Out> _<Out>(System.Func<Out> fnc) => new FuncOf<Out>(fnc);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc"></param>
-        public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> fnc) =>
+        public static IFunc<In, Out> _<In, Out>(System.Func<In, Out> fnc) =>
             new FuncOf<In, Out>(fnc);
 
         /// <summary>
@@ -178,10 +178,10 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="proc">procedure to execute</param>
         /// <param name="result"></param>
-        public static IFunc<In, Out> New<In, Out>(IAction<In> proc, Out result) =>
+        public static IFunc<In, Out> _<In, Out>(IAction<In> proc, Out result) =>
             new FuncOf<In, Out>(proc, result);
 
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
             new FuncOf<In1, In2, Out>(func);
     }
 }

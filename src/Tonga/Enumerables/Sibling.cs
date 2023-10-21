@@ -144,7 +144,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="item">item to start</param>
-        public static IScalar<T> New<T>(T item, IEnumerable<T> source)
+        public static IScalar<T> _<T>(T item, IEnumerable<T> source)
             where T : IComparable<T> =>
             new Sibling<T>(item, source);
 
@@ -154,7 +154,7 @@ namespace Tonga.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
-        public static IScalar<T> New<T>(T item, IEnumerable<T> source, T fallback)
+        public static IScalar<T> _<T>(T item, IEnumerable<T> source, T fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, fallback);
 
@@ -164,7 +164,7 @@ namespace Tonga.Enumerable
         /// <param name="source">source enum</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="item">item to start</param>
-        public static IScalar<T> New<T>(T item, IEnumerable<T> source, int relativeposition)
+        public static IScalar<T> _<T>(T item, IEnumerable<T> source, int relativeposition)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, relativeposition);
 
@@ -175,7 +175,7 @@ namespace Tonga.Enumerable
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
-        public static IScalar<T> New<T>(T item, IEnumerable<T> source, int relativeposition, T fallback)
+        public static IScalar<T> _<T>(T item, IEnumerable<T> source, int relativeposition, T fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, relativeposition, fallback);
 
@@ -185,7 +185,7 @@ namespace Tonga.Enumerable
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
         /// <param name="item">item to start</param>
-        public static IScalar<T> New<T>(T item, IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> _<T>(T item, IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, fallback);
 
@@ -196,7 +196,7 @@ namespace Tonga.Enumerable
         /// <param name="item">item to start</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="relativeposition">requested position relative to the given item</param>
-        public static IScalar<T> New<T>(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> _<T>(T item, IEnumerable<T> source, int relativeposition, IFunc<IEnumerable<T>, T> fallback)
             where T : IComparable<T> =>
             new Sibling<T>(item, source, relativeposition, fallback);
     }

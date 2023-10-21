@@ -44,10 +44,10 @@ namespace Tonga.Collection
     /// Reversed collection.
     public static class Reversed
     {
-        public static ICollection<T> New<T>(params T[] src) => new Reversed<T>(src);
+        public static ICollection<T> _<T>(params T[] src) => new Reversed<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) => new Reversed<T>(src);
 
-        public static ICollection<T> New<T>(ICollection<T> src) => new Reversed<T>(src);
+        public static ICollection<T> _<T>(ICollection<T> src) => new Reversed<T>(src);
     }
 }

@@ -48,7 +48,7 @@ namespace Tonga.Map
         /// The result is sticky.
         /// </summary>
         public KvpOfMany(string key, System.Func<IEnumerable<string>> values) : base(
-            new KvpOf<IEnumerable<string>>(key, values)
+            new AsPair<IEnumerable<string>>(key, values)
         )
         { }
 
@@ -57,7 +57,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, params System.Func<TValue>[] values)
+        public static IPair<IEnumerable<TValue>> _<TValue>(string key, params System.Func<TValue>[] values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
@@ -65,19 +65,19 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, params TValue[] values)
+        public static IPair<IEnumerable<TValue>> _<TValue>(string key, params TValue[] values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many strings.
         /// </summary>
-        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, IEnumerable<TValue> values)
+        public static IPair<IEnumerable<TValue>> _<TValue>(string key, IEnumerable<TValue> values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, System.Func<IEnumerable<TValue>> values)
+        public static IPair<IEnumerable<TValue>> _<TValue>(string key, System.Func<IEnumerable<TValue>> values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, params System.Func<TValue>[] many)
+        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, params System.Func<TValue>[] many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>
@@ -93,19 +93,19 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, params TValue[] many)
+        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, params TValue[] many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, IEnumerable<TValue> many)
+        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, IEnumerable<TValue> many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, System.Func<IEnumerable<TValue>> many)
+        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, System.Func<IEnumerable<TValue>> many)
             => new KeyToValues<TKey, TValue>(key, many);
     }
 
@@ -158,7 +158,7 @@ namespace Tonga.Map
         /// A key to many values.
         /// </summary>
         public KvpOfMany(string key, System.Func<IEnumerable<TValue>> values) : base(
-            new KvpOf<IEnumerable<TValue>>(key, values)
+            new AsPair<IEnumerable<TValue>>(key, values)
         )
         { }
     }
@@ -212,7 +212,7 @@ namespace Tonga.Map
         /// A key to many values.
         /// </summary>
         public KeyToValues(TKey key, System.Func<IEnumerable<TValue>> many) : base(
-            new KvpOf<TKey, IEnumerable<TValue>>(key, many)
+            new AsPair<TKey, IEnumerable<TValue>>(key, many)
         )
         { }
     }

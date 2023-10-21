@@ -17,7 +17,7 @@ namespace Tonga.List
         /// <param name="origin">a list to join</param>
         /// <param name="src">lists to join</param>
         public Joined(IList<T> origin, params IList<T>[] src) : this(
-            Enumerable.Joined.From(
+            Enumerable.Joined._(
                 Single.From(origin),
                 src
             )
@@ -30,7 +30,7 @@ namespace Tonga.List
         /// <param name="src">The lists to join together</param>
         /// <param name="origin">a list to join</param>
         public Joined(IList<T> origin, params T[] src) : this(
-            Enumerable.Joined.From(
+            Enumerable.Joined._(
                 Single.From(origin),
                 src
             )
@@ -51,7 +51,7 @@ namespace Tonga.List
         /// <param name="src">The lists to join together</param>
         public Joined(IEnumerable<IList<T>> src) : base(() =>
             AsList._(
-                Enumerable.Joined.From<T>(src)
+                Enumerable.Joined._<T>(src)
             )
         )
         { }

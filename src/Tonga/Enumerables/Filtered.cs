@@ -24,7 +24,7 @@ namespace Tonga.Enumerable
         /// <param name="items">other items to filter</param>
         public Filtered(Func<T, Boolean> fnc, T item1, T item2, params T[] items) : this(
             fnc,
-            Joined.From(
+            Joined._(
                 new AsEnumerable<T>(item1, item2),
                 new AsEnumerable<T>(items)
             )

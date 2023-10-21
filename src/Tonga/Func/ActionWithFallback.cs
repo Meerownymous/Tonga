@@ -80,7 +80,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static IAction<T> New<T>(IAction<T> fnc, System.Action<Exception> fbk) =>
+        public static IAction<T> _<T>(IAction<T> fnc, System.Action<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static IAction<T> New<T>(System.Action fnc, IAction<Exception> fbk) =>
+        public static IAction<T> _<T>(System.Action fnc, IAction<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static IAction<T> New<T>(System.Action<T> fnc, System.Action<Exception> fbk) =>
+        public static IAction<T> _<T>(System.Action<T> fnc, System.Action<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">Action to call</param>
         /// <param name="fbk">Fallback action</param>
-        public static IAction<T> New<T>(IAction<T> fnc, IAction<Exception> fbk) =>
+        public static IAction<T> _<T>(IAction<T> fnc, IAction<Exception> fbk) =>
             new ActionWithFallback<T>(fnc, fbk);
     }
 

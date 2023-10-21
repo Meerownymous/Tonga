@@ -50,7 +50,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="scalar">func to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public static IScalar<T> New<T>(System.Func<T> scalar, int attempts = 3)
+        public static IScalar<T> _<T>(System.Func<T> scalar, int attempts = 3)
             => new Retry<T>(scalar, attempts);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public static IScalar<T> New<T>(IScalar<T> scalar, int attempts = 3)
+        public static IScalar<T> _<T>(IScalar<T> scalar, int attempts = 3)
             => new Retry<T>(scalar, attempts);
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="exit"></param>
-        public static IScalar<T> New<T>(IScalar<T> scalar, IFunc<Int32, Boolean> exit)
+        public static IScalar<T> _<T>(IScalar<T> scalar, IFunc<Int32, Boolean> exit)
             => new Retry<T>(scalar, exit);
     }
 }

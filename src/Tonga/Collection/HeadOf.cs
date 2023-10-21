@@ -50,9 +50,9 @@ namespace Tonga.Collection
 
     public static class HeadOf
     {
-        public static ICollection<T> New<T>(int lmt, params T[] src) => new HeadOf<T>(lmt, src);
-        public static ICollection<T> New<T>(int lmt, ICollection<T> src) => new HeadOf<T>(lmt, src);
-        public static ICollection<T> New<T>(int lmt, IEnumerable<T> src) => new HeadOf<T>(lmt, src);
-        public static ICollection<T> New<T>(int lmt, IEnumerator<T> src) => new HeadOf<T>(lmt, src);
+        public static ICollection<T> _<T>(int lmt, params T[] src) => new HeadOf<T>(lmt, src);
+        public static ICollection<T> _<T>(int lmt, ICollection<T> src) => new HeadOf<T>(lmt, src);
+        public static ICollection<T> _<T>(int lmt, IEnumerable<T> src) => new HeadOf<T>(lmt, src);
+        public static ICollection<T> _<T>(int lmt, IEnumerator<T> src) => new HeadOf<T>(lmt, src);
     }
 }

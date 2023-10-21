@@ -13,8 +13,8 @@ namespace Yaapii.Lookup.Tests
         {
             Assert.True(
                 new VersionMap(true,
-                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
-                    new KvpOf<Version, string>(new Version(2, 0, 0, 0), "zway")
+                    new AsPair<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new AsPair<Version, string>(new Version(2, 0, 0, 0), "zway")
                 ).ContainsKey(new Version(1, 0, 0, 0))
             );
         }
@@ -24,8 +24,8 @@ namespace Yaapii.Lookup.Tests
         {
             Assert.True(
                 new VersionMap(true,
-                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
-                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                    new AsPair<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new AsPair<Version, string>(new Version(5, 0, 0, 0), "zway")
                 ).ContainsKey(new Version(2, 0, 0, 0))
             );
         }
@@ -35,8 +35,8 @@ namespace Yaapii.Lookup.Tests
         {
             Assert.True(
                 new VersionMap(true,
-                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
-                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                    new AsPair<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new AsPair<Version, string>(new Version(5, 0, 0, 0), "zway")
                 ).ContainsKey(new Version(10, 0, 0, 0))
             );
         }
@@ -46,8 +46,8 @@ namespace Yaapii.Lookup.Tests
         {
             Assert.False(
                 new VersionMap(false,
-                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
-                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                    new AsPair<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new AsPair<Version, string>(new Version(5, 0, 0, 0), "zway")
                 ).ContainsKey(new Version(10, 0, 0, 0))
             );
         }
@@ -57,8 +57,8 @@ namespace Yaapii.Lookup.Tests
         {
             Assert.True(
                 new VersionMap(false,
-                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
-                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                    new AsPair<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new AsPair<Version, string>(new Version(5, 0, 0, 0), "zway")
                 ).ContainsKey(new Version(2, 0, 0, 0))
             );
         }
@@ -68,8 +68,8 @@ namespace Yaapii.Lookup.Tests
         {
             Assert.True(
                 new VersionMap(false,
-                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
-                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                    new AsPair<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new AsPair<Version, string>(new Version(5, 0, 0, 0), "zway")
                 ).ContainsKey(new Version(1, 0))
             );
         }
@@ -80,8 +80,8 @@ namespace Yaapii.Lookup.Tests
             Assert.Equal(
                 "zway",
                 new VersionMap(true,
-                    new KvpOf<Version, string>(new Version(1, 0, 0, 0), "ainz"),
-                    new KvpOf<Version, string>(new Version(5, 0, 0, 0), "zway")
+                    new AsPair<Version, string>(new Version(1, 0, 0, 0), "ainz"),
+                    new AsPair<Version, string>(new Version(5, 0, 0, 0), "zway")
                 )[new Version(5, 0)]
             );
         }

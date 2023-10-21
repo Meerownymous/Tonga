@@ -33,15 +33,15 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(params IKvp[] kvps) : this(
-            new AsEnumerable<IKvp>(kvps)
+        public MapInputEnvelope(params IPair[] kvps) : this(
+            new AsEnumerable<IPair>(kvps)
         )
         { }
 
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(IEnumerable<IKvp> kvps) : this(
+        public MapInputEnvelope(IEnumerable<IPair> kvps) : this(
             input => new Joined(input, new LazyDict(kvps))
         )
         { }
@@ -107,15 +107,15 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(params IKvp<Value>[] kvps) : this(
-            new AsEnumerable<IKvp<Value>>(kvps)
+        public MapInputEnvelope(params IPair<Value>[] kvps) : this(
+            new AsEnumerable<IPair<Value>>(kvps)
         )
         { }
 
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(IEnumerable<IKvp<Value>> kvps) : this(
+        public MapInputEnvelope(IEnumerable<IPair<Value>> kvps) : this(
             input => new Joined<Value>(input, new LazyDict<Value>(kvps, false))
         )
         { }
@@ -181,15 +181,15 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(params IKvp<Key, Value>[] kvps) : this(
-            new AsEnumerable<IKvp<Key, Value>>(kvps)
+        public MapInputEnvelope(params IPair<Key, Value>[] kvps) : this(
+            new AsEnumerable<IPair<Key, Value>>(kvps)
         )
         { }
 
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(IEnumerable<IKvp<Key, Value>> kvps) : this(
+        public MapInputEnvelope(IEnumerable<IPair<Key, Value>> kvps) : this(
             input => new Joined<Key, Value>(input, new LazyDict<Key, Value>(kvps, false))
         )
         { }

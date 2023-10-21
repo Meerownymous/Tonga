@@ -59,8 +59,8 @@ namespace Tonga.Collection
 
     public static class Filtered
     {
-        public static ICollection<T> New<T>(Func<T, Boolean> func, IEnumerable<T> src) => new Filtered<T>(func, src);
-        public static ICollection<T> New<T>(Func<T, Boolean> func, IEnumerator<T> src) => new Filtered<T>(func, src);
-        public static ICollection<T> New<T>(Func<T, Boolean> func, T item1, T item2, params T[] items) => new Filtered<T>(func, item1, item2, items);
+        public static ICollection<T> _<T>(Func<T, Boolean> func, IEnumerable<T> src) => new Filtered<T>(func, src);
+        public static ICollection<T> _<T>(Func<T, Boolean> func, IEnumerator<T> src) => new Filtered<T>(func, src);
+        public static ICollection<T> _<T>(Func<T, Boolean> func, T item1, T item2, params T[] items) => new Filtered<T>(func, item1, item2, items);
     }
 }

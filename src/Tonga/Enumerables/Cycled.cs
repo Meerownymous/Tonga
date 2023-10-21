@@ -55,6 +55,6 @@ namespace Tonga.Enumerable
     /// <typeparam name="T">type of the contents</typeparam>
     public static class Cycled
     {
-        public static IEnumerable<T> New<T>(IEnumerable<T> enumerable) => new Cycled<T>(enumerable);
+        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable) => new Cycled<T>(enumerable);
     }
 }

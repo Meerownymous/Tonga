@@ -14,37 +14,37 @@ namespace Tonga.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(params IKvp[] kvps) : this(new AsList<IKvp>(kvps))
+        public MapInputOf(params IPair[] kvps) : this(new AsList<IPair>(kvps))
         { }
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(IEnumerable<IKvp> kvps) : base(kvps)
+        public MapInputOf(IEnumerable<IPair> kvps) : base(kvps)
         { }
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static IMapInput<Value> New<Value>(params IKvp<Value>[] kvps)
+        public static IMapInput<Value> _<Value>(params IPair<Value>[] kvps)
             => new MapInputOf<Value>(kvps);
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static IMapInput<Value> New<Value>(IEnumerable<IKvp<Value>> kvps)
+        public static IMapInput<Value> _<Value>(IEnumerable<IPair<Value>> kvps)
             => new MapInputOf<Value>(kvps);
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static IMapInput<Key, Value> New<Key, Value>(params IKvp<Key, Value>[] kvps)
+        public static IMapInput<Key, Value> _<Key, Value>(params IPair<Key, Value>[] kvps)
             => new MapInputOf<Key, Value>(kvps);
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public static IMapInput<Key, Value> New<Key, Value>(IEnumerable<IKvp<Key, Value>> kvps)
+        public static IMapInput<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> kvps)
             => new MapInputOf<Key, Value>(kvps);
     }
 
@@ -57,13 +57,13 @@ namespace Tonga.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(params IKvp<Value>[] kvps) : this(new AsList<IKvp<Value>>(kvps))
+        public MapInputOf(params IPair<Value>[] kvps) : this(new AsList<IPair<Value>>(kvps))
         { }
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(IEnumerable<IKvp<Value>> kvps) : base(kvps)
+        public MapInputOf(IEnumerable<IPair<Value>> kvps) : base(kvps)
         { }
     }
 
@@ -76,13 +76,13 @@ namespace Tonga.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(params IKvp<Key, Value>[] kvps) : this(new AsList<IKvp<Key, Value>>(kvps))
+        public MapInputOf(params IPair<Key, Value>[] kvps) : this(new AsList<IPair<Key, Value>>(kvps))
         { }
 
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public MapInputOf(IEnumerable<IKvp<Key, Value>> kvps) : base(kvps)
+        public MapInputOf(IEnumerable<IPair<Key, Value>> kvps) : base(kvps)
         { }
     }
 }

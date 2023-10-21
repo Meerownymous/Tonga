@@ -94,8 +94,8 @@ namespace Tonga.Map
                     var keys = new List<Key>(dict.Keys);
                     keys.Sort(cmp);
                     var result = new LazyDict<Key, Value>(
-                        new Mapped<Key, IKvp<Key, Value>>(
-                            key => new KvpOf<Key, Value>(key, () => dict[key]),
+                        new Mapped<Key, IPair<Key, Value>>(
+                            key => AsPair._(key, () => dict[key]),
                             keys
                         )
                     );
@@ -193,8 +193,8 @@ namespace Tonga.Map
                     var keys = new List<string>(dict.Keys);
                     keys.Sort(cmp);
                     var result = new LazyDict<string, Value>(
-                        new Mapped<string, IKvp<string, Value>>(
-                            key => new KvpOf<string, Value>(key, () => dict[key]),
+                        new Mapped<string, IPair<string, Value>>(
+                            key => new AsPair<string, Value>(key, () => dict[key]),
                             keys
                         )
                     );
@@ -291,8 +291,8 @@ namespace Tonga.Map
                     var keys = new List<string>(dict.Keys);
                     keys.Sort(cmp);
                     var result = new LazyDict<string, string>(
-                        new Mapped<string, IKvp<string, string>>(
-                            key => new KvpOf<string, string>(key, () => dict[key]),
+                        new Mapped<string, IPair<string, string>>(
+                            key => new AsPair<string, string>(key, () => dict[key]),
                             keys
                         )
                     );
@@ -306,7 +306,7 @@ namespace Tonga.Map
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> dict)
+        public static IDictionary<Key, Value> _<Key, Value>(IDictionary<Key, Value> dict)
             => new Sorted<Key, Value>(dict);
 
         /// <summary>
@@ -314,14 +314,14 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> dict, Func<Key, Key, int> compare)
+        public static IDictionary<Key, Value> _<Key, Value>(IDictionary<Key, Value> dict, Func<Key, Key, int> compare)
             => new Sorted<Key, Value>(dict, compare);
 
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs)
+        public static IDictionary<Key, Value> _<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs)
             => new Sorted<Key, Value>(pairs);
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
+        public static IDictionary<Key, Value> _<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
             => new Sorted<Key, Value>(pairs, compare);
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
+        public static IDictionary<Key, Value> _<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
             => new Sorted<Key, Value>(pairs, compare);
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
+        public static IDictionary<Key, Value> _<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
             => new Sorted<Key, Value>(pairs, cmp);
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
+        public static IDictionary<Key, Value> _<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
             => new Sorted<Key, Value>(pairs, cmp);
 
         /// <summary>
@@ -361,14 +361,14 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> dict, IComparer<Key> cmp)
+        public static IDictionary<Key, Value> _<Key, Value>(IDictionary<Key, Value> dict, IComparer<Key> cmp)
             => new Sorted<Key, Value>(dict, cmp);
 
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
-        public static IDictionary<string, Value> New<Value>(IDictionary<string, Value> dict)
+        public static IDictionary<string, Value> _<Value>(IDictionary<string, Value> dict)
             => new Sorted<Value>(dict);
 
         /// <summary>
@@ -376,14 +376,14 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public static IDictionary<string, Value> New<Value>(IDictionary<string, Value> dict, Func<string, string, int> compare)
+        public static IDictionary<string, Value> _<Value>(IDictionary<string, Value> dict, Func<string, string, int> compare)
             => new Sorted<Value>(dict, compare);
 
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs)
+        public static IDictionary<string, Value> _<Value>(IEnumerable<KeyValuePair<string, Value>> pairs)
             => new Sorted<Value>(pairs);
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
+        public static IDictionary<string, Value> _<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<string, string, int> compare)
             => new Sorted<Value>(pairs, compare);
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
+        public static IDictionary<string, Value> _<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, Func<KeyValuePair<string, Value>, KeyValuePair<string, Value>, int> compare)
             => new Sorted<Value>(pairs, compare);
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<string> cmp)
+        public static IDictionary<string, Value> _<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<string> cmp)
             => new Sorted<Value>(pairs, cmp);
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public static IDictionary<string, Value> New<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<KeyValuePair<string, Value>> cmp)
+        public static IDictionary<string, Value> _<Value>(IEnumerable<KeyValuePair<string, Value>> pairs, IComparer<KeyValuePair<string, Value>> cmp)
             => new Sorted<Value>(pairs, cmp);
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public static IDictionary<string, Value> New<Value>(IDictionary<string, Value> dict, IComparer<string> cmp)
+        public static IDictionary<string, Value> _<Value>(IDictionary<string, Value> dict, IComparer<string> cmp)
             => new Sorted<Value>(dict, cmp);
     }
 

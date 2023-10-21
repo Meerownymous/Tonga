@@ -54,12 +54,12 @@ namespace Tonga.Collection
     ///
     public static class Solid
     {
-        public static ICollection<T> New<T>(params T[] array) => new Solid<T>(array);
+        public static ICollection<T> _<T>(params T[] array) => new Solid<T>(array);
 
-        public static ICollection<T> New<T>(IEnumerator<T> src) => new Solid<T>(src);
+        public static ICollection<T> _<T>(IEnumerator<T> src) => new Solid<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new Solid<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) => new Solid<T>(src);
 
-        public static ICollection<T> New<T>(ICollection<T> src) => new Solid<T>(src);
+        public static ICollection<T> _<T>(ICollection<T> src) => new Solid<T>(src);
     }
 }

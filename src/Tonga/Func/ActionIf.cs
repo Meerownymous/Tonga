@@ -14,7 +14,7 @@ namespace Tonga.Func
         /// Conditional Action as part of an <see cref="ActionSwitch{In}"/>
         /// </summary>
         public ActionIf(string condition, Action<In> consequence) : base(
-            new KvpOf<Action<In>>(condition, consequence)
+            new AsPair<Action<In>>(condition, consequence)
         )
         { }
     }
@@ -28,7 +28,7 @@ namespace Tonga.Func
         /// Conditional Action as part of an <see cref="ActionSwitch{In1, In2}"/>
         /// </summary>
         public ActionIf(string condition, Action<In1, In2> consequence) : base(
-            new KvpOf<Action<In1, In2>>(condition, consequence)
+            new AsPair<Action<In1, In2>>(condition, consequence)
         )
         { }
     }
@@ -38,11 +38,11 @@ namespace Tonga.Func
         /// <summary>
         /// ctor
         /// </summary>
-        public static IKvp<Action<T>> New<T>(string condition, Action<T> consequence) => new ActionIf<T>(condition, consequence);
+        public static IPair<Action<T>> _<T>(string condition, Action<T> consequence) => new ActionIf<T>(condition, consequence);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static IKvp<Action<In1, In2>> New<In1, In2>(string condition, Action<In1, In2> consequence) => new ActionIf<In1, In2>(condition, consequence);
+        public static IPair<Action<In1, In2>> _<In1, In2>(string condition, Action<In1, In2> consequence) => new ActionIf<In1, In2>(condition, consequence);
     }
 }

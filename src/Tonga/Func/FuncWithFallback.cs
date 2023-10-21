@@ -205,7 +205,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
-        public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> func, System.Func<Exception, Out> fallback) =>
+        public static IFunc<In, Out> _<In, Out>(System.Func<In, Out> func, System.Func<Exception, Out> fallback) =>
             new FuncWithFallback<In, Out>(func, fallback);
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
-        public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> func, IFunc<Exception, Out> fallback) =>
+        public static IFunc<In, Out> _<In, Out>(System.Func<In, Out> func, IFunc<Exception, Out> fallback) =>
             new FuncWithFallback<In, Out>(func, fallback);
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to call</param>
         /// <param name="fbk">fallback func</param>
-        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk) =>
+        public static IFunc<In, Out> _<In, Out>(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk) =>
             new FuncWithFallback<In, Out>(fnc, fbk);
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Tonga.Func
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
-        public static IFunc<In, Out> New<In, Out>(System.Func<In, Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) =>
+        public static IFunc<In, Out> _<In, Out>(System.Func<In, Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) =>
             new FuncWithFallback<In, Out>(func, fallback, flw);
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Tonga.Func
         /// <param name="fnc">func to call</param>
         /// <param name="fbk">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
-        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+        public static IFunc<In, Out> _<In, Out>(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
             new FuncWithFallback<In, Out>(fnc, fbk, flw);
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
-        public static IFunc<Out> New<Out>(System.Func<Out> func, System.Func<Exception, Out> fallback) =>
+        public static IFunc<Out> _<Out>(System.Func<Out> func, System.Func<Exception, Out> fallback) =>
             new FuncWithFallback<Out>(func, fallback);
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
-        public static IFunc<Out> New<Out>(System.Func<Out> func, IFunc<Exception, Out> fallback) =>
+        public static IFunc<Out> _<Out>(System.Func<Out> func, IFunc<Exception, Out> fallback) =>
             new FuncWithFallback<Out>(func, fallback);
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to call</param>
         /// <param name="fbk">fallback func</param>
-        public static IFunc<Out> New<Out>(IFunc<Out> fnc, IFunc<Exception, Out> fbk) =>
+        public static IFunc<Out> _<Out>(IFunc<Out> fnc, IFunc<Exception, Out> fbk) =>
             new FuncWithFallback<Out>(fnc, fbk);
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Tonga.Func
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
-        public static IFunc<Out> New<Out>(System.Func<Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) =>
+        public static IFunc<Out> _<Out>(System.Func<Out> func, System.Func<Exception, Out> fallback, System.Func<Out, Out> flw) =>
             new FuncWithFallback<Out>(func, fallback, flw);
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Tonga.Func
         /// <param name="fnc">func to call</param>
         /// <param name="fbk">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
-        public static IFunc<Out> New<Out>(IFunc<Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+        public static IFunc<Out> _<Out>(IFunc<Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
             new FuncWithFallback<Out>(fnc, fbk, flw);
 
     }

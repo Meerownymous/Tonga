@@ -19,9 +19,9 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap(() =>
-                    new Enumerable.AsEnumerable<IKvp>(
-                        new KvpOf(() => one),
-                        new KvpOf(() => two)
+                    new Enumerable.AsEnumerable<IPair>(
+                        new AsPair(() => one),
+                        new AsPair(() => two)
                     )
                 );
 
@@ -34,9 +34,9 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap(() =>
-                    new Enumerable.AsEnumerable<IKvp>(
-                        new KvpOf("key a", "value a"),
-                        new KvpOf("key b", () =>
+                    new Enumerable.AsEnumerable<IPair>(
+                        new AsPair("key a", "value a"),
+                        new AsPair("key b", () =>
                         {
                             failed = true;
                             return "value b";
@@ -96,8 +96,8 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap(() =>
-                    new Enumerable.AsEnumerable<IKvp>(
-                        new KvpOf("key", () => (value++).ToString())
+                    new Enumerable.AsEnumerable<IPair>(
+                        new AsPair("key", () => (value++).ToString())
                     )
                 );
             var a = map["key"];
@@ -113,9 +113,9 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap<int>(() =>
-                    new Enumerable.AsEnumerable<IKvp<int>>(
-                        new KvpOf<int>(() => one),
-                        new KvpOf<int>(() => two)
+                    new Enumerable.AsEnumerable<IPair<int>>(
+                        new AsPair<int>(() => one),
+                        new AsPair<int>(() => two)
                     )
                 );
 
@@ -128,9 +128,9 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap<int>(() =>
-                    new Enumerable.AsEnumerable<IKvp<int>>(
-                        new KvpOf<int>("key a", 0),
-                        new KvpOf<int>("key b", () =>
+                    new Enumerable.AsEnumerable<IPair<int>>(
+                        new AsPair<int>("key a", 0),
+                        new AsPair<int>("key b", () =>
                         {
                             failed = true;
                             return 1;
@@ -191,8 +191,8 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap<int>(() =>
-                    new Enumerable.AsEnumerable<IKvp<int>>(
-                        new KvpOf<int>("key", () => value++)
+                    new Enumerable.AsEnumerable<IPair<int>>(
+                        new AsPair<int>("key", () => value++)
                     )
                 );
             var a = map["key"];
@@ -208,9 +208,9 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap<string, string>(() =>
-                    new Enumerable.AsEnumerable<IKvp<string, string>>(
-                        new KvpOf<string, string>(() => one),
-                        new KvpOf<string, string>(() => two)
+                    new Enumerable.AsEnumerable<IPair<string, string>>(
+                        new AsPair<string, string>(() => one),
+                        new AsPair<string, string>(() => two)
                     )
                 );
 
@@ -223,9 +223,9 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap<int, int>(() =>
-                    new Enumerable.AsEnumerable<IKvp<int, int>>(
-                        new KvpOf<int, int>(10, 0),
-                        new KvpOf<int, int>(11, () =>
+                    new Enumerable.AsEnumerable<IPair<int, int>>(
+                        new AsPair<int, int>(10, 0),
+                        new AsPair<int, int>(11, () =>
                         {
                             failed = true;
                             return 1;
@@ -285,7 +285,7 @@ namespace Tonga.Map.Tests
             var map =
                 new LiveMap<int, int>(() =>
                     AsEnumerable._(
-                        new KvpOf<int, int>(0, () => value++)
+                        new AsPair<int, int>(0, () => value++)
                     )
                 );
             var a = map[0];

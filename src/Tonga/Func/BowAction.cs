@@ -54,12 +54,12 @@ namespace Tonga.Func
         public BowAction(System.Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
             trigger,
             new MapOf<Action>(
-                new KvpOf<Action>("prepare", prepare),
-                new KvpOf<Action>("shoot", shoot)
+                new AsPair<Action>("prepare", prepare),
+                new AsPair<Action>("shoot", shoot)
             ),
             new MapOf<TimeSpan>(
-                new KvpOf<TimeSpan>("timeout", timeout),
-                new KvpOf<TimeSpan>("interval", interval)
+                new AsPair<TimeSpan>("timeout", timeout),
+                new AsPair<TimeSpan>("interval", interval)
             ))
         { }
 

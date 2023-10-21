@@ -45,11 +45,11 @@ namespace Tonga.Collection
 
     public static class CollectionOf
     {
-        public static ICollection<T> New<T>(params T[] array) => new CollectionOf<T>(array);
+        public static ICollection<T> _<T>(params T[] array) => new CollectionOf<T>(array);
 
-        public static ICollection<T> New<T>(IEnumerator<T> src) => new CollectionOf<T>(src);
+        public static ICollection<T> _<T>(IEnumerator<T> src) => new CollectionOf<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new CollectionOf<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) => new CollectionOf<T>(src);
 
     }
 }

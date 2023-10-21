@@ -90,7 +90,7 @@ namespace Tonga.Enumerable
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items"><see cref="System.Func{TResult}"/> functions which retrieve items to compare</param>
-        public static IScalar<T> New<T>(params System.Func<T>[] items)
+        public static IScalar<T> _<T>(params System.Func<T>[] items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -98,7 +98,7 @@ namespace Tonga.Enumerable
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static IScalar<T> New<T>(IEnumerable<T> items)
+        public static IScalar<T> _<T>(IEnumerable<T> items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -106,7 +106,7 @@ namespace Tonga.Enumerable
         /// Find the smallest item in the given items
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static IScalar<T> New<T>(params T[] items)
+        public static IScalar<T> _<T>(params T[] items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -114,7 +114,7 @@ namespace Tonga.Enumerable
         /// Find the smallest item in the given scalars.
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static IScalar<T> New<T>(params IScalar<T>[] items)
+        public static IScalar<T> _<T>(params IScalar<T>[] items)
             where T : IComparable<T>
             => new Min<T>(items);
 
@@ -122,7 +122,7 @@ namespace Tonga.Enumerable
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">items to compare</param>
-        public static IScalar<T> New<T>(IEnumerable<IScalar<T>> items)
+        public static IScalar<T> _<T>(IEnumerable<IScalar<T>> items)
             where T : IComparable<T>
             => new Min<T>(items);
     }

@@ -126,7 +126,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">Func to call</param>
         /// <param name="fbk">Fallback func</param>
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk)
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk)
             => new BiFuncWithFallback<In1, In2, Out>(fnc, fbk);
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">Func to call</param>
         /// <param name="fbk">Fallback func</param>
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk) =>
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk) =>
             new BiFuncWithFallback<In1, In2, Out>(fnc, fbk);
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Tonga.Func
         /// <param name="fnc">Func to call</param>
         /// <param name="fbk">Fallback func</param>
         /// <param name="flw">Func to call aferwards</param>
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk, IFunc<Out, Out> flw) =>
             new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Tonga.Func
         /// <param name="fnc">Func to call</param>
         /// <param name="fbk">Fallback func</param>
         /// <param name="flw">Func to call aferwards</param>
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk, System.Func<Out, Out> flw) =>
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk, System.Func<Out, Out> flw) =>
             new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Tonga.Func
         /// <param name="fnc">Func to call</param>
         /// <param name="fbk">Fallback func</param>
         /// <param name="flw">Func to call aferwards</param>
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk, System.Func<Out, Out> flw) =>
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> fnc, System.Func<Exception, Out> fbk, System.Func<Out, Out> flw) =>
             new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Tonga.Func
         /// <param name="fnc">Func to call</param>
         /// <param name="fbk">Fallback func</param>
         /// <param name="flw">Func to call aferwards</param>
-        public static BiFuncWithFallback<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
+        public static BiFuncWithFallback<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> fnc, IFunc<Exception, Out> fbk, IFunc<Out, Out> flw) =>
             new BiFuncWithFallback<In1, In2, Out>(fnc, fbk, flw);
     }
 }

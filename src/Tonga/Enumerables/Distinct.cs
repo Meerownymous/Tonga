@@ -43,7 +43,7 @@ namespace Tonga.Enumerable
             this.result =
                 AsEnumerable._(() =>
                     Produced(
-                        Joined.From(enumerables),
+                        Joined._(enumerables),
                         new Comparison<T>(comparison)
                     )
                 );

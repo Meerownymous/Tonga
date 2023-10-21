@@ -51,7 +51,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">function to return first value to compare</param>
         /// <param name="second">function to return second value to compare</param>
-        public static Equals<T> New<T>(Func<T> first, Func<T> second)
+        public static Equals<T> _<T>(Func<T> first, Func<T> second)
             where T : IComparable<T>
             => new Equals<T>(first, second);
 
@@ -60,7 +60,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">first value to compare</param>
         /// <param name="second">second value to compare</param>
-        public static Equals<T> New<T>(T first, T second)
+        public static Equals<T> _<T>(T first, T second)
             where T : IComparable<T>
             => new Equals<T>(first, second);
 
@@ -69,7 +69,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">scalar of first value to compare</param>
         /// <param name="second">scalar of second value to compare</param>
-        public static Equals<T> New<T>(ScalarEnvelope<T> first, ScalarEnvelope<T> second)
+        public static Equals<T> _<T>(ScalarEnvelope<T> first, ScalarEnvelope<T> second)
             where T : IComparable<T>
             => new Equals<T>(first, second);
     }

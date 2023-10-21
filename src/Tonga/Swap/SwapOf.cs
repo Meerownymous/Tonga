@@ -62,7 +62,7 @@ namespace Tonga.Swap
         /// Function that has two inputs and an output.
         /// </summary>
         /// <param name="func"></param>
-        public static SwapOf<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
+        public static SwapOf<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
             new SwapOf<In1, In2, Out>(func);
 
         public Out Flip(In1 input1, In2 input2)

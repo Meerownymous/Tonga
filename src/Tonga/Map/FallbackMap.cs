@@ -393,7 +393,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map, IDictionary<Key, Value> fallbackMap)
+        public static IDictionary<Key, Value> _<Key, Value>(IDictionary<Key, Value> map, IDictionary<Key, Value> fallbackMap)
             => new FallbackMap<Key, Value>(map, fallbackMap);
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public static IDictionary<Key, Value> New<Key, Value>(System.Func<IDictionary<Key, Value>> map, IDictionary<Key, Value> fallbackMap)
+        public static IDictionary<Key, Value> _<Key, Value>(System.Func<IDictionary<Key, Value>> map, IDictionary<Key, Value> fallbackMap)
             => new FallbackMap<Key, Value>(map, fallbackMap);
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map, Func<Key, Value> fallback)
+        public static IDictionary<Key, Value> _<Key, Value>(IDictionary<Key, Value> map, Func<Key, Value> fallback)
             => new FallbackMap<Key, Value>(map, fallback);
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public static IDictionary<Key, Value> New<Key, Value>(System.Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
+        public static IDictionary<Key, Value> _<Key, Value>(System.Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
             => new FallbackMap<Key, Value>(map, fallback);
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public static IDictionary<string, Value> New<Value>(IDictionary<string, Value> map, IDictionary<string, Value> fallbackMap)
+        public static IDictionary<string, Value> _<Value>(IDictionary<string, Value> map, IDictionary<string, Value> fallbackMap)
             => new FallbackMap<Value>(map, fallbackMap);
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public static IDictionary<string, Value> New<Value>(System.Func<IDictionary<string, Value>> map, IDictionary<string, Value> fallbackMap)
+        public static IDictionary<string, Value> _<Value>(System.Func<IDictionary<string, Value>> map, IDictionary<string, Value> fallbackMap)
             => new FallbackMap<Value>(map, fallbackMap);
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public static IDictionary<string, Value> New<Value>(IDictionary<string, Value> map, Func<string, Value> fallback)
+        public static IDictionary<string, Value> _<Value>(IDictionary<string, Value> map, Func<string, Value> fallback)
             => new FallbackMap<Value>(map, fallback);
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public static IDictionary<string, Value> New<Value>(System.Func<IDictionary<string, Value>> map, Func<string, Value> fallback)
+        public static IDictionary<string, Value> _<Value>(System.Func<IDictionary<string, Value>> map, Func<string, Value> fallback)
             => new FallbackMap<Value>(map, fallback);
     }
 }

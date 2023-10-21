@@ -69,14 +69,14 @@ namespace Tonga.Collection
     public static class Sorted
     {
         /// <summary>
-        public static ICollection<T> New<T>(params T[] src) where T : IComparable<T> => new Sorted<T>(src);
+        public static ICollection<T> _<T>(params T[] src) where T : IComparable<T> => new Sorted<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) where T : IComparable<T> => new Sorted<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) where T : IComparable<T> => new Sorted<T>(src);
 
-        public static ICollection<T> New<T>(Comparer<T> cmp, params T[] src) where T : IComparable<T> => new Sorted<T>(cmp, src);
+        public static ICollection<T> _<T>(Comparer<T> cmp, params T[] src) where T : IComparable<T> => new Sorted<T>(cmp, src);
 
-        public static ICollection<T> New<T>(Comparer<T> cmp, IEnumerator<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
+        public static ICollection<T> _<T>(Comparer<T> cmp, IEnumerator<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
 
-        public static ICollection<T> New<T>(Comparer<T> cmp, ICollection<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
+        public static ICollection<T> _<T>(Comparer<T> cmp, ICollection<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
     }
 }

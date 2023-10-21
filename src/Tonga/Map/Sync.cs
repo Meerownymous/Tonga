@@ -63,7 +63,7 @@ namespace Tonga.Map
         public Synced(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    Enumerable.Joined.From(map, list)
+                    Enumerable.Joined._(map, list)
                 )
             )
         )
@@ -147,7 +147,7 @@ namespace Tonga.Map
         public Sync(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    Enumerable.Joined.From(map, list)
+                    Enumerable.Joined._(map, list)
                 )
             )
         )
@@ -184,7 +184,7 @@ namespace Tonga.Map
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list"></param>
-        public static IDictionary<Key, Value> New<Key, Value>(KeyValuePair<Key, Value>[] list)
+        public static IDictionary<Key, Value> _<Key, Value>(KeyValuePair<Key, Value>[] list)
             => new Synced<Key, Value>(list);
 
         /// <summary>
@@ -192,21 +192,21 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">list of entries to merge</param>
-        public static IDictionary<Key, Value> New<Key, Value>(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list)
+        public static IDictionary<Key, Value> _<Key, Value>(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list)
             => new Synced<Key, Value>(map, list);
 
         /// <summary>
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list">list of entries</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> _<Key, Value>(IEnumerable<KeyValuePair<Key, Value>> list)
             => new Synced<Key, Value>(list);
 
         /// <summary>
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list">list of entries</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IEnumerator<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> _<Key, Value>(IEnumerator<KeyValuePair<Key, Value>> list)
             => new Synced<Key, Value>(list);
 
         /// <summary>
@@ -214,14 +214,14 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">items to merge</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> _<Key, Value>(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list)
             => new Synced<Key, Value>(map, list);
 
         /// <summary>
         /// A merged map that is threadsafe.
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
-        public static IDictionary<Key, Value> New<Key, Value>(IDictionary<Key, Value> map)
+        public static IDictionary<Key, Value> _<Key, Value>(IDictionary<Key, Value> map)
             => new Synced<Key, Value>(map);
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Tonga.Map
         /// <param name="list">list of values to merge</param>
         /// <param name="key">func to get the key</param>
         /// <param name="value">func to get the value</param>
-        public static IDictionary<Key, Value> New<Source, Key, Value>(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value)
+        public static IDictionary<Key, Value> _<Source, Key, Value>(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value)
             => new Sync<Source, Key, Value>(map, list, key, value);
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Tonga.Map
         /// <param name="list">list of values to merge</param>
         /// <param name="key">func to get the key</param>
         /// <param name="value">func to get the value</param>
-        public static IDictionary<Key, Value> New<Source, Key, Value>(IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value)
+        public static IDictionary<Key, Value> _<Source, Key, Value>(IEnumerable<Source> list, Func<Source, Key> key, Func<Source, Value> value)
             => new Sync<Source, Key, Value>(list, key, value);
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list">list of values to merge</param>
         /// <param name="entry">func to get the entry</param>
-        public static IDictionary<Key, Value> New<Source, Key, Value>(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry)
+        public static IDictionary<Key, Value> _<Source, Key, Value>(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry)
             => new Sync<Source, Key, Value>(list, entry);
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Tonga.Map
         /// <param name="map"></param>
         /// <param name="list"></param>
         /// <param name="entry"></param>
-        public static IDictionary<Key, Value> New<Source, Key, Value>(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry)
+        public static IDictionary<Key, Value> _<Source, Key, Value>(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry)
             => new Sync<Source, Key, Value>(map, list, entry);
 
         /// <summary>
@@ -265,21 +265,21 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">map to merge to</param>
         /// <param name="list">items to merge</param>
-        public static IDictionary<Key, Value> New<Source, Key, Value>(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> _<Source, Key, Value>(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list)
             => new Sync<Source, Key, Value>(map, list);
 
         /// <summary>
         /// Makes a map that is threadsafe.
         /// </summary>
         /// <param name="list">list of entries</param>
-        public static IDictionary<Key, Value> New<Source, Key, Value>(IEnumerable<KeyValuePair<Key, Value>> list)
+        public static IDictionary<Key, Value> _<Source, Key, Value>(IEnumerable<KeyValuePair<Key, Value>> list)
             => new Sync<Source, Key, Value>(list);
 
         /// <summary>
         /// A merged map that is threadsafe.
         /// </summary>
         /// <param name="map">Map to make threadsafe</param>
-        public static IDictionary<Key, Value> New<Source, Key, Value>(IDictionary<Key, Value> map)
+        public static IDictionary<Key, Value> _<Source, Key, Value>(IDictionary<Key, Value> map)
             => new Sync<Source, Key, Value>(map);
     }
 

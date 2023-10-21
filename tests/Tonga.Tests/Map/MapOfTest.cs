@@ -30,8 +30,8 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 value,
                 new MapOf(
-                    new MapInputOf(new KvpOf("A", "V")),
-                    new MapInputOf(new KvpOf("B", "Y"))
+                    new MapInputOf(new AsPair("A", "V")),
+                    new MapInputOf(new AsPair("B", "Y"))
                 )[key]
             );
         }
@@ -153,8 +153,8 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 value,
                 new MapOf<int>(
-                    new MapInputOf<int>(new KvpOf<int>("A", 39478624)),
-                    new MapInputOf<int>(new KvpOf<int>("B", 60208801))
+                    new MapInputOf<int>(new AsPair<int>("A", 39478624)),
+                    new MapInputOf<int>(new AsPair<int>("B", 60208801))
                 )[key]
             );
         }
@@ -184,7 +184,7 @@ namespace Tonga.Map.Tests
                 new MapOf<int>(
                     Repeated._(
                         AsScalar._(() =>
-                            new KvpOf<int>(random.Next() + "", 1)),
+                            new AsPair<int>(random.Next() + "", 1)),
                             AsScalar._(() =>
                             {
                                 Interlocked.Increment(ref size);
@@ -219,8 +219,8 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 value,
                 new MapOf<int, int>(
-                    new MapInputOf<int, int>(new KvpOf<int, int>(12, 39478624)),
-                    new MapInputOf<int, int>(new KvpOf<int, int>(24, 60208801))
+                    new MapInputOf<int, int>(new AsPair<int, int>(12, 39478624)),
+                    new MapInputOf<int, int>(new AsPair<int, int>(24, 60208801))
                 )[key]
             );
         }
@@ -249,7 +249,7 @@ namespace Tonga.Map.Tests
             var map =
                 new MapOf<int, int>(
                     Repeated._(
-                        () => new KvpOf<int, int>(random.Next(), 1),
+                        () => new AsPair<int, int>(random.Next(), 1),
                         () =>
                         {
                             Interlocked.Increment(ref size);
@@ -270,8 +270,8 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 "works",
                 new MapOf(
-                    new KvpOf("name", () => throw new ApplicationException()),
-                    new KvpOf("anothername", () => "works")
+                    new AsPair("name", () => throw new ApplicationException()),
+                    new AsPair("anothername", () => "works")
                 )["anothername"]
             );
         }
@@ -281,8 +281,8 @@ namespace Tonga.Map.Tests
         {
             var map =
                 new MapOf(
-                    new KvpOf("name", () => "also works"),
-                    new KvpOf("name2", () => "works")
+                    new AsPair("name", () => "also works"),
+                    new AsPair("name2", () => "works")
                 );
 
             Assert.Throws<InvalidOperationException>(() => map.GetEnumerator());
@@ -299,8 +299,8 @@ namespace Tonga.Map.Tests
         public void ImplicitCtorWithMapWorks()
         {
             var map =
-                MapOf.New(
-                    KvpOf.New("target",
+                MapOf._(
+                    AsPair._("target",
                         new FallbackMap(
                             new MapOf(
                                 "CONTAINS", "contains",
@@ -311,7 +311,7 @@ namespace Tonga.Map.Tests
                             unkown => unkown
                         )
                     ),
-                    KvpOf.New("program",
+                    AsPair._("program",
                         new FallbackMap(
                             new MapOf(
                                 "CONTAINS", "contains",

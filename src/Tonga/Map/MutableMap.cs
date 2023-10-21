@@ -18,7 +18,7 @@ namespace Tonga.Map
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public MutableMap(IEnumerable<IKvp<TValue>> kvps) : this(() =>
+        public MutableMap(IEnumerable<IPair<TValue>> kvps) : this(() =>
         {
             var map = new Dictionary<string, TValue>();
             foreach (var kvp in kvps)
@@ -138,7 +138,7 @@ namespace Tonga.Map
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public MutableMap(IEnumerable<IKvp<TKey, TValue>> kvps) : this(() =>
+        public MutableMap(IEnumerable<IPair<TKey, TValue>> kvps) : this(() =>
         {
             var map = new Dictionary<TKey, TValue>();
             foreach (var kvp in kvps)
@@ -249,28 +249,28 @@ namespace Tonga.Map
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static IDictionary<string, TValue> New<TValue>(IEnumerable<IKvp<TValue>> kvps)
+        public static IDictionary<string, TValue> _<TValue>(IEnumerable<IPair<TValue>> kvps)
             => new MutableMap<TValue>(kvps);
 
         /// <summary>
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static IDictionary<string, TValue> New<TValue>(IEnumerable<KeyValuePair<string, TValue>> kvps)
+        public static IDictionary<string, TValue> _<TValue>(IEnumerable<KeyValuePair<string, TValue>> kvps)
             => new MutableMap<TValue>(kvps);
 
         /// <summary>
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static IDictionary<TKey, TValue> New<TKey, TValue>(IEnumerable<IKvp<TKey, TValue>> kvps)
+        public static IDictionary<TKey, TValue> _<TKey, TValue>(IEnumerable<IPair<TKey, TValue>> kvps)
             => new MutableMap<TKey, TValue>(kvps);
 
         /// <summary>
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        public static IDictionary<TKey, TValue> New<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> kvps)
+        public static IDictionary<TKey, TValue> _<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> kvps)
             => new MutableMap<TKey, TValue>(kvps);
     }
 }

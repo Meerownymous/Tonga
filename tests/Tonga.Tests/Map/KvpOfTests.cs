@@ -12,7 +12,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "value",
-                new KvpOf("key", () => "value").Value()
+                new AsPair("key", () => "value").Value()
             );
         }
 
@@ -21,20 +21,20 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "key",
-                new KvpOf("key", () => throw new ApplicationException()).Key()
+                new AsPair("key", () => throw new ApplicationException()).Key()
             );
         }
 
         [Fact]
         public void KnowsAboutBeingLazy()
         {
-            Assert.True(new KvpOf("2", () => "4").IsLazy());
+            Assert.True(new AsPair("2", () => "4").IsLazy());
         }
 
         [Fact]
         public void KnowsAboutBeingNotLazy()
         {
-            Assert.False(new KvpOf("2", "4").IsLazy());
+            Assert.False(new AsPair("2", "4").IsLazy());
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 1,
-                new KvpOf<int>("key", () => 1).Value()
+                new AsPair<int>("key", () => 1).Value()
             );
         }
 
@@ -51,20 +51,20 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "key",
-                new KvpOf<int>("key", () => throw new ApplicationException()).Key()
+                new AsPair<int>("key", () => throw new ApplicationException()).Key()
             );
         }
 
         [Fact]
         public void KnowsAboutBeingLazyValue()
         {
-            Assert.True(new KvpOf<int>("2", () => 4).IsLazy());
+            Assert.True(new AsPair<int>("2", () => 4).IsLazy());
         }
 
         [Fact]
         public void KnowsAboutBeingNotLazyValue()
         {
-            Assert.False(new KvpOf<int>("2", 4).IsLazy());
+            Assert.False(new AsPair<int>("2", 4).IsLazy());
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 1,
-                new KvpOf<int, int>(8, () => 1).Value()
+                new AsPair<int, int>(8, () => 1).Value()
             );
         }
 
@@ -81,20 +81,20 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 8,
-                new KvpOf<int, int>(8, () => throw new ApplicationException()).Key()
+                new AsPair<int, int>(8, () => throw new ApplicationException()).Key()
             );
         }
 
         [Fact]
         public void KnowsAboutBeingLazyKeyValue()
         {
-            Assert.True(new KvpOf<int, int>(2, () => 4).IsLazy());
+            Assert.True(new AsPair<int, int>(2, () => 4).IsLazy());
         }
 
         [Fact]
         public void KnowsAboutBeingNotLazyKeyValue()
         {
-            Assert.False(new KvpOf<int, int>(2, 4).IsLazy());
+            Assert.False(new AsPair<int, int>(2, 4).IsLazy());
         }
     }
 }

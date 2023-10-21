@@ -17,12 +17,12 @@ namespace Tonga.Map
     /// </summary>
     public sealed class VersionMap : MapEnvelope<Version, string>
     {
-        public VersionMap(bool openEnd, params IKvp<Version, string>[] kvps) : this(
+        public VersionMap(bool openEnd, params IPair<Version, string>[] kvps) : this(
             AsEnumerable._(kvps), openEnd
         )
         { }
 
-        public VersionMap(IEnumerable<IKvp<Version, string>> kvps, bool openEnd) : base(() => new VersionMap<string>(kvps, openEnd), false)
+        public VersionMap(IEnumerable<IPair<Version, string>> kvps, bool openEnd) : base(() => new VersionMap<string>(kvps, openEnd), false)
         { }
     }
 
@@ -54,7 +54,7 @@ namespace Tonga.Map
         /// It matches the version range, not the exact version.
         /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(params IKvp<Version, Value>[] kvps) : this(false, kvps)
+        public VersionMap(params IPair<Version, Value>[] kvps) : this(false, kvps)
         { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Tonga.Map
         /// It matches the version range, not the exact version.
         /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(bool openEnd, params IKvp<Version, Value>[] kvps) : this(AsEnumerable._(kvps), openEnd)
+        public VersionMap(bool openEnd, params IPair<Version, Value>[] kvps) : this(AsEnumerable._(kvps), openEnd)
         { }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Tonga.Map
         /// It matches the version range, not the exact version.
         /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(IEnumerable<IKvp<Version, Value>> kvps, bool openEnd)
+        public VersionMap(IEnumerable<IPair<Version, Value>> kvps, bool openEnd)
         {
             this.map = new LazyDict<Version, Value>(kvps);
             this.openEnd = openEnd;

@@ -11,9 +11,9 @@ namespace Tonga.Map.Tests
         {
             var dict =
                 new Joined(
-                    new LazyDict(new KvpOf("A", "I am")),
-                    new LazyDict(new KvpOf("B", "trapped in")),
-                    new LazyDict(new KvpOf("C", "a dictionary"))
+                    new LazyDict(new AsPair("A", "I am")),
+                    new LazyDict(new AsPair("B", "trapped in")),
+                    new LazyDict(new AsPair("C", "a dictionary"))
                 );
 
             Assert.Equal(
@@ -27,9 +27,9 @@ namespace Tonga.Map.Tests
         {
             var dict =
                 new Joined(
-                    new LazyDict(new KvpOf("A", "Hakuna")),
-                    new LazyDict(new KvpOf("B", "Matata")),
-                    new LazyDict(new KvpOf("B", "Banana"))
+                    new LazyDict(new AsPair("A", "Hakuna")),
+                    new LazyDict(new AsPair("B", "Matata")),
+                    new LazyDict(new AsPair("B", "Banana"))
                 );
 
             Assert.Equal(
@@ -43,9 +43,9 @@ namespace Tonga.Map.Tests
         {
             var dict =
                 new Joined<int>(
-                    new LazyDict<int>(new KvpOf<int>("A", 89)),
-                    new LazyDict<int>(new KvpOf<int>("B", 17)),
-                    new LazyDict<int>(new KvpOf<int>("C", 8))
+                    new LazyDict<int>(new AsPair<int>("A", 89)),
+                    new LazyDict<int>(new AsPair<int>("B", 17)),
+                    new LazyDict<int>(new AsPair<int>("C", 8))
                 );
 
             Assert.Equal(
@@ -59,9 +59,9 @@ namespace Tonga.Map.Tests
         {
             var dict =
                 new Joined<int>(
-                    new LazyDict<int>(new KvpOf<int>("A", 1)),
-                    new LazyDict<int>(new KvpOf<int>("B", 4)),
-                    new LazyDict<int>(new KvpOf<int>("B", 19))
+                    new LazyDict<int>(new AsPair<int>("A", 1)),
+                    new LazyDict<int>(new AsPair<int>("B", 4)),
+                    new LazyDict<int>(new AsPair<int>("B", 19))
                 );
 
             Assert.Equal(
@@ -75,9 +75,9 @@ namespace Tonga.Map.Tests
         {
             var dict =
                 new Joined<int, int>(
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 1)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(1, 3)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(2, 37))
+                    new LazyDict<int, int>(new AsPair<int, int>(0, 1)),
+                    new LazyDict<int, int>(new AsPair<int, int>(1, 3)),
+                    new LazyDict<int, int>(new AsPair<int, int>(2, 37))
                 );
 
             Assert.Equal(
@@ -91,9 +91,9 @@ namespace Tonga.Map.Tests
         {
             var dict =
                 new Joined<int, int>(
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 1)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 4)),
-                    new LazyDict<int, int>(new KvpOf<int, int>(0, 19))
+                    new LazyDict<int, int>(new AsPair<int, int>(0, 1)),
+                    new LazyDict<int, int>(new AsPair<int, int>(0, 4)),
+                    new LazyDict<int, int>(new AsPair<int, int>(0, 19))
                 );
 
             Assert.Equal(
@@ -107,9 +107,9 @@ namespace Tonga.Map.Tests
         {
             var dict =
                 new Joined(
-                    new LazyDict(new KvpOf("A", () => "I am")),
-                    new LazyDict(new KvpOf("B", () => "trapped in")),
-                    new LazyDict(new KvpOf("C", "a dictionary"))
+                    new LazyDict(new AsPair("A", () => "I am")),
+                    new LazyDict(new AsPair("B", () => "trapped in")),
+                    new LazyDict(new AsPair("C", "a dictionary"))
                 );
 
             Assert.Equal(

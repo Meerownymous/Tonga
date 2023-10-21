@@ -5,7 +5,7 @@ namespace Tonga
     /// <summary>
     /// A key-value pair string to string to add to a map.
     /// </summary>
-    public interface IKvp
+    public interface IPair
     {
         string Key();
         string Value();
@@ -15,7 +15,7 @@ namespace Tonga
     /// <summary>
     /// A key-value pair to add to a map.
     /// </summary>
-    public interface IKvp<TValue>
+    public interface IPair<TValue>
     {
         string Key();
         TValue Value();
@@ -25,7 +25,7 @@ namespace Tonga
     /// <summary>
     /// A key-value pair to add to a map.
     /// </summary>
-    public interface IKvp<TKey, TValue>
+    public interface IPair<TKey, TValue>
     {
         TKey Key();
         TValue Value();

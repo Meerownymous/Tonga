@@ -35,7 +35,7 @@ namespace Tonga.Enumerable
         /// <param name="items">array of items to join</param>
         public Joined(T first, IEnumerable<T> lst, params T[] items) : this(
             AsEnumerable._(
-                new Single<T>(first),
+                Single._(first),
                 lst,
                 AsEnumerable._(items)
             )

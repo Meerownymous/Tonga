@@ -10,7 +10,7 @@ namespace Tonga.Enumerable.Test
         public void DetectsMatch()
         {
             Assert.True(
-                new ExactAmount(3,
+                new IsAmount(3,
                     AsEnumerable._("a", "b", "c")
                 ).Value()
             );
@@ -20,7 +20,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnLess()
         {
             Assert.False(
-                new ExactAmount(3,
+                new IsAmount(3,
                     AsEnumerable._("a", "b")
                 ).Value()
             );
@@ -30,7 +30,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnMore()
         {
             Assert.False(
-                new ExactAmount(3,
+                new IsAmount(3,
                     AsEnumerable._("a", "b", "c", "d")
                 ).Value()
             );

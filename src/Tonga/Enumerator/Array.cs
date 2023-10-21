@@ -27,7 +27,6 @@ namespace Tonga.Enumerator
             get
             {
                 if (this.cursor[0] < 0) throw new InvalidOperationException("Move the enumerator first.");
-                Debug.WriteLine("- "+ this.items[this.cursor[0]]);
                 return this.items[this.cursor[0]];
             }
         }

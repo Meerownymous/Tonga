@@ -23,7 +23,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Each(Action<In> proc, params In[] src) : this(new ActionOf<In>(input => proc.Invoke(input)), src)
+        public Each(Action<In> proc, params In[] src) : this(new ActionOf<In>(proc.Invoke), src)
         { }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Each(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
+        public Each(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(proc.Invoke), src)
         { }
 
         /// <summary>

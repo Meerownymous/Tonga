@@ -12,7 +12,7 @@ namespace Tonga.Func
     /// </summary>
     public sealed class ActionSwitch<In> : IAction<string, In>
     {
-        private readonly MapOf<Action<In>> map;
+        private readonly AsMap<Action<In>> map;
         private readonly Action<string, In> fallback;
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Tonga.Func
         /// </summary>
         public ActionSwitch(IEnumerable<IPair<Action<In>>> consequences, Action<string, In> fallback)
         {
-            this.map = new MapOf<Action<In>>(consequences);
+            this.map = new AsMap<Action<In>>(consequences);
             this.fallback = fallback;
         }
 
@@ -360,7 +360,7 @@ namespace Tonga.Func
     /// </summary>
     public sealed class ActionSwitch<In1, In2> : IAction<string, In1, In2>
     {
-        private readonly MapOf<Action<In1, In2>> map;
+        private readonly AsMap<Action<In1, In2>> map;
         private readonly Action<string, In1, In2> fallback;
 
         /// <summary>
@@ -686,7 +686,7 @@ namespace Tonga.Func
         /// </summary>
         public ActionSwitch(IEnumerable<IPair<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback)
         {
-            this.map = new MapOf<Action<In1, In2>>(consequences);
+            this.map = new AsMap<Action<In1, In2>>(consequences);
             this.fallback = fallback;
         }
 

@@ -16,7 +16,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(IPair kvp, IDictionary<string, string> origin) : this(
-            new MapOf(kvp),
+            new AsMap(kvp),
             origin
         )
         { }
@@ -25,7 +25,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(IMapInput input, IDictionary<string, string> origin) : this(
-            new MapOf(input),
+            new AsMap(input),
             origin
         )
         { }
@@ -34,7 +34,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, string>[] dicts) : this(
-            new Enumerable.AsEnumerable<IDictionary<string, string>>(dicts)
+            AsEnumerable._(dicts)
         )
         { }
 
@@ -129,7 +129,7 @@ namespace Tonga.Map
         /// </summary>
         public Joined(IPair<Value> kvp, IDictionary<string, Value> origin, bool live = false) : this(
             live,
-            new MapOf<Value>(kvp), origin
+            AsMap._(kvp), origin
         )
         { }
 
@@ -138,7 +138,7 @@ namespace Tonga.Map
         /// </summary>
         public Joined(IMapInput<Value> input, IDictionary<string, Value> origin, bool live = false) : this(
             live,
-            new MapOf<Value>(input), origin
+            AsMap._(input), origin
         )
         { }
 
@@ -193,7 +193,7 @@ namespace Tonga.Map
         /// </summary>
         public Joined(IPair<Key, Value> kvp, IDictionary<Key, Value> origin, bool live = false) : this(
             live,
-            new MapOf<Key, Value>(kvp), origin
+            AsMap._(kvp), origin
         )
         { }
 
@@ -202,7 +202,7 @@ namespace Tonga.Map
         /// </summary>
         public Joined(IMapInput<Key, Value> input, IDictionary<Key, Value> origin, bool live = false) : this(
             live,
-            new MapOf<Key, Value>(input), origin
+            AsMap._(input), origin
         )
         { }
 

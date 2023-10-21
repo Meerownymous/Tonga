@@ -859,7 +859,8 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(IEnumerable<string> lines) : this(
             Mapped._(
-                AsText._, lines
+                AsText._,
+                lines
             )
         )
         { }
@@ -868,11 +869,13 @@ namespace Tonga.Text
         /// </summary>
         public Paragraph(params IText[] lines) : this(AsEnumerable._(lines))
         { }
+
         /// <summary>
         /// A paragraph which seperates the given lines by a carriage return.
         /// </summary>
-        public Paragraph(IEnumerable<IText> lines)
-            : base(Joined.From(Environment.NewLine, lines))
+        public Paragraph(IEnumerable<IText> lines) : base(
+            Joined._(Environment.NewLine, lines)
+        )
         { }
     }
 }

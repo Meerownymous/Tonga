@@ -47,7 +47,7 @@ namespace Tonga.Collection
         /// <param name="src">items to filter</param>
         public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(() =>
             new LiveCollection<T>(
-                Enumerable.Filtered.From(
+                Enumerable.Filtered._(
                     func, src
                 )
             )

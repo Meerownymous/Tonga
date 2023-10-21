@@ -7,12 +7,12 @@ namespace Tonga.Scalar
     /// <summary>
     /// Tells if an enumerable has exactly the the specified item count.
     /// </summary>
-    public sealed class ExactAmount : ScalarEnvelope<bool>
+    public sealed class IsAmount : ScalarEnvelope<bool>
     {
         /// <summary>
         /// Tells if an enumerable has exactly the the specified item count.
         /// </summary>
-        public ExactAmount(int amount, IEnumerable source) : base(() =>
+        public IsAmount(int amount, IEnumerable source) : base(() =>
         {
             if (amount < 0)
             {

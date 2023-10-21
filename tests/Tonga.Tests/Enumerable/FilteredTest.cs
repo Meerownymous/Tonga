@@ -31,7 +31,7 @@ namespace Tonga.Enumerable.Test
         {
             var filterings = 0;
             var filtered =
-                Filtered.From(
+                Filtered._(
                     (input) =>
                     {
                         filterings++;
@@ -56,7 +56,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new LengthOf(
-                    Filtered.From(
+                    Filtered._(
                         input => input.Length > 1,
                         new None()
                     )

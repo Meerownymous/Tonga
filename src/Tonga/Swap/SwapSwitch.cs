@@ -435,7 +435,7 @@ namespace Tonga.Swap
         {
             this.swaps =
                 FallbackMap._(
-                    MapOf._(swap),
+                    AsMap._(swap),
                     unknown => new SwapOf<TInput, TOutput>((input) => fallback(unknown, input))
                 );
         }
@@ -876,7 +876,7 @@ namespace Tonga.Swap
         {
             this.swaps =
                 new FallbackMap<ISwap<TInput1, TInput2, TOutput>>(
-                    new MapOf<ISwap<TInput1, TInput2, TOutput>>(swap),
+                    new AsMap<ISwap<TInput1, TInput2, TOutput>>(swap),
                     unknown =>
                         new SwapOf<TInput1, TInput2, TOutput>(
                             (input1, input2) => fallback(unknown, input1, input2)
@@ -1320,7 +1320,7 @@ namespace Tonga.Swap
         {
             this.swaps =
                 new FallbackMap<TKey, ISwap<TInput1, TInput2, TOutput>>(
-                    new MapOf<TKey, ISwap<TInput1, TInput2, TOutput>>(swap),
+                    new AsMap<TKey, ISwap<TInput1, TInput2, TOutput>>(swap),
                     unknown =>
                         new SwapOf<TInput1, TInput2, TOutput>(
                             (input1, input2) => fallback(unknown, input1, input2)

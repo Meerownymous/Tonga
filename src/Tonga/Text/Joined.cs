@@ -134,7 +134,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="strs">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(String delimit, IEnumerable<string> strs) => new Joined(delimit, strs);
+        public static Joined _(String delimit, IEnumerable<string> strs) => new Joined(delimit, strs);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.
@@ -142,7 +142,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="strs">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(String delimit, params string[] strs) => new Joined(delimit, strs);
+        public static Joined _(String delimit, params string[] strs) => new Joined(delimit, strs);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.
@@ -150,7 +150,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(IText delimit, params IText[] txts) => new Joined(delimit, txts);
+        public static Joined _(IText delimit, params IText[] txts) => new Joined(delimit, txts);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.
@@ -158,7 +158,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(String delimit, params IText[] txts) => new Joined(delimit, txts);
+        public static Joined _(String delimit, params IText[] txts) => new Joined(delimit, txts);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.
@@ -166,7 +166,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(String delimit, IEnumerable<IText> txts) => new Joined(delimit, txts);
+        public static Joined _(String delimit, IEnumerable<IText> txts) => new Joined(delimit, txts);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.
@@ -174,7 +174,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(String delimit, System.Func<IEnumerable<IText>> txts) => new Joined(delimit, txts);
+        public static Joined _(String delimit, System.Func<IEnumerable<IText>> txts) => new Joined(delimit, txts);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.
@@ -182,7 +182,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(IText delimit, IScalar<IEnumerable<IText>> txts) => new Joined(delimit, txts);
+        public static Joined _(IText delimit, IScalar<IEnumerable<IText>> txts) => new Joined(delimit, txts);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.
@@ -190,6 +190,6 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined From(IText delimit, IEnumerable<IText> txts) => new Joined(delimit, txts);
+        public static Joined _(IText delimit, IEnumerable<IText> txts) => new Joined(delimit, txts);
     }
 }

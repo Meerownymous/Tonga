@@ -59,7 +59,7 @@ namespace Tonga.Text
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        public SubText(IText text, System.Func<int> start, System.Func<int> length) : base(() =>
+        public SubText(IText text, Func<int> start, Func<int> length) : base(() =>
             {
                 return
                     text.AsString().Substring(

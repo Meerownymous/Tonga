@@ -208,7 +208,7 @@ namespace Tonga.Map
         private AsPair(Func<KeyValuePair<string, Func<TValue>>> kvp, bool isLazy)
         {
             this.entry = Sticky._(kvp.Invoke);
-            this.value = Sticky._((() => this.entry.Value().Value.Invoke()));
+            this.value = Sticky._(() => this.entry.Value().Value.Invoke());
             this.isLazy = isLazy;
         }
 

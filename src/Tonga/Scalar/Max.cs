@@ -19,7 +19,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params System.Func<T>[] items) : this(
-            new Mapped<System.Func<T>, IScalar<T>>(
+            Mapped._(
                 item => AsScalar._(() => item.Invoke()),
                 AsEnumerable._(items)
             )
@@ -31,7 +31,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<T> items) : this(
-            new Mapped<T, IScalar<T>>(item => AsScalar._(item), items))
+            Mapped._(item => AsScalar._(item), items))
         { }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params T[] items) : this(
-            new Mapped<T, IScalar<T>>(item => AsScalar._(item), items))
+            Mapped._(item => AsScalar._(item), items))
         { }
 
         /// <summary>
@@ -53,8 +53,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(IEnumerable<IScalar<T>> items)
-            : base(() =>
+        public Max(IEnumerable<IScalar<T>> items) : base(() =>
             {
                 var e = items.GetEnumerator();
                 if (!e.MoveNext())

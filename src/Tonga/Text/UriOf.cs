@@ -26,7 +26,7 @@ namespace Tonga.Text
         public UriOf(IText url)
         {
             this.source =
-                new AsScalar<Uri>(
+                AsScalar._(
                     new UriBuilder(url.AsString()).Uri
                 );
         }

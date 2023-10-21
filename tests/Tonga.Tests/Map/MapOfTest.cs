@@ -17,7 +17,7 @@ namespace Tonga.Map.Tests
             var one = new KeyValuePair<string, string>("hello", "map");
             var two = new KeyValuePair<string, string>("goodbye", "dictionary");
 
-            var m = new MapOf(one, two);
+            var m = new AsMap(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -29,9 +29,9 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 value,
-                new MapOf(
-                    new MapInputOf(new AsPair("A", "V")),
-                    new MapInputOf(new AsPair("B", "Y"))
+                new AsMap(
+                    new AsMapInput(new AsPair("A", "V")),
+                    new AsMapInput(new AsPair("B", "Y"))
                 )[key]
             );
         }
@@ -40,7 +40,7 @@ namespace Tonga.Map.Tests
         public void ConvertsEnumerableToMap()
         {
             var m =
-                new MapOf(
+                new AsMap(
                     new KeyValuePair<string, string>("0", "hello, "),
                     new KeyValuePair<string, string>("1", "world!")
                 );
@@ -55,7 +55,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "B",
-                new MapOf(
+                new AsMap(
                     "A", "B",
                     "C", "D"
                 )["A"]
@@ -67,7 +67,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "B",
-                new MapOf(
+                new AsMap(
                     Enumerable.AsEnumerable._(
                         "A", "B",
                         "C", "D"
@@ -80,7 +80,7 @@ namespace Tonga.Map.Tests
         public void RejectsOddValueCount()
         {
             Assert.Throws<ArgumentException>(() =>
-                new MapOf(
+                new AsMap(
                     Enumerable.AsEnumerable._(
                         "A", "B",
                         "C"
@@ -94,7 +94,7 @@ namespace Tonga.Map.Tests
         {
             int size = 1;
 
-            var map = new MapOf<int>(
+            var map = new AsMap<int>(
                 () =>
                     new Dictionary<string, int>()
                     {
@@ -117,7 +117,7 @@ namespace Tonga.Map.Tests
             var random = new Random();
 
             var map =
-                new MapOf(
+                new AsMap(
                     Repeated._(
                         () => new KeyValuePair<string, string>(random.Next() + "", "1"),
                         () =>
@@ -140,7 +140,7 @@ namespace Tonga.Map.Tests
             var one = new KeyValuePair<string, int>("hello", 10);
             var two = new KeyValuePair<string, int>("goodbye", 20);
 
-            var m = new MapOf<int>(one, two);
+            var m = new AsMap<int>(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -152,9 +152,9 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 value,
-                new MapOf<int>(
-                    new MapInputOf<int>(new AsPair<int>("A", 39478624)),
-                    new MapInputOf<int>(new AsPair<int>("B", 60208801))
+                new AsMap<int>(
+                    new AsMapInput<int>(new AsPair<int>("A", 39478624)),
+                    new AsMapInput<int>(new AsPair<int>("B", 60208801))
                 )[key]
             );
         }
@@ -165,7 +165,7 @@ namespace Tonga.Map.Tests
         public void ConvertsEnumerableToMapTypedValue(string key, int value)
         {
             var m =
-                new MapOf<int>(
+                new AsMap<int>(
                     new KeyValuePair<string, int>("hello", 0),
                     new KeyValuePair<string, int>("world", 1)
                 );
@@ -181,7 +181,7 @@ namespace Tonga.Map.Tests
             var random = new Random();
 
             var map =
-                new MapOf<int>(
+                new AsMap<int>(
                     Repeated._(
                         AsScalar._(() =>
                             new AsPair<int>(random.Next() + "", 1)),
@@ -206,7 +206,7 @@ namespace Tonga.Map.Tests
             var one = new KeyValuePair<int, int>(45, 10);
             var two = new KeyValuePair<int, int>(33, 20);
 
-            var m = new MapOf<int, int>(one, two);
+            var m = new AsMap<int, int>(one, two);
 
             Assert.True(m.Contains(one) && m.Contains(two));
         }
@@ -218,9 +218,9 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 value,
-                new MapOf<int, int>(
-                    new MapInputOf<int, int>(new AsPair<int, int>(12, 39478624)),
-                    new MapInputOf<int, int>(new AsPair<int, int>(24, 60208801))
+                new AsMap<int, int>(
+                    new AsMapInput<int, int>(new AsPair<int, int>(12, 39478624)),
+                    new AsMapInput<int, int>(new AsPair<int, int>(24, 60208801))
                 )[key]
             );
         }
@@ -231,7 +231,7 @@ namespace Tonga.Map.Tests
         public void ConvertsEnumerableToMapTypedKeyValue(int key, int value)
         {
             var m =
-                new MapOf<int, int>(
+                new AsMap<int, int>(
                     new KeyValuePair<int, int>(9, 0),
                     new KeyValuePair<int, int>(10, 1)
                 );
@@ -247,7 +247,7 @@ namespace Tonga.Map.Tests
             var random = new Random();
 
             var map =
-                new MapOf<int, int>(
+                new AsMap<int, int>(
                     Repeated._(
                         () => new AsPair<int, int>(random.Next(), 1),
                         () =>
@@ -269,7 +269,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "works",
-                new MapOf(
+                new AsMap(
                     new AsPair("name", () => throw new ApplicationException()),
                     new AsPair("anothername", () => "works")
                 )["anothername"]
@@ -280,7 +280,7 @@ namespace Tonga.Map.Tests
         public void IKvpRejectsBuildingAllValues()
         {
             var map =
-                new MapOf(
+                new AsMap(
                     new AsPair("name", () => "also works"),
                     new AsPair("name2", () => "works")
                 );
@@ -291,7 +291,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void WorksWithEmptyList()
         {
-            var map = new MapOf(new None());
+            var map = new AsMap(new None());
             Assert.Equal(0, map.Keys.Count);
         }
 
@@ -299,10 +299,10 @@ namespace Tonga.Map.Tests
         public void ImplicitCtorWithMapWorks()
         {
             var map =
-                MapOf._(
+                AsMap._(
                     AsPair._("target",
                         new FallbackMap(
-                            new MapOf(
+                            new AsMap(
                                 "CONTAINS", "contains",
                                 "GT", ">",
                                 "LT", "<",
@@ -313,7 +313,7 @@ namespace Tonga.Map.Tests
                     ),
                     AsPair._("program",
                         new FallbackMap(
-                            new MapOf(
+                            new AsMap(
                                 "CONTAINS", "contains",
                                 "GT", ">",
                                 "LT", "<",

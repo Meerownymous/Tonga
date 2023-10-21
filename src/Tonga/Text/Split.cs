@@ -67,7 +67,7 @@ namespace Tonga.Text
 
                 return
                     remBlank ?
-                    Filtered.From(
+                    Filtered._(
                         (str) => !String.IsNullOrWhiteSpace(str),
                         split
                     )

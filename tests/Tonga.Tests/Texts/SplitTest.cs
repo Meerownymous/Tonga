@@ -12,7 +12,7 @@ namespace Tonga.Text.Test
             Assert.Equal(
                 2,
                 new LengthOf(
-                    Filtered.From(
+                    Filtered._(
                         s => s == "Hello" || s == "world!",
                         new Split(
                             "Hello world!", "\\s+"
@@ -37,7 +37,7 @@ namespace Tonga.Text.Test
             Assert.Equal(
                 2,
                 new LengthOf(
-                    Filtered.From(
+                    Filtered._(
                         s => s == "Atoms" || s == "OOP!",
                         new Split(
                             "Atoms OOP!",
@@ -54,7 +54,7 @@ namespace Tonga.Text.Test
             Assert.Equal(
                 2,
                 new LengthOf(
-                    Filtered.From(
+                    Filtered._(
                         s => s == "Atoms" || s == "Primitives!",
                         new Split(
                             AsText._("Atoms4Primitives!"), "\\d+")
@@ -69,7 +69,7 @@ namespace Tonga.Text.Test
             Assert.Equal(
                 2,
                 new LengthOf(
-                    Filtered.From(
+                    Filtered._(
                         s => s == "Split" || s == "OOP",
                         new Split(AsText._("Split#OOP!"), "\\W+")
                     )

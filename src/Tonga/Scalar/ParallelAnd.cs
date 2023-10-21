@@ -61,7 +61,7 @@ namespace Tonga.Scalar
         /// <param name="src"></param>
         public ParallelAnd(IFunc<T, bool> func, IEnumerable<T> src) : this(
             Mapped._(
-                i => new AsScalar<bool>(func.Invoke(i)),
+                i => AsScalar._(func.Invoke(i)),
                 src
             )
         )

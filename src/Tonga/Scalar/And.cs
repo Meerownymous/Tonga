@@ -10,32 +10,33 @@ namespace Tonga.Scalar
     public sealed class And<In> : ScalarEnvelope<Boolean>
     {
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
-        /// <param name="func"> the condition to apply </param>
+        /// <param name="check"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Enumerable.AsEnumerable._(src))
+        public And(Func<In, bool> check, params In[] src) : this(new FuncOf<In, bool>(check), AsEnumerable._(src))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
-        /// <param name="func"> the condition to apply </param>
+        /// <param name="check"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, IEnumerable<In> src) : this(new FuncOf<In, bool>(func), src)
+        public And(Func<In, bool> check, IEnumerable<In> src) : this(new FuncOf<In, bool>(check), src)
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
-        /// <param name="func"> the condition to apply </param>
+        /// <param name="check"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, params In[] src) : this(func, Enumerable.AsEnumerable._(src))
+        public And(IFunc<In, Boolean> check, params In[] src) : this(check, AsEnumerable._(src))
         { }
 
         /// <summary> ctor </summary>
-        /// <param name="func"> the condition to apply </param>
-        /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, IEnumerable<In> src) :
+        /// <param name="check"> the condition to apply </param>
+        /// <param name="items"> list of items </param>
+        public And(IFunc<In, Boolean> check, IEnumerable<In> items) :
             this(
                 Mapped._(
                     new FuncOf<In, IScalar<Boolean>>((item) =>
-                        AsScalar._(func.Invoke(item))),
-                    src
+                        AsScalar._(check.Invoke(item))
+                    ),
+                    items
                 )
             )
         { }
@@ -43,8 +44,16 @@ namespace Tonga.Scalar
         /// <summary> True if all functions return true with given input value </summary>
         /// <param name="value"> Input value wich will executed by all given functions </param>
         /// <param name="functions"> Functions wich will executed with given input value </param>
-        public And(In value, params Func<In, bool>[] functions)
-            : this(tValue => new And(new Mapped<Func<In, bool>, bool>(tFunc => tFunc.Invoke(tValue), functions)).Value(), value)
+        public And(In value, params Func<In, bool>[] functions) : this(
+            tValue =>
+            new And(
+                Mapped._(
+                    tFunc => tFunc.Invoke(tValue),
+                    functions
+                )
+            ).Value(),
+            value
+        )
         { }
 
         /// <summary></summary>
@@ -71,12 +80,12 @@ namespace Tonga.Scalar
     {
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(params System.Func<bool>[] funcs) : this(Enumerable.AsEnumerable._(funcs))
+        public And(params Func<bool>[] funcs) : this(AsEnumerable._(funcs))
         { }
 
-        /// <summary> Logical and. Returns true if all calls to <see cref="System.Func{Out}"/> were true. </summary>
+        /// <summary> Logical and. Returns true if all calls to <see cref="Func{Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(IEnumerable<System.Func<bool>> funcs) : this(
+        public And(IEnumerable<Func<bool>> funcs) : this(
             Mapped._(
                 func => AsScalar._(func),
                 funcs
@@ -87,7 +96,8 @@ namespace Tonga.Scalar
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params IScalar<Boolean>[] src) : this(
-            Enumerable.AsEnumerable._(src))
+           AsEnumerable._(src)
+        )
         { }
 
         /// <summary> ctor </summary>

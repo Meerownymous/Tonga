@@ -10,7 +10,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map which is empty.
         /// </summary>
-        public EmptyMap() : base(() => new MapOf(new None()), false)
+        public EmptyMap() : base(() => new AsMap(new None()), false)
         { }
     }
 
@@ -22,7 +22,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map which is empty.
         /// </summary>
-        public EmptyMap() : base(() => new MapOf<Value>(), false)
+        public EmptyMap() : base(() => AsMap._<Value>(), false)
         { }
     }
 
@@ -34,7 +34,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map which is empty.
         /// </summary>
-        public EmptyMap() : base(() => new MapOf<Key, Value>(), false)
+        public EmptyMap() : base(() => AsMap._<Key, Value>(), false)
         { }
     }
 }

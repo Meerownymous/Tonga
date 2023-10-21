@@ -114,7 +114,7 @@ namespace Tonga.Scalar
         public First(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
             : base(() =>
             {
-                var filtered = new Filtered<T>(condition, src).GetEnumerator();
+                var filtered = Filtered._(condition, src).GetEnumerator();
 
                 T result;
                 if (filtered.MoveNext())

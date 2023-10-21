@@ -8,7 +8,7 @@ namespace Tonga.Map
     /// <summary>
     /// A map from string to string.
     /// You must understand, that this map will build every time when any method is called.
-    /// If you do not want this, use <see cref="MapOf"/>
+    /// If you do not want this, use <see cref="AsMap"/>
     /// </summary>
     public sealed class LiveMap : MapEnvelope
     {
@@ -60,7 +60,7 @@ namespace Tonga.Map
     /// <summary>
     /// A map from string to typed value.
     /// You must understand, that this map will build every time when any method is called.
-    /// If you do not want this, use <see cref="MapOf"/>
+    /// If you do not want this, use <see cref="AsMap"/>
     /// </summary>
     public sealed class LiveMap<Value> : MapEnvelope<Value>
     {
@@ -84,7 +84,7 @@ namespace Tonga.Map
     /// <summary>
     /// A map from one type to another.
     /// You must understand, that this map will build every time when any method is called.
-    /// If you do not want this, use <see cref="MapOf"/>
+    /// If you do not want this, use <see cref="AsMap"/>
     /// </summary>
     public sealed class LiveMap<Key, Value> : MapEnvelope<Key, Value>
     {

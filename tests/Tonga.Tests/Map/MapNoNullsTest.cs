@@ -14,7 +14,7 @@ namespace Tonga.Map.Tests
             Assert.Contains(
                 new KeyValuePair<int, int>(0, 0),
                 new NoNulls<int, int>(
-                    new MapOf<int, int>(
+                    new AsMap<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -27,7 +27,7 @@ namespace Tonga.Map.Tests
             Assert.DoesNotContain(
                 new KeyValuePair<int, int>(1, 0),
                 new NoNulls<int, int>(
-                    new MapOf<int, int>(
+                    new AsMap<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -40,7 +40,7 @@ namespace Tonga.Map.Tests
             Assert.DoesNotContain(
                 new KeyValuePair<int, int>(0, 1),
                 new NoNulls<int, int>(
-                    new MapOf<int, int>(
+                    new AsMap<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -53,7 +53,7 @@ namespace Tonga.Map.Tests
             Assert.DoesNotContain(
                 new KeyValuePair<int, int>(1, 1),
                 new NoNulls<int, int>(
-                    new MapOf<int, int>(
+                    new AsMap<int, int>(
                         new KeyValuePair<int, int>(0, 0)
                     )
                 )
@@ -64,7 +64,7 @@ namespace Tonga.Map.Tests
         public void ContainsWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -77,7 +77,7 @@ namespace Tonga.Map.Tests
         public void ContainsWithNullValue()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -90,7 +90,7 @@ namespace Tonga.Map.Tests
         public void ContainsWithNullKeyAndNullValue()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -103,7 +103,7 @@ namespace Tonga.Map.Tests
         public void ContainsKeyWithExistingKey()
         {
             var map = new NoNulls<int, int>(
-                new MapOf<int, int>(
+                new AsMap<int, int>(
                     new KeyValuePair<int, int>(0, 0)
                 )
             );
@@ -143,7 +143,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void AddEntryWithNullKey()
         {
-            var map = new NoNulls<object, object>(new MapOf<object, object>());
+            var map = new NoNulls<object, object>(new AsMap<object, object>());
             Assert.Throws<ArgumentException>(
                 () => map.Add(new KeyValuePair<object, object>(null, 0))
             );
@@ -152,7 +152,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void AddEntryWithNullValue()
         {
-            var map = new NoNulls<object, object>(new MapOf<object, object>());
+            var map = new NoNulls<object, object>(new AsMap<object, object>());
             Assert.Throws<ArgumentException>(
                 () => map.Add(new KeyValuePair<object, object>(0, null))
             );
@@ -161,7 +161,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void AddEntryWithNullKeyAndNullValue()
         {
-            var map = new NoNulls<object, object>(new MapOf<object, object>());
+            var map = new NoNulls<object, object>(new AsMap<object, object>());
             Assert.Throws<ArgumentException>(
                 () => map.Add(new KeyValuePair<object, object>(null, null))
             );
@@ -225,7 +225,7 @@ namespace Tonga.Map.Tests
         public void TryGetValueWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -249,7 +249,7 @@ namespace Tonga.Map.Tests
         public void GetValue()
         {
             var map = new NoNulls<int, int>(
-                new MapOf<int, int>(
+                new AsMap<int, int>(
                     new KeyValuePair<int, int>(0, 0)
                 )
             );
@@ -260,7 +260,7 @@ namespace Tonga.Map.Tests
         public void GetValueWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -271,7 +271,7 @@ namespace Tonga.Map.Tests
         public void GetNullValue()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, null)
                 )
             );
@@ -294,7 +294,7 @@ namespace Tonga.Map.Tests
         public void SetValueWithNullKey()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -305,7 +305,7 @@ namespace Tonga.Map.Tests
         public void SetValueWithNullValue()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );
@@ -316,7 +316,7 @@ namespace Tonga.Map.Tests
         public void SetValueWithNullKeyAndNullValue()
         {
             var map = new NoNulls<object, object>(
-                new MapOf<object, object>(
+                new AsMap<object, object>(
                     new KeyValuePair<object, object>(0, 0)
                 )
             );

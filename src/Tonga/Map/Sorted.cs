@@ -76,7 +76,7 @@ namespace Tonga.Map
                 {
                     var items = new List<KeyValuePair<Key, Value>>(pairs);
                     items.Sort(cmp);
-                    return new MapOf<Key, Value>(items);
+                    return AsMap._(items);
                 },
                 false
             )
@@ -175,7 +175,7 @@ namespace Tonga.Map
                 {
                     var items = new List<KeyValuePair<string, Value>>(pairs);
                     items.Sort(cmp);
-                    return new MapOf<string, Value>(items);
+                    return new AsMap<string, Value>(items);
                 },
                 false
             )
@@ -273,7 +273,7 @@ namespace Tonga.Map
                 {
                     var items = new List<KeyValuePair<string, string>>(pairs);
                     items.Sort(cmp);
-                    return new MapOf<string, string>(items);
+                    return new AsMap<string, string>(items);
                 },
                 false
             )

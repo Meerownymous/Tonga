@@ -47,7 +47,7 @@ namespace Tonga.Func
             trigger,
             prepare,
             shoot,
-            new MapOf<TimeSpan>(
+            new AsMap<TimeSpan>(
                 new AsPair<TimeSpan>("timeout", timeout),
                 new AsPair<TimeSpan>("interval", interval)
             ))

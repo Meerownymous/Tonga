@@ -16,8 +16,10 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="scalar">func to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public Retry(Func<T> scalar, int attempts = 3)
-            : this(AsScalar._(scalar.Invoke), attempts)
+        public Retry(Func<T> scalar, int attempts = 3) : this(
+            AsScalar._(scalar.Invoke),
+            attempts
+        )
         { }
 
         /// <summary>

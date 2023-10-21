@@ -30,8 +30,8 @@ namespace Tonga.Enumerable
             this.result =
                 AsEnumerable._(() =>
                     Produced(
-                        Filtered.From(match, a),
-                        Filtered.From(match, b)
+                        Filtered._(match, a),
+                        Filtered._(match, b)
                     )
                 );
         }

@@ -51,7 +51,7 @@ namespace Tonga.Map.Tests
         {
             var m =
                 new LiveMap(() =>
-                    new MapOf(
+                    new AsMap(
                         new KeyValuePair<string, string>("0", "hello, "),
                         new KeyValuePair<string, string>("1", "world!")
                     )
@@ -70,7 +70,7 @@ namespace Tonga.Map.Tests
 
             var map =
                 new LiveMap<int, int>(() =>
-                    new MapOf<int, int>(
+                    new AsMap<int, int>(
                         new Repeated<KeyValuePair<int, int>>(
                             AsScalar._(() =>
                                 new KeyValuePair<int, int>(random.Next(), 1)
@@ -145,7 +145,7 @@ namespace Tonga.Map.Tests
         {
             var m =
                 new LiveMap<int>(() =>
-                    new MapOf<int>(
+                    new AsMap<int>(
                         Enumerable.AsEnumerable._(
                             new KeyValuePair<string, int>("hello", 0),
                             new KeyValuePair<string, int>("world", 1)
@@ -166,7 +166,7 @@ namespace Tonga.Map.Tests
 
             var map =
                 new LiveMap<int>(() =>
-                    new MapOf<int>(
+                    new AsMap<int>(
                         new Repeated<KeyValuePair<string, int>>(
                             AsScalar._(() =>
                                 new KeyValuePair<string, int>(random.Next() + "", 1)),
@@ -240,7 +240,7 @@ namespace Tonga.Map.Tests
         {
             var m =
                 new LiveMap<int, String>(() =>
-                    new MapOf<int, string>(
+                    new AsMap<int, string>(
                         new KeyValuePair<int, string>(0, "hello, "),
                         new KeyValuePair<int, string>(1, "world!")
                     )
@@ -259,7 +259,7 @@ namespace Tonga.Map.Tests
 
             var map =
                 new LiveMap<int, int>(() =>
-                    new MapOf<int, int>(
+                    new AsMap<int, int>(
                         new Repeated<KeyValuePair<int, int>>(
                             AsScalar._(() =>
                                 new KeyValuePair<int, int>(random.Next(), 1)),

@@ -121,7 +121,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
         public Or(IEnumerable<Func<bool>> funcs) : this(
-            new Mapped<Func<bool>, IScalar<bool>>(
+            Mapped._(
                 func => AsScalar._(func),
                 funcs
             )
@@ -141,7 +141,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(params bool[] src) : this(
-            new Mapped<bool, IScalar<bool>>(
+            Mapped._(
                 item => AsScalar._(item),
                 src
             )
@@ -153,7 +153,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(IEnumerable<bool> src) : this(
-            new Mapped<bool, IScalar<bool>>(
+            Mapped._(
                 item => AsScalar._(item),
                 src
             )

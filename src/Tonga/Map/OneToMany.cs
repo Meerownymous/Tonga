@@ -58,7 +58,7 @@ namespace Tonga.Map
         /// The result is sticky.
         /// </summary>
         public static IPair<IEnumerable<TValue>> _<TValue>(string key, params System.Func<TValue>[] values)
-            => new KvpOfMany<TValue>(key, values);
+            => new OneToMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many strings.
@@ -66,19 +66,19 @@ namespace Tonga.Map
         /// The result is sticky.
         /// </summary>
         public static IPair<IEnumerable<TValue>> _<TValue>(string key, params TValue[] values)
-            => new KvpOfMany<TValue>(key, values);
+            => new OneToMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many strings.
         /// </summary>
         public static IPair<IEnumerable<TValue>> _<TValue>(string key, IEnumerable<TValue> values)
-            => new KvpOfMany<TValue>(key, values);
+            => new OneToMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
         public static IPair<IEnumerable<TValue>> _<TValue>(string key, System.Func<IEnumerable<TValue>> values)
-            => new KvpOfMany<TValue>(key, values);
+            => new OneToMany<TValue>(key, values);
 
         /// <summary>
         /// A key to many values.
@@ -86,7 +86,7 @@ namespace Tonga.Map
         /// The result is sticky.
         /// </summary>
         public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, params System.Func<TValue>[] many)
-            => new KeyToValues<TKey, TValue>(key, many);
+            => new OneToMany<TKey, TValue>(key, many);
 
         /// <summary>
         /// A key to many values.
@@ -94,32 +94,32 @@ namespace Tonga.Map
         /// The result is sticky.
         /// </summary>
         public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, params TValue[] many)
-            => new KeyToValues<TKey, TValue>(key, many);
+            => new OneToMany<TKey, TValue>(key, many);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
         public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, IEnumerable<TValue> many)
-            => new KeyToValues<TKey, TValue>(key, many);
+            => new OneToMany<TKey, TValue>(key, many);
 
         /// <summary>
         /// A key to many values.
         /// </summary>
         public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, System.Func<IEnumerable<TValue>> many)
-            => new KeyToValues<TKey, TValue>(key, many);
+            => new OneToMany<TKey, TValue>(key, many);
     }
 
     /// <summary>
     /// A key to many values.
     /// </summary>
-    public sealed class KvpOfMany<TValue> : KvpEnvelope<IEnumerable<TValue>>
+    public sealed class OneToMany<TValue> : KvpEnvelope<IEnumerable<TValue>>
     {
         /// <summary>
         /// A key to many strings.
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params System.Func<TValue>[] values) : this(key, () =>
+        public OneToMany(string key, params System.Func<TValue>[] values) : this(key, () =>
             {
                 var lst = new List<TValue>();
                 for (var i = 0; i < values.Length; i++)
@@ -136,7 +136,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params TValue[] values) : this(key, () =>
+        public OneToMany(string key, params TValue[] values) : this(key, () =>
             {
                 var lst = new List<TValue>();
                 for (var i = 0; i < values.Length; i++)
@@ -151,14 +151,14 @@ namespace Tonga.Map
         /// <summary>
         /// A key to many strings.
         /// </summary>
-        public KvpOfMany(string key, IEnumerable<TValue> values) : this(key, () => values)
+        public OneToMany(string key, IEnumerable<TValue> values) : this(key, () => values)
         { }
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KvpOfMany(string key, System.Func<IEnumerable<TValue>> values) : base(
-            new AsPair<IEnumerable<TValue>>(key, values)
+        public OneToMany(string key, Func<IEnumerable<TValue>> values) : base(
+            AsPair._(key, values)
         )
         { }
     }
@@ -166,14 +166,14 @@ namespace Tonga.Map
     /// <summary>
     /// A key to many values.
     /// </summary>
-    public sealed class KeyToValues<TKey, TValue> : KvpEnvelope<TKey, IEnumerable<TValue>>
+    public sealed class OneToMany<TKey, TValue> : KvpEnvelope<TKey, IEnumerable<TValue>>
     {
         /// <summary>
         /// A key to many values.
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KeyToValues(TKey key, params System.Func<TValue>[] many) : this(key, () =>
+        public OneToMany(TKey key, params Func<TValue>[] many) : this(key, () =>
         {
             var lst = new List<TValue>();
             for (var i = 0; i < many.Length; i++)
@@ -190,29 +190,25 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KeyToValues(TKey key, params TValue[] many) : this(key, () =>
-        {
-            var lst = new List<TValue>();
-            for (var i = 0; i < many.Length; i++)
-            {
-                lst.Add(many[i]);
-            }
-            return lst;
-        }
+        public OneToMany(TKey key, params TValue[] many) : this(
+            key,
+            () => AsEnumerable._(many)
         )
         { }
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KeyToValues(TKey key, IEnumerable<TValue> many) : this(key, () => many)
+        public OneToMany(TKey key, IEnumerable<TValue> many) : this(
+            key, () => many
+        )
         { }
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KeyToValues(TKey key, System.Func<IEnumerable<TValue>> many) : base(
-            new AsPair<TKey, IEnumerable<TValue>>(key, many)
+        public OneToMany(TKey key, Func<IEnumerable<TValue>> many) : base(
+            AsPair._(key, many)
         )
         { }
     }

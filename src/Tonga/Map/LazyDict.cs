@@ -43,7 +43,7 @@ namespace Tonga.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<Scalar.Sticky<string>>(() =>
+                new AsMap<Scalar.Sticky<string>>(() =>
                 {
                     var dict = new Dictionary<string, Scalar.Sticky<string>>();
                     foreach (var kvp in kvps)
@@ -323,7 +323,7 @@ namespace Tonga.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<Scalar.Sticky<Value>>(() =>
+                new AsMap<Scalar.Sticky<Value>>(() =>
                 {
                     var dict = new Dictionary<string, Scalar.Sticky<Value>>();
                     foreach (var kvp in kvps)
@@ -561,7 +561,7 @@ namespace Tonga.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<Key, Scalar.Sticky<Value>>(() =>
+                new AsMap<Key, Scalar.Sticky<Value>>(() =>
                 {
                     var dict = new Dictionary<Key, Scalar.Sticky<Value>>();
                     foreach (var kvp in kvps)

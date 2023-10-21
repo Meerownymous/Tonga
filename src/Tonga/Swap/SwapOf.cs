@@ -101,11 +101,6 @@ namespace Tonga.Swap
         public Out Flip(In1 arg1, In2 arg2, In3 arg3)
         {
             return func.Invoke(arg1, arg2, arg3);
-        }      
-
-        public Out Invoke(In1 input1, In2 input2, In3 input3)
-        {
-            throw new System.NotImplementedException();
-        }  
+        }
     }
 }

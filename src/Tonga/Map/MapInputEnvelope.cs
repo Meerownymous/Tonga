@@ -18,7 +18,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(System.Func<IMapInput> input) : this(
-            dict => new Joined(dict, new MapOf(input()))
+            dict => new Joined(dict, new AsMap(input()))
         )
         { }
 
@@ -26,7 +26,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IScalar<IMapInput> input) : this(
-            dict => new Joined(dict, new MapOf(input.Value()))
+            dict => new Joined(dict, new AsMap(input.Value()))
         )
         { }
 
@@ -92,7 +92,11 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(System.Func<IMapInput<Value>> input) : this(
-            dict => new Joined<Value>(dict, new MapOf<Value>(input()))
+            dict =>
+            Joined._(
+                dict,
+                AsMap._(input())
+            )
         )
         { }
 
@@ -100,7 +104,8 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IScalar<IMapInput<Value>> input) : this(
-            dict => new Joined<Value>(dict, new MapOf<Value>(input.Value()))
+            dict =>
+            Joined._(dict, AsMap._(input.Value()))
         )
         { }
 
@@ -166,7 +171,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(System.Func<IMapInput<Key, Value>> input) : this(
-            dict => new Joined<Key, Value>(dict, new MapOf<Key, Value>(input()))
+            dict => new Joined<Key, Value>(dict, AsMap._(input()))
         )
         { }
 
@@ -174,7 +179,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IScalar<IMapInput<Key, Value>> input) : this(
-            dict => new Joined<Key, Value>(dict, new MapOf<Key, Value>(input.Value()))
+            dict => new Joined<Key, Value>(dict, AsMap._(input.Value()))
         )
         { }
 

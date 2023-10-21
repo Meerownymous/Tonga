@@ -86,6 +86,6 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
-        public static IEnumerable<T> From<T>(Func<T, Boolean> fnc, IEnumerable<T> src) => new Filtered<T>(fnc, src);
+        public static IEnumerable<T> _<T>(Func<T, Boolean> fnc, IEnumerable<T> src) => new Filtered<T>(fnc, src);
     }
 }

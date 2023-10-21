@@ -19,7 +19,7 @@ namespace Tonga.Text
         /// <param name="valid">The valid texts</param>
         public Strict(string candidate, params string[] valid) : this(
             candidate,
-            new Enumerable.AsEnumerable<string>(valid)
+            AsEnumerable._(valid)
         )
         { }
 
@@ -53,7 +53,12 @@ namespace Tonga.Text
         /// <param name="ignoreCase">Ignore case in the canidate and valid texts</param>
         /// <param name="valid">The valid texts</param>
         public Strict(string candidate, bool ignoreCase, IEnumerable<string> valid) : this(
-            AsText._(candidate), ignoreCase, new Mapped<string, IText>(AsText._, valid)
+            AsText._(candidate),
+            ignoreCase,
+            Mapped._(
+                AsText._,
+                valid
+            )
         )
         { }
 
@@ -76,7 +81,7 @@ namespace Tonga.Text
         public Strict(IText candidate, bool ignoreCase, params string[] valid) : this(
             candidate,
             ignoreCase,
-            new Mapped<string, IText>(AsText._, valid)
+            Mapped._(AsText._, valid)
         )
         { }
 
@@ -97,7 +102,7 @@ namespace Tonga.Text
         public Strict(IText candidate, bool ignoreCase, params IText[] valid) : this(
             candidate,
             ignoreCase,
-            new AsEnumerable<IText>(valid)
+            AsEnumerable._(valid)
         )
         { }
 
@@ -122,7 +127,8 @@ namespace Tonga.Text
         public Strict(IText candidate, bool ignoreCase, IEnumerable<IText> valid) : this(
             candidate,
             valid,
-            new AsScalar<StringComparison>(() => ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal))
+            AsScalar._(() => ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)
+        )
         { }
 
         /// <summary>

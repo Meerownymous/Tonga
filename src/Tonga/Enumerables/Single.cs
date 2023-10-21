@@ -32,7 +32,7 @@ namespace Tonga.Enumerable
 
     public static class Single
     {
-        public static Single<T> From<T>(T item) => new Single<T>(item);
+        public static Single<T> _<T>(T item) => new Single<T>(item);
     }
 }
 

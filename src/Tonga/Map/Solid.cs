@@ -61,7 +61,7 @@ namespace Tonga.Map
         /// <param name="list">List of values</param>        
         public Solid(IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
-                new MapOf<Key, Value>(list)
+                AsMap._(list)
             )
         )
         { }
@@ -82,7 +82,7 @@ namespace Tonga.Map
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
-                new MapOf<Key, Value>(
+                AsMap._(
                     Enumerable.Joined._(map, list)
                 )
             )
@@ -96,7 +96,7 @@ namespace Tonga.Map
         public Solid(IDictionary<Key, Value> map) : base(
             () =>
                 new Synced<Key, Value>(
-                    new MapOf<Key, Value>(map)
+                    AsMap._(map)
                 ),
             false
         )

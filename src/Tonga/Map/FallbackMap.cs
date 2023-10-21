@@ -54,7 +54,7 @@ namespace Tonga.Map
         /// <param name="fallback">Fallback generating missing values</param>
         public FallbackMap(System.Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
         {
-            this.origin = new AsScalar<IDictionary<Key, Value>>(map);
+            this.origin = AsScalar._(map);
             this.fallback = fallback;
         }
 

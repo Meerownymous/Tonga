@@ -12,7 +12,7 @@ namespace Tonga.Time
     /// </summary>
     public sealed class DateAsText : IText
     {
-        private readonly AsScalar<string> formatted;
+        private readonly Func<string> formatted;
 
         /// <summary>
         /// Current Datetime as ISO
@@ -81,10 +81,7 @@ namespace Tonga.Time
         /// <param name="provider">a format provider</param>
         public DateAsText(IScalar<DateTime> date, IText format, IFormatProvider provider)
         {
-            this.formatted =
-                new AsScalar<string>(
-                    () => date.Value().ToString(format.AsString(), provider)
-                );
+            this.formatted = () => date.Value().ToString(format.AsString(), provider);
         }
 
         /// <summary>
@@ -93,17 +90,7 @@ namespace Tonga.Time
         /// <returns></returns>
         public string AsString()
         {
-            return formatted.Value();
-        }
-
-        /// <summary>
-        /// Equal to another <see cref="IText"/>
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(IText other)
-        {
-            return formatted.Value().Equals(other.AsString());
+            return formatted();
         }
     }
 }

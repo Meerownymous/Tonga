@@ -259,7 +259,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified map building.
         /// </summary>
-        public MapEnvelope(System.Func<IDictionary<Key, Value>> origin, bool live)
+        public MapEnvelope(Func<IDictionary<Key, Value>> origin, bool live)
         {
             this.origin = origin;
             this.live = live;

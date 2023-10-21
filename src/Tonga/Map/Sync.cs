@@ -20,7 +20,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list"></param>
         public Synced(KeyValuePair<Key, Value>[] list) : this(
-            new Enumerable.AsEnumerable<KeyValuePair<Key, Value>>(list)
+            AsEnumerable._(list)
         )
         { }
 
@@ -31,7 +31,7 @@ namespace Tonga.Map
         /// <param name="list">list of entries to merge</param>
         public Synced(Dictionary<Key, Value> map, KeyValuePair<Key, Value>[] list) : this(
             map,
-            new Enumerable.AsEnumerable<KeyValuePair<Key, Value>>(list)
+            AsEnumerable._(list)
         )
         { }
 
@@ -51,7 +51,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list">list of entries</param>
         public Synced(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            Enumerable.AsEnumerable._(() => list)
+            AsEnumerable._(() => list)
         )
         { }
 
@@ -123,7 +123,7 @@ namespace Tonga.Map
         /// <param name="list">list of values to merge</param>
         /// <param name="entry">func to get the entry</param>
         public Sync(IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
-            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list)
+            Mapped._(entry, list)
         )
         { }
 
@@ -135,7 +135,7 @@ namespace Tonga.Map
         /// <param name="entry"></param>
         public Sync(IDictionary<Key, Value> map, IEnumerable<Source> list, Func<Source, KeyValuePair<Key, Value>> entry) : this(
             map,
-            new Mapped<Source, KeyValuePair<Key, Value>>(entry, list)
+            Mapped._(entry, list)
         )
         { }
 

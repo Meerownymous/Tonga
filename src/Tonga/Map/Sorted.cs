@@ -88,21 +88,7 @@ namespace Tonga.Map
         /// <param name="dict">Map to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
         public Sorted(IDictionary<Key, Value> dict, IComparer<Key> cmp)
-            : base(
-                () =>
-                {
-                    var keys = new List<Key>(dict.Keys);
-                    keys.Sort(cmp);
-                    var result = new LazyDict<Key, Value>(
-                        new Mapped<Key, IPair<Key, Value>>(
-                            key => AsPair._(key, () => dict[key]),
-                            keys
-                        )
-                    );
-                    return result;
-                },
-                false
-            )
+            : base(() => new SortedDictionary<Key, Value>(dict, cmp), false)
         { }
     }
 

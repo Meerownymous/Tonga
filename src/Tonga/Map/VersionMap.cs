@@ -13,7 +13,7 @@ namespace Tonga.Map
     /// <summary>
     /// A map which matches a version. 
     /// It can match the version range, not the exact version.
-    /// This means if you have two krvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
     /// </summary>
     public sealed class VersionMap : MapEnvelope<Version, string>
     {

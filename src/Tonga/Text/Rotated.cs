@@ -33,8 +33,7 @@ namespace Tonga.Text
                     ).ToString();
                 }
                 return str;
-            },
-            false
+            }
         )
         { }
     }

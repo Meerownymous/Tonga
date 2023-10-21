@@ -15,7 +15,7 @@ namespace Tonga.List.Tests
             Assert.Throws<Exception>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ListOf<bool>()
+                        new AsList<bool>()
                     )).Value());
         }
 
@@ -26,7 +26,7 @@ namespace Tonga.List.Tests
                 1,
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ListOf<bool>(false)
+                        new AsList<bool>(false)
                     )).Value()
             );
         }
@@ -37,7 +37,7 @@ namespace Tonga.List.Tests
             Assert.Throws<OperationCanceledException>(() =>
                 new LengthOf(
                     new NotEmpty<bool>(
-                        new ListOf<bool>(),
+                        new AsList<bool>(),
                         new OperationCanceledException()
                     )).Value());
         }

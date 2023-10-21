@@ -21,7 +21,7 @@ namespace Tonga.IO
         /// <summary>
         /// the input
         /// </summary>
-        private readonly IScalar<Stream> _origin;
+        private readonly IScalar<Stream> origin;
 
         /// <summary>
         /// Input out of a file Uri.
@@ -45,7 +45,7 @@ namespace Tonga.IO
         /// Input out of a file Uri.
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public InputOf(FileInfo file) : this(new Live<FileInfo>(file))
+        public InputOf(FileInfo file) : this(AsScalar._(file))
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Tonga.IO
         /// Input out of a Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public InputOf(Url url) : this(new Live<Url>(url))
+        public InputOf(Url url) : this(AsScalar._(url))
         { }
 
         /// <summary>
@@ -89,14 +89,14 @@ namespace Tonga.IO
         /// ctor
         /// </summary>
         /// <param name="rdr">a stringreader</param>
-        public InputOf(StringReader rdr) : this(new BytesOf(rdr))
+        public InputOf(StringReader rdr) : this(new AsBytes(rdr))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="rdr">a streamreader</param>
-        public InputOf(StreamReader rdr) : this(new BytesOf(rdr))
+        public InputOf(StreamReader rdr) : this(new AsBytes(rdr))
         { }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="rdr">a streamreader</param>
         /// <param name="enc">encoding of the reader</param>
-        public InputOf(StreamReader rdr, Encoding enc) : this(new BytesOf(rdr, enc))
+        public InputOf(StreamReader rdr, Encoding enc) : this(new AsBytes(rdr, enc))
         { }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="str">a stream</param>
         /// <param name="enc">encoding of the stream</param>
-        public InputOf(Stream str, Encoding enc) : this(new BytesOf(new StreamReader(str), enc))
+        public InputOf(Stream str, Encoding enc) : this(new AsBytes(new StreamReader(str), enc))
         { }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Tonga.IO
         /// <param name="rdr">a streamreader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        public InputOf(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new BytesOf(rdr, enc, max))
+        public InputOf(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new AsBytes(rdr, enc, max))
         { }
 
         /// <summary>
@@ -137,16 +137,17 @@ namespace Tonga.IO
         /// <param name="builder">a stringbuilder</param>
         /// <param name="enc">encoding of the stringbuilder</param>
         public InputOf(StringBuilder builder, Encoding enc) : this(
-            new Live<Stream>(
-                () => new MemoryStream(
-                    new BytesOf(builder, enc).AsBytes())))
+            AsScalar._<Stream>(() => new MemoryStream(
+                new AsBytes(builder, enc).Bytes())
+            )
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="chars">some chars</param>
-        public InputOf(params char[] chars) : this(new BytesOf(chars))
+        public InputOf(params char[] chars) : this(new AsBytes(chars))
         { }
 
         /// <summary>
@@ -154,14 +155,14 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="chars">some chars</param>
         /// <param name="enc">encoding of the chars</param>
-        public InputOf(char[] chars, Encoding enc) : this(new BytesOf(chars, enc))
+        public InputOf(char[] chars, Encoding enc) : this(new AsBytes(chars, enc))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="text">some text</param>
-        public InputOf(String text) : this(new BytesOf(text))
+        public InputOf(String text) : this(new AsBytes(text))
         { }
 
         /// <summary>
@@ -169,14 +170,14 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some <see cref="string"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the string</param>
-        public InputOf(String text, Encoding enc) : this(new BytesOf(text, enc))
+        public InputOf(String text, Encoding enc) : this(new AsBytes(text, enc))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
-        public InputOf(IText text) : this(new BytesOf(text))
+        public InputOf(IText text) : this(new AsBytes(text))
         { }
 
         /// <summary>
@@ -184,50 +185,53 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
         /// <param name="encoding"><see cref="Encoding"/> of the text</param>
-        public InputOf(IText text, Encoding encoding) : this(new BytesOf(text, encoding))
+        public InputOf(IText text, Encoding encoding) : this(new AsBytes(text, encoding))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="error"><see cref="Exception"/> to serialize</param>
-        public InputOf(Exception error) : this(new BytesOf(error))
+        public InputOf(Exception error) : this(new AsBytes(error))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="bytes">a <see cref="byte"/> array</param>
-        public InputOf(byte[] bytes) : this(new BytesOf(bytes))
+        public InputOf(byte[] bytes) : this(new AsBytes(bytes))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public InputOf(IBytes src) : this(new Live<Stream>(
-                        () =>
-                        {
-                            var b = src.AsBytes();
-                            var m = new MemoryStream();
-                            m.Write(b, 0, b.Length);
-                            m.Position = 0;
-                            return m;
-                        }))
+        public InputOf(IBytes src) : this(
+            AsScalar._<Stream>(
+                () =>
+                {
+                    var b = src.Bytes();
+                    var m = new MemoryStream();
+                    m.Write(b, 0, b.Length);
+                    m.Position = 0;
+                    return m;
+                }
+            )
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/> as input</param>
-        public InputOf(Stream stream) : this(new Live<Stream>(stream))
+        public InputOf(Stream stream) : this(AsScalar._(stream))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc">a function retrieving a <see cref="Stream"/> as input</param>
-        public InputOf(Func<Stream> fnc) : this(new Live<Stream>(fnc))
+        public InputOf(Func<Stream> fnc) : this(AsScalar._(fnc))
         { }
 
         /// <summary>
@@ -236,7 +240,11 @@ namespace Tonga.IO
         /// <param name="stream">the input <see cref="Stream"/></param>
         private InputOf(IScalar<Stream> stream)
         {
-            this._origin = new ScalarOf<Stream>(stream, streamObj => !streamObj.CanRead);
+            this.origin =
+                StickyIf._(
+                    current => current.CanRead,
+                    stream
+                );
         }
 
         /// <summary>
@@ -245,7 +253,7 @@ namespace Tonga.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return this._origin.Value();
+            return this.origin.Value();
         }
 
         /// <summary>

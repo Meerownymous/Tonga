@@ -14,9 +14,9 @@ namespace Tonga.List.Tests
                 8,
                 new Scalar.LengthOf(
                     new Joined<string>(
-                        new ListOf<string>("hello", "world", "друг"),
-                        new ListOf<string>("how", "are", "you"),
-                        new ListOf<string>("what's", "up")
+                        AsList._("hello", "world", "друг"),
+                        new AsList<string>("how", "are", "you"),
+                        new AsList<string>("what's", "up")
                     )
                 ).Value()
             );
@@ -30,8 +30,8 @@ namespace Tonga.List.Tests
                 new Scalar.LengthOf(
                     new Joined<string>(
                         new Mapped<string, IList<string>>(
-                           str => new ListOf<string>(str),
-                           new ListOf<string>("x")
+                           str => new AsList<string>(str),
+                           new AsList<string>("x")
                         )
                     )
                 ).Value()
@@ -45,7 +45,7 @@ namespace Tonga.List.Tests
                 8,
                 new Scalar.LengthOf(
                     new Joined<string>(
-                        new ListOf<string>("hello", "world", "друг"),
+                        new AsList<string>("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",

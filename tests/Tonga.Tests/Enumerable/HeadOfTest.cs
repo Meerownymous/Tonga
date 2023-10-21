@@ -15,7 +15,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new SumOf(
                     new Head<int>(
-                        EnumerableOf.Pipe(0, 1, 2, 3, 4),
+                        AsEnumerable._(0, 1, 2, 3, 4),
                         3
                     )
                 ).AsInt() == 3,
@@ -28,7 +28,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new SumOf(
                     new Head<int>(
-                        EnumerableOf.Pipe(0, 1, 2, 3, 4, 5),
+                        AsEnumerable._(0, 1, 2, 3, 4, 5),
                         10
                     )
                 ).AsInt() == 15,
@@ -42,7 +42,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Head<int>(
-                        EnumerableOf.Pipe(0, 1, 2, 3, 4),
+                        AsEnumerable._(0, 1, 2, 3, 4),
                         0
                     )
                 ).Value() == 0,
@@ -56,7 +56,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Head<int>(
-                        EnumerableOf.Pipe(0, 1, 2, 3, 4),
+                        AsEnumerable._(0, 1, 2, 3, 4),
                         -1
                     )
                 ).Value() == 0,

@@ -11,9 +11,9 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                Sticky.New(
-                    Lambda.Pipe(() => advances++,
-                        EnumerableOf.Pipe("one", "two", "three")
+                Sticky._(
+                    Lambda.From(() => advances++,
+                        AsEnumerable._("one", "two", "three")
                     )
                 );
             sticky.GetEnumerator().MoveNext();
@@ -26,9 +26,9 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                Sticky.New(
-                    Lambda.Pipe(() => advances++,
-                        EnumerableOf.Pipe("one", "two", "three")
+                Sticky._(
+                    Lambda.From(() => advances++,
+                        AsEnumerable._("one", "two", "three")
                     )
                 );
             _ = sticky[1];
@@ -41,9 +41,9 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                Sticky.New(
-                    Lambda.Pipe(() => advances++,
-                        EnumerableOf.Pipe("one", "two", "three")
+                Sticky._(
+                    Lambda.From(() => advances++,
+                        AsEnumerable._("one", "two", "three")
                     )
                 );
             _ = sticky.Contains("two");
@@ -56,9 +56,9 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                Sticky.New(
-                    Lambda.Pipe(() => advances++,
-                        EnumerableOf.Pipe("one", "two", "three")
+                Sticky._(
+                    Lambda.From(() => advances++,
+                        AsEnumerable._("one", "two", "three")
                     )
                 );
             _ = sticky.Count;
@@ -71,9 +71,9 @@ namespace Tonga.List.Test
         {
             var advances = 0;
             var sticky =
-                Sticky.New(
-                    Lambda.Pipe(() => advances++,
-                        EnumerableOf.Pipe("one", "two", "three")
+                Sticky._(
+                    Lambda.From(() => advances++,
+                        AsEnumerable._("one", "two", "three")
                     )
                 );
             _ = sticky.Count;

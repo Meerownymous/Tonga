@@ -24,7 +24,7 @@ namespace Tonga.IO
         public HeadInputStream(Stream origin, int length)
         {
             this.origin =
-                new ScalarOf<Stream>(origin);
+                new AsScalar<Stream>(origin);
             this.length = length;
             this.processed = new List<long>() { 0 };
         }

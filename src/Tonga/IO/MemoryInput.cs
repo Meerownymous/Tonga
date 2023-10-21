@@ -19,7 +19,7 @@ namespace Tonga.IO
         public MemoryInput(IInput input)
         {
             this.memory =
-                new ScalarOf<MemoryStream>(() =>
+                new AsScalar<MemoryStream>(() =>
                 {
                     var memStream = new MemoryStream();
                     input.Stream().CopyTo(memStream);

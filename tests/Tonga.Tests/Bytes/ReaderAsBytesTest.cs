@@ -13,14 +13,15 @@ namespace Tonga.Bytes.Tests
         [Fact]
         public void ReadsString()
         {
-            String source = "hello, друг!";
-            Assert.True(
-            new LiveText(
-                new ReaderAsBytes(
-                    new StreamReader(
-                        new InputOf(source).Stream())
-                )
-            ).AsString() == source);
+            Assert.Equal(
+                "hello, друг!",
+                AsText._(
+                    new ReaderAsBytes(
+                        new StreamReader(
+                            new InputOf("hello, друг!").Stream())
+                    )
+                ).AsString()
+            );
         }
     }
 }

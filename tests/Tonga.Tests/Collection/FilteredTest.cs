@@ -25,7 +25,7 @@ namespace Tonga.Collection.Tests
                 new LengthOf(
                     new Filtered<string>(
                         input => input.Length > 4,
-                        EnumerableOf.Pipe("hello", "world", "друг")
+                        AsEnumerable._("hello", "world", "друг")
                     )
                 ).Value()
             );
@@ -49,7 +49,7 @@ namespace Tonga.Collection.Tests
                 2,
                 new Filtered<string>(
                     input => input.Length >= 4,
-                    EnumerableOf.Pipe("some", "text", "yes")
+                    AsEnumerable._("some", "text", "yes")
                 ).Count
             );
         }
@@ -60,7 +60,7 @@ namespace Tonga.Collection.Tests
             Assert.NotEmpty(
                 new Filtered<string>(
                     input => input.Length > 4,
-                    EnumerableOf.Pipe("first", "second")
+                    AsEnumerable._("first", "second")
                 )
             );
         }
@@ -71,7 +71,7 @@ namespace Tonga.Collection.Tests
             Assert.Empty(
                 new Filtered<string>(
                     input => input.Length > 16,
-                    EnumerableOf.Pipe("third", "fourth")
+                    AsEnumerable._("third", "fourth")
                 )
             );
         }

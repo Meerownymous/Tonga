@@ -16,7 +16,7 @@ namespace Tonga.Enumerable.Test
                 new Text.Joined(", ",
                     new SortedBy<string, int>(
                         s => new IntOf(s.Substring(2)).Value(),
-                        EnumerableOf.Pipe("nr3", "nr2", "nr10", "nr44", "nr-6", "nr0")
+                        AsEnumerable._("nr3", "nr2", "nr10", "nr44", "nr-6", "nr0")
                     )
                 ).AsString()
             );
@@ -30,7 +30,7 @@ namespace Tonga.Enumerable.Test
                     new SortedBy<string, int>(
                         s => new IntOf(s.Substring(s.Length-1)).Value(),
                         IReverseCompare<int>.Default,
-                        EnumerableOf.Pipe(
+                        AsEnumerable._(
                             "a2", "c3", "hello9", "dude6", "Friend7"
                         )
                     )

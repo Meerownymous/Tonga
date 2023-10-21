@@ -19,7 +19,7 @@ namespace Tonga.IO
         /// <summary>
         /// the source
         /// </summary>
-        private readonly IScalar<Stream> _source;
+        private readonly IScalar<Stream> source;
 
         /// <summary>
         /// A readable stream out of a file Uri.
@@ -110,14 +110,14 @@ namespace Tonga.IO
         /// A readable stream out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(IInput input) : this(new Live<Stream>(() => input.Stream()))
+        public InputStreamOf(IInput input) : this(AsScalar._(input.Stream))
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="Func"/> that returns a <see cref="Stream"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(Func<Stream> input) : this(new Live<Stream>(input))
+        public InputStreamOf(System.Func<Stream> input) : this(AsScalar._(input))
         { }
 
         /// <summary>
@@ -126,27 +126,27 @@ namespace Tonga.IO
         /// <param name="src">the source</param>
         private InputStreamOf(IScalar<Stream> src) : base()
         {
-            this._source = new ScalarOf<Stream>(src, stream => !stream.CanRead);
+            this.source = src;
         }
 
         public override int Read(byte[] buf, int offset, int len)
         {
-            return this._source.Value().Read(buf, offset, len);
+            return this.source.Value().Read(buf, offset, len);
         }
 
-        public override bool CanRead => this._source.Value().CanRead;
+        public override bool CanRead => this.source.Value().CanRead;
 
-        public override bool CanSeek => this._source.Value().CanSeek;
+        public override bool CanSeek => this.source.Value().CanSeek;
 
-        public override bool CanWrite => this._source.Value().CanWrite;
+        public override bool CanWrite => this.source.Value().CanWrite;
 
-        public override long Length => this._source.Value().Length;
+        public override long Length => this.source.Value().Length;
 
         public override long Position
         {
             get
             {
-                return this._source.Value().Position;
+                return this.source.Value().Position;
             }
             set
             {
@@ -156,12 +156,12 @@ namespace Tonga.IO
 
         public override void Flush()
         {
-            _source.Value().Flush();
+            source.Value().Flush();
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return _source.Value().Seek(offset, origin);
+            return source.Value().Seek(offset, origin);
         }
 
         public override void SetLength(long value)
@@ -176,7 +176,7 @@ namespace Tonga.IO
 
         public void Dispose()
         {
-            _source.Value().Dispose();
+            source.Value().Dispose();
         }
     }
 }

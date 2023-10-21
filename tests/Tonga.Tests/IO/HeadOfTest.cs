@@ -12,7 +12,7 @@ namespace Tonga.IO.Tests
         {
             Assert.Contains(
                 "reads",
-                new TextOf(
+                AsText._(
                     new HeadOf(
                         new InputOf("readsHeadOfLongInput"),
                         5
@@ -25,7 +25,7 @@ namespace Tonga.IO.Tests
         void ReadsOnlyLength()
         {
             var res =
-                new TextOf(
+                AsText._(
                     new HeadOf(
                         new InputOf("readsHeadOfLongInput"),
                         5
@@ -47,7 +47,7 @@ namespace Tonga.IO.Tests
         {
             Assert.Contains(
                 "",
-                new TextOf(
+                AsText._(
                     new HeadOf(
                         new InputOf("readsEmptyHeadOfInput"),
                         0
@@ -62,7 +62,7 @@ namespace Tonga.IO.Tests
             var input = "readsHeadOfShorterInput";
             Assert.Contains(
                 input,
-                new TextOf(
+                AsText._(
                     new HeadOf(
                         new InputOf(input),
                         35

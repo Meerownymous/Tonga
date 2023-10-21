@@ -18,8 +18,8 @@ namespace Tonga.Bytes.Tests
                     return new InputStreamOf("");
                 })
             );
-            bytes.AsBytes();
-            bytes.AsBytes();
+            bytes.Bytes();
+            bytes.Bytes();
             Assert.Equal(2, calls);
         }
 
@@ -31,11 +31,11 @@ namespace Tonga.Bytes.Tests
                 () =>
                 {
                     ++calls;
-                    return new BytesOf(1);
+                    return new AsBytes(1);
                 }
             );
-            bytes.AsBytes();
-            bytes.AsBytes();
+            bytes.Bytes();
+            bytes.Bytes();
             Assert.Equal(2, calls);
         }
     }

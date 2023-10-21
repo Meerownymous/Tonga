@@ -30,7 +30,7 @@ namespace Tonga.Number
         public Similar(INumber first, INumber second, int accuracy)
         {
             this.isSimilar =
-                new ScalarOf<Boolean>(() =>
+                new AsScalar<Boolean>(() =>
                 {
                     bool isSimilar;
                     if (accuracy > 0)

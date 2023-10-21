@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Tonga.Enumerable;
+using Tonga.List;
 
 namespace Tonga.Collection
 {
@@ -18,7 +20,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source items</param>
-        public Mapped(Func<In, Out> mapping, params In[] src) : this(mapping, EnumerableOf.Pipe(src))
+        public Mapped(Func<In, Out> mapping, params In[] src) : this(mapping, AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace Tonga.Collection
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : this(
-            mapping, Enumerable.EnumerableOf.Pipe(src))
+            mapping, Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -45,8 +47,9 @@ namespace Tonga.Collection
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source collection</param>
         public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
-            new Enumerable.Mapped<In, Out>(mapping, src).GetEnumerator(),
-            false
+            AsList._(
+                Enumerable.Mapped._(mapping, src)
+            )
         )
         { }
     }
@@ -58,12 +61,12 @@ namespace Tonga.Collection
     /// <typeparam name="Out">target type</typeparam>
     public static class Mapped
     {
-        public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, params In[] src) => new Mapped<In, Out>(mapping, src);
+        public static ICollection<Out> _<In, Out>(Func<In, Out> mapping, params In[] src) => new Mapped<In, Out>(mapping, src);
 
-        public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, IEnumerator<In> src) => new Mapped<In, Out>(mapping, src);
+        public static ICollection<Out> _<In, Out>(Func<In, Out> mapping, IEnumerator<In> src) => new Mapped<In, Out>(mapping, src);
 
-        public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, IEnumerable<In> src) => new Mapped<In, Out>(mapping, src);
+        public static ICollection<Out> _<In, Out>(Func<In, Out> mapping, IEnumerable<In> src) => new Mapped<In, Out>(mapping, src);
 
-        public static ICollection<Out> New<In, Out>(Func<In, Out> mapping, ICollection<In> src) => new Mapped<In, Out>(mapping, src);
+        public static ICollection<Out> _<In, Out>(Func<In, Out> mapping, ICollection<In> src) => new Mapped<In, Out>(mapping, src);
     }
 }

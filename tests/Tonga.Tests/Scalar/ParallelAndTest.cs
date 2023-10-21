@@ -57,7 +57,7 @@ namespace Tonga.Scalar.Tests
             var result =
                 new ParallelAnd<bool>
                 (
-                    new None<IScalar<bool>>()
+                    (IEnumerable<IScalar<bool>>)new None<IScalar<bool>>()
                 ).Value();
             Assert.True(result);
         }
@@ -68,9 +68,9 @@ namespace Tonga.Scalar.Tests
             var list = new LinkedList<string>();
             Assert.True(
                 new ParallelAnd<bool>(
-                    new Enumerable.Mapped<string, IScalar<bool>>(
-                        str => { list.AddLast(str); return new True(); },
-                        Enumerable.EnumerableOf.Pipe("hello", "world")
+                    (IEnumerable<IScalar<bool>>)new Enumerable.Mapped<string, IScalar<bool>>(
+                        (System.Func<string, IScalar<bool>>)(                        str => { list.AddLast(str); return (IScalar<bool>)new True(); }),
+                        Enumerable.AsEnumerable._("hello", "world")
                     )
                 ).Value() &&
                 list.Contains("hello") &&
@@ -84,8 +84,8 @@ namespace Tonga.Scalar.Tests
             var list = new LinkedList<string>();
             Assert.True(
                 new ParallelAnd<bool>(
-                    new Enumerable.Mapped<string, IScalar<bool>>(
-                        str => { list.AddLast(str); return new True(); },
+                    (IEnumerable<IScalar<bool>>)new Enumerable.Mapped<string, IScalar<bool>>(
+                        (System.Func<string, IScalar<bool>>)(                        str => { list.AddLast(str); return (IScalar<bool>)new True(); }),
                         new None()
                     )
                 ).Value() &&
@@ -111,9 +111,9 @@ namespace Tonga.Scalar.Tests
         {
             var result =
                 new ParallelAnd<bool>(
-                    new List.ListOf<IScalar<bool>>(
-                        new True(),
-                        new True()
+                    (IEnumerable<IScalar<bool>>)new List.AsList<IScalar<bool>>(
+                        (IScalar<bool>)new True(),
+                        (IScalar<bool>)new True()
                     )
                 ).Value();
             Assert.True(result);
@@ -125,7 +125,7 @@ namespace Tonga.Scalar.Tests
 
             var result =
                 new ParallelAnd<bool>(
-                    new ListOf<IScalar<bool>>()
+                    (IEnumerable<IScalar<bool>>)new AsList<IScalar<bool>>()
                 ).Value();
 
             Assert.True(result);

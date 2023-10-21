@@ -15,8 +15,8 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public MapOf(KeyValuePair<string, string> entry, params KeyValuePair<string, string>[] more) : this(
-            Enumerable.Joined.Pipe(
-                EnumerableOf.Pipe(more),
+            Enumerable.Joined.From(
+                AsEnumerable._(more),
                 entry
             )
         )
@@ -29,7 +29,7 @@ namespace Tonga.Map
         /// <param name="list">KeyValuePairs to append</param>
         public MapOf(IDictionary<string, string> src, params KeyValuePair<string, string>[] list) : this(
             src,
-            EnumerableOf.Pipe(list))
+            AsEnumerable._(list))
         { }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Tonga.Map
         /// <param name="src"></param>
         /// <param name="list"></param>
         public MapOf(IDictionary<string, string> src, IEnumerable<KeyValuePair<string, string>> list) : this(
-            Enumerable.Joined.Pipe(
+            Enumerable.Joined.From(
                 src,
                 list
             )
@@ -50,7 +50,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<string, string>> entries) : this(
-            EnumerableOf.Pipe(() => entries))
+            AsEnumerable._(() => entries))
         { }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Tonga.Map
         /// </summary>
         public MapOf(IKvp entry, params IKvp[] more) : base(() =>
             new LazyDict(
-                Enumerable.Joined.Pipe(
-                    EnumerableOf.Pipe(entry),
+                Enumerable.Joined.From(
+                    AsEnumerable._(entry),
                     more
                 )
             ),
@@ -117,7 +117,7 @@ namespace Tonga.Map
         /// A map from string to string.
         /// </summary>
         public MapOf(params string[] pairSequence) : this(
-            EnumerableOf.Pipe(pairSequence)
+            AsEnumerable._(pairSequence)
         )
         { }
 
@@ -125,8 +125,8 @@ namespace Tonga.Map
         /// A map from string to string.
         /// </summary>
         public MapOf(string key, string value, params string[] additional) : this(
-            Enumerable.Joined.Pipe(
-                EnumerableOf.Pipe(key, value),
+            Enumerable.Joined.From(
+                AsEnumerable._(key, value),
                 additional
             )
         )
@@ -169,7 +169,7 @@ namespace Tonga.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput[] inputs) : this(EnumerableOf.Pipe(inputs))
+        public MapOf(params IMapInput[] inputs) : this(AsEnumerable._(inputs))
         { }
 
         /// <summary>
@@ -647,7 +647,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public static IDictionary<string, Value> New<Value>(Func<IDictionary<string, Value>> input)
+        public static IDictionary<string, Value> New<Value>(System.Func<IDictionary<string, Value>> input)
             => new MapOf<Value>(input);
 
         /// <summary>
@@ -1115,7 +1115,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public static IDictionary<Key, Value> New<Key, Value>(Func<IDictionary<Key, Value>> input)
+        public static IDictionary<Key, Value> New<Key, Value>(System.Func<IDictionary<Key, Value>> input)
             => new MapOf<Key, Value>(input);
     }
 
@@ -1132,7 +1132,7 @@ namespace Tonga.Map
             string key2, Value value2,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2)
             ),
@@ -1149,7 +1149,7 @@ namespace Tonga.Map
             string key3, Value value3,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3)
@@ -1168,7 +1168,7 @@ namespace Tonga.Map
             string key4, Value value4,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1189,7 +1189,7 @@ namespace Tonga.Map
             string key5, Value value5,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1212,7 +1212,7 @@ namespace Tonga.Map
             string key6, Value value6,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1237,7 +1237,7 @@ namespace Tonga.Map
             string key7, Value value7,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1264,7 +1264,7 @@ namespace Tonga.Map
             string key8, Value value8,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1293,7 +1293,7 @@ namespace Tonga.Map
             string key9, Value value9,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1324,7 +1324,7 @@ namespace Tonga.Map
             string key10, Value value10,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1357,7 +1357,7 @@ namespace Tonga.Map
             string key11, Value value11,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1392,7 +1392,7 @@ namespace Tonga.Map
             string key12, Value value12,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1429,7 +1429,7 @@ namespace Tonga.Map
             string key13, Value value13,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1468,7 +1468,7 @@ namespace Tonga.Map
             string key14, Value value14,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1509,7 +1509,7 @@ namespace Tonga.Map
             string key15, Value value15,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1552,7 +1552,7 @@ namespace Tonga.Map
             string key16, Value value16,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Value>(key1, value1),
                 new KvpOf<Value>(key2, value2),
                 new KvpOf<Value>(key3, value3),
@@ -1579,7 +1579,7 @@ namespace Tonga.Map
         /// </summary>
         public MapOf(KeyValuePair<string, Value> entry, params KeyValuePair<string, Value>[] more) : this(
             new Enumerable.Joined<KeyValuePair<string, Value>>(
-                new EnumerableOf<KeyValuePair<string, Value>>(more),
+                new AsEnumerable<KeyValuePair<string, Value>>(more),
                 entry
             )
         )
@@ -1590,7 +1590,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<string, Value>> entries) : this(
-            new EnumerableOf<KeyValuePair<string, Value>>(() => entries))
+            new AsEnumerable<KeyValuePair<string, Value>>(() => entries))
         { }
 
         /// <summary>
@@ -1648,7 +1648,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="inputs">inputs</param>
         public MapOf(params IMapInput<Value>[] inputs) : this(
-            EnumerableOf.Pipe(inputs)
+            AsEnumerable._(inputs)
         )
         { }
 
@@ -1673,7 +1673,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public MapOf(Func<IDictionary<string, Value>> input) : base(
+        public MapOf(System.Func<IDictionary<string, Value>> input) : base(
             input, false
         )
         { }
@@ -1693,7 +1693,7 @@ namespace Tonga.Map
             Key key2, Value value2,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2)
             ),
@@ -1710,7 +1710,7 @@ namespace Tonga.Map
             Key key3, Value value3,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3)
@@ -1729,7 +1729,7 @@ namespace Tonga.Map
             Key key4, Value value4,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1750,7 +1750,7 @@ namespace Tonga.Map
             Key key5, Value value5,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1773,7 +1773,7 @@ namespace Tonga.Map
             Key key6, Value value6,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1798,7 +1798,7 @@ namespace Tonga.Map
             Key key7, Value value7,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1825,7 +1825,7 @@ namespace Tonga.Map
             Key key8, Value value8,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1854,7 +1854,7 @@ namespace Tonga.Map
             Key key9, Value value9,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1885,7 +1885,7 @@ namespace Tonga.Map
             Key key10, Value Key0,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1918,7 +1918,7 @@ namespace Tonga.Map
             Key key11, Value Key1,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1953,7 +1953,7 @@ namespace Tonga.Map
             Key key12, Value Key2,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -1990,7 +1990,7 @@ namespace Tonga.Map
             Key key13, Value Key3,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2029,7 +2029,7 @@ namespace Tonga.Map
             Key key14, Value Key4,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2070,7 +2070,7 @@ namespace Tonga.Map
             Key key15, Value Key5,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2113,7 +2113,7 @@ namespace Tonga.Map
             Key key16, Value Key6,
             bool rejectBuildingAllValues = true
         ) : this(
-            EnumerableOf.Pipe(
+            AsEnumerable._(
                 new KvpOf<Key, Value>(key1, Key),
                 new KvpOf<Key, Value>(key2, value2),
                 new KvpOf<Key, Value>(key3, value3),
@@ -2140,7 +2140,7 @@ namespace Tonga.Map
         /// </summary>
         public MapOf(KeyValuePair<Key, Value> item, params KeyValuePair<Key, Value>[] more) : this(
             new Enumerable.Joined<KeyValuePair<Key, Value>>(
-                EnumerableOf.Pipe(more),
+                AsEnumerable._(more),
                 item
             )
         )
@@ -2153,7 +2153,7 @@ namespace Tonga.Map
         /// <param name="list">KeyValuePairs to append</param>
         public MapOf(IDictionary<Key, Value> src, params KeyValuePair<Key, Value>[] list) : this(
             src,
-            EnumerableOf.Pipe(list))
+            AsEnumerable._(list))
         { }
 
         /// <summary>
@@ -2174,7 +2174,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerator of KeyValuePairs</param>
         public MapOf(IEnumerator<KeyValuePair<Key, Value>> entries) : this(
-            Enumerable.EnumerableOf.Pipe(() => entries))
+            Enumerable.AsEnumerable._(() => entries))
         { }
 
         /// <summary>
@@ -2183,7 +2183,7 @@ namespace Tonga.Map
         public MapOf(IKvp<Key, Value> entry, params IKvp<Key, Value>[] more) : base(() =>
              new LazyDict<Key, Value>(
                  new Enumerable.Joined<IKvp<Key, Value>>(
-                     EnumerableOf.Pipe(entry),
+                     AsEnumerable._(entry),
                      more
                  )
              ),
@@ -2231,7 +2231,7 @@ namespace Tonga.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public MapOf(params IMapInput<Key, Value>[] inputs) : this(new EnumerableOf<IMapInput<Key, Value>>(inputs))
+        public MapOf(params IMapInput<Key, Value>[] inputs) : this(new AsEnumerable<IMapInput<Key, Value>>(inputs))
         { }
 
         /// <summary>
@@ -2255,7 +2255,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public MapOf(Func<IDictionary<Key, Value>> input) : base(
+        public MapOf(System.Func<IDictionary<Key, Value>> input) : base(
             input, false
         )
         { }

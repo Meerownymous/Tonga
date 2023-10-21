@@ -19,7 +19,7 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(params IKvp<Action<In>>[] consequences) : this(
-            EnumerableOf.Pipe(consequences)
+            AsEnumerable._(consequences)
         )
         { }
 
@@ -30,7 +30,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence1,
             IKvp<Action<In>> consequence2
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -46,7 +46,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence2,
             IKvp<Action<In>> consequence3
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -64,7 +64,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence3,
             IKvp<Action<In>> consequence4
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -84,7 +84,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence4,
             IKvp<Action<In>> consequence5
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -106,7 +106,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence5,
             IKvp<Action<In>> consequence6
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -130,7 +130,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence6,
             IKvp<Action<In>> consequence7
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -156,7 +156,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence7,
             IKvp<Action<In>> consequence8
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -178,7 +178,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence2,
             Action<string, In> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -195,7 +195,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence3,
             Action<string, In> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -214,7 +214,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence4,
             Action<string, In> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -235,7 +235,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence5,
             Action<string, In> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -258,7 +258,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence6,
             Action<string, In> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -283,7 +283,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence7,
             Action<string, In> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -310,7 +310,7 @@ namespace Tonga.Func
             IKvp<Action<In>> consequence8,
             Action<string, In> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -370,7 +370,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence1,
             IKvp<Action<In1, In2>> consequence2
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -386,7 +386,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence2,
             IKvp<Action<In1, In2>> consequence3
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -404,7 +404,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence3,
             IKvp<Action<In1, In2>> consequence4
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -424,7 +424,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence4,
             IKvp<Action<In1, In2>> consequence5
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -446,7 +446,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence5,
             IKvp<Action<In1, In2>> consequence6
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -470,7 +470,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence6,
             IKvp<Action<In1, In2>> consequence7
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -496,7 +496,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence7,
             IKvp<Action<In1, In2>> consequence8
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -518,7 +518,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence2,
             Action<string, In1, In2> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -535,7 +535,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence3,
             Action<string, In1, In2> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -554,7 +554,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence4,
             Action<string, In1, In2> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -575,7 +575,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence5,
             Action<string, In1, In2> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -598,7 +598,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence6,
             Action<string, In1, In2> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -623,7 +623,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence7,
             Action<string, In1, In2> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -650,7 +650,7 @@ namespace Tonga.Func
             IKvp<Action<In1, In2>> consequence8,
             Action<string, In1, In2> fallback
         ) : this(
-                EnumerableOf.Pipe(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -668,7 +668,7 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(params IKvp<Action<In1, In2>>[] consequences) : this(
-            EnumerableOf.Pipe(consequences)
+            AsEnumerable._(consequences)
         )
         { }
 

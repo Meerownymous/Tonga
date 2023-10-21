@@ -17,7 +17,7 @@ namespace Tonga.IO
         /// <summary>
         /// the target
         /// </summary>
-        private readonly IScalar<StreamWriter> _target;
+        private readonly IScalar<StreamWriter> target;
 
         /// <summary>
         /// A <see cref="StreamWriter"/> to a file <see cref="Uri"/>.
@@ -59,10 +59,10 @@ namespace Tonga.IO
         { }
 
         /// <summary>
-        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="Func{StreamWriter}"/>.
+        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="System.Func{StreamWriter}"/>.
         /// </summary>
         /// <param name="fnc">Function returning a streamwriter</param>
-        private WriterTo(Func<StreamWriter> fnc) : this(new Live<StreamWriter>(fnc))
+        private WriterTo(System.Func<StreamWriter> fnc) : this(AsScalar._(fnc))
         { }
 
         /// <summary>
@@ -71,203 +71,203 @@ namespace Tonga.IO
         /// <param name="tgt">the target streamwriter</param>
         private WriterTo(IScalar<StreamWriter> tgt) : base(new DeadStream())
         {
-            this._target = new ScalarOf<StreamWriter>(tgt, writer => !writer.BaseStream.CanWrite);
+            this.target = Sticky._(tgt);
         }
 
-#pragma warning disable CS1591
+        #pragma warning disable CS1591
         public override void Write(char[] cbuf)
         {
-            this._target.Value().Write(cbuf);
+            this.target.Value().Write(cbuf);
         }
 
         public override async Task FlushAsync()
         {
-            await this._target.Value().FlushAsync();
+            await this.target.Value().FlushAsync();
         }
 
         public override void Write(bool value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(char value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(char[] buffer, int index, int count)
         {
-            this._target.Value().Write(buffer, index, count);
+            this.target.Value().Write(buffer, index, count);
         }
 
         public override void Write(decimal value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(double value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(int value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(long value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(object value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(string format, object arg0)
         {
-            this._target.Value().Write(format, arg0);
+            this.target.Value().Write(format, arg0);
         }
 
         public override void Write(string format, object arg0, object arg1)
         {
-            this._target.Value().Write(format, arg0, arg1);
+            this.target.Value().Write(format, arg0, arg1);
         }
 
         public override void Write(string format, object arg0, object arg1, object arg2)
         {
-            this._target.Value().Write(format, arg0, arg1, arg2);
+            this.target.Value().Write(format, arg0, arg1, arg2);
         }
 
         public override void Write(string format, params object[] arg)
         {
-            this._target.Value().Write(format, arg);
+            this.target.Value().Write(format, arg);
         }
 
         public override void Write(string value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(uint value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Write(ulong value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override async Task WriteAsync(char value)
         {
-            await this._target.Value().WriteAsync(value);
+            await this.target.Value().WriteAsync(value);
         }
 
         public override async Task WriteAsync(char[] buffer, int index, int count)
         {
-            await this._target.Value().WriteAsync(buffer, index, count);
+            await this.target.Value().WriteAsync(buffer, index, count);
         }
 
         public override Task WriteAsync(string value)
         {
-            return this._target.Value().WriteAsync(value);
+            return this.target.Value().WriteAsync(value);
         }
 
         public override void WriteLine()
         {
-            this._target.Value().WriteLine();
+            this.target.Value().WriteLine();
         }
 
         public override void WriteLine(bool value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(char value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(char[] buffer)
         {
-            this._target.Value().WriteLine(buffer);
+            this.target.Value().WriteLine(buffer);
         }
 
         public override void WriteLine(char[] buffer, int index, int count)
         {
-            this._target.Value().WriteLine(buffer, index, count);
+            this.target.Value().WriteLine(buffer, index, count);
         }
 
         public override void WriteLine(decimal value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(double value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(float value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(int value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(long value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(object value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(string format, object arg0)
         {
-            this._target.Value().WriteLine(format, arg0);
+            this.target.Value().WriteLine(format, arg0);
         }
 
         public override void WriteLine(string format, object arg0, object arg1)
         {
-            this._target.Value().WriteLine(format, arg0, arg1);
+            this.target.Value().WriteLine(format, arg0, arg1);
         }
 
         public override void WriteLine(string format, object arg0, object arg1, object arg2)
         {
-            this._target.Value().WriteLine(format, arg0, arg1, arg2);
+            this.target.Value().WriteLine(format, arg0, arg1, arg2);
         }
 
         public override void WriteLine(string format, params object[] arg)
         {
-            this._target.Value().WriteLine(format, arg);
+            this.target.Value().WriteLine(format, arg);
         }
 
         public override void WriteLine(string value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(uint value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override void WriteLine(ulong value)
         {
-            this._target.Value().WriteLine(value);
+            this.target.Value().WriteLine(value);
         }
 
         public override async Task WriteLineAsync()
         {
-            await this._target.Value().WriteLineAsync();
+            await this.target.Value().WriteLineAsync();
         }
 
         public override async Task WriteLineAsync(char value)
@@ -277,38 +277,38 @@ namespace Tonga.IO
 
         public override async Task WriteLineAsync(char[] buffer, int index, int count)
         {
-            await this._target.Value().WriteLineAsync(buffer, index, count);
+            await this.target.Value().WriteLineAsync(buffer, index, count);
         }
 
         public override async Task WriteLineAsync(string value)
         {
-            await this._target.Value().WriteLineAsync(value);
+            await this.target.Value().WriteLineAsync(value);
         }
 
-        public override string NewLine { get => this._target.Value().NewLine; set => this._target.Value().NewLine = value; }
+        public override string NewLine { get => this.target.Value().NewLine; set => this.target.Value().NewLine = value; }
 
         public override void Write(float value)
         {
-            this._target.Value().Write(value);
+            this.target.Value().Write(value);
         }
 
         public override void Flush()
         {
-            this._target.Value().Flush();
+            this.target.Value().Flush();
         }
 
         protected override void Dispose(bool disposing)
         {
             try
             {
-                this._target.Value().Flush();
+                this.target.Value().Flush();
             }
             catch (Exception) { }
 
             try
             {
                 //this._target.Value().BaseStream.Dispose();
-                ((IDisposable)this._target.Value()).Dispose();
+                ((IDisposable)this.target.Value()).Dispose();
             }
             catch (Exception) { }
             base.Dispose(disposing);

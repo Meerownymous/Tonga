@@ -21,7 +21,7 @@ namespace Tonga.Tests
             {
                 byte[] bytes = new byte[size];
                 new Random().NextBytes(bytes);
-                return new ListOf<byte>(bytes);
+                return new AsList<byte>(bytes);
             }
         )
         { }

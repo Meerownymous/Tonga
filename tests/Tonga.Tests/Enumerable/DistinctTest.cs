@@ -15,8 +15,8 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        EnumerableOf.Pipe(1, 2, 3),
-                        EnumerableOf.Pipe(10, 2, 30)
+                        AsEnumerable._(1, 2, 3),
+                        AsEnumerable._(10, 2, 30)
                     )
                 ).Value() == 5);
         }
@@ -28,13 +28,13 @@ namespace Tonga.Enumerable.Test
                 5,
                 new LengthOf(
                     new Distinct<INumber>(
-                        EnumerableOf.Pipe(
-                            EnumerableOf.Pipe(
+                        AsEnumerable._(
+                            AsEnumerable._(
                                 new NumberOf(1),
                                 new NumberOf(2),
                                 new NumberOf(3)
                             ),
-                             EnumerableOf.Pipe(
+                             AsEnumerable._(
                                 new NumberOf(10),
                                 new NumberOf(2),
                                 new NumberOf(30)
@@ -52,9 +52,9 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Distinct<int>(
-                        EnumerableOf.Pipe(
-                            EnumerableOf.Pipe(1, 2, 3),
-                            EnumerableOf.Pipe(10, 2, 30)
+                        AsEnumerable._(
+                            AsEnumerable._(1, 2, 3),
+                            AsEnumerable._(10, 2, 30)
                         )
                     )
                 ).Value() == 5);
@@ -77,7 +77,7 @@ namespace Tonga.Enumerable.Test
         {
             var dst =
                 new Distinct<string>(
-                    EnumerableOf.Pipe("test", "test")
+                    AsEnumerable._("test", "test")
                 );
 
             Assert.Equal(

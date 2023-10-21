@@ -19,7 +19,7 @@ namespace Tonga.Text
         /// <param name="valid">The valid texts</param>
         public Strict(string candidate, params string[] valid) : this(
             candidate,
-            new Enumerable.EnumerableOf<string>(valid)
+            new Enumerable.AsEnumerable<string>(valid)
         )
         { }
 
@@ -42,7 +42,7 @@ namespace Tonga.Text
         /// <param name="ignoreCase">Ignore case in the canidate and valid texts</param>
         /// <param name="valid">The valid texts</param>
         public Strict(string candidate, bool ignoreCase, params string[] valid) : this(
-            candidate, ignoreCase, Enumerable.EnumerableOf.Pipe(valid)
+            candidate, ignoreCase, AsEnumerable._(valid)
         )
         { }
 
@@ -53,7 +53,7 @@ namespace Tonga.Text
         /// <param name="ignoreCase">Ignore case in the canidate and valid texts</param>
         /// <param name="valid">The valid texts</param>
         public Strict(string candidate, bool ignoreCase, IEnumerable<string> valid) : this(
-            new LiveText(candidate), ignoreCase, new Mapped<string, IText>((str) => new LiveText(str), valid)
+            AsText._(candidate), ignoreCase, new Mapped<string, IText>(AsText._, valid)
         )
         { }
 
@@ -76,7 +76,7 @@ namespace Tonga.Text
         public Strict(IText candidate, bool ignoreCase, params string[] valid) : this(
             candidate,
             ignoreCase,
-            new Mapped<string, IText>((str) => new LiveText(str), valid)
+            new Mapped<string, IText>(AsText._, valid)
         )
         { }
 
@@ -97,7 +97,7 @@ namespace Tonga.Text
         public Strict(IText candidate, bool ignoreCase, params IText[] valid) : this(
             candidate,
             ignoreCase,
-            new Enumerable.EnumerableOf<IText>(valid)
+            new AsEnumerable<IText>(valid)
         )
         { }
 
@@ -122,7 +122,7 @@ namespace Tonga.Text
         public Strict(IText candidate, bool ignoreCase, IEnumerable<IText> valid) : this(
             candidate,
             valid,
-            new ScalarOf<StringComparison>(() => ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal))
+            new AsScalar<StringComparison>(() => ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal))
         { }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Tonga.Text
                 throw new ArgumentException($"'{str}' is not valid here - expected: {new Joined(", ", valid).AsString()}");
             }
             return str;
-        }, false)
+        })
         { }
     }
 }

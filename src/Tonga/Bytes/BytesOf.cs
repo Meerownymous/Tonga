@@ -14,7 +14,7 @@ namespace Tonga.Bytes
     /// <summary>
     /// Bytes out of other objects.
     /// </summary>
-    public sealed class BytesOf : IBytes
+    public sealed class AsBytes : IBytes
     {
         /// <summary>
         /// original
@@ -25,7 +25,7 @@ namespace Tonga.Bytes
         /// Bytes out of a input.
         /// </summary>
         /// <param name="input">the input</param>
-        public BytesOf(IInput input) : this(new InputAsBytes(input))
+        public AsBytes(IInput input) : this(new InputAsBytes(input))
         { }
 
         /// <summary>
@@ -33,14 +33,14 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="input">the input</param>
         /// <param name="max">max buffer size</param>
-        public BytesOf(IInput input, int max) : this(new InputAsBytes(input, max))
+        public AsBytes(IInput input, int max) : this(new InputAsBytes(input, max))
         { }
 
         /// <summary>
         /// Bytes out of a StringBuilder.
         /// </summary>
         /// <param name="builder">stringbuilder</param>
-        public BytesOf(StringBuilder builder) : this(builder, Encoding.UTF8)
+        public AsBytes(StringBuilder builder) : this(builder, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="builder">stringbuilder</param>
         /// <param name="enc">encoding of stringbuilder</param>
-        public BytesOf(StringBuilder builder, Encoding enc) : this(
+        public AsBytes(StringBuilder builder, Encoding enc) : this(
             () => enc.GetBytes(builder.ToString()))
         { }
 
@@ -56,14 +56,14 @@ namespace Tonga.Bytes
         /// Bytes out of a StringReader.
         /// </summary>
         /// <param name="rdr">stringreader</param>
-        public BytesOf(StringReader rdr) : this(new ReaderAsBytes(rdr))
+        public AsBytes(StringReader rdr) : this(new ReaderAsBytes(rdr))
         { }
 
         /// <summary>
         /// Bytes out of a StreamReader.
         /// </summary>
         /// <param name="rdr">streamreader</param>
-        public BytesOf(StreamReader rdr) : this(new ReaderAsBytes(rdr))
+        public AsBytes(StreamReader rdr) : this(new ReaderAsBytes(rdr))
         { }
 
         /// <summary>
@@ -72,14 +72,14 @@ namespace Tonga.Bytes
         /// <param name="rdr">the reader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">max buffer size of the reader</param>
-        public BytesOf(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new ReaderAsBytes(rdr, enc, max))
+        public AsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new ReaderAsBytes(rdr, enc, max))
         { }
 
         /// <summary>
         /// Bytes out of a list of chars.
         /// </summary>
         /// <param name="chars">enumerable of bytes</param>
-        public BytesOf(IEnumerable<char> chars) : this(chars, Encoding.UTF8)
+        public AsBytes(IEnumerable<char> chars) : this(chars, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="chars">enumerable of chars</param>
         /// <param name="enc">encoding of chars</param>
-        public BytesOf(IEnumerable<char> chars, Encoding enc) : this(
+        public AsBytes(IEnumerable<char> chars, Encoding enc) : this(
             chars.ToArray(),
             enc
         )
@@ -97,7 +97,7 @@ namespace Tonga.Bytes
         /// Bytes out of a char array.
         /// </summary>
         /// <param name="chars">array of chars</param>
-        public BytesOf(params char[] chars) : this(chars, Encoding.UTF8)
+        public AsBytes(params char[] chars) : this(chars, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -105,14 +105,14 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="chars">an array of chars</param>
         /// <param name="encoding">encoding of chars</param>
-        public BytesOf(char[] chars, Encoding encoding) : this(new String(chars), encoding)
+        public AsBytes(char[] chars, Encoding encoding) : this(new String(chars), encoding)
         { }
 
         /// <summary>
         /// Bytes out of a string.
         /// </summary>
         /// <param name="source">a string</param>
-        public BytesOf(String source) : this(source, Encoding.UTF8)
+        public AsBytes(String source) : this(source, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="source">a string</param>
         /// <param name="encoding">encoding of the string</param>
-        public BytesOf(String source, Encoding encoding) : this(
+        public AsBytes(String source, Encoding encoding) : this(
             () => encoding.GetBytes(source))
         { }
 
@@ -128,7 +128,7 @@ namespace Tonga.Bytes
         /// Bytes out of Text.
         /// </summary>
         /// <param name="text">a text</param>
-        public BytesOf(IText text) : this(text, Encoding.UTF8)
+        public AsBytes(IText text) : this(text, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="text">a text</param>
         /// <param name="encoding">encoding of the string</param>
-        public BytesOf(IText text, Encoding encoding) : this(
+        public AsBytes(IText text, Encoding encoding) : this(
             () => encoding.GetBytes(text.AsString()))
         { }
 
@@ -144,7 +144,7 @@ namespace Tonga.Bytes
         /// Bytes out of Exception object.
         /// </summary>
         /// <param name="error">exception to serialize</param>
-        public BytesOf(Exception error) : this(
+        public AsBytes(Exception error) : this(
                 () => Encoding.UTF8.GetBytes(error.ToString()))
         { }
 
@@ -152,30 +152,30 @@ namespace Tonga.Bytes
         /// Bytes out of IBytes object.
         /// </summary>
         /// <param name="bytes">bytes</param>
-        public BytesOf(IBytes bytes) : this(
-                () => bytes.AsBytes())
+        public AsBytes(IBytes bytes) : this(
+                () => bytes.Bytes())
         { }
 
         /// <summary>
         /// Bytes out of function which returns a byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public BytesOf(Func<Byte[]> bytes) : this(new ScalarOf<Byte[]>(bytes))
+        public AsBytes(System.Func<byte[]> bytes) : this(new AsScalar<Byte[]>(bytes))
         { }
 
         /// <summary>
         /// Bytes out of byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public BytesOf(params Byte[] bytes) : this(new ScalarOf<Byte[]>(bytes))
+        public AsBytes(params Byte[] bytes) : this(new AsScalar<Byte[]>(bytes))
         { }
 
         /// <summary>
         /// Bytes out of an int.
         /// </summary>
         /// <param name="number">an int</param>
-        public BytesOf(int number) : this(
-            new ScalarOf<Byte[]>(() =>
+        public AsBytes(int number) : this(
+            new AsScalar<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -185,8 +185,8 @@ namespace Tonga.Bytes
         /// Bytes out of a long.
         /// </summary>
         /// <param name="number">a long</param>
-        public BytesOf(long number) : this(
-            new ScalarOf<Byte[]>(() =>
+        public AsBytes(long number) : this(
+            new AsScalar<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -196,8 +196,8 @@ namespace Tonga.Bytes
         /// Bytes out of a float.
         /// </summary>
         /// <param name="number">a float</param>
-        public BytesOf(float number) : this(
-            new ScalarOf<Byte[]>(() =>
+        public AsBytes(float number) : this(
+            new AsScalar<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -207,8 +207,8 @@ namespace Tonga.Bytes
         /// Bytes out of a double.
         /// </summary>
         /// <param name="number">a double</param>
-        public BytesOf(double number) : this(
-            new ScalarOf<Byte[]>(() =>
+        public AsBytes(double number) : this(
+            new AsScalar<Byte[]>(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -218,7 +218,7 @@ namespace Tonga.Bytes
         /// Bytes out of other objects.
         /// </summary>
         /// <param name="bytes">scalar of bytes</param>
-        private BytesOf(IScalar<Byte[]> bytes)
+        private AsBytes(IScalar<Byte[]> bytes)
         {
             this.origin = bytes;
         }
@@ -227,7 +227,7 @@ namespace Tonga.Bytes
         /// Get the content as byte array.
         /// </summary>
         /// <returns>content as byte array</returns>
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
             return this.origin.Value();
         }

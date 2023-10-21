@@ -46,8 +46,8 @@ namespace Tonga.Scalar
     /// <typeparam name="T"></typeparam>
     public static class Contains
     {
-        public static IScalar<bool> New<T>(IEnumerable<T> src, T item) => new Contains<T>(src, item);
+        public static ScalarEnvelope<bool> New<T>(IEnumerable<T> src, T item) => new Contains<T>(src, item);
 
-        public static IScalar<bool> New<T>(IEnumerable<T> items, Func<T, bool> match) => new Contains<T>(items, match);
+        public static ScalarEnvelope<bool> New<T>(IEnumerable<T> items, Func<T, bool> match) => new Contains<T>(items, match);
     }
 }

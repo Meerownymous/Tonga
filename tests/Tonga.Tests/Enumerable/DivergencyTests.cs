@@ -12,8 +12,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Empty(
                 new Divergency<string>(
-                    EnumerableOf.Pipe("a", "b"),
-                    EnumerableOf.Pipe("a", "b")
+                    AsEnumerable._("a", "b"),
+                    AsEnumerable._("a", "b")
                 )
             );
         }

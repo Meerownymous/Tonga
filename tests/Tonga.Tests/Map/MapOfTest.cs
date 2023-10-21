@@ -68,7 +68,7 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 "B",
                 new MapOf(
-                    Enumerable.EnumerableOf.Pipe(
+                    Enumerable.AsEnumerable._(
                         "A", "B",
                         "C", "D"
                     )
@@ -81,7 +81,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Throws<ArgumentException>(() =>
                 new MapOf(
-                    Enumerable.EnumerableOf.Pipe(
+                    Enumerable.AsEnumerable._(
                         "A", "B",
                         "C"
                     )
@@ -118,16 +118,15 @@ namespace Tonga.Map.Tests
 
             var map =
                 new MapOf(
-                    new Repeated<KeyValuePair<string, string>>(
-                        new Scalar.Live<KeyValuePair<string, string>>(
-                            () => new KeyValuePair<string, string>(random.Next() + "", "1")),
-                            new Scalar.Live<int>(() =>
-                            {
-                                Interlocked.Increment(ref size);
-                                return size;
-                            })
-                        )
-                    );
+                    Repeated._(
+                        () => new KeyValuePair<string, string>(random.Next() + "", "1"),
+                        () =>
+                        {
+                            Interlocked.Increment(ref size);
+                            return size;
+                        }
+                    )
+                );
 
             var a = map.Count;
             var b = map.Count;
@@ -183,10 +182,10 @@ namespace Tonga.Map.Tests
 
             var map =
                 new MapOf<int>(
-                    new Repeated<IKvp<int>>(
-                        new Scalar.Live<IKvp<int>>(
-                            () => new KvpOf<int>(random.Next() + "", 1)),
-                            new Scalar.Live<int>(() =>
+                    Repeated._(
+                        AsScalar._(() =>
+                            new KvpOf<int>(random.Next() + "", 1)),
+                            AsScalar._(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -242,22 +241,20 @@ namespace Tonga.Map.Tests
         }
 
         [Fact]
-        public void IsStickyTypedKeyValue()
+        public void IsStickyWithTypedKeyValue()
         {
             int size = 1;
             var random = new Random();
 
             var map =
                 new MapOf<int, int>(
-                    new Repeated<IKvp<int, int>>(
-                        new Scalar.Live<IKvp<int, int>>(
-                            () => new KvpOf<int, int>(random.Next(), 1)),
-                            new Scalar.Live<int>(() =>
-                            {
-                                Interlocked.Increment(ref size);
-                                return size;
-                            }
-                        )
+                    Repeated._(
+                        () => new KvpOf<int, int>(random.Next(), 1),
+                        () =>
+                        {
+                            Interlocked.Increment(ref size);
+                            return size;
+                        }
                     )
                 );
 

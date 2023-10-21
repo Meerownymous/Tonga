@@ -20,9 +20,9 @@ namespace Tonga.IO.Tests
             int value = 123;
             Assert.True(
                 BitConverter.ToInt32(
-                    new BytesOf(
+                    new AsBytes(
                         value
-                    ).AsBytes(),
+                    ).Bytes(),
                     0
                 ) == value,
                 "Can't read int into bytes"
@@ -35,9 +35,9 @@ namespace Tonga.IO.Tests
             long value = 123456789123456789;
             Assert.True(
                 BitConverter.ToInt64(
-                    new BytesOf(
+                    new AsBytes(
                         value
-                    ).AsBytes(),
+                    ).Bytes(),
                     0
                 ) == value,
                 "Can't read long into bytes"
@@ -50,9 +50,9 @@ namespace Tonga.IO.Tests
             double value = 1.23;
             Assert.True(
                 BitConverter.ToDouble(
-                    new BytesOf(
+                    new AsBytes(
                         value
-                    ).AsBytes(),
+                    ).Bytes(),
                     0
                 ) == value,
                 "Can't read double into bytes"
@@ -65,9 +65,9 @@ namespace Tonga.IO.Tests
             float value = 1.23f;
             Assert.True(
                 BitConverter.ToSingle(
-                    new BytesOf(
+                    new AsBytes(
                         value
-                    ).AsBytes(),
+                    ).Bytes(),
                     0
                 ) == value,
                 "Can't read float into bytes"
@@ -80,17 +80,17 @@ namespace Tonga.IO.Tests
             int multiplier = 5_000;
             String body = "1234567890";
             Assert.True(
-                new BytesOf(
+                new AsBytes(
                     new InputOf(
                         new Text.Joined(
                             "",
-                            new Head<string>(
-                                new Endless<string>(body),
+                            Head.From(
+                                Endless.From(body),
                                 multiplier
                             )
                         )
                     )
-                ).AsBytes().Length == body.Length * multiplier,
+                ).Bytes().Length == body.Length * multiplier,
             "Can't read large content from in-memory Input");
         }
 
@@ -99,9 +99,9 @@ namespace Tonga.IO.Tests
         {
             Assert.True(
                 Encoding.UTF8.GetString(
-                    new BytesOf(
+                    new AsBytes(
                         new InputOf("Hello, друг!")
-                    ).AsBytes()) == "Hello, друг!");
+                    ).Bytes()) == "Hello, друг!");
         }
 
         [Fact]
@@ -109,8 +109,8 @@ namespace Tonga.IO.Tests
         {
             String source = "hello, друг!";
             Assert.True(
-                new LiveText(
-                    new BytesOf(
+                AsText._(
+                    new AsBytes(
                         new StreamReader(
                             new MemoryStream(
                                 Encoding.UTF8.GetBytes(source))),
@@ -127,12 +127,12 @@ namespace Tonga.IO.Tests
             String source = "hello, товарищ!";
             Assert.True(
                 Encoding.UTF8.GetString(
-                    new BytesOf(
+                    new AsBytes(
                         new InputOf(
-                            new LiveText(source)
+                            AsText._(source)
                         ),
                         2
-                    ).AsBytes()) == source
+                    ).Bytes()) == source
                 );
         }
 
@@ -143,7 +143,7 @@ namespace Tonga.IO.Tests
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
             {
                 t =
-                    new LiveText(
+                    AsText._(
                         new InputOf(stream),
                         Encoding.UTF8
                     );
@@ -156,13 +156,13 @@ namespace Tonga.IO.Tests
         [Fact]
         public void AsBytes()
         {
-            IText text = new LiveText("Hello!");
+            IText text = AsText._("Hello!");
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
-                    new BytesOf(
+                    new AsBytes(
                         new InputOf(text)
-                        ).AsBytes(),
-                    new BytesOf(text.AsString()).AsBytes()
+                        ).Bytes(),
+                    new AsBytes(text.AsString()).Bytes()
                 )
             );
         }
@@ -176,8 +176,8 @@ namespace Tonga.IO.Tests
             catch (IOException ex)
             {
                 stackTrace =
-                    new LiveText(
-                        new BytesOf(
+                    AsText._(
+                        new AsBytes(
                             ex
                         )
                     ).AsString();
@@ -196,9 +196,9 @@ namespace Tonga.IO.Tests
             var text = "Hello!";
             Assert.Equal(
                 text,
-                new TextOf(
-                    new BytesOf(
-                        new List.ListOf<char>(text),
+                AsText._(
+                    new AsBytes(
+                        new List.AsList<char>(text),
                         Encoding.Unicode
                     ),
                     Encoding.Unicode

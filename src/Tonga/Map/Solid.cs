@@ -19,7 +19,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
         public Solid(Tuple<Key, Value>[] pairs) : this(
-            EnumerableOf.Pipe(pairs)
+            AsEnumerable._(pairs)
         )
         { }
 
@@ -28,7 +28,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Pairs of mappings</param>
         public Solid(IEnumerable<Tuple<Key, Value>> pairs) : this(
-            Mapped.Pipe(
+            Mapped._(
                 tpl => new KeyValuePair<Key, Value>(tpl.Item1, tpl.Item2),
                 pairs
             )
@@ -40,7 +40,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list"></param>
         public Solid(params KeyValuePair<Key, Value>[] list) : this(
-            EnumerableOf.Pipe(list)
+            AsEnumerable._(list)
         )
         { }
 
@@ -51,7 +51,7 @@ namespace Tonga.Map
         /// <param name="list">list of values to merge</param>
         public Solid(IDictionary<Key, Value> map, params KeyValuePair<Key, Value>[] list) : this(
             map,
-            EnumerableOf.Pipe(list)
+            AsEnumerable._(list)
         )
         { }
 
@@ -71,7 +71,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="list">List of values</param>
         public Solid(IEnumerator<KeyValuePair<Key, Value>> list) : this(
-            EnumerableOf.Pipe(() => list)
+            AsEnumerable._(() => list)
         )
         { }
 
@@ -83,7 +83,7 @@ namespace Tonga.Map
         public Solid(IDictionary<Key, Value> map, IEnumerable<KeyValuePair<Key, Value>> list) : this(
             new LiveMap<Key, Value>(() =>
                 new MapOf<Key, Value>(
-                    Enumerable.Joined.Pipe(map, list)
+                    Enumerable.Joined.From(map, list)
                 )
             )
         )

@@ -25,7 +25,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">the object to lock</param>
-        public Sync(Func<T> src, object lck) : this(new Live<T>(src), lck)
+        public Sync(Func<T> src, object lck) : this(AsScalar._(src), lck)
         { }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Tonga.Scalar
         /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
-        public static IScalar<T> New<T>(Func<T> src)
+        public static IScalar<T> New<T>(System.Func<T> src)
             => new Sync<T>(src);
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">the object to lock</param>
-        public static IScalar<T> New<T>(Func<T> src, object lck)
+        public static IScalar<T> New<T>(System.Func<T> src, object lck)
             => new Sync<T>(src, lck);
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Tonga.Enumerable.Test
                     new Mapped<int, string>(
                         i => i.ToString(),
                         new Sorted<int>(
-                            EnumerableOf.Pipe(3, 2, 10, 44, -6, 0)
+                            AsEnumerable._(3, 2, 10, 44, -6, 0)
                         )
                     )
                 ).AsString() == "-6, 0, 2, 3, 10, 44",
@@ -30,7 +30,7 @@ namespace Tonga.Enumerable.Test
                 new Text.Joined(", ",
                     new Sorted<string>(
                         IReverseCompare<string>.Default,
-                        EnumerableOf.Pipe(
+                        AsEnumerable._(
                             "a", "c", "hello", "dude", "Friend"
                         )
                     )

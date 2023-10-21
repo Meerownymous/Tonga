@@ -24,7 +24,7 @@ namespace Tonga.Collection.Tests
                 new Solid<int>(
                     new Mapped<int, int>(
                         i => i + 1,
-                        EnumerableOf.Pipe(1, -1, 0, 1)
+                        AsEnumerable._(1, -1, 0, 1)
                     )
                 );
 

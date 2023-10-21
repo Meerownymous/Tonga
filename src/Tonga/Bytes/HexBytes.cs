@@ -18,7 +18,7 @@ namespace Tonga.Bytes
         /// Bytes from Hex String
         /// </summary>
         /// <param name="origin">The string in Hex format</param>
-        public HexBytes(string origin) : this(new LiveText(origin))
+        public HexBytes(string origin) : this(Text.AsText._(origin))
         { }
         /// <summary>
         /// Bytes from Hex String
@@ -26,7 +26,7 @@ namespace Tonga.Bytes
         /// <param name="origin">The string in Hex format</param>
         public HexBytes(IText origin)
         {
-            this.bytes = new ScalarOf<byte[]>(() =>
+            this.bytes = new AsScalar<byte[]>(() =>
             {
                 var hex = origin.AsString();
                 if ((hex.Length & 1) == 1)
@@ -42,7 +42,7 @@ namespace Tonga.Bytes
             });
         }
 
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
             return this.bytes.Value();
         }

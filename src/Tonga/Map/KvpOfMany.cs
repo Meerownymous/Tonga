@@ -17,7 +17,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params Func<string>[] many) : this(key, () =>
+        public KvpOfMany(string key, params System.Func<string>[] many) : this(key, () =>
             {
                 var lst = new List<string>();
                 for (var i = 0; i < many.Length; i++)
@@ -33,7 +33,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params string[] values) : this(key, () => EnumerableOf.Pipe(values))
+        public KvpOfMany(string key, params string[] values) : this(key, () => AsEnumerable._(values))
         { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Tonga.Map
         /// The function is executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, Func<IEnumerable<string>> values) : base(
+        public KvpOfMany(string key, System.Func<IEnumerable<string>> values) : base(
             new KvpOf<IEnumerable<string>>(key, values)
         )
         { }
@@ -57,7 +57,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, params Func<TValue>[] values)
+        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, params System.Func<TValue>[] values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Tonga.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, Func<IEnumerable<TValue>> values)
+        public static IKvp<IEnumerable<TValue>> New<TValue>(string key, System.Func<IEnumerable<TValue>> values)
             => new KvpOfMany<TValue>(key, values);
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, params Func<TValue>[] many)
+        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, params System.Func<TValue>[] many)
             => new KeyToValues<TKey, TValue>(key, many);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Tonga.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, Func<IEnumerable<TValue>> many)
+        public static IKvp<TKey, IEnumerable<TValue>> New<TKey, TValue>(TKey key, System.Func<IEnumerable<TValue>> many)
             => new KeyToValues<TKey, TValue>(key, many);
     }
 
@@ -119,7 +119,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params Func<TValue>[] values) : this(key, () =>
+        public KvpOfMany(string key, params System.Func<TValue>[] values) : this(key, () =>
             {
                 var lst = new List<TValue>();
                 for (var i = 0; i < values.Length; i++)
@@ -157,7 +157,7 @@ namespace Tonga.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KvpOfMany(string key, Func<IEnumerable<TValue>> values) : base(
+        public KvpOfMany(string key, System.Func<IEnumerable<TValue>> values) : base(
             new KvpOf<IEnumerable<TValue>>(key, values)
         )
         { }
@@ -173,7 +173,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KeyToValues(TKey key, params Func<TValue>[] many) : this(key, () =>
+        public KeyToValues(TKey key, params System.Func<TValue>[] many) : this(key, () =>
         {
             var lst = new List<TValue>();
             for (var i = 0; i < many.Length; i++)
@@ -211,7 +211,7 @@ namespace Tonga.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KeyToValues(TKey key, Func<IEnumerable<TValue>> many) : base(
+        public KeyToValues(TKey key, System.Func<IEnumerable<TValue>> many) : base(
             new KvpOf<TKey, IEnumerable<TValue>>(key, many)
         )
         { }

@@ -17,7 +17,7 @@ namespace Tonga.Map
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
         private readonly Func<IDictionary<string, string>> origin;
-        private readonly ScalarOf<IDictionary<string, string>> fixedOrigin;
+        private readonly IScalar<IDictionary<string, string>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Tonga.Map
         {
             this.origin = origin;
             this.live = live;
-            this.fixedOrigin = new ScalarOf<IDictionary<string, string>>(origin);
+            this.fixedOrigin = Sticky._(origin);
         }
 
         public string this[string key]
@@ -135,7 +135,7 @@ namespace Tonga.Map
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
         private readonly Func<IDictionary<string, Value>> origin;
-        private readonly ScalarOf<IDictionary<string, Value>> fixedOrigin;
+        private readonly IScalar<IDictionary<string, Value>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Tonga.Map
         {
             this.origin = origin;
             this.live = live;
-            this.fixedOrigin = new ScalarOf<IDictionary<string, Value>>(origin);
+            this.fixedOrigin = Sticky._(origin);
         }
 
         public Value this[string key]
@@ -253,17 +253,17 @@ namespace Tonga.Map
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
         private readonly Func<IDictionary<Key, Value>> origin;
-        private readonly ScalarOf<IDictionary<Key, Value>> fixedOrigin;
+        private readonly Sticky<IDictionary<Key, Value>> fixedOrigin;
         private readonly bool live;
 
         /// <summary>
         /// Simplified map building.
         /// </summary>
-        public MapEnvelope(Func<IDictionary<Key, Value>> origin, bool live)
+        public MapEnvelope(System.Func<IDictionary<Key, Value>> origin, bool live)
         {
             this.origin = origin;
             this.live = live;
-            this.fixedOrigin = new ScalarOf<IDictionary<Key, Value>>(origin);
+            this.fixedOrigin = Sticky._(origin);
         }
 
         public Value this[Key key]

@@ -14,9 +14,9 @@ namespace Tonga.Collection.Tests
         public void BehavesAsCollection()
         {
             new Joined<int>(
-                EnumerableOf.Pipe(1, -1, 2, 0),
-                EnumerableOf.Pipe(1, -1, 2, 0),
-                EnumerableOf.Pipe(1, -1, 2, 0)
+                AsEnumerable._(1, -1, 2, 0),
+                AsEnumerable._(1, -1, 2, 0),
+                AsEnumerable._(1, -1, 2, 0)
             );
         }
 
@@ -25,10 +25,10 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 8,
-                new Joined<String>(
-                    EnumerableOf.Pipe("hello", "world", "друг"),
-                    EnumerableOf.Pipe("how", "are", "you"),
-                    EnumerableOf.Pipe("what's", "up")
+                Joined._(
+                    AsEnumerable._("hello", "world", "друг"),
+                    AsEnumerable._("how", "are", "you"),
+                    AsEnumerable._("what's", "up")
                 ).Count);
         }
 
@@ -46,8 +46,8 @@ namespace Tonga.Collection.Tests
         {
             Assert.NotEmpty(
                 new Joined<String>(
-                    EnumerableOf.Pipe("1", "2"),
-                    EnumerableOf.Pipe("3", "4")
+                    AsEnumerable._("1", "2"),
+                    AsEnumerable._("3", "4")
                 ));
         }
 
@@ -64,9 +64,9 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
              new Joined<int>(
-                 EnumerableOf.Pipe(1, 2),
-                 EnumerableOf.Pipe(3, 4),
-                 EnumerableOf.Pipe(5, 6)
+                 AsEnumerable._(1, 2),
+                 AsEnumerable._(3, 4),
+                 AsEnumerable._(5, 6)
              ).Add(7));
         }
 
@@ -75,8 +75,8 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new Joined<String>(
-                    EnumerableOf.Pipe("w", "a"),
-                    EnumerableOf.Pipe("b", "c")
+                    AsEnumerable._("w", "a"),
+                    AsEnumerable._("b", "c")
                 ).Remove("t"));
         }
 
@@ -85,8 +85,8 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new Joined<int>(
-                    EnumerableOf.Pipe(10),
-                    EnumerableOf.Pipe(20)
+                    AsEnumerable._(10),
+                    AsEnumerable._(20)
                 ).Clear());
         }
     }

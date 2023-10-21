@@ -17,7 +17,7 @@ namespace Tonga.IO.Tests
                 new LengthOf(
                     new SlowInput(
                         new InputOf(
-                            new LiveText(text)
+                            AsText._(text)
                         )
                     )
                 ).Value(),

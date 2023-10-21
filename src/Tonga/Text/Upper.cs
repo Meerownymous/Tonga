@@ -1,6 +1,3 @@
-
-
-
 namespace Tonga.Text
 {
     /// <summary>
@@ -12,7 +9,9 @@ namespace Tonga.Text
         /// A <see cref="IText"/> as uppercase.
         /// </summary>
         /// <param name="text">text to uppercase</param>
-        public Upper(IText text) : base(() => text.AsString().ToUpper(), false)
+        public Upper(IText text) : base(() => text.AsString().ToUpper())
         { }
+
+        public static Upper _(IText text) => new Upper(text);
     }
 }

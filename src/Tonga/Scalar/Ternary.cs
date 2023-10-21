@@ -19,12 +19,16 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative)
-        :
-            this(input,
+        public Ternary(
+            In input,
+            Func<In, Boolean> condition,
+            Func<In, Out> consequent,
+            Func<In, Out> alternative
+        ) : this(input,
                 new FuncOf<In, Boolean>(condition),
                 new FuncOf<In, Out>(consequent),
-                new FuncOf<In, Out>(alternative))
+                new FuncOf<In, Out>(alternative)
+            )
         { }
 
         /// <summary>
@@ -36,9 +40,9 @@ namespace Tonga.Scalar
         /// <param name="alternative">alternative</param>
         public Ternary(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
             : this(
-                new Live<bool>(() => condition.Invoke(input)),
-                new Live<Out>(() => consequent.Invoke(input)),
-                new Live<Out>(() => alternative.Invoke(input))
+                AsScalar._(() => condition.Invoke(input)),
+                AsScalar._(() => consequent.Invoke(input)),
+                AsScalar._(() => alternative.Invoke(input))
             )
         { }
 
@@ -48,8 +52,8 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(Boolean condition, Out consequent, Out alternative)
-            : this(new Live<Boolean>(condition), consequent, alternative)
+        public Ternary(Boolean condition, Out consequent, Out alternative) : this(
+            AsScalar._(condition), consequent, alternative)
         { }
 
         /// <summary>
@@ -58,8 +62,9 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(IScalar<Boolean> condition, Out consequent, Out alternative)
-            : this(condition, new Live<Out>(consequent), new Live<Out>(alternative))
+        public Ternary(IScalar<bool> condition, Out consequent, Out alternative) : this(
+            condition, AsScalar._(consequent), AsScalar._(alternative)
+        )
         { }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative)
+        public Ternary(IScalar<bool> condition, IScalar<Out> consequent, IScalar<Out> alternative)
             : base(() =>
             {
                 IScalar<Out> result;
@@ -94,8 +99,13 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> New<In, Out>(In input, System.Func<In, Boolean> condition, System.Func<In, Out> consequent, System.Func<In, Out> alternative)
-            => new Ternary<In, Out>(input, condition, consequent, alternative);
+        public static IScalar<Out> From<In, Out>(
+            In input,
+            Func<In, Boolean> condition,
+            Func<In, Out> consequent,
+            Func<In, Out> alternative
+        ) =>
+            new Ternary<In, Out>(input, condition, consequent, alternative);
 
         /// <summary>
         /// A ternary operation using the given input and functions.
@@ -104,7 +114,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> New<In, Out>(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
+        public static IScalar<Out> From<In, Out>(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
             => new Ternary<In, Out>(input, condition, consequent, alternative);
 
         /// <summary>
@@ -113,7 +123,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> New<In, Out>(Boolean condition, Out consequent, Out alternative)
+        public static IScalar<Out> From<In, Out>(Boolean condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
@@ -122,7 +132,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> New<In, Out>(IScalar<Boolean> condition, Out consequent, Out alternative)
+        public static IScalar<Out> From<In, Out>(IScalar<bool> condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
@@ -131,7 +141,9 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> New<In, Out>(IScalar<Boolean> condition, IScalar<Out> consequent, IScalar<Out> alternative)
+        public static IScalar<Out> From<In, Out>(IScalar<bool> condition,
+            IScalar<Out> consequent, IScalar<Out> alternative
+        )
             => new Ternary<In, Out>(condition, consequent, alternative);
     }
 }

@@ -32,7 +32,7 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void ReturnsFirstMatch()
         {
-            var list = Enumerable.EnumerableOf.Pipe("hallo", "ich", "heisse", "Max");
+            var list = Enumerable.AsEnumerable._("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "Max",
@@ -43,7 +43,7 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void ReturnsFirstValue()
         {
-            var list = Enumerable.EnumerableOf.Pipe("hallo", "ich", "heisse", "Max");
+            var list = Enumerable.AsEnumerable._("hallo", "ich", "heisse", "Max");
 
             Assert.Equal(
                 "hallo",

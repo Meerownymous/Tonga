@@ -20,8 +20,7 @@ namespace Tonga.Text
                     throw new IOException("invalid text (null)");
                 }
                 return text.AsString();
-            },
-            false
+            }
         )
         { }
     }

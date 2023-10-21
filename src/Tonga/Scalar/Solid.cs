@@ -15,29 +15,29 @@ namespace Tonga.Scalar
         private volatile object cache;
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> that is threadsafe.
+        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         public Solid(Func<T> src) : this(src, src)
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
+        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe and sticky.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">the object to lock</param>
-        public Solid(Func<T> src, object lck) : this(new Live<T>(src), lck)
+        public Solid(Func<T> src, object lck) : this(AsScalar._(src), lck)
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
+        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe and sticky.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         public Solid(IScalar<T> src) : this(src, src)
         { }
 
         /// <summary>
-        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
+        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe and sticky.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">object to lock while using scalar</param>

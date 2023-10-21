@@ -18,7 +18,7 @@ namespace Tonga.IO.Tests
             String content = "Hello, товарищ!";
 
             Assert.True(
-                new LiveText(
+                AsText._(
                     new TeeInput(
                         new InputOf(content),
                         new TeeOutput(

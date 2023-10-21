@@ -14,9 +14,9 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new Or(
-                    Enumerable.EnumerableOf.Pipe(
-                        new Live<bool>(true),
-                        new Live<bool>(false)
+                    AsEnumerable._(
+                        AsScalar._(true),
+                        AsScalar._(false)
                     )
                 ).Value()
             );

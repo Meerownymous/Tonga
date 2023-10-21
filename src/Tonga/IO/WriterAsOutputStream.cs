@@ -20,12 +20,12 @@ namespace Tonga.IO
         /// <summary>
         /// the writer
         /// </summary>
-        private readonly StreamWriter _writer;
+        private readonly StreamWriter writer;
 
         /// <summary>
         /// encoding of the writer
         /// </summary>
-        private readonly IScalar<Decoder> _decoder;
+        private readonly IScalar<Decoder> decoder;
 
         /// <summary>
         /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
@@ -44,7 +44,7 @@ namespace Tonga.IO
         /// </summary>
         public WriterAsOutputStream(StreamWriter writer, Encoding encoding) : this(
                 writer,
-                new Live<Decoder>(() =>
+                AsScalar._(() =>
                 {
                     var decoder = encoding.GetDecoder();
                     decoder.Fallback = DecoderFallback.ExceptionFallback;
@@ -58,8 +58,8 @@ namespace Tonga.IO
         /// </summary>
         public WriterAsOutputStream(StreamWriter writer, IScalar<Decoder> decoder) : base()
         {
-            this._writer = writer;
-            this._decoder = decoder;
+            this.writer = writer;
+            this.decoder = decoder;
         }
 
         /// <summary>
@@ -101,30 +101,30 @@ namespace Tonga.IO
 
         private int Next(byte[] buffer, int offset, int length)
         {
-            var charCount = this._decoder.Value().GetCharCount(buffer, 0, length);
+            var charCount = this.decoder.Value().GetCharCount(buffer, 0, length);
             char[] chars = new char[charCount];
-            this._decoder.Value().GetChars(buffer, 0, charCount, chars, 0);
+            this.decoder.Value().GetChars(buffer, 0, charCount, chars, 0);
 
             long max = Math.Min((long)length, charCount);
 
 
-            this._writer.Write(chars);
-            this._writer.Flush();
+            this.writer.Write(chars);
+            this.writer.Flush();
 
             return (int)Math.Min((long)length, charCount);
         }
 
         private async Task<int> NextAsync(byte[] buffer, int offset, int length)
         {
-            var charCount = this._decoder.Value().GetCharCount(buffer, 0, length);
+            var charCount = this.decoder.Value().GetCharCount(buffer, 0, length);
             char[] chars = new char[charCount];
-            this._decoder.Value().GetChars(buffer, 0, charCount, chars, 0);
+            this.decoder.Value().GetChars(buffer, 0, charCount, chars, 0);
 
             long max = Math.Min((long)length, charCount);
 
 
-            await this._writer.WriteAsync(chars);
-            await this._writer.FlushAsync();
+            await this.writer.WriteAsync(chars);
+            await this.writer.FlushAsync();
 
             return (int)Math.Min((long)length, charCount);
         }
@@ -146,7 +146,7 @@ namespace Tonga.IO
 
         public override void Flush()
         {
-            this._writer.Flush();
+            this.writer.Flush();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -170,13 +170,13 @@ namespace Tonga.IO
         {
             try
             {
-                this._writer.Flush();
+                this.writer.Flush();
             }
             catch (Exception) { }
 
             try
             {
-                this._writer.Dispose();
+                this.writer.Dispose();
             }
             catch (Exception) { }
             base.Dispose(disposing);

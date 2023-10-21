@@ -27,14 +27,14 @@ namespace Tonga.IO.Tests
                 new InputOf(
                     new TeeInputStream(
                         new MemoryStream(
-                            new BytesOf(
+                            new AsBytes(
                                 new Text.Joined(",",
                                     new Head<string>(
                                         new Endless<string>("Hello World"),
                                         1000
                                     )
                                 )
-                            ).AsBytes()
+                            ).Bytes()
                         ),
                         new OutputTo(
                             new Uri(inputPath)

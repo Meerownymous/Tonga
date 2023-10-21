@@ -11,8 +11,8 @@ namespace Tonga.Bytes.Tests
         {
             Assert.True(
                 new BytesEqual(
-                    new BytesOf(3.2d),
-                    new BytesOf(3.2d)
+                    new AsBytes(3.2d),
+                    new AsBytes(3.2d)
                 ).Value()
             );
         }
@@ -22,8 +22,8 @@ namespace Tonga.Bytes.Tests
         {
             Assert.False(
                 new BytesEqual(
-                    new BytesOf(1),
-                    new BytesOf(3.2d)
+                    new AsBytes(1),
+                    new AsBytes(3.2d)
                 ).Value()
             );
         }
@@ -33,8 +33,8 @@ namespace Tonga.Bytes.Tests
         {
             Assert.False(
                 new BytesEqual(
-                    new BytesOf(1),
-                    new BytesOf(3.2d)
+                    new AsBytes(1),
+                    new AsBytes(3.2d)
                 ).Value()
             );
         }

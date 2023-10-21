@@ -15,14 +15,14 @@ namespace Tonga.Collection
         /// A collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public CollectionOf(params T[] more) : this(new EnumerableOf<T>(more))
+        public CollectionOf(params T[] more) : this(new AsEnumerable<T>(more))
         { }
 
         /// <summary>
         /// A collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public CollectionOf(IEnumerator<T> src) : this(Enumerable.EnumerableOf.Pipe(src))
+        public CollectionOf(IEnumerator<T> src) : this(AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -38,8 +38,7 @@ namespace Tonga.Collection
                     list.Add(item);
                 }
                 return list;
-            },
-            false
+            }
         )
         { }
     }

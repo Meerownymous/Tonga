@@ -17,7 +17,7 @@ namespace Tonga.Map
     {
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
-        private readonly ScalarOf<IDictionary<Key, Value>> origin;
+        private readonly AsScalar<IDictionary<Key, Value>> origin;
         private readonly Func<Key, Value> fallback;
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public FallbackMap(Func<IDictionary<Key, Value>> map, IDictionary<Key, Value> fallbackMap)
+        public FallbackMap(System.Func<IDictionary<Key, Value>> map, IDictionary<Key, Value> fallbackMap)
             : this(map, key => fallbackMap[key])
         { }
 
@@ -52,9 +52,9 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public FallbackMap(Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
+        public FallbackMap(System.Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
         {
-            this.origin = new ScalarOf<IDictionary<Key, Value>>(map);
+            this.origin = new AsScalar<IDictionary<Key, Value>>(map);
             this.fallback = fallback;
         }
 
@@ -144,7 +144,7 @@ namespace Tonga.Map
     {
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
-        private readonly ScalarOf<IDictionary<string, Value>> origin;
+        private readonly AsScalar<IDictionary<string, Value>> origin;
         private readonly Func<string, Value> fallback;
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public FallbackMap(Func<IDictionary<string, Value>> map, IDictionary<string, Value> fallbackMap)
+        public FallbackMap(System.Func<IDictionary<string, Value>> map, IDictionary<string, Value> fallbackMap)
             : this(map, key => fallbackMap[key])
         { }
 
@@ -179,9 +179,9 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public FallbackMap(Func<IDictionary<string, Value>> map, Func<string, Value> fallback)
+        public FallbackMap(System.Func<IDictionary<string, Value>> map, Func<string, Value> fallback)
         {
-            this.origin = new ScalarOf<IDictionary<string, Value>>(map);
+            this.origin = new AsScalar<IDictionary<string, Value>>(map);
             this.fallback = fallback;
         }
 
@@ -270,7 +270,7 @@ namespace Tonga.Map
     {
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
-        private readonly ScalarOf<IDictionary<string, string>> origin;
+        private readonly AsScalar<IDictionary<string, string>> origin;
         private readonly Func<string, string> fallback;
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public FallbackMap(Func<IDictionary<string, string>> map, IDictionary<string, string> fallbackMap)
+        public FallbackMap(System.Func<IDictionary<string, string>> map, IDictionary<string, string> fallbackMap)
             : this(map, key => fallbackMap[key])
         { }
 
@@ -305,9 +305,9 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public FallbackMap(Func<IDictionary<string, string>> map, Func<string, string> fallback)
+        public FallbackMap(System.Func<IDictionary<string, string>> map, Func<string, string> fallback)
         {
-            this.origin = new ScalarOf<IDictionary<string, string>>(map);
+            this.origin = new AsScalar<IDictionary<string, string>>(map);
             this.fallback = fallback;
         }
 
@@ -401,7 +401,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public static IDictionary<Key, Value> New<Key, Value>(Func<IDictionary<Key, Value>> map, IDictionary<Key, Value> fallbackMap)
+        public static IDictionary<Key, Value> New<Key, Value>(System.Func<IDictionary<Key, Value>> map, IDictionary<Key, Value> fallbackMap)
             => new FallbackMap<Key, Value>(map, fallbackMap);
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public static IDictionary<Key, Value> New<Key, Value>(Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
+        public static IDictionary<Key, Value> New<Key, Value>(System.Func<IDictionary<Key, Value>> map, Func<Key, Value> fallback)
             => new FallbackMap<Key, Value>(map, fallback);
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public static IDictionary<string, Value> New<Value>(Func<IDictionary<string, Value>> map, IDictionary<string, Value> fallbackMap)
+        public static IDictionary<string, Value> New<Value>(System.Func<IDictionary<string, Value>> map, IDictionary<string, Value> fallbackMap)
             => new FallbackMap<Value>(map, fallbackMap);
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallback">Fallback generating missing values</param>
-        public static IDictionary<string, Value> New<Value>(Func<IDictionary<string, Value>> map, Func<string, Value> fallback)
+        public static IDictionary<string, Value> New<Value>(System.Func<IDictionary<string, Value>> map, Func<string, Value> fallback)
             => new FallbackMap<Value>(map, fallback);
     }
 }

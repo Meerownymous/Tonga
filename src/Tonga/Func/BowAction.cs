@@ -12,14 +12,14 @@ namespace Tonga.Func
     /// </summary>
     public sealed class BowAction : IAction
     {
-        private readonly Func<bool> trigger;
+        private readonly System.Func<bool> trigger;
         private readonly IDictionary<string, Action> actions;
         private readonly IDictionary<string, TimeSpan> timespans;
 
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action shoot) : this(
+        public BowAction(System.Func<bool> trigger, Action shoot) : this(
             trigger, () => { },
             shoot,
             new TimeSpan(0, 0, 10),
@@ -30,7 +30,7 @@ namespace Tonga.Func
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action shoot, TimeSpan timeout) : this(
+        public BowAction(System.Func<bool> trigger, Action shoot, TimeSpan timeout) : this(
             trigger,
             () => { },
             shoot,
@@ -42,7 +42,7 @@ namespace Tonga.Func
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        public BowAction(Func<bool> trigger, Action prepare, Action shoot) : this(
+        public BowAction(System.Func<bool> trigger, Action prepare, Action shoot) : this(
             trigger,
             prepare,
             shoot,
@@ -51,7 +51,7 @@ namespace Tonga.Func
         )
         { }
 
-        public BowAction(Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
+        public BowAction(System.Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
             trigger,
             new MapOf<Action>(
                 new KvpOf<Action>("prepare", prepare),
@@ -66,7 +66,7 @@ namespace Tonga.Func
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        private BowAction(Func<bool> trigger, IDictionary<string, Action> actions, IDictionary<string, TimeSpan> timespans)
+        private BowAction(System.Func<bool> trigger, IDictionary<string, Action> actions, IDictionary<string, TimeSpan> timespans)
         {
             this.trigger = trigger;
             this.actions = actions;

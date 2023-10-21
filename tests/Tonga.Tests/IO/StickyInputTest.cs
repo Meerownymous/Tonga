@@ -26,14 +26,14 @@ namespace Tonga.IO.Tests
                     new InputOf(
                         new TeeInputStream(
                             new MemoryStream(
-                                new BytesOf(
+                                new AsBytes(
                                     new Text.Joined(lmt,
                                         new Head<string>(
                                             new Endless<string>(str),
                                             times
                                         )
                                     )
-                                ).AsBytes()
+                                ).Bytes()
                             ),
                             new OutputTo(
                                 new Uri(path)
@@ -46,7 +46,7 @@ namespace Tonga.IO.Tests
 
             Assert.True(
                 new RepeatedFunc<IInput, Boolean>(
-                    input => new BytesOf(input).AsBytes().Length == length,
+                    input => new AsBytes(input).Bytes().Length == length,
                     10
                 ).Invoke(ipt),
                 "can't return the same result every time");
@@ -57,7 +57,7 @@ namespace Tonga.IO.Tests
         {
             Assert.Contains(
                 "<html",
-                new LiveText(
+                AsText._(
                     new StickyInput(
                         new InputOf(
                             new Url("http://www.google.de")
@@ -86,11 +86,11 @@ namespace Tonga.IO.Tests
         {
             int size = 130_000;
             Assert.True(
-                new BytesOf(
+                new AsBytes(
                     new StickyInput(
                         new SlowInput(size)
                     )
-                ).AsBytes().Length == size,
+                ).Bytes().Length == size,
                 "Can't read bytes from a large source slowly"
             );
         }

@@ -14,7 +14,7 @@ namespace Tonga.Scalar.Tests
         public void DeliversFirstElement()
         {
             Assert.True(
-                new BitAt(new BytesOf(1)).Value()
+                new BitAt(new AsBytes(1)).Value()
             );
         }
 
@@ -23,7 +23,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new BitAt(
-                    new BytesOf(2),
+                    new AsBytes(2),
                     1
                 ).Value()
             );
@@ -33,7 +33,7 @@ namespace Tonga.Scalar.Tests
         public void FailsWhenBytesEmpty()
         {
             Assert.Throws<ArgumentException>(() =>
-                new BitAt(new BytesOf("")).Value()
+                new BitAt(new AsBytes("")).Value()
             );
         }
 
@@ -41,7 +41,7 @@ namespace Tonga.Scalar.Tests
         public void FailsWithCustomExceptionOfFirstPosition()
         {
             Assert.Throws<ApplicationException>(() =>
-                new BitAt(new BytesOf(""), new ApplicationException("Custom exception message")).Value()
+                new BitAt(new AsBytes(""), new ApplicationException("Custom exception message")).Value()
             );
         }
 
@@ -50,7 +50,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new BitAt(
-                    new BytesOf(""),
+                    new AsBytes(""),
                     2,
                     true
                 ).Value()
@@ -62,7 +62,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new BitAt(
-                    new BytesOf(""),
+                    new AsBytes(""),
                     true
                 ).Value()
             );
@@ -73,7 +73,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new BitAt(
-                    new BytesOf(""),
+                    new AsBytes(""),
                     2,
                     bytes => true
                 ).Value()
@@ -85,7 +85,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new BitAt(
-                    new BytesOf(""),
+                    new AsBytes(""),
                     2,
                     new FuncOf<IBytes, bool>(bytes => true)
                 ).Value()
@@ -97,7 +97,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new BitAt(
-                    new BytesOf(""),
+                    new AsBytes(""),
                     bytes => true
                 ).Value()
             );
@@ -108,7 +108,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Throws<ApplicationException>(() =>
                 new BitAt(
-                    new BytesOf(""),
+                    new AsBytes(""),
                     1,
                     new ApplicationException()
                 ).Value()

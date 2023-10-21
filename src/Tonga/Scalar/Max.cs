@@ -11,17 +11,17 @@ namespace Tonga.Enumerable
     /// The greatest item in the given <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Max<T> : ScalarEnvelope<T>
+    public sealed class Max<T> : Scalar.ScalarEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params Func<T>[] items) : this(
-            new Mapped<Func<T>, IScalar<T>>(
-                item => new Scalar.Live<T>(() => item.Invoke()),
-                EnumerableOf.Pipe(items)
+        public Max(params System.Func<T>[] items) : this(
+            new Mapped<System.Func<T>, IScalar<T>>(
+                item => AsScalar._(() => item.Invoke()),
+                AsEnumerable._(items)
             )
         )
         { }
@@ -31,7 +31,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<T> items) : this(
-            new Mapped<T, IScalar<T>>(item => new Scalar.Live<T>(item), items))
+            new Mapped<T, IScalar<T>>(item => AsScalar._(item), items))
         { }
 
         /// <summary>
@@ -39,14 +39,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params T[] items) : this(
-            new Mapped<T, IScalar<T>>(item => new Scalar.Live<T>(item), items))
+            new Mapped<T, IScalar<T>>(item => AsScalar._(item), items))
         { }
 
         /// <summary>
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params IScalar<T>[] items) : this(EnumerableOf.Pipe(items))
+        public Max(params IScalar<T>[] items) : this(AsEnumerable._(items))
         { }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> New<T>(params Func<T>[] items)
+        public static IScalar<T> New<T>(params System.Func<T>[] items)
             where T : IComparable<T>
             => new Max<T>(items);
 

@@ -38,7 +38,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new IsNumber(
-                    new LiveText(
+                    AsText._(
                         "1,234.56"
                     )
                 ).Value(),
@@ -51,7 +51,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new IsNumber(
-                    new LiveText(
+                    AsText._(
                         "1234,56"
                     ),
                     new System.Globalization.NumberFormatInfo
@@ -79,7 +79,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.False(
                 new IsNumber(
-                    new LiveText(
+                    AsText._(
                         "not a number"
                     )
                 ).Value(),

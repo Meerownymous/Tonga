@@ -14,7 +14,7 @@ namespace Tonga.Text
         /// Normalized A <see cref="IText"/>  (whitespaces replaced with one single space)
         /// </summary>
         /// <param name="text">text to normalize</param>
-        public Normalized(String text) : this(new LiveText(text))
+        public Normalized(String text) : this(AsText._(text))
         { }
 
         /// <summary>
@@ -22,8 +22,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to normalize</param>
         public Normalized(IText text) : base(() =>
-            Regex.Replace(new Trimmed(text).AsString(), "\\s+", " "),
-            false
+            Regex.Replace(new Trimmed(text).AsString(), "\\s+", " ")
         )
         { }
     }

@@ -19,9 +19,9 @@ namespace Tonga.Bytes
         /// <param name="bytes">origin bytes</param>
         public Base64Bytes(IBytes bytes)
         {
-            this.bytes = new ScalarOf<byte[]>(() =>
+            this.bytes = new AsScalar<byte[]>(() =>
             {
-                var byts = bytes.AsBytes();
+                var byts = bytes.Bytes();
                 string base64String = Encoding.UTF8.GetString(byts, 0, byts.Length);
                 return Convert.FromBase64String(base64String);
             });
@@ -31,7 +31,7 @@ namespace Tonga.Bytes
         /// The 
         /// </summary>
         /// <returns></returns>
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
             return this.bytes.Value();
         }

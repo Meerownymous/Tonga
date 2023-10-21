@@ -11,6 +11,6 @@ namespace Tonga
         /// Get the content as a byte array.
         /// </summary>
         /// <returns></returns>
-        byte[] AsBytes();
+        byte[] Bytes();
     }
 }

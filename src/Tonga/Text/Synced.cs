@@ -28,8 +28,7 @@ namespace Tonga.Text
                 {
                     return text.AsString();
                 }
-            },
-            true
+            }
         )
         { }
     }

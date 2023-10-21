@@ -12,7 +12,7 @@ namespace Tonga.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Enumerable.EnumerableOf.Pipe(src))
+        public And(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
@@ -24,7 +24,7 @@ namespace Tonga.Scalar
         /// <summary> Logical and. Returns true if all calls to <see cref="IFunc{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>
         /// <param name="src"> list of items </param>
-        public And(IFunc<In, Boolean> func, params In[] src) : this(func, Enumerable.EnumerableOf.Pipe(src))
+        public And(IFunc<In, Boolean> func, params In[] src) : this(func, Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary> ctor </summary>
@@ -32,9 +32,9 @@ namespace Tonga.Scalar
         /// <param name="src"> list of items </param>
         public And(IFunc<In, Boolean> func, IEnumerable<In> src) :
             this(
-                Mapped.Pipe(
+                Mapped._(
                     new FuncOf<In, IScalar<Boolean>>((item) =>
-                        new Live<Boolean>(func.Invoke(item))),
+                        AsScalar._(func.Invoke(item))),
                     src
                 )
             )
@@ -71,14 +71,14 @@ namespace Tonga.Scalar
     {
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(params Func<bool>[] funcs) : this(Enumerable.EnumerableOf.Pipe(funcs))
+        public And(params System.Func<bool>[] funcs) : this(Enumerable.AsEnumerable._(funcs))
         { }
 
-        /// <summary> Logical and. Returns true if all calls to <see cref="Func{Out}"/> were true. </summary>
+        /// <summary> Logical and. Returns true if all calls to <see cref="System.Func{Out}"/> were true. </summary>
         /// <param name="funcs"> the conditions to apply </param>
-        public And(IEnumerable<Func<bool>> funcs) : this(
-            new Mapped<Func<bool>, IScalar<bool>>(
-                func => new Live<bool>(func),
+        public And(IEnumerable<System.Func<bool>> funcs) : this(
+            Mapped._(
+                func => AsScalar._(func),
                 funcs
             )
         )
@@ -87,14 +87,14 @@ namespace Tonga.Scalar
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params IScalar<Boolean>[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(params bool[] src) : this(
-            Mapped.Pipe(
-                tBool => new Live<bool>(tBool),
+            Mapped._(
+                tBool => AsScalar._(tBool),
                 src
             )
         )
@@ -103,8 +103,8 @@ namespace Tonga.Scalar
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
         public And(IEnumerable<bool> src) : this(
-            Mapped.Pipe(
-                tBool => new Live<bool>(tBool),
+            Mapped._(
+                tBool => AsScalar._(tBool),
                 src
             )
         )
@@ -112,8 +112,7 @@ namespace Tonga.Scalar
 
         /// <summary> ctor </summary>
         /// <param name="src"> list of items </param>
-        public And(IEnumerable<IScalar<bool>> src)
-            : base(() =>
+        public And(IEnumerable<IScalar<bool>> src) : base(() =>
             {
                 Boolean result = true;
                 foreach (IScalar<Boolean> item in src)

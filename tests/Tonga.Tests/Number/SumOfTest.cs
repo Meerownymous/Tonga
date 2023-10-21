@@ -21,7 +21,7 @@ namespace Tonga.Number.Tests
         {
             Assert.True(
                 new SumOf(
-                    EnumerableOf.Pipe(1.5F, 2.5F, 3.5F)
+                    AsEnumerable._(1.5F, 2.5F, 3.5F)
                 ).AsFloat() == 7.5F
             );
         }

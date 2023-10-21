@@ -21,7 +21,7 @@ namespace Tonga.Func.Tests
                             input => input += "X",
                             input => input += "Y"
                         ),
-                        EnumerableOf.Pipe("public", "final", "class")
+                        AsEnumerable._("public", "final", "class")
                     ))
             ).Value() == 3,
             "cannot chain functions");
@@ -38,13 +38,13 @@ namespace Tonga.Func.Tests
                          new Enumerable.Mapped<string, string>(
                             new ChainedFunc<string, string, string>(
                                 input => input += "1",
-                                EnumerableOf.Pipe(
+                                AsEnumerable._(
                                     new FuncOf<string, string>(input => input += ("2")),
                                     new FuncOf<string, string>(input => input.Replace("a", "b"))
                                 ),
                                 input => input.Trim()
                             ),
-                            EnumerableOf.Pipe("private", "static", "String"))
+                            AsEnumerable._("private", "static", "String"))
                     )
                 ).Value()
             );

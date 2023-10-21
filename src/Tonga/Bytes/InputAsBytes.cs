@@ -20,7 +20,7 @@ namespace Tonga.Bytes
         /// <param name="max">maximum buffer size</param>
         public InputAsBytes(IInput input, int max = 16 << 10)
         {
-            this.bytes = new ScalarOf<byte[]>(() =>
+            this.bytes = new AsScalar<byte[]>(() =>
             {
                 var baos = new MemoryStream();
                 byte[] output;
@@ -40,7 +40,7 @@ namespace Tonga.Bytes
         /// Get the content as byte array. (Self-Disposing)
         /// </summary>
         /// <returns>content as byte array</returns>
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
             return this.bytes.Value();
         }

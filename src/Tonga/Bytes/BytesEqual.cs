@@ -18,10 +18,10 @@ namespace Tonga.Bytes
         /// <param name="right"></param>
         public BytesEqual(IBytes left, IBytes right)
         {
-            this.equal = new ScalarOf<bool>(() =>
+            this.equal = new AsScalar<bool>(() =>
             {
-                var leftByte = left.AsBytes();
-                var rightByte = right.AsBytes();
+                var leftByte = left.Bytes();
+                var rightByte = right.Bytes();
                 var equal = leftByte.Length == rightByte.Length;
 
                 for (var i = 0; i < leftByte.Length && equal; i++)

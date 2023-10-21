@@ -16,21 +16,24 @@ namespace Tonga.Map
     /// </summary>
     public sealed class LazyDict : IDictionary<string, string>
     {
-        private readonly IDictionary<string, ScalarOf<string>> map;
+        private readonly IDictionary<string, Scalar.Sticky<string>> map;
         private readonly InvalidOperationException rejectReadException = new InvalidOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
-        private readonly ScalarOf<bool> anyValueIsLazy;
+        private readonly Scalar.Sticky<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp[] kvps) : this(EnumerableOf.Pipe(kvps), true)
+        public LazyDict(params IKvp[] kvps) : this(AsEnumerable._(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(new Enumerable.EnumerableOf<IKvp>(kvps), rejectBuildingAllKeys)
+        public LazyDict(bool rejectBuildingAllKeys, params IKvp[] kvps) : this(
+            AsEnumerable._(kvps),
+            rejectBuildingAllKeys
+        )
         { }
 
         /// <summary>
@@ -40,16 +43,16 @@ namespace Tonga.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<ScalarOf<string>>(() =>
+                new MapOf<Scalar.Sticky<string>>(() =>
                 {
-                    var dict = new Dictionary<string, ScalarOf<string>>();
+                    var dict = new Dictionary<string, Scalar.Sticky<string>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new ScalarOf<string>(() => kvp.Value());
+                        dict[kvp.Key()] = Scalar.Sticky._(() => kvp.Value());
                     }
                     return dict;
                 });
-            this.anyValueIsLazy = new ScalarOf<bool>(() =>
+            this.anyValueIsLazy = Scalar.Sticky._(() =>
             {
                 bool result = false;
                 foreach (var kvp in kvps)
@@ -91,10 +94,12 @@ namespace Tonga.Map
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new List.Mapped<ScalarOf<string>, string>(
-                        v => v.Value(),
-                        map.Values
-                   );
+                    List.Sticky._(
+                        List.Mapped._(
+                            v => v.Value(),
+                            map.Values
+                        )
+                    );
             }
         }
 
@@ -180,7 +185,7 @@ namespace Tonga.Map
                         ).AsString());
             }
 
-            new ListOf<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
+            new AsList<KeyValuePair<string, string>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -197,7 +202,7 @@ namespace Tonga.Map
                     + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
             }
             return
-                new Enumerable.Mapped<KeyValuePair<string, ScalarOf<string>>, KeyValuePair<string, string>>(
+                Enumerable.Mapped._(
                     kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.Value()),
                     this.map
                 ).GetEnumerator();
@@ -291,21 +296,24 @@ namespace Tonga.Map
     /// </summary>
     public sealed class LazyDict<Value> : IDictionary<string, Value>
     {
-        private readonly IDictionary<string, ScalarOf<Value>> map;
+        private readonly IDictionary<string, Scalar.Sticky<Value>> map;
         private readonly InvalidOperationException rejectReadException = new InvalidOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
-        private readonly ScalarOf<bool> anyValueIsLazy;
+        private readonly Scalar.Sticky<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Value>[] kvps) : this(new Enumerable.EnumerableOf<IKvp<Value>>(kvps), true)
+        public LazyDict(params IKvp<Value>[] kvps) : this(new Enumerable.AsEnumerable<IKvp<Value>>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(new Enumerable.EnumerableOf<IKvp<Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Value>[] kvps) : this(
+            AsEnumerable._(kvps),
+            rejectBuildingAllValues
+        )
         { }
 
         /// <summary>
@@ -315,16 +323,16 @@ namespace Tonga.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<ScalarOf<Value>>(() =>
+                new MapOf<Scalar.Sticky<Value>>(() =>
                 {
-                    var dict = new Dictionary<string, ScalarOf<Value>>();
+                    var dict = new Dictionary<string, Scalar.Sticky<Value>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new ScalarOf<Value>(() => kvp.Value());
+                        dict[kvp.Key()] = Scalar.Sticky._(() => kvp.Value());
                     }
                     return dict;
                 });
-            this.anyValueIsLazy = new ScalarOf<bool>(() =>
+            this.anyValueIsLazy = Scalar.Sticky._(() =>
             {
                 bool result = false;
                 foreach (var kvp in kvps)
@@ -366,7 +374,7 @@ namespace Tonga.Map
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new List.Mapped<ScalarOf<Value>, Value>(
+                    List.Mapped._(
                         v => v.Value(),
                         map.Values
                    );
@@ -454,7 +462,7 @@ namespace Tonga.Map
                         ).AsString());
             }
 
-            new ListOf<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
+            new AsList<KeyValuePair<string, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -471,7 +479,7 @@ namespace Tonga.Map
                     + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
             }
             return
-                new Enumerable.Mapped<KeyValuePair<string, ScalarOf<Value>>, KeyValuePair<string, Value>>(
+                Enumerable.Mapped._(
                     kvp => new KeyValuePair<string, Value>(kvp.Key, kvp.Value.Value()),
                     this.map
                 ).GetEnumerator();
@@ -529,21 +537,21 @@ namespace Tonga.Map
     /// </summary>
     public sealed class LazyDict<Key, Value> : IDictionary<Key, Value>
     {
-        private readonly IDictionary<Key, ScalarOf<Value>> map;
+        private readonly IDictionary<Key, Scalar.Sticky<Value>> map;
         private readonly InvalidOperationException rejectReadException = new InvalidOperationException("Writing is not supported, it's a read-only map");
         private readonly bool rejectBuildingAllValues;
-        private readonly ScalarOf<bool> anyValueIsLazy;
+        private readonly Scalar.Sticky<bool> anyValueIsLazy;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IKvp<Key, Value>[] kvps) : this(Enumerable.EnumerableOf.Pipe(kvps), true)
+        public LazyDict(params IKvp<Key, Value>[] kvps) : this(Enumerable.AsEnumerable._(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new Enumerable.EnumerableOf<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
+        public LazyDict(bool rejectBuildingAllValues, params IKvp<Key, Value>[] kvps) : this(new Enumerable.AsEnumerable<IKvp<Key, Value>>(kvps), rejectBuildingAllValues)
         { }
 
         /// <summary>
@@ -553,16 +561,16 @@ namespace Tonga.Map
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
-                new MapOf<Key, ScalarOf<Value>>(() =>
+                new MapOf<Key, Scalar.Sticky<Value>>(() =>
                 {
-                    var dict = new Dictionary<Key, ScalarOf<Value>>();
+                    var dict = new Dictionary<Key, Scalar.Sticky<Value>>();
                     foreach (var kvp in kvps)
                     {
-                        dict[kvp.Key()] = new ScalarOf<Value>(() => kvp.Value());
+                        dict[kvp.Key()] = Scalar.Sticky._(() => kvp.Value());
                     }
                     return dict;
                 });
-            this.anyValueIsLazy = new ScalarOf<bool>(() =>
+            this.anyValueIsLazy = Scalar.Sticky._(() =>
             {
                 bool result = false;
                 foreach (var kvp in kvps)
@@ -605,7 +613,7 @@ namespace Tonga.Map
                         + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
                 }
                 return
-                    new List.Mapped<ScalarOf<Value>, Value>(
+                    List.Mapped._(
                         v => v.Value(),
                         map.Values
 
@@ -696,7 +704,7 @@ namespace Tonga.Map
                         ).AsString());
             }
 
-            new ListOf<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
+            new AsList<KeyValuePair<Key, Value>>(this).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -713,7 +721,7 @@ namespace Tonga.Map
                     + " If you need this behaviour, set the ctor param 'rejectBuildingAllValues' to false.");
             }
             return
-                new Enumerable.Mapped<KeyValuePair<Key, ScalarOf<Value>>, KeyValuePair<Key, Value>>(
+                Enumerable.Mapped._(
                     kvp => new KeyValuePair<Key, Value>(kvp.Key, kvp.Value.Value()),
                     this.map
                 ).GetEnumerator();

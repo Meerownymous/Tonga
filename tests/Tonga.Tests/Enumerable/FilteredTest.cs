@@ -31,7 +31,7 @@ namespace Tonga.Enumerable.Test
         {
             var filterings = 0;
             var filtered =
-                new Filtered<string>(
+                Filtered.From(
                     (input) =>
                     {
                         filterings++;
@@ -52,36 +52,11 @@ namespace Tonga.Enumerable.Test
         }
 
         [Fact]
-        public void CanBeSticky()
-        {
-            var filterings = 0;
-            var filtered =
-                Filtered.Sticky(
-                    (input) =>
-                    {
-                        filterings++;
-                        return input != "B";
-                    },
-                    new List<string>() { "A", "B", "C" }
-                );
-
-            var enm1 = filtered.GetEnumerator();
-            enm1.MoveNext();
-            var current = enm1.Current;
-
-            var enm2 = filtered.GetEnumerator();
-            enm2.MoveNext();
-            var current2 = enm2.Current;
-
-            Assert.Equal(1, filterings);
-        }
-
-        [Fact]
         public void FiltersEmptyList()
         {
             Assert.True(
                 new LengthOf(
-                    new Filtered<string>(
+                    Filtered.From(
                         input => input.Length > 1,
                         new None()
                     )

@@ -19,7 +19,7 @@ namespace Tonga.Enumerator
         /// <param name="items">enumerator to count</param>
         public LengthOf(IEnumerator items)
         {
-            this.length = new ScalarOf<int>(() =>
+            this.length = new AsScalar<int>(() =>
             {
                 int size = 0;
                 while (items.MoveNext())

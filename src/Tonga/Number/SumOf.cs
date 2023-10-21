@@ -16,7 +16,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source floats</param>
         public SumOf(params float[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source longs</param>
         public SumOf(params long[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source ints</param>
         public SumOf(params int[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source doubles</param>
         public SumOf(params double[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source doubles</param>
         public SumOf(IEnumerable<double> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -57,7 +57,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -66,7 +66,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -75,7 +75,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)
@@ -91,7 +91,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source integers</param>
         public SumOf(IEnumerable<int> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -100,7 +100,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -109,7 +109,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -118,7 +118,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)
@@ -134,7 +134,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source longs</param>
         public SumOf(IEnumerable<long> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -143,7 +143,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -152,7 +152,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -161,7 +161,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)
@@ -177,7 +177,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source floats</param>
         public SumOf(IEnumerable<float> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 foreach (int val in src)
@@ -186,7 +186,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 foreach (int val in src)
@@ -195,7 +195,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 foreach (long val in src)
@@ -204,7 +204,7 @@ namespace Tonga.Number
                 }
                 return sum;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 foreach (float val in src)

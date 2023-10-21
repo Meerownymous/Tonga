@@ -16,7 +16,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">items to limit</param>
-        public HeadOf(int lmt, params T[] src) : this(lmt, EnumerableOf.Pipe(src))
+        public HeadOf(int lmt, params T[] src) : this(lmt, AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="lmt">max number of items to limit to</param>
         /// <param name="src">Enumerator to limit</param>
-        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, Enumerable.EnumerableOf.Pipe(src))
+        public HeadOf(int lmt, IEnumerator<T> src) : this(lmt, Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -43,8 +43,7 @@ namespace Tonga.Collection
         public HeadOf(int lmt, ICollection<T> src) : base(
             () => new LiveCollection<T>(
                 new Enumerable.Head<T>(src, lmt)
-            ),
-            false
+            )
         )
         { }
     }

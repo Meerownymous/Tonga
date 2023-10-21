@@ -17,7 +17,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(Func<IMapInput> input) : this(
+        public MapInputEnvelope(System.Func<IMapInput> input) : this(
             dict => new Joined(dict, new MapOf(input()))
         )
         { }
@@ -34,7 +34,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp[] kvps) : this(
-            new EnumerableOf<IKvp>(kvps)
+            new AsEnumerable<IKvp>(kvps)
         )
         { }
 
@@ -91,7 +91,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(Func<IMapInput<Value>> input) : this(
+        public MapInputEnvelope(System.Func<IMapInput<Value>> input) : this(
             dict => new Joined<Value>(dict, new MapOf<Value>(input()))
         )
         { }
@@ -108,7 +108,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp<Value>[] kvps) : this(
-            new EnumerableOf<IKvp<Value>>(kvps)
+            new AsEnumerable<IKvp<Value>>(kvps)
         )
         { }
 
@@ -165,7 +165,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(Func<IMapInput<Key, Value>> input) : this(
+        public MapInputEnvelope(System.Func<IMapInput<Key, Value>> input) : this(
             dict => new Joined<Key, Value>(dict, new MapOf<Key, Value>(input()))
         )
         { }
@@ -182,7 +182,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(params IKvp<Key, Value>[] kvps) : this(
-            new EnumerableOf<IKvp<Key, Value>>(kvps)
+            new AsEnumerable<IKvp<Key, Value>>(kvps)
         )
         { }
 

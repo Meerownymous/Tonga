@@ -13,7 +13,7 @@ namespace Tonga.Enumerable.Test
                 "two",
                 new ItemAt<string>(
                     new Cycled<string>(
-                        EnumerableOf.Pipe("one", "two", "three")
+                        AsEnumerable._("one", "two", "three")
                     ),
                     7
                 ).Value()

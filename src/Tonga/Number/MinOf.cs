@@ -16,7 +16,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params int[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<int> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -34,7 +34,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -44,7 +44,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -54,7 +54,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();
@@ -72,7 +72,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params double[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<double> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -90,7 +90,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -100,7 +100,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -110,7 +110,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();
@@ -128,7 +128,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params long[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<long> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -146,7 +146,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -156,7 +156,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -166,7 +166,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();
@@ -184,7 +184,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params float[] src) : this(
-            Enumerable.EnumerableOf.Pipe(src))
+            Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(IEnumerable<float> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 var min = double.MaxValue;
                 var e = src.GetEnumerator();
@@ -202,7 +202,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 var min = int.MaxValue;
                 var e = src.GetEnumerator();
@@ -212,7 +212,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 var min = long.MaxValue;
                 var e = src.GetEnumerator();
@@ -222,7 +222,7 @@ namespace Tonga.Number
                 }
                 return min;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 var min = float.MaxValue;
                 var e = src.GetEnumerator();

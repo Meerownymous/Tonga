@@ -17,14 +17,13 @@ namespace Tonga.Collection
         public Joined(params IEnumerable<T>[] list) : base(
             () => new LiveCollection<T>(
                     new Enumerable.Joined<T>(list)
-            ),
-            false
+            )
         )
         { }
     }
 
     public static class Joined
     {
-        public static ICollection<T> New<T>(params IEnumerable<T>[] list) => new Joined<T>(list);
+        public static ICollection<T> _<T>(params IEnumerable<T>[] list) => new Joined<T>(list);
     }
 }

@@ -17,8 +17,8 @@ namespace Tonga.Enumerable.Test
                 "HELLO",
                 new ItemAt<IText>(
                     new Mapped<String, IText>(
-                        input => new Upper(new LiveText(input)),
-                        EnumerableOf.Pipe("hello", "world", "damn")),
+                        input => new Upper(AsText._(input)),
+                        AsEnumerable._("hello", "world", "damn")),
                     0
                 ).Value().AsString()
             );
@@ -29,13 +29,13 @@ namespace Tonga.Enumerable.Test
         {
             var mappings = 0;
             var mapping =
-                Mapped.Pipe(
+                Mapped._(
                     input =>
                     {
                         mappings++;
-                        return new Upper(new LiveText(input));
+                        return Upper._(AsText._(input));
                     },
-                    EnumerableOf.Pipe("hello", "world", "damn")
+                    AsEnumerable._("hello", "world", "damn")
                 );
 
             var enm1 = mapping.GetEnumerator();
@@ -44,28 +44,6 @@ namespace Tonga.Enumerable.Test
             enm2.MoveNext(); var current2 = enm2.Current;
 
             Assert.Equal(2, mappings);
-        }
-
-        [Fact]
-        public void CanBeSticky()
-        {
-            var mappings = 0;
-            var mapping =
-                Mapped.Sticky(
-                    input =>
-                    {
-                        mappings++;
-                        return new Upper(new LiveText(input));
-                    },
-                    EnumerableOf.Pipe("hello", "world", "damn")
-                );
-
-            var enm1 = mapping.GetEnumerator();
-            enm1.MoveNext(); var current = enm1.Current;
-            var enm2 = mapping.GetEnumerator();
-            enm2.MoveNext(); var current2 = enm2.Current;
-
-            Assert.Equal(1, mappings);
         }
 
         [Fact]
@@ -79,7 +57,7 @@ namespace Tonga.Enumerable.Test
                         mappings++;
                         return input;
                     },
-                    EnumerableOf.Pipe("hello", "world", "damn")
+                    AsEnumerable._("hello", "world", "damn")
                 );
 
             var enm1 = mapping.GetEnumerator();
@@ -96,7 +74,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new Mapped<String, IText>(
-                        input => new Upper(new LiveText(input)),
+                        input => new Upper(AsText._(input)),
                         new None()
                     )
                 ).Value() == 0
@@ -110,8 +88,8 @@ namespace Tonga.Enumerable.Test
                 "WORLD1",
                 new ItemAt<IText>(
                     new Mapped<String, IText>(
-                        (input, index) => new Upper(new LiveText(input + index)),
-                        EnumerableOf.Pipe("hello", "world", "damn")
+                        (input, index) => new Upper(AsText._(input + index)),
+                        AsEnumerable._("hello", "world", "damn")
                         ),
                     1
                 ).Value().AsString()
@@ -123,7 +101,7 @@ namespace Tonga.Enumerable.Test
         public void AdvancesOnlyNecessary()
         {
             var advances = 0;
-            var origin = new ListOf<string>("item1", "item2", "item3");
+            var origin = new AsList<string>("item1", "item2", "item3");
 
             var list =
                 new Mapped<string, string>(
@@ -144,7 +122,7 @@ namespace Tonga.Enumerable.Test
         public void CopyCtorDoesNotAdvance()
         {
             var advances = 0;
-            var origin = new ListOf<string>("item1", "item2", "item3");
+            var origin = new AsList<string>("item1", "item2", "item3");
 
             var list =
                 new Mapped<string, string>(

@@ -17,7 +17,7 @@ namespace Tonga.IO
         /// <summary>
         /// the output
         /// </summary>
-        private readonly IScalar<Stream> _origin;
+        private readonly IScalar<Stream> origin;
 
         /// <summary>
         /// a path
@@ -51,32 +51,36 @@ namespace Tonga.IO
         { }
 
         /// <summary>
-        /// <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="Func{TResult}"/>.
+        /// <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="System.Func{TResult}"/>.
         /// </summary>
         /// <param name="fnc">target stream returning function</param>
-        public OutputTo(Func<Stream> fnc) : this(new Live<Stream>(fnc))
+        public OutputTo(Func<Stream> fnc) : this(AsScalar._(fnc))
         { }
 
         /// <summary>
         /// <see cref="IOutput"/> to a target <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">target stream</param>
-        public OutputTo(Stream stream) : this(new Live<Stream>(() => stream))
+        public OutputTo(Stream stream) : this(AsScalar._(() => stream))
         { }
 
         private OutputTo(IScalar<Stream> origin)
         {
-            this._origin = new ScalarOf<Stream>(origin, stream => !stream.CanWrite);
+            this.origin =
+                StickyIf._(
+                    value => value.CanWrite,
+                    origin
+                );
         }
 
         public Stream Stream()
         {
-            return this._origin.Value();
+            return this.origin.Value();
         }
 
         public void Dispose()
         {
-            _origin.Value().Dispose();
+            origin.Value().Dispose();
         }
     }
 }

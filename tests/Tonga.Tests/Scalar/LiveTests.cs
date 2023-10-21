@@ -10,7 +10,7 @@ namespace Tonga.Scalar.Tests
         public void ReloadsFunc()
         {
             var counts = 0;
-            var live = new Live<bool>(() =>
+            var live = AsScalar._(() =>
             {
                 ++counts;
                 return true;

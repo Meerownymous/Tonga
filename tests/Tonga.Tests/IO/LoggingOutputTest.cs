@@ -42,7 +42,7 @@ namespace Tonga.IO.Tests
                             "memory"
                         ).Stream();
 
-                    output.Write(new BytesOf("a").AsBytes(), 0, 1);
+                    output.Write(new AsBytes("a").Bytes(), 0, 1);
 
                 }
                 var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
@@ -63,7 +63,7 @@ namespace Tonga.IO.Tests
         {
             using (var tempfile = new TempFile("txt"))
             {
-                var bytes = new BytesOf("Hello World!").AsBytes();
+                var bytes = new AsBytes("Hello World!").Bytes();
 
                 using (var append = new AppendTo(tempfile.Value()))
                 {
@@ -86,7 +86,7 @@ namespace Tonga.IO.Tests
 
                 Assert.Equal(
                     bytes,
-                    new BytesOf(content).AsBytes()
+                    new AsBytes(content).Bytes()
                 );
             }
         }

@@ -13,7 +13,7 @@ namespace Tonga.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new LiveText(
+                AsText._(
                     new ResourceOf("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
                 ).AsString()
             );
@@ -24,7 +24,7 @@ namespace Tonga.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new LiveText(
+                AsText._(
                     new ResourceOf("IO/Resources/test.txt", this.GetType())
                 ).AsString()
             );
@@ -37,7 +37,7 @@ namespace Tonga.IO.Tests
         {
             Assert.Equal(
                 "Hello from Embedded!",
-                new LiveText(
+                AsText._(
                     new ResourceOf(
                         name,
                         this.GetType())

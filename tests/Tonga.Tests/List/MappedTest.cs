@@ -17,8 +17,8 @@ namespace Tonga.List.Tests
                 "HELLO",
                 new ItemAt<IText>(
                     new Mapped<String, IText>(
-                        input => new Upper(new LiveText(input)),
-                        new ListOf<string>("hello", "world", "damn")
+                        input => new Upper(AsText._(input)),
+                        new AsList<string>("hello", "world", "damn")
                     ),
                     0
                 ).Value().AsString()
@@ -32,8 +32,8 @@ namespace Tonga.List.Tests
                 0,
                 new LengthOf(
                     new Mapped<String, IText>(
-                        input => new Upper(new LiveText(input)),
-                        new ListOf<string>()
+                        input => new Upper(AsText._(input)),
+                        new AsList<string>()
                     )
                 ).Value()
             );

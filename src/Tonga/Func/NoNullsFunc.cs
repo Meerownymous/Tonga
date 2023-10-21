@@ -65,7 +65,7 @@ namespace Tonga.Func
         /// Raises an <see cref="IOException"/> when the return value is null.
         /// </summary>
         /// <param name="fnc">func to check</param>
-        public NoNullsFunc(Func<Out> fnc) : this(new FuncOf<Out>(fnc), new IOException("Return value is null"))
+        public NoNullsFunc(System.Func<Out> fnc) : this(new FuncOf<Out>(fnc), new IOException("Return value is null"))
         { }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="ex">Exception to throw</param>
-        public NoNullsFunc(Func<Out> fnc, Exception ex) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(() => throw ex))
+        public NoNullsFunc(System.Func<Out> fnc, Exception ex) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(() => throw ex))
         { }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="fallback">fallback value</param>
-        public NoNullsFunc(Func<Out> fnc, Out fallback) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(() => fallback))
+        public NoNullsFunc(System.Func<Out> fnc, Out fallback) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(() => fallback))
         { }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="fallback">fallback value</param>
-        public NoNullsFunc(Func<Out> fnc, Func<Out> fallback) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(fallback))
+        public NoNullsFunc(System.Func<Out> fnc, System.Func<Out> fallback) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(fallback))
         { }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Tonga.Func
         /// Raises an <see cref="IOException"/> when the return value is null.
         /// </summary>
         /// <param name="fnc">func to check</param>
-        public static IFunc<Out> New<Out>(Func<Out> fnc) => new NoNullsFunc<Out>(fnc);
+        public static IFunc<Out> New<Out>(System.Func<Out> fnc) => new NoNullsFunc<Out>(fnc);
 
         /// <summary>
         /// Raises an <see cref="IOException"/> when the return value is null.
@@ -165,7 +165,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="ex">Exception to throw</param>
-        public static IFunc<Out> New<Out>(Func<Out> fnc, Exception ex) => new NoNullsFunc<Out>(fnc, ex);
+        public static IFunc<Out> New<Out>(System.Func<Out> fnc, Exception ex) => new NoNullsFunc<Out>(fnc, ex);
 
         /// <summary>
         /// Raises given <see cref="Exception"/> when the return value is null.
@@ -179,7 +179,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="fallback">fallback value</param>
-        public static IFunc<Out> New<Out>(Func<Out> fnc, Out fallback) => new NoNullsFunc<Out>(fnc, fallback);
+        public static IFunc<Out> New<Out>(System.Func<Out> fnc, Out fallback) => new NoNullsFunc<Out>(fnc, fallback);
 
         /// <summary>
         /// Returns the fallback if the func returns null.
@@ -193,7 +193,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="fallback">fallback value</param>
-        public static IFunc<Out> New<Out>(Func<Out> fnc, Func<Out> fallback) => new NoNullsFunc<Out>(fnc, fallback);
+        public static IFunc<Out> New<Out>(System.Func<Out> fnc, System.Func<Out> fallback) => new NoNullsFunc<Out>(fnc, fallback);
 
         /// <summary>
         /// Calls the fallback function if the func return null.

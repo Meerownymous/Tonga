@@ -15,17 +15,17 @@ namespace Tonga.Bytes
         /// <summary>
         /// a reader
         /// </summary>
-        private readonly IScalar<StreamReader> _reader;
+        private readonly IScalar<StreamReader> reader;
 
         /// <summary>
         /// encoding of the reader
         /// </summary>
-        private readonly Encoding _encoding;
+        private readonly Encoding encoding;
 
         /// <summary>
         /// maximum buffer size
         /// </summary>
-        private readonly int _size;
+        private readonly int size;
 
         /// <summary>
         /// A <see cref="StringReader"/> as <see cref="IBytes"/>
@@ -57,16 +57,18 @@ namespace Tonga.Bytes
         /// <param name="rdr">the reader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        public ReaderAsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new Live<StreamReader>(rdr), enc, max)
+        public ReaderAsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(
+            AsScalar._(rdr), enc, max)
         { }
 
         /// <summary>
-        /// A <see cref="StreamReader"/> returned by a <see cref="Func{TResult}"/>as <see cref="IBytes"/>
+        /// A <see cref="StreamReader"/> returned by a <see cref="System.Func{TResult}"/>as <see cref="IBytes"/>
         /// </summary>
         /// <param name="rdr">function to retrieve the reader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        private ReaderAsBytes(Func<StreamReader> rdr, Encoding enc, int max = 16 << 10) : this(new Live<StreamReader>(rdr), enc, max)
+        private ReaderAsBytes(System.Func<StreamReader> rdr, Encoding enc, int max = 16 << 10) : this(
+            AsScalar._(rdr), enc, max)
         { }
 
         /// <summary>
@@ -77,21 +79,21 @@ namespace Tonga.Bytes
         /// <param name="max">maximum buffer size</param>
         public ReaderAsBytes(IScalar<StreamReader> rdr, Encoding enc, int max)
         {
-            this._reader = new ScalarOf<StreamReader>(rdr, reader => !reader.BaseStream.CanRead);
-            this._encoding = enc;
-            this._size = max;
+            this.reader = rdr;
+            this.encoding = enc;
+            this.size = max;
         }
 
         /// <summary>
         /// Get the content as byte array.
         /// </summary>
         /// <returns>content as a byte array.</returns>
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
-            var rdr = this._reader.Value();
-            var buffer = new char[this._size];
-            var builder = new StringBuilder(this._size);
-            int pos = 0;
+            var rdr = this.reader.Value();
+            var buffer = new char[this.size];
+            var builder = new StringBuilder(this.size);
+            var pos = 0;
             while (rdr.Peek() > -1)
             {
                 pos = rdr.Read(buffer, 0, buffer.Length);
@@ -99,7 +101,7 @@ namespace Tonga.Bytes
             }
             rdr.BaseStream.Position = 0;
             rdr.DiscardBufferedData();
-            return this._encoding.GetBytes(builder.ToString());
+            return this.encoding.GetBytes(builder.ToString());
         }
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace Tonga.Bytes
         {
             try
             {
-                _reader.Value().Dispose();
+                reader.Value().Dispose();
             }
             catch (Exception) { }
         }

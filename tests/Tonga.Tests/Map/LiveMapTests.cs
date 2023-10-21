@@ -19,7 +19,7 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap(() =>
-                    new Enumerable.EnumerableOf<IKvp>(
+                    new Enumerable.AsEnumerable<IKvp>(
                         new KvpOf(() => one),
                         new KvpOf(() => two)
                     )
@@ -34,7 +34,7 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap(() =>
-                    new Enumerable.EnumerableOf<IKvp>(
+                    new Enumerable.AsEnumerable<IKvp>(
                         new KvpOf("key a", "value a"),
                         new KvpOf("key b", () =>
                         {
@@ -72,10 +72,10 @@ namespace Tonga.Map.Tests
                 new LiveMap<int, int>(() =>
                     new MapOf<int, int>(
                         new Repeated<KeyValuePair<int, int>>(
-                            new Scalar.Live<KeyValuePair<int, int>>(() =>
+                            AsScalar._(() =>
                                 new KeyValuePair<int, int>(random.Next(), 1)
                             ),
-                            new Scalar.Live<int>(() =>
+                            AsScalar._(() =>
                             {
                                 Interlocked.Increment(ref size);
                                 return size;
@@ -96,7 +96,7 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap(() =>
-                    new Enumerable.EnumerableOf<IKvp>(
+                    new Enumerable.AsEnumerable<IKvp>(
                         new KvpOf("key", () => (value++).ToString())
                     )
                 );
@@ -113,7 +113,7 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap<int>(() =>
-                    new Enumerable.EnumerableOf<IKvp<int>>(
+                    new Enumerable.AsEnumerable<IKvp<int>>(
                         new KvpOf<int>(() => one),
                         new KvpOf<int>(() => two)
                     )
@@ -128,7 +128,7 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap<int>(() =>
-                    new Enumerable.EnumerableOf<IKvp<int>>(
+                    new Enumerable.AsEnumerable<IKvp<int>>(
                         new KvpOf<int>("key a", 0),
                         new KvpOf<int>("key b", () =>
                         {
@@ -146,7 +146,7 @@ namespace Tonga.Map.Tests
             var m =
                 new LiveMap<int>(() =>
                     new MapOf<int>(
-                        Enumerable.EnumerableOf.Pipe(
+                        Enumerable.AsEnumerable._(
                             new KeyValuePair<string, int>("hello", 0),
                             new KeyValuePair<string, int>("world", 1)
                         )
@@ -168,9 +168,9 @@ namespace Tonga.Map.Tests
                 new LiveMap<int>(() =>
                     new MapOf<int>(
                         new Repeated<KeyValuePair<string, int>>(
-                            new Scalar.Live<KeyValuePair<string, int>>(() =>
+                            AsScalar._(() =>
                                 new KeyValuePair<string, int>(random.Next() + "", 1)),
-                                new Scalar.Live<int>(() =>
+                                AsScalar._(() =>
                                 {
                                     Interlocked.Increment(ref size);
                                     return size;
@@ -191,7 +191,7 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap<int>(() =>
-                    new Enumerable.EnumerableOf<IKvp<int>>(
+                    new Enumerable.AsEnumerable<IKvp<int>>(
                         new KvpOf<int>("key", () => value++)
                     )
                 );
@@ -208,7 +208,7 @@ namespace Tonga.Map.Tests
 
             var m =
                 new LiveMap<string, string>(() =>
-                    new Enumerable.EnumerableOf<IKvp<string, string>>(
+                    new Enumerable.AsEnumerable<IKvp<string, string>>(
                         new KvpOf<string, string>(() => one),
                         new KvpOf<string, string>(() => two)
                     )
@@ -223,7 +223,7 @@ namespace Tonga.Map.Tests
             var failed = false;
             var unused =
                 new LiveMap<int, int>(() =>
-                    new Enumerable.EnumerableOf<IKvp<int, int>>(
+                    new Enumerable.AsEnumerable<IKvp<int, int>>(
                         new KvpOf<int, int>(10, 0),
                         new KvpOf<int, int>(11, () =>
                         {
@@ -261,9 +261,9 @@ namespace Tonga.Map.Tests
                 new LiveMap<int, int>(() =>
                     new MapOf<int, int>(
                         new Repeated<KeyValuePair<int, int>>(
-                            new Scalar.Live<KeyValuePair<int, int>>(() =>
+                            AsScalar._(() =>
                                 new KeyValuePair<int, int>(random.Next(), 1)),
-                                new Scalar.Live<int>(() =>
+                                AsScalar._(() =>
                                 {
                                     Interlocked.Increment(ref size);
                                     return size;
@@ -284,7 +284,7 @@ namespace Tonga.Map.Tests
             var value = 0;
             var map =
                 new LiveMap<int, int>(() =>
-                    new Enumerable.EnumerableOf<IKvp<int, int>>(
+                    AsEnumerable._(
                         new KvpOf<int, int>(0, () => value++)
                     )
                 );

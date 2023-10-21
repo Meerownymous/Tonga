@@ -12,12 +12,12 @@ namespace Tonga.Func.Tests
         [Fact]
         public void RunsFuncMultipleTimes()
         {
-            var iter = Enumerable.EnumerableOf.Pipe(1, 2, 5, 6).GetEnumerator();
+            var iter = Enumerable.AsEnumerable._(1, 2, 5, 6).GetEnumerator();
             var func = new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {
                     iter.MoveNext();
-                    return new Scalar.Live<int>(iter.Current);
+                    return AsScalar._(iter.Current);
                 },
                 3
             );
@@ -42,15 +42,18 @@ namespace Tonga.Func.Tests
         [Fact]
         public void DoesntRepeatAny()
         {
-            Assert.Throws<ArgumentException>(
-            () => new RepeatedFunc<bool, IScalar<int>>(
-                input =>
-                {
-                    return new Scalar.Live<int>(
-                            new Random().Next());
-                },
-                0
-            ).Invoke(true));
+            Assert.Throws<ArgumentException>(() =>
+                new RepeatedFunc<bool, IScalar<int>>(
+                    input =>
+                    {
+                        return
+                            (IScalar<int>)AsScalar._(
+                                new Random().Next()
+                            );
+                    },
+                    0
+                ).Invoke(true)
+            );
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new LengthOf(
                     new NotEmpty<bool>(
-                        EnumerableOf.Pipe(false)
+                        AsEnumerable._(false)
                     )
                 ).Value() == 1
             );

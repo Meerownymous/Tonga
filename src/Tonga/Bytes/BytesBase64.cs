@@ -9,7 +9,7 @@ namespace Tonga.Bytes
     /// <summary>
     /// Encodes all origin bytes using the Base64 encoding scheme.
     /// </summary>
-    public sealed class BytesBase64 : IBytes
+    public sealed class BytesAsBase64 : IBytes
     {
         private readonly IScalar<byte[]> bytes;
 
@@ -17,21 +17,23 @@ namespace Tonga.Bytes
         /// Encoded origin bytes using the Base64 encoding scheme.
         /// </summary>
         /// <param name="bytes"></param>
-        public BytesBase64(IBytes bytes)
+        public BytesAsBase64(IBytes bytes)
         {
-            this.bytes = new ScalarOf<byte[]>(() =>
-                Encoding.UTF8.GetBytes(
-                    Convert.ToBase64String(
-                        bytes.AsBytes()
+            this.bytes =
+                new AsScalar<byte[]>(() =>
+                    Encoding.UTF8.GetBytes(
+                        Convert.ToBase64String(
+                            bytes.Bytes()
+                        )
                     )
-                ));
+                );
         }
 
         /// <summary>
         /// The bytes encoded as Base64
         /// </summary>
         /// <returns></returns>
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
             return this.bytes.Value();
         }

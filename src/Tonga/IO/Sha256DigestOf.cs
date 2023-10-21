@@ -15,7 +15,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="source">Input</param>
         public Sha256DigestOf(IInput source) :
-            base(source, new Live<HashAlgorithm>(() => new SHA256CryptoServiceProvider()))
+            base(source, AsScalar._<HashAlgorithm>(() => new SHA256CryptoServiceProvider()))
         { }
     }
 }

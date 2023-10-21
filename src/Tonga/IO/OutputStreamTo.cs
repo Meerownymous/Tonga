@@ -19,7 +19,7 @@ namespace Tonga.IO
         /// <summary>
         /// the target
         /// </summary>
-        private readonly IScalar<Stream> _target;
+        private readonly IScalar<Stream> target;
 
         /// <summary>
         /// A writable <see cref="Stream"/> of a file path.
@@ -47,7 +47,7 @@ namespace Tonga.IO
         /// A writable <see cref="Stream"/> out of a <see cref="IOutput"/>.
         /// </summary>
         /// <param name="output">an output</param>
-        public OutputStreamTo(IOutput output) : this(new Live<Stream>(() => output.Stream()))
+        public OutputStreamTo(IOutput output) : this(AsScalar._(() => output.Stream()))
         { }
 
         /// <summary>
@@ -56,32 +56,32 @@ namespace Tonga.IO
         /// <param name="tgt">the target</param>
         private OutputStreamTo(IScalar<Stream> tgt) : base()
         {
-            this._target = new ScalarOf<Stream>(tgt);
+            this.target = Sticky._(tgt);
         }
 
         public async new void WriteAsync(byte[] buffer, int offset, int length)
         {
-            await this._target.Value().WriteAsync(buffer, offset, length);
+            await this.target.Value().WriteAsync(buffer, offset, length);
         }
 
         public override void WriteByte(byte b)
         {
-            this._target.Value().WriteByte(b);
+            this.target.Value().WriteByte(b);
         }
 
         public override void Write(byte[] buffer, int offset, int length)
         {
-            this._target.Value().Write(buffer, offset, length);
+            this.target.Value().Write(buffer, offset, length);
         }
 
         public void Dispose()
         {
-            ((IDisposable)this._target.Value()).Dispose();
+            ((IDisposable)this.target.Value()).Dispose();
         }
 
         public override void Flush()
         {
-            this._target.Value().Flush();
+            this.target.Value().Flush();
         }
 
         public override bool CanRead => false;
@@ -90,18 +90,18 @@ namespace Tonga.IO
 
         public override bool CanWrite => true;
 
-        public override long Length => _target.Value().Length;
+        public override long Length => target.Value().Length;
 
-        public override long Position { get { return _target.Value().Position; } set { _target.Value().Position = value; } }
+        public override long Position { get { return target.Value().Position; } set { target.Value().Position = value; } }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return this._target.Value().Seek(offset, origin);
+            return this.target.Value().Seek(offset, origin);
         }
 
         public override void SetLength(long value)
         {
-            this._target.Value().SetLength(value);
+            this.target.Value().SetLength(value);
         }
 
         public override int Read(byte[] buffer, int offset, int count)

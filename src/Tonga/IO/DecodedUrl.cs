@@ -29,7 +29,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="url">url as string</param>
         /// <param name="enc">encoding of the string</param>
-        public DecodedUrl(String url, Encoding enc) : this(new TextOf(url, enc))
+        public DecodedUrl(String url, Encoding enc) : this(new AsText(url, enc))
         { }
 
         /// <summary>

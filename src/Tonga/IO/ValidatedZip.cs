@@ -12,11 +12,11 @@ namespace Tonga.IO
     /// </summary>
     public sealed class ValidatedZip : IInput
     {
-        private readonly ScalarOf<Stream> stream;
+        private readonly AsScalar<Stream> stream;
 
         public ValidatedZip(IInput input)
         {
-            this.stream = new ScalarOf<Stream>(() =>
+            this.stream = new AsScalar<Stream>(() =>
             {
                 if (!IsZip(input.Stream()))
                 {

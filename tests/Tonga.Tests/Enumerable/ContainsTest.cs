@@ -15,7 +15,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.True(
                 new Contains<string>(
-                    EnumerableOf.Pipe("Hello", "my", "cat", "is", "missing"),
+                    AsEnumerable._("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "cat"
                     ).Value());
         }
@@ -25,7 +25,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.False(
                 new Contains<string>(
-                    EnumerableOf.Pipe("Hello", "my", "cat", "is", "missing"),
+                    AsEnumerable._("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
                     ).Value());
         }

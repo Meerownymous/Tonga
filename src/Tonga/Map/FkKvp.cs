@@ -9,14 +9,14 @@ namespace Tonga.Map
     /// </summary>
     public sealed class FkKvp<TKey, TValue> : IKvp<TKey, TValue>
     {
-        private readonly Func<TKey> keyFunc;
-        private readonly Func<TValue> valueFunc;
-        private readonly Func<bool> isLazyFunc;
+        private readonly System.Func<TKey> keyFunc;
+        private readonly System.Func<TValue> valueFunc;
+        private readonly System.Func<bool> isLazyFunc;
 
         /// <summary>
         /// Fake Kvp
         /// </summary>
-        public FkKvp(Func<TKey> keyFunc, Func<TValue> valueFunc, Func<bool> isLazyFunc)
+        public FkKvp(System.Func<TKey> keyFunc, System.Func<TValue> valueFunc, System.Func<bool> isLazyFunc)
         {
             this.keyFunc = keyFunc;
             this.valueFunc = valueFunc;

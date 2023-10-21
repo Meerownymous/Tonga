@@ -10,15 +10,13 @@ namespace Tonga.Text
     /// <summary>
     /// A double out of text.
     /// </summary>
-    public sealed class DoubleOf : IScalar<Double>
+    public sealed class DoubleOf : Scalar.ScalarEnvelope<double>
     {
-        private readonly ScalarOf<Double> val;
-
         /// <summary>
         /// A double out of <see cref="string"/>.
         /// </summary>
         /// <param name="str">a double as a string</param>
-        public DoubleOf(String str) : this(new TextOf(str))
+        public DoubleOf(String str) : this(new AsText(str))
         { }
 
         /// <summary>
@@ -33,7 +31,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="str">a double as a string</param>
         /// <param name="culture">culture of the given string</param>
-        public DoubleOf(String str, CultureInfo culture) : this(new TextOf(str), culture)
+        public DoubleOf(String str, CultureInfo culture) : this(AsText._(str), culture)
         { }
 
         /// <summary>
@@ -41,25 +39,15 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">a double as a text</param>
         /// <param name="culture">culture of the given text</param>
-        public DoubleOf(IText text, CultureInfo culture) : this(new Live<Double>(() => Convert.ToDouble(text.AsString(), culture.NumberFormat)))
+        public DoubleOf(IText text, CultureInfo culture) : this(
+            () => Convert.ToDouble(text.AsString(), culture.NumberFormat)
+        )
         { }
 
         /// <summary>
         /// A double out of a encapsulating <see cref="IScalar{T}"/>
         /// </summary>
         /// <param name="value">a scalar of the double to sum</param>
-        public DoubleOf(IScalar<Double> value)
-        {
-            val = new ScalarOf<Double>(value);
-        }
-
-        /// <summary>
-        /// Get the value.
-        /// </summary>
-        /// <returns>value as double</returns>
-        public Double Value()
-        {
-            return val.Value();
-        }
+        public DoubleOf(Func<Double> value) : base(value) { }
     }
 }

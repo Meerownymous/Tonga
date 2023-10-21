@@ -17,7 +17,7 @@ namespace Tonga.IO
         /// A directory that cleans up when disposed.
         /// </summary>
         public TempDirectory() : this(
-            new ScalarOf<string>(() =>
+            AsScalar._(() =>
                 Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())
             )
         )
@@ -27,7 +27,7 @@ namespace Tonga.IO
         /// A directory that cleans up when disposed.
         /// </summary>
         public TempDirectory(string path) : this(
-            new Live<string>(path)
+            AsScalar._(path)
         )
         { }
 
@@ -36,7 +36,7 @@ namespace Tonga.IO
         /// </summary>
         private TempDirectory(IScalar<string> path)
         {
-            this.path = path;
+            this.path = Sticky._(path);
         }
 
         public void Dispose()

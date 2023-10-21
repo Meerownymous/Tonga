@@ -3,7 +3,6 @@
 using System;
 using Tonga.Scalar;
 
-#pragma warning disable MaxClassLength // Class length max
 namespace Tonga.Text
 {
     /// <summary>
@@ -12,7 +11,7 @@ namespace Tonga.Text
     /// </summary>
     public abstract class TextEnvelope : IText
     {
-        private readonly Func<IText> origin;
+        private readonly System.Func<string> origin;
 
         /// <summary>
         /// A <see cref="IText"/> envelope.
@@ -20,7 +19,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">Origin text</param>
         /// <param name="live">should the value be created every time the object is used?</param>
-        public TextEnvelope(IText text) : this(() => text)
+        public TextEnvelope(IText text) : this(text.AsString)
         { }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="origin">How to create the value</param>
         /// <param name="live">should the value be created every time the object is used?</param>
-        public TextEnvelope(Func<IText> origin)
+        public TextEnvelope(System.Func<string> origin)
         {
             this.origin = origin;
         }
@@ -40,7 +39,7 @@ namespace Tonga.Text
         /// <returns></returns>
         public String AsString()
         {
-            return this.origin.Invoke().AsString();
+            return this.origin.Invoke();
         }
     }
 }

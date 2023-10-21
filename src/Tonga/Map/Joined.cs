@@ -34,7 +34,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<string, string>[] dicts) : this(
-            new Enumerable.EnumerableOf<IDictionary<string, string>>(dicts)
+            new Enumerable.AsEnumerable<IDictionary<string, string>>(dicts)
         )
         { }
 
@@ -44,9 +44,9 @@ namespace Tonga.Map
         public Joined(IEnumerable<IDictionary<string, string>> dicts, bool rejectBuildingAllValues = true) : base(
             () =>
                 new LazyDict(
-                    Enumerable.Joined.Pipe(
-                        Mapped.Pipe(dict =>
-                            Mapped.Pipe((key) => new KvpOf(key, () => dict[key]),
+                    Enumerable.Joined.From(
+                        Mapped._(dict =>
+                            Mapped._((key) => new KvpOf(key, () => dict[key]),
                                 dict.Keys
                             ),
                             dicts
@@ -155,7 +155,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(bool live, params IDictionary<string, Value>[] dicts) : this(
-            new EnumerableOf<IDictionary<string, Value>>(dicts),
+            new AsEnumerable<IDictionary<string, Value>>(dicts),
             live
         )
         { }
@@ -166,9 +166,9 @@ namespace Tonga.Map
         public Joined(IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
             () =>
                 new LazyDict<string, Value>(
-                    Enumerable.Joined.Pipe(
-                        Mapped.Pipe(dict =>
-                            Mapped.Pipe((key) => new KvpOf<string, Value>(key, () => dict[key]),
+                    Enumerable.Joined.From(
+                        Mapped._(dict =>
+                            Mapped._((key) => new KvpOf<string, Value>(key, () => dict[key]),
                                 dict.Keys
                             ),
                             dicts
@@ -210,7 +210,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(bool live, params IDictionary<Key, Value>[] dicts) : this(
-            new Enumerable.EnumerableOf<IDictionary<Key, Value>>(dicts),
+            new Enumerable.AsEnumerable<IDictionary<Key, Value>>(dicts),
             live
         )
         { }
@@ -219,7 +219,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<Key, Value>[] dicts) : this(
-            new Enumerable.EnumerableOf<IDictionary<Key, Value>>(dicts),
+            new Enumerable.AsEnumerable<IDictionary<Key, Value>>(dicts),
             false
         )
         { }
@@ -230,9 +230,9 @@ namespace Tonga.Map
         public Joined(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
             () =>
                 new LazyDict<Key, Value>(
-                    Enumerable.Joined.Pipe(
-                        Mapped.Pipe(dict =>
-                            Mapped.Pipe((key) => new KvpOf<Key, Value>(key, () => dict[key]),
+                    Enumerable.Joined.From(
+                        Mapped._(dict =>
+                            Mapped._((key) => new KvpOf<Key, Value>(key, () => dict[key]),
                                 dict.Keys
                             ),
                             dicts

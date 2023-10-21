@@ -18,7 +18,7 @@ namespace Tonga.Map
     public sealed class VersionMap : MapEnvelope<Version, string>
     {
         public VersionMap(bool openEnd, params IKvp<Version, string>[] kvps) : this(
-            EnumerableOf.Pipe(kvps), openEnd
+            AsEnumerable._(kvps), openEnd
         )
         { }
 
@@ -62,7 +62,7 @@ namespace Tonga.Map
         /// It matches the version range, not the exact version.
         /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(bool openEnd, params IKvp<Version, Value>[] kvps) : this(EnumerableOf.Pipe(kvps), openEnd)
+        public VersionMap(bool openEnd, params IKvp<Version, Value>[] kvps) : this(AsEnumerable._(kvps), openEnd)
         { }
 
         /// <summary>

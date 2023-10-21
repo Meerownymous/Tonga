@@ -10,7 +10,7 @@ namespace Tonga.Text
     /// </summary>
     public sealed class EndsWith : IScalar<bool>
     {
-        private readonly ScalarOf<bool> result;
+        private readonly AsScalar<bool> result;
 
         /// <summary>
         /// Checks if a <see cref="IText"/> ends with a given <see cref="string"/>
@@ -19,7 +19,7 @@ namespace Tonga.Text
         /// <param name="tail">Ending content to use in the test</param>
         public EndsWith(IText text, string tail) : this(
             text,
-            new LiveText(tail)
+            AsText._(tail)
         )
         { }
 
@@ -31,7 +31,7 @@ namespace Tonga.Text
         public EndsWith(IText text, IText tail)
         {
             this.result =
-                new ScalarOf<bool>(() =>
+                new AsScalar<bool>(() =>
                 {
                     var regex = new Regex(Regex.Escape(tail.AsString()) + "$");
                     return regex.IsMatch(text.AsString());

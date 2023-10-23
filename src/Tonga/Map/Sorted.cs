@@ -178,7 +178,7 @@ namespace Tonga.Map
                 {
                     var keys = new List<string>(dict.Keys);
                     keys.Sort(cmp);
-                    var result = new LazyDict<string, Value>(
+                    var result = new LazyMap<string, Value>(
                         new Mapped<string, IPair<string, Value>>(
                             key => new AsPair<string, Value>(key, () => dict[key]),
                             keys
@@ -276,7 +276,7 @@ namespace Tonga.Map
                 {
                     var keys = new List<string>(dict.Keys);
                     keys.Sort(cmp);
-                    var result = new LazyDict<string, string>(
+                    var result = new LazyMap<string, string>(
                         new Mapped<string, IPair<string, string>>(
                             key => new AsPair<string, string>(key, () => dict[key]),
                             keys

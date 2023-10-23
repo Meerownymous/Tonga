@@ -43,7 +43,7 @@ namespace Tonga.Map
         /// </summary>
         public Joined(IEnumerable<IDictionary<string, string>> dicts, bool rejectBuildingAllValues = true) : base(
             () =>
-                new LazyDict(
+                new LazyMap(
                     Enumerable.Joined._(
                         Mapped._(dict =>
                             Mapped._((key) => new AsPair(key, () => dict[key]),
@@ -165,7 +165,7 @@ namespace Tonga.Map
         /// </summary>
         public Joined(IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
             () =>
-                new LazyDict<string, Value>(
+                new LazyMap<string, Value>(
                     Enumerable.Joined._(
                         Mapped._(dict =>
                             Mapped._((key) => new AsPair<string, Value>(key, () => dict[key]),
@@ -229,7 +229,7 @@ namespace Tonga.Map
         /// </summary>
         public Joined(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
             () =>
-                new LazyDict<Key, Value>(
+                new LazyMap<Key, Value>(
                     Enumerable.Joined._(
                         Mapped._(dict =>
                             Mapped._((key) => AsPair._(key, () => dict[key]),

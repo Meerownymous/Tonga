@@ -67,8 +67,8 @@ namespace Tonga.Map
 
         private AsPair(Func<KeyValuePair<string, Func<string>>> pair, bool isLazy)
         {
-            this.entry = Sticky._(pair.Invoke);
-            this.value = Sticky._(() => this.entry.Value().Value.Invoke());
+            this.entry = Scalar.Sticky._(pair.Invoke);
+            this.value = Scalar.Sticky._(() => this.entry.Value().Value.Invoke());
             this.isLazy = isLazy;
         }
 
@@ -207,8 +207,8 @@ namespace Tonga.Map
 
         private AsPair(Func<KeyValuePair<string, Func<TValue>>> kvp, bool isLazy)
         {
-            this.entry = Sticky._(kvp.Invoke);
-            this.value = Sticky._(() => this.entry.Value().Value.Invoke());
+            this.entry = Scalar.Sticky._(kvp.Invoke);
+            this.value = Scalar.Sticky._(() => this.entry.Value().Value.Invoke());
             this.isLazy = isLazy;
         }
 
@@ -274,8 +274,8 @@ namespace Tonga.Map
 
         private AsPair(Func<KeyValuePair<TKey, Func<TValue>>> kvp, bool isLazy)
         {
-            this.entry = Sticky._(kvp.Invoke);
-            this.value = Sticky._(() => this.entry.Value().Value.Invoke());
+            this.entry = Scalar.Sticky._(kvp.Invoke);
+            this.value = Scalar.Sticky._(() => this.entry.Value().Value.Invoke());
             this.isLazy = isLazy;
         }
 

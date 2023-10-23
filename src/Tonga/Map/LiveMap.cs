@@ -17,7 +17,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         public LiveMap(System.Func<IEnumerable<IPair>> entries) : this(() =>
-            new LazyDict(entries(), true)
+            new LazyMap(entries(), true)
         )
         { }
 
@@ -93,7 +93,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         public LiveMap(System.Func<IEnumerable<IPair<Key, Value>>> entries, bool rejectBuildingAllValues = true) : this(() =>
-            new LazyDict<Key, Value>(entries(), rejectBuildingAllValues)
+            new LazyMap<Key, Value>(entries(), rejectBuildingAllValues)
         )
         { }
 

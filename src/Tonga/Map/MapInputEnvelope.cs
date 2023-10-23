@@ -42,7 +42,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IEnumerable<IPair> kvps) : this(
-            input => new Joined(input, new LazyDict(kvps))
+            input => new Joined(input, new LazyMap(kvps))
         )
         { }
 
@@ -195,7 +195,7 @@ namespace Tonga.Map
         /// Simplified DictInput building.
         /// </summary>
         public MapInputEnvelope(IEnumerable<IPair<Key, Value>> kvps) : this(
-            input => new Joined<Key, Value>(input, new LazyDict<Key, Value>(kvps, false))
+            input => new Joined<Key, Value>(input, new LazyMap<Key, Value>(kvps, false))
         )
         { }
 

@@ -83,7 +83,7 @@ namespace Tonga.Map.Tests
         [InlineData(2, 6)]
         public void EnumeratesKeysWhenLazy(int index, int expectedKey)
         {
-            var unsorted = new LazyDict<int, int>(false,
+            var unsorted = new LazyMap<int, int>(false,
                 new AsPair<int, int>(1, () => { throw new Exception("i shall not be called"); }),
                 new AsPair<int, int>(6, () => { throw new Exception("i shall not be called"); }),
                 new AsPair<int, int>(-5, () => { throw new Exception("i shall not be called"); })
@@ -97,7 +97,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void DeliversSingleValueWhenLazy()
         {
-            var unsorted = new LazyDict<int, int>(false,
+            var unsorted = new LazyMap<int, int>(false,
                 new AsPair<int, int>(1, () => 4),
                 new AsPair<int, int>(6, () => { throw new Exception("i shall not be called"); }),
                 new AsPair<int, int>(-5, () => { throw new Exception("i shall not be called"); })
@@ -109,7 +109,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void RejectsBuildingAllValuesByDefault()
         {
-            var unsorted = new LazyDict<int, int>(false,
+            var unsorted = new LazyMap<int, int>(false,
                 new AsPair<int, int>(1, () => 4),
                 new AsPair<int, int>(6, () => { throw new Exception("i shall not be called"); }),
                 new AsPair<int, int>(-5, () => { throw new Exception("i shall not be called"); })

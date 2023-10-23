@@ -57,7 +57,7 @@ namespace Tonga.Map
         /// A map from the given key value pairs.
         /// </summary>
         public AsMap(IPair entry, params IPair[] more) : base(() =>
-            new LazyDict(
+            new LazyMap(
                 Enumerable.Joined._(
                     AsEnumerable._(entry),
                     more
@@ -83,7 +83,7 @@ namespace Tonga.Map
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
         public AsMap(IEnumerable<IPair> entries, bool rejectBuildingAllValues) : this(
-            new LazyDict(entries, rejectBuildingAllValues)
+            new LazyMap(entries, rejectBuildingAllValues)
         )
         { }
 
@@ -179,7 +179,7 @@ namespace Tonga.Map
         public AsMap(IEnumerable<IMapInput> inputs) : this(
             () =>
             {
-                IDictionary<string, string> dict = new LazyDict();
+                IDictionary<string, string> dict = new LazyMap();
                 foreach (IMapInput input in inputs)
                 {
                     dict = input.Apply(dict);
@@ -2181,7 +2181,7 @@ namespace Tonga.Map
         /// A map from the given key value pairs.
         /// </summary>
         public AsMap(IPair<Key, Value> entry, params IPair<Key, Value>[] more) : base(() =>
-             new LazyDict<Key, Value>(
+             new LazyMap<Key, Value>(
                  Enumerable.Joined._(
                      AsEnumerable._(entry),
                      more
@@ -2197,7 +2197,7 @@ namespace Tonga.Map
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
         public AsMap(IEnumerable<IPair<Key, Value>> entries, bool rejectBuildingAllValues = true) : this(
-            new LazyDict<Key, Value>(entries, rejectBuildingAllValues)
+            new LazyMap<Key, Value>(entries, rejectBuildingAllValues)
         )
         { }
 
@@ -2241,7 +2241,7 @@ namespace Tonga.Map
         public AsMap(IEnumerable<IMapInput<Key, Value>> inputs) : this(
             () =>
             {
-                IDictionary<Key, Value> dict = new LazyDict<Key, Value>();
+                IDictionary<Key, Value> dict = new LazyMap<Key, Value>();
                 foreach (IMapInput<Key, Value> input in inputs)
                 {
                     dict = input.Apply(dict);

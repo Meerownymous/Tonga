@@ -72,7 +72,7 @@ namespace Tonga.Map
         /// </summary>
         public VersionMap(IEnumerable<IPair<Version, Value>> kvps, bool openEnd)
         {
-            this.map = new LazyDict<Version, Value>(kvps);
+            this.map = new LazyMap<Version, Value>(kvps);
             this.openEnd = openEnd;
         }
 

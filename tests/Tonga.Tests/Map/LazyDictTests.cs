@@ -11,7 +11,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void AllValuesAreBuiltWhenPreventionIsDisabled()
         {
-            var dict = new LazyDict<int, int>(false,
+            var dict = new LazyMap<int, int>(false,
                 new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
             );
 
@@ -22,7 +22,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void ValuesAreNotBuiltWhenLazy()
         {
-            var dict = new LazyDict<int, int>(true,
+            var dict = new LazyMap<int, int>(true,
                 new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
             );
 
@@ -33,7 +33,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void ValuesAreBuiltWhenRejectionEnabledButValuesNotLazy()
         {
-            var dict = new LazyDict<int, int>(true,
+            var dict = new LazyMap<int, int>(true,
                new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => false)
            );
 
@@ -44,7 +44,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void CanGetEnumeratorWhenEmpty()
         {
-            var dict = new LazyDict<int, int>(true);
+            var dict = new LazyMap<int, int>(true);
             dict.GetEnumerator();
         }
     }

@@ -2,7 +2,7 @@ using System;
 using Tonga.Enumerable;
 using Xunit;
 
-namespace Tonga.List.Test
+namespace Tonga.List.Tests
 {
     public sealed class StickyTest
     {

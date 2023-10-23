@@ -62,12 +62,12 @@ namespace Tonga.Bytes
         { }
 
         /// <summary>
-        /// A <see cref="StreamReader"/> returned by a <see cref="System.Func{TResult}"/>as <see cref="IBytes"/>
+        /// A <see cref="StreamReader"/> returned by a <see cref="Func{TResult}"/>as <see cref="IBytes"/>
         /// </summary>
         /// <param name="rdr">function to retrieve the reader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        private ReaderAsBytes(System.Func<StreamReader> rdr, Encoding enc, int max = 16 << 10) : this(
+        private ReaderAsBytes(Func<StreamReader> rdr, Encoding enc, int max = 16 << 10) : this(
             AsScalar._(rdr), enc, max)
         { }
 

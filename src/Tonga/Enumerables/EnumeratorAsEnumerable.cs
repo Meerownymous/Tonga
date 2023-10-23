@@ -21,7 +21,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// A given enumerator as enumerable.
         /// </summary>
-        public EnumeratorAsEnumerable(System.Func<IEnumerator<T>> enumerator)
+        public EnumeratorAsEnumerable(Func<IEnumerator<T>> enumerator)
         {
             this.enumerator = enumerator;
         }

@@ -12,7 +12,7 @@ namespace Tonga.Map.Tests
         public void AllValuesAreBuiltWhenPreventionIsDisabled()
         {
             var dict = new LazyMap<int, int>(false,
-                new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
+                new FkPair<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
             );
 
             var ex = Assert.Throws<Exception>(() => new List<KeyValuePair<int, int>>(dict));
@@ -23,7 +23,7 @@ namespace Tonga.Map.Tests
         public void ValuesAreNotBuiltWhenLazy()
         {
             var dict = new LazyMap<int, int>(true,
-                new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
+                new FkPair<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => true)
             );
 
             var ex = Assert.Throws<InvalidOperationException>(() => dict.GetEnumerator());
@@ -34,7 +34,7 @@ namespace Tonga.Map.Tests
         public void ValuesAreBuiltWhenRejectionEnabledButValuesNotLazy()
         {
             var dict = new LazyMap<int, int>(true,
-               new FkKvp<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => false)
+               new FkPair<int, int>(() => 1, () => throw new Exception("i shall not be called"), () => false)
            );
 
             var ex = Assert.Throws<Exception>(() => new List<KeyValuePair<int, int>>(dict));

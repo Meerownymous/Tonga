@@ -116,7 +116,7 @@ namespace Tonga.Scalar
         { }
 
         /// <summary>
-        /// Logical or. Returns true if any calls to <see cref="System.Func{Out}"/> were
+        /// Logical or. Returns true if any calls to <see cref="Func{Out}"/> were
         /// true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>

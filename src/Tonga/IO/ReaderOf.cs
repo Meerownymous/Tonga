@@ -132,10 +132,10 @@ namespace Tonga.IO
         { }
 
         /// <summary>
-        /// A <see cref="StreamReader"/> out of a <see cref="System.Func{TResult}"/> that returns a <see cref="StreamReader"/>.
+        /// A <see cref="StreamReader"/> out of a <see cref="Func{TResult}"/> that returns a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="src">func retrieving a reader</param>
-        private ReaderOf(System.Func<StreamReader> src) : this(AsScalar._(src))
+        private ReaderOf(Func<StreamReader> src) : this(AsScalar._(src))
         { }
 
         /// <summary>

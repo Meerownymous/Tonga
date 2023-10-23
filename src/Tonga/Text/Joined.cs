@@ -79,7 +79,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Joined(String delimit, System.Func<IEnumerable<IText>> txts) : this(
+        public Joined(String delimit, Func<IEnumerable<IText>> txts) : this(
             AsText._(delimit),
             txts
         )
@@ -115,7 +115,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">scalars of texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        private Joined(IText delimit, System.Func<IEnumerable<IText>> txts) : base(() =>
+        private Joined(IText delimit, Func<IEnumerable<IText>> txts) : base(() =>
             String.Join(
                 delimit.AsString(),
                 new Mapped<IText, string>(
@@ -174,7 +174,7 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Joined _(String delimit, System.Func<IEnumerable<IText>> txts) => new Joined(delimit, txts);
+        public static Joined _(String delimit, Func<IEnumerable<IText>> txts) => new Joined(delimit, txts);
 
         /// <summary>
         /// Joins texts together with the delimiter between them.

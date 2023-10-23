@@ -647,7 +647,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public static IDictionary<string, Value> _<Value>(System.Func<IDictionary<string, Value>> input)
+        public static IDictionary<string, Value> _<Value>(Func<IDictionary<string, Value>> input)
             => new AsMap<Value>(input);
 
         /// <summary>
@@ -1115,7 +1115,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public static IDictionary<Key, Value> _<Key, Value>(System.Func<IDictionary<Key, Value>> input)
+        public static IDictionary<Key, Value> _<Key, Value>(Func<IDictionary<Key, Value>> input)
             => new AsMap<Key, Value>(input);
     }
 

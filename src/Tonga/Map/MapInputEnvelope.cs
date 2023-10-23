@@ -17,7 +17,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(System.Func<IMapInput> input) : this(
+        public MapInputEnvelope(Func<IMapInput> input) : this(
             dict => new Joined(dict, new AsMap(input()))
         )
         { }
@@ -91,7 +91,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(System.Func<IMapInput<Value>> input) : this(
+        public MapInputEnvelope(Func<IMapInput<Value>> input) : this(
             dict =>
             Joined._(
                 dict,
@@ -170,7 +170,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified DictInput building.
         /// </summary>
-        public MapInputEnvelope(System.Func<IMapInput<Key, Value>> input) : this(
+        public MapInputEnvelope(Func<IMapInput<Key, Value>> input) : this(
             dict => new Joined<Key, Value>(dict, AsMap._(input()))
         )
         { }

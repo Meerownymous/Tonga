@@ -117,7 +117,7 @@ namespace Tonga.IO
         /// A readable stream out of a <see cref="Func"/> that returns a <see cref="Stream"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(System.Func<Stream> input) : this(AsScalar._(input))
+        public InputStreamOf(Func<Stream> input) : this(AsScalar._(input))
         { }
 
         /// <summary>

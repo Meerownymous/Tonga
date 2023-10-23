@@ -7,16 +7,16 @@ namespace Tonga.Map
     /// <summary>
     /// Fake Kvp
     /// </summary>
-    public sealed class FkKvp<TKey, TValue> : IPair<TKey, TValue>
+    public sealed class FkPair<TKey, TValue> : IPair<TKey, TValue>
     {
-        private readonly System.Func<TKey> keyFunc;
-        private readonly System.Func<TValue> valueFunc;
-        private readonly System.Func<bool> isLazyFunc;
+        private readonly Func<TKey> keyFunc;
+        private readonly Func<TValue> valueFunc;
+        private readonly Func<bool> isLazyFunc;
 
         /// <summary>
         /// Fake Kvp
         /// </summary>
-        public FkKvp(System.Func<TKey> keyFunc, System.Func<TValue> valueFunc, System.Func<bool> isLazyFunc)
+        public FkPair(Func<TKey> keyFunc, Func<TValue> valueFunc, Func<bool> isLazyFunc)
         {
             this.keyFunc = keyFunc;
             this.valueFunc = valueFunc;

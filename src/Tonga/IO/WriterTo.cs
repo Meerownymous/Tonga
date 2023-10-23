@@ -59,10 +59,10 @@ namespace Tonga.IO
         { }
 
         /// <summary>
-        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="System.Func{StreamWriter}"/>.
+        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="Func{StreamWriter}"/>.
         /// </summary>
         /// <param name="fnc">Function returning a streamwriter</param>
-        private WriterTo(System.Func<StreamWriter> fnc) : this(AsScalar._(fnc))
+        private WriterTo(Func<StreamWriter> fnc) : this(AsScalar._(fnc))
         { }
 
         /// <summary>

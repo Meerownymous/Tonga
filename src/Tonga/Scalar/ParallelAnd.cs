@@ -20,7 +20,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src"></param>
         public ParallelAnd(params IScalar<bool>[] src) : this(
-            Enumerable.AsEnumerable._(src)
+            AsEnumerable._(src)
         )
         { }
 
@@ -40,7 +40,7 @@ namespace Tonga.Scalar
         /// <param name="func"></param>
         /// <param name="src"></param>
         public ParallelAnd(IFunc<T, bool> func, params T[] src) : this(
-            func, Enumerable.AsEnumerable._(src)
+            func, AsEnumerable._(src)
         )
         { }
 

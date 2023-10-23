@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Tonga.Map.Tests
@@ -15,6 +14,26 @@ namespace Tonga.Map.Tests
                         AsPair._(1, "one")
                     )
                 )[1]
+            );
+        }
+
+        [Fact]
+        public void RemembersValue()
+        {
+            var map =
+                Sticky._(
+                    AsMap._(
+                        OneTimePair._(
+                            AsPair._(1, "one")
+                        )
+                    )
+                );
+
+            _ = map[1];
+
+            Assert.Equal(
+                "one",
+                map[1]
             );
         }
     }

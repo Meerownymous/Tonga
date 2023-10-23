@@ -23,7 +23,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public Sticky(System.Func<IEnumerable<T>> source) : this(() => source().GetEnumerator())
+        public Sticky(Func<IEnumerable<T>> source) : this(() => source().GetEnumerator())
         { }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public Sticky(System.Func<IEnumerator<T>> source)
+        public Sticky(Func<IEnumerator<T>> source)
         {
             this.exclusive = new object();
             this.buffer = new List<T>();
@@ -119,7 +119,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> From<T>(System.Func<IEnumerable<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> From<T>(Func<IEnumerable<T>> source) => new Sticky<T>(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
@@ -130,7 +130,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> From<T>(System.Func<IEnumerator<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> From<T>(Func<IEnumerator<T>> source) => new Sticky<T>(source);
     }
 }
 

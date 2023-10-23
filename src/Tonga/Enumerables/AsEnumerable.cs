@@ -10,7 +10,7 @@ namespace Tonga.Enumerable
     /// <typeparam name="T"></typeparam>
     public sealed class AsEnumerable<T> : IEnumerable<T>
     {
-        private readonly System.Func<IEnumerator<T>> origin;
+        private readonly Func<IEnumerator<T>> origin;
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
@@ -22,17 +22,17 @@ namespace Tonga.Enumerable
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="System.Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
         public AsEnumerable(IEnumerator<T> origin) : this(() => origin)
         { }
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="System.Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
-        public AsEnumerable(System.Func<IEnumerator<T>> origin)
+        public AsEnumerable(Func<IEnumerator<T>> origin)
         {
             this.origin = origin;
         }
@@ -55,19 +55,19 @@ namespace Tonga.Enumerable
     public static class AsEnumerable
     {
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="System.Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
         public static IEnumerable<T> _<T>(params T[] items) => new AsEnumerable<T>(items);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="System.Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
         public static IEnumerable<T> _<T>(IEnumerator<T> fnc) => new AsEnumerable<T>(fnc);
 
         /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="System.Func{T}"/>"/>.
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
         public static IEnumerable<T> _<T>(Func<IEnumerator<T>> fnc) => new AsEnumerable<T>(fnc);

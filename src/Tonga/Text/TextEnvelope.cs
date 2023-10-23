@@ -11,7 +11,7 @@ namespace Tonga.Text
     /// </summary>
     public abstract class TextEnvelope : IText
     {
-        private readonly System.Func<string> origin;
+        private readonly Func<string> origin;
 
         /// <summary>
         /// A <see cref="IText"/> envelope.
@@ -28,7 +28,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="origin">How to create the value</param>
         /// <param name="live">should the value be created every time the object is used?</param>
-        public TextEnvelope(System.Func<string> origin)
+        public TextEnvelope(Func<string> origin)
         {
             this.origin = origin;
         }

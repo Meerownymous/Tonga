@@ -51,7 +51,7 @@ namespace Tonga.IO
         { }
 
         /// <summary>
-        /// <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="System.Func{TResult}"/>.
+        /// <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="fnc">target stream returning function</param>
         public OutputTo(Func<Stream> fnc) : this(AsScalar._(fnc))

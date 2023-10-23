@@ -13,7 +13,7 @@ namespace Tonga.List
     /// <typeparam name="T">type of items</typeparam>
     public sealed class AsList<T> : IList<T>
     {
-        private readonly System.Func<IEnumerable<T>> origin;
+        private readonly Func<IEnumerable<T>> origin;
         private readonly InvalidOperationException readOnlyError;
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public AsList(System.Func<IEnumerable<T>> src)
+        public AsList(Func<IEnumerable<T>> src)
         {
             this.origin = src;
             this.readOnlyError = new InvalidOperationException("The list is readonly.");
@@ -164,7 +164,7 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="src">source enumerable</param>
-        public static IList<T> _<T>(System.Func<IEnumerable<T>> src)
+        public static IList<T> _<T>(Func<IEnumerable<T>> src)
             => new AsList<T>(src);
 
         /// <summary>

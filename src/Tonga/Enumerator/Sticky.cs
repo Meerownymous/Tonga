@@ -28,7 +28,7 @@
 //        /// this ctor allows injecting and therefore re-using the caching elements.
 //        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
 //        /// Enumerators while the same cache is filled when advancing them.
-//        public Sticky(System.Func<IEnumerator<T>> origin) : this(new Cache<T>(origin))
+//        public Sticky(Func<IEnumerator<T>> origin) : this(new Cache<T>(origin))
 //        { }
 
 //        /// In order to allow enumerables to not pre-compute/copy all elements,
@@ -89,7 +89,7 @@
 //            private readonly bool[] reachedEnd;
 //            private readonly int[] count;
 
-//            public Cache(System.Func<IEnumerator<T>> origin)
+//            public Cache(Func<IEnumerator<T>> origin)
 //            {
 //                this.count = new int[1] { 0 };
 //                this.reachedEnd = new bool[1] { false };
@@ -195,7 +195,7 @@
 //        /// this ctor allows injecting and therefore re-using the caching elements.
 //        /// An enumerable like <see cref="EnumerableEnvelope"/> can then issue multiple 
 //        /// Enumerators while the same cache is filled when advancing them.
-//        public IEnumerator<T> _<T>(System.Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
+//        public IEnumerator<T> _<T>(Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
 
 //        /// In order to allow enumerables to not pre-compute/copy all elements,
 //        /// this ctor allows injecting and therefore re-using the caching elements.

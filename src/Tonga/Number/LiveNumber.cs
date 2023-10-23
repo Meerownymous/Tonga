@@ -18,7 +18,7 @@ namespace Tonga.Number
         /// <param name="text">text to parse</param>
         /// <param name="blockSeperator">seperator for blocks, for example 1.000</param>
         /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
-        public LiveNumber(System.Func<string> text, string decimalSeperator, string blockSeperator) : this(
+        public LiveNumber(Func<string> text, string decimalSeperator, string blockSeperator) : this(
             () => new NumberOf(text(), decimalSeperator, blockSeperator)
         )
         { }
@@ -27,7 +27,7 @@ namespace Tonga.Number
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="str">The string</param>
-        public LiveNumber(System.Func<string> str) : this(
+        public LiveNumber(Func<string> str) : this(
             () => new NumberOf(str())
         )
         { }
@@ -37,7 +37,7 @@ namespace Tonga.Number
         /// </summary>	
         /// <param name="str">The string</param>	
         /// <param name="provider">a number format provider</param>	
-        public LiveNumber(System.Func<string> str, IScalar<IFormatProvider> provider) : this(
+        public LiveNumber(Func<string> str, IScalar<IFormatProvider> provider) : this(
            () => new NumberOf(str(), provider)
         )
         { }
@@ -47,7 +47,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="str">The string</param>
         /// <param name="provider">a number format provider</param>
-        public LiveNumber(System.Func<string> str, IFormatProvider provider) : this(
+        public LiveNumber(Func<string> str, IFormatProvider provider) : this(
             () => new NumberOf(str(), provider)
         )
         { }
@@ -56,7 +56,7 @@ namespace Tonga.Number
         /// A <see cref="int"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="integer">The integer</param>
-        public LiveNumber(System.Func<int> integer) : this(
+        public LiveNumber(Func<int> integer) : this(
             () => new NumberOf(integer())
         )
         { }
@@ -65,7 +65,7 @@ namespace Tonga.Number
         /// A <see cref="double"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="dbl">The double</param>
-        public LiveNumber(System.Func<double> dbl) : this(
+        public LiveNumber(Func<double> dbl) : this(
             () => new NumberOf(dbl())
         )
         { }
@@ -74,7 +74,7 @@ namespace Tonga.Number
         /// A <see cref="long"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="lng">The long</param>
-        public LiveNumber(System.Func<long> lng) : this(
+        public LiveNumber(Func<long> lng) : this(
             () => new NumberOf(lng())
         )
         { }
@@ -83,7 +83,7 @@ namespace Tonga.Number
         /// A <see cref="float"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="flt">The float</param>
-        public LiveNumber(System.Func<float> flt) : this(
+        public LiveNumber(Func<float> flt) : this(
             () => new NumberOf(flt())
         )
         { }
@@ -100,7 +100,7 @@ namespace Tonga.Number
         )
         { }
 
-        public LiveNumber(System.Func<INumber> number)
+        public LiveNumber(Func<INumber> number)
         {
             this.number = AsScalar._(number);
         }

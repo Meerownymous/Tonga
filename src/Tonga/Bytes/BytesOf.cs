@@ -160,7 +160,7 @@ namespace Tonga.Bytes
         /// Bytes out of function which returns a byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public AsBytes(System.Func<byte[]> bytes) : this(new AsScalar<Byte[]>(bytes))
+        public AsBytes(Func<byte[]> bytes) : this(new AsScalar<Byte[]>(bytes))
         { }
 
         /// <summary>

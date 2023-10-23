@@ -37,7 +37,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="origin">Collection</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(ICollection<T> origin, System.Func<ICollection<T>> fallback) : base(
+        public NotEmpty(ICollection<T> origin, Func<ICollection<T>> fallback) : base(
             () =>
             {
                 if (!origin.GetEnumerator().MoveNext())
@@ -58,6 +58,6 @@ namespace Tonga.Collection
     {
         public static ICollection<T> _<T>(ICollection<T> origin) => new NotEmpty<T>(origin);
 
-        public static ICollection<T> _<T>(ICollection<T> origin, System.Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
+        public static ICollection<T> _<T>(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
     }
 }

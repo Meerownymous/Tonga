@@ -12,7 +12,7 @@ namespace Tonga.Enumerable
     {
         private readonly IEnumerable<T> whenMatching;
         private readonly IEnumerable<T> whenNotMatching;
-        private readonly System.Func<bool> condition;
+        private readonly Func<bool> condition;
 
         /// <summary>
         /// Enumerable sourced depending on a given condition.
@@ -29,7 +29,7 @@ namespace Tonga.Enumerable
         /// Enumerable sourced depending on a given condition.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public Ternary(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, System.Func<bool> condition)
+        public Ternary(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition)
         {
             this.whenMatching = whenMatching;
             this.whenNotMatching = whenNotMatching;
@@ -65,7 +65,7 @@ namespace Tonga.Enumerable
         /// Enumerable sourced depending on a given condition.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static Ternary<T> From<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, System.Func<bool> condition) =>
+        public static Ternary<T> From<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition) =>
             new Ternary<T>(whenMatching, whenNotMatching, condition);
     }
 }

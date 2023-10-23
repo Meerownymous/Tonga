@@ -17,7 +17,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params System.Func<string>[] many) : this(key, () =>
+        public KvpOfMany(string key, params Func<string>[] many) : this(key, () =>
             {
                 var lst = new List<string>();
                 for (var i = 0; i < many.Length; i++)
@@ -47,7 +47,7 @@ namespace Tonga.Map
         /// The function is executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, System.Func<IEnumerable<string>> values) : base(
+        public KvpOfMany(string key, Func<IEnumerable<string>> values) : base(
             new AsPair<IEnumerable<string>>(key, values)
         )
         { }
@@ -57,7 +57,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IPair<IEnumerable<TValue>> _<TValue>(string key, params System.Func<TValue>[] values)
+        public static IPair<IEnumerable<TValue>> _<TValue>(string key, params Func<TValue>[] values)
             => new OneToMany<TValue>(key, values);
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Tonga.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IPair<IEnumerable<TValue>> _<TValue>(string key, System.Func<IEnumerable<TValue>> values)
+        public static IPair<IEnumerable<TValue>> _<TValue>(string key, Func<IEnumerable<TValue>> values)
             => new OneToMany<TValue>(key, values);
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, params System.Func<TValue>[] many)
+        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, params Func<TValue>[] many)
             => new OneToMany<TKey, TValue>(key, many);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Tonga.Map
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, System.Func<IEnumerable<TValue>> many)
+        public static IPair<TKey, IEnumerable<TValue>> _<TKey, TValue>(TKey key, Func<IEnumerable<TValue>> many)
             => new OneToMany<TKey, TValue>(key, many);
     }
 
@@ -119,7 +119,7 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public OneToMany(string key, params System.Func<TValue>[] values) : this(key, () =>
+        public OneToMany(string key, params Func<TValue>[] values) : this(key, () =>
             {
                 var lst = new List<TValue>();
                 for (var i = 0; i < values.Length; i++)

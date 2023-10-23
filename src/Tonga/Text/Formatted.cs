@@ -204,7 +204,7 @@ namespace Tonga.Text
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Formatted From(IText ptn, CultureInfo locale, System.Func<object[]> arguments) =>
+        public static Formatted From(IText ptn, CultureInfo locale, Func<object[]> arguments) =>
             new Formatted(ptn, locale, arguments);
     }
 }

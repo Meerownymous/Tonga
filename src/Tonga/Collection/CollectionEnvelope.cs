@@ -18,7 +18,7 @@ namespace Tonga.Collection
         /// scalar of collection
         /// </summary>
         private readonly InvalidOperationException readonlyError = new InvalidOperationException("The collection is readonly");
-        private readonly System.Func<ICollection<T>> origin;
+        private readonly Func<ICollection<T>> origin;
 
         public CollectionEnvelope(Func<ICollection<T>> col)
         {

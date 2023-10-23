@@ -12,7 +12,7 @@ namespace Tonga.Func
     /// </summary>
     public sealed class BowFunc<T> : IAction<T>
     {
-        private readonly System.Func<bool> trigger;
+        private readonly Func<bool> trigger;
         private readonly Action prepare;
         private readonly Action<T> shoot;
         private readonly IDictionary<string, TimeSpan> timespans;
@@ -20,7 +20,7 @@ namespace Tonga.Func
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public BowFunc(System.Func<bool> trigger, Action<T> shoot) : this(
+        public BowFunc(Func<bool> trigger, Action<T> shoot) : this(
             trigger,
             () => { },
             shoot,
@@ -31,7 +31,7 @@ namespace Tonga.Func
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public BowFunc(System.Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout) : this(
+        public BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout) : this(
             trigger,
             prepare,
             shoot,
@@ -43,7 +43,7 @@ namespace Tonga.Func
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public BowFunc(System.Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval) : this(
+        public BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval) : this(
             trigger,
             prepare,
             shoot,
@@ -56,7 +56,7 @@ namespace Tonga.Func
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        private BowFunc(System.Func<bool> trigger, Action prepare, Action<T> shoot, IDictionary<string, TimeSpan> timespans)
+        private BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, IDictionary<string, TimeSpan> timespans)
         {
             this.trigger = trigger;
             this.prepare = prepare;
@@ -111,20 +111,20 @@ namespace Tonga.Func
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static IAction<T> _<T>(System.Func<bool> trigger, Action<T> shoot)
+        public static IAction<T> _<T>(Func<bool> trigger, Action<T> shoot)
             => new BowFunc<T>(trigger, shoot);
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static IAction<T> _<T>(System.Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout)
+        public static IAction<T> _<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout)
             => new BowFunc<T>(trigger, prepare, shoot, timeout);
 
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static IAction<T> _<T>(System.Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval)
+        public static IAction<T> _<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval)
             => new BowFunc<T>(trigger, prepare, shoot, timeout, interval);
 
     }

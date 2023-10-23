@@ -24,7 +24,7 @@ namespace Tonga.List
         /// List which only advances to the necessary item but remembers it once it has ssen it once.
         /// smart constructor.
         /// </summary>
-        public Sticky(System.Func<IEnumerator<T>> enumerator)
+        public Sticky(Func<IEnumerator<T>> enumerator)
         {
             this.enumerator = new Lazy<IEnumerator<T>>(enumerator);
             this.memory = new List<T>();
@@ -174,7 +174,7 @@ namespace Tonga.List
         /// <summary>
         /// List which only advances to the necessary item but remembers it once it has ssen it once.
         /// </summary>
-        public static Sticky<T> _<T>(System.Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
+        public static Sticky<T> _<T>(Func<IEnumerator<T>> origin) => new Sticky<T>(origin);
     }
 }
 

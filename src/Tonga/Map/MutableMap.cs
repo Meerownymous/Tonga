@@ -50,7 +50,7 @@ namespace Tonga.Map
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        private MutableMap(System.Func<IDictionary<string, TValue>> map)
+        private MutableMap(Func<IDictionary<string, TValue>> map)
         {
             this.map = new MutableMap<string, TValue>(map);
         }
@@ -170,7 +170,7 @@ namespace Tonga.Map
         /// A map whose contents can be changed.
         /// (Our normal objects are immutable)
         /// </summary>
-        internal MutableMap(System.Func<IDictionary<TKey, TValue>> map)
+        internal MutableMap(Func<IDictionary<TKey, TValue>> map)
         {
             this.map = new AsScalar<IDictionary<TKey, TValue>>(map);
         }

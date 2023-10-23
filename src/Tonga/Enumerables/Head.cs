@@ -35,7 +35,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="source">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public Head(IEnumerable<T> source, System.Func<int> limit)
+        public Head(IEnumerable<T> source, Func<int> limit)
         {
             this.result = AsEnumerable._(() => Produced(source, limit));
         }
@@ -44,7 +44,7 @@ namespace Tonga.Enumerable
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private static IEnumerator<T> Produced(IEnumerable<T> source, System.Func<int> limit)
+        private static IEnumerator<T> Produced(IEnumerable<T> source, Func<int> limit)
         {
             var max = limit();
             var taken = 0;
@@ -80,7 +80,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> enumerable, System.Func<int> limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> From<T>(IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
 
         /// <summary>
         /// ctor
@@ -102,7 +102,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, System.Func<int> limit) =>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, Func<int> limit) =>
             Enumerable.Sticky.From(new Head<T>(enumerable, limit));
     }
 }

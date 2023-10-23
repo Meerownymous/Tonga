@@ -52,7 +52,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="scalar">func to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
-        public static IScalar<T> _<T>(System.Func<T> scalar, int attempts = 3)
+        public static IScalar<T> _<T>(Func<T> scalar, int attempts = 3)
             => new Retry<T>(scalar, attempts);
 
         /// <summary>

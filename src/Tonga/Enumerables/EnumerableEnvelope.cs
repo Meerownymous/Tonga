@@ -17,7 +17,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public EnumerableEnvelope(System.Func<IEnumerable<string>> origin) : this(() =>
+        public EnumerableEnvelope(Func<IEnumerable<string>> origin) : this(() =>
             origin().GetEnumerator()
         )
         { }
@@ -25,7 +25,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public EnumerableEnvelope(System.Func<IEnumerator<string>> origin)
+        public EnumerableEnvelope(Func<IEnumerator<string>> origin)
         {
             this.items = new EnumeratorAsEnumerable<string>(origin);
         }
@@ -61,13 +61,13 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(System.Func<IEnumerable<T>> origin) : this(() => origin().GetEnumerator())
+        public ManyEnvelope(Func<IEnumerable<T>> origin) : this(() => origin().GetEnumerator())
         { }
 
         /// <summary>
         /// Envelope for Enumerables.
         /// </summary>
-        public ManyEnvelope(System.Func<IEnumerator<T>> origin)
+        public ManyEnvelope(Func<IEnumerator<T>> origin)
         {
             this.content = new EnumeratorAsEnumerable<T>(origin);
         }

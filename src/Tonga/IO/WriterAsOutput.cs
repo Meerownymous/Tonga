@@ -43,7 +43,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="wtr">a streamwriter</param>
         /// <param name="fnc">function returning a decoder for the writer</param>
-        public WriterAsOutput(StreamWriter wtr, System.Func<Decoder> fnc) : this(wtr, AsScalar._(fnc))
+        public WriterAsOutput(StreamWriter wtr, Func<Decoder> fnc) : this(wtr, AsScalar._(fnc))
         { }
 
         /// <summary>

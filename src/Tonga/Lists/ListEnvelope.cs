@@ -16,7 +16,7 @@ namespace Tonga.List
     public abstract class ListEnvelope<T> : IList<T>
     {
         private readonly InvalidOperationException readOnlyError;
-        private readonly System.Func<IList<T>> origin;
+        private readonly Func<IList<T>> origin;
 
         /// <summary>
         /// List envelope. Not sticky, will enumerate on each access.

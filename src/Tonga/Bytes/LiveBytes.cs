@@ -16,14 +16,14 @@ namespace Tonga.Bytes
         /// Reloads the bytes input on every call
         /// </summary>
         /// <param name="input">The input</param>
-        public LiveBytes(System.Func<IInput> input) : this(() => new AsBytes(input()))
+        public LiveBytes(Func<IInput> input) : this(() => new AsBytes(input()))
         { }
 
         /// <summary>
         /// Relaods the bytes on every call
         /// </summary>
         /// <param name="bytes"></param>
-        public LiveBytes(System.Func<IBytes> bytes) : this(AsScalar._(bytes))
+        public LiveBytes(Func<IBytes> bytes) : this(AsScalar._(bytes))
         { }
 
         private LiveBytes(IScalar<IBytes> bytes)

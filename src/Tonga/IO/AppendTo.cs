@@ -47,7 +47,7 @@ namespace Tonga.IO
         { }
 
         /// <summary>
-        /// Append <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="System.Func{TResult}"/>.
+        /// Append <see cref="IOutput"/> to a target <see cref="Stream"/> returned by a <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="fnc">target stream returning function</param>
         public AppendTo(Func<Stream> fnc) : this(new OutputTo(fnc))

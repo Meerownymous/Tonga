@@ -15,7 +15,7 @@ namespace Tonga.Text
     /// </summary>
     public sealed class AsText : IText
     {
-        private readonly System.Func<string> origin;
+        private readonly Func<string> origin;
 
         /// <summary>
         /// A <see cref="IText"/> out of a int.
@@ -517,6 +517,6 @@ namespace Tonga.Text
         /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
         /// </summary>
         /// <param name="txt">scalar of a string</param>
-        public static AsText _(System.Func<string> txt) => new AsText(txt);
+        public static AsText _(Func<string> txt) => new AsText(txt);
     }
 }

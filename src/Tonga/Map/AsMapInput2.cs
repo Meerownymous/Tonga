@@ -11,20 +11,20 @@ namespace Tonga.Map
     /// <summary>
     /// LookupInput from pairs.
     /// </summary>
-    public sealed class AsLookupInput<Key, Value> : ILookupInput<Key, Value>
+    public sealed class AsMapInput3<Key, Value> : ILookupInput<Key, Value>
     {
         private readonly IEnumerable<IPair<Key, Value>> pairs;
 
         /// <summary>
         /// LookupInput from pairs.
         /// </summary>
-        public AsLookupInput(params IPair<Key, Value>[] pairs) : this(AsEnumerable._(pairs))
+        public AsMapInput3(params IPair<Key, Value>[] pairs) : this(AsEnumerable._(pairs))
         { }
 
         /// <summary>
         /// LookupInput from pairs.
         /// </summary>
-        public AsLookupInput(IEnumerable<IPair<Key, Value>> kvps)
+        public AsMapInput3(IEnumerable<IPair<Key, Value>> kvps)
         {
             this.pairs = kvps;
         }
@@ -48,13 +48,13 @@ namespace Tonga.Map
         /// <summary>
         /// LookupInput from pairs.
         /// </summary>
-        public static AsLookupInput<Key, Value> _<Key, Value>(params IPair<Key, Value>[] pairs) =>
-            new AsLookupInput<Key, Value>(pairs);
+        public static AsMapInput3<Key, Value> _<Key, Value>(params IPair<Key, Value>[] pairs) =>
+            new AsMapInput3<Key, Value>(pairs);
 
         /// <summary>
         /// LookupInput from pairs.
         /// </summary>
-        public static AsLookupInput<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> pairs) =>
-            new AsLookupInput<Key, Value>(pairs);
+        public static AsMapInput3<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> pairs) =>
+            new AsMapInput3<Key, Value>(pairs);
     }
 }

@@ -7,14 +7,14 @@ namespace Tonga.Map
 /// <summary>
     /// A map from string to typed value.
     /// </summary>
-    public sealed class AsLookup<Key, Value> : IMap<Key, Value>
+    public sealed class AsMap3<Key, Value> : IMap<Key, Value>
     {
         private readonly Lazy<IDictionary<Key, IPair<Key, Value>>> map;
 
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2
         ) : this(
@@ -28,7 +28,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3
@@ -44,7 +44,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -62,7 +62,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -82,7 +82,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -104,7 +104,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -128,7 +128,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -154,7 +154,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -182,7 +182,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -212,7 +212,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -244,7 +244,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -278,7 +278,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -314,7 +314,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -352,7 +352,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -392,7 +392,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(
+        public AsMap3(
             Key key1, Value Key,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -434,7 +434,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsLookup(IPair<Key, Value> item, params IPair<Key, Value>[] more) : this(
+        public AsMap3(IPair<Key, Value> item, params IPair<Key, Value>[] more) : this(
             Enumerable.Joined._(
                 AsEnumerable._(more),
                 item
@@ -446,7 +446,7 @@ namespace Tonga.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public AsLookup(params ILookupInput<Key, Value>[] inputs) : this(
+        public AsMap3(params ILookupInput<Key, Value>[] inputs) : this(
             AsEnumerable._(inputs)
         )
         { }
@@ -455,7 +455,7 @@ namespace Tonga.Map
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public AsLookup(IEnumerable<ILookupInput<Key, Value>> inputs) : this(
+        public AsMap3(IEnumerable<ILookupInput<Key, Value>> inputs) : this(
             () =>
             {
                 IMap<Key, Value> map = new EmptyLookup<Key, Value>();
@@ -472,7 +472,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public AsLookup(IEnumerable<IPair<Key, Value>> pairs) : this(
+        public AsMap3(IEnumerable<IPair<Key, Value>> pairs) : this(
             () => pairs
         )
         { }
@@ -481,7 +481,7 @@ namespace Tonga.Map
         /// A map from the given dictionary.
         /// </summary>
         /// <param name="input">input dictionary</param>
-        public AsLookup(Func<IEnumerable<IPair<Key, Value>>> pairs)
+        public AsMap3(Func<IEnumerable<IPair<Key, Value>>> pairs)
         {
             this.map = new Lazy<IDictionary<Key,IPair<Key,Value>>>(() =>
             {
@@ -523,10 +523,10 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<string, string> _(
+        public static AsMap3<string, string> _(
             params string[] pairs
         )
-        => new AsLookup<string, string>(
+        => new AsMap3<string, string>(
             AsEnumerable._(() =>
             {
                 var enumerator = AsEnumerable._(pairs).GetEnumerator();
@@ -553,11 +553,11 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2
         );
@@ -565,12 +565,12 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3
@@ -579,13 +579,13 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -595,14 +595,14 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
             Key key5, Value value5
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -613,7 +613,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -621,7 +621,7 @@ namespace Tonga.Map
             Key key5, Value value5,
             Key key6, Value value6
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -633,7 +633,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -642,7 +642,7 @@ namespace Tonga.Map
             Key key6, Value value6,
             Key key7, Value value7
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -655,7 +655,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -665,7 +665,7 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -679,7 +679,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -690,7 +690,7 @@ namespace Tonga.Map
             Key key8, Value value8,
             Key key9, Value value9
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -705,7 +705,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -717,7 +717,7 @@ namespace Tonga.Map
             Key key9, Value value9,
             Key key10, Value value10
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -733,7 +733,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -746,7 +746,7 @@ namespace Tonga.Map
             Key key10, Value value10,
             Key key11, Value value11
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -763,7 +763,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -777,7 +777,7 @@ namespace Tonga.Map
             Key key11, Value value11,
             Key key12, Value value12
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -795,7 +795,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -810,7 +810,7 @@ namespace Tonga.Map
             Key key12, Value value12,
             Key key13, Value value13
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -829,7 +829,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -845,7 +845,7 @@ namespace Tonga.Map
             Key key13, Value value13,
             Key key14, Value value14
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -865,7 +865,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -882,7 +882,7 @@ namespace Tonga.Map
             Key key14, Value value14,
             Key key15, Value value15
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -903,7 +903,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given keys and values.
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(
+        public static AsMap3<Key, Value> _<Key, Value>(
             Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
@@ -921,7 +921,7 @@ namespace Tonga.Map
             Key key15, Value value15,
             Key key16, Value value16
         )
-        => new AsLookup<Key, Value>(
+        => new AsMap3<Key, Value>(
             key1, value1,
             key2, value2,
             key3, value3,
@@ -943,29 +943,29 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public static AsLookup<Key, Value> _<Key, Value>(IPair<Key, Value> item, params IPair<Key, Value>[] more)
-            => new AsLookup<Key, Value>(item, more);
+        public static AsMap3<Key, Value> _<Key, Value>(IPair<Key, Value> item, params IPair<Key, Value>[] more)
+            => new AsMap3<Key, Value>(item, more);
 
         /// <summary>
         /// A map from the given key value pairs.
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
-        public static AsLookup<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> entries)
-            => new AsLookup<Key, Value>(entries);
+        public static AsMap3<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> entries)
+            => new AsMap3<Key, Value>(entries);
 
         /// <summary>
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">inputs</param>
-        public static AsLookup<Key, Value> _<Key, Value>(params ILookupInput<Key, Value>[] inputs)
-            => new AsLookup<Key, Value>(inputs);
+        public static AsMap3<Key, Value> _<Key, Value>(params ILookupInput<Key, Value>[] inputs)
+            => new AsMap3<Key, Value>(inputs);
 
         /// <summary>
         /// A map from the given inputs.
         /// </summary>
         /// <param name="inputs">enumerable of map inputs</param>
-        public static AsLookup<Key, Value> _<Key, Value>(IEnumerable<ILookupInput<Key, Value>> inputs)
-            => new AsLookup<Key, Value>(inputs);
+        public static AsMap3<Key, Value> _<Key, Value>(IEnumerable<ILookupInput<Key, Value>> inputs)
+            => new AsMap3<Key, Value>(inputs);
 
 
     }

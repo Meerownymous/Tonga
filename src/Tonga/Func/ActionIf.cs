@@ -8,7 +8,7 @@ namespace Tonga.Func
     /// <summary>
     /// Conditional Action as part of an <see cref="ActionSwitch{In}"/>
     /// </summary>
-    public sealed class ActionIf<In> : KvpEnvelope<Action<In>>
+    public sealed class ActionIf<In> : PairEnvelope<Action<In>>
     {
         /// <summary>
         /// Conditional Action as part of an <see cref="ActionSwitch{In}"/>
@@ -22,7 +22,7 @@ namespace Tonga.Func
     /// <summary>
     /// Conditional Action as part of an <see cref="ActionSwitch{In1, In2}"/>
     /// </summary>
-    public sealed class ActionIf<In1, In2> : KvpEnvelope<Action<In1, In2>>
+    public sealed class ActionIf<In1, In2> : PairEnvelope<Action<In1, In2>>
     {
         /// <summary>
         /// Conditional Action as part of an <see cref="ActionSwitch{In1, In2}"/>

@@ -65,6 +65,6 @@ namespace Tonga.Enumerable
         /// Enumerable partitioned by a given size.
         /// </summary>
         public static IEnumerable<IEnumerable<T>> Sticky<T>(int size, IEnumerable<T> items) =>
-            Enumerable.Sticky.From(new Partitioned<T>(size, items));
+            Enumerable.Sticky._(new Partitioned<T>(size, items));
     }
 }

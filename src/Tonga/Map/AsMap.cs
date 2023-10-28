@@ -1597,7 +1597,7 @@ namespace Tonga.Map
         /// A map from the given IKvps.
         /// </summary>
         public AsMap(IPair<Value> entry, params IPair<Value>[] more) : base(() =>
-            new LazyDict<Value>(
+            new LazyMap<Value>(
                 Enumerable.Joined._(
                     Enumerable.Single._(entry),
                     more
@@ -1613,7 +1613,7 @@ namespace Tonga.Map
         /// <param name="entries">enumerable of kvps</param>
         /// <param name="rejectBuildingAllValues">if you have KVPs with value functions, it is by default prevented to build all values by getting the enumerator. You can deactivate that here.</param>
         public AsMap(IEnumerable<IPair<Value>> entries, bool rejectBuildingAllValues = true) : this(
-            new LazyDict<Value>(entries, rejectBuildingAllValues)
+            new LazyMap<Value>(entries, rejectBuildingAllValues)
         )
         { }
 
@@ -1659,7 +1659,7 @@ namespace Tonga.Map
         public AsMap(IEnumerable<IMapInput<Value>> inputs) : this(
             () =>
             {
-                IDictionary<string, Value> dict = new LazyDict<Value>();
+                IDictionary<string, Value> dict = new LazyMap<Value>();
                 foreach (IMapInput<Value> input in inputs)
                 {
                     dict = input.Apply(dict);

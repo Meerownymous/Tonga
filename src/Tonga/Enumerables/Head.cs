@@ -87,7 +87,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable) =>
-            Enumerable.Sticky.From(new Head<T>(enumerable));
+            Enumerable.Sticky._(new Head<T>(enumerable));
 
         /// <summary>
         /// ctor
@@ -95,7 +95,7 @@ namespace Tonga.Enumerable
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, int limit) =>
-            Enumerable.Sticky.From(new Head<T>(enumerable, limit));
+            Enumerable.Sticky._(new Head<T>(enumerable, limit));
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
@@ -103,6 +103,6 @@ namespace Tonga.Enumerable
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, Func<int> limit) =>
-            Enumerable.Sticky.From(new Head<T>(enumerable, limit));
+            Enumerable.Sticky._(new Head<T>(enumerable, limit));
     }
 }

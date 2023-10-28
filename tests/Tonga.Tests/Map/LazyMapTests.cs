@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tonga.Map.Tests
 {
-    public sealed class LazyDictTests
+    public sealed class LazyMapTests
     {
         [Fact]
         public void AllValuesAreBuiltWhenPreventionIsDisabled()

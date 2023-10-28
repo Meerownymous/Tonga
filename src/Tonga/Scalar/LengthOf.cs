@@ -22,5 +22,11 @@ namespace Tonga.Scalar
             new Enumerator.LengthOf(items.GetEnumerator()).Value()
         )
         { }
-    }
+
+        /// <summary>
+        /// Length of an <see cref="IEnumerable"/>
+        /// </summary>
+        /// <param name="items">the enumerable</param>
+        public static LengthOf _(IEnumerable items) => new LengthOf(items);
+    }    
 }

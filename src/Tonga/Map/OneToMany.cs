@@ -10,14 +10,14 @@ namespace Tonga.Map
     /// A key to many strings.
     /// Since 1.9.2019
     /// </summary>
-    public sealed class KvpOfMany : KvpEnvelope<IEnumerable<string>>
+    public sealed class OneToMany : PairEnvelope<IEnumerable<string>>
     {
         /// <summary>
         /// A key to many values.
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params Func<string>[] many) : this(key, () =>
+        public OneToMany(string key, params Func<string>[] many) : this(key, () =>
             {
                 var lst = new List<string>();
                 for (var i = 0; i < many.Length; i++)
@@ -33,13 +33,13 @@ namespace Tonga.Map
         /// The functions are executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, params string[] values) : this(key, () => AsEnumerable._(values))
+        public OneToMany(string key, params string[] values) : this(key, () => AsEnumerable._(values))
         { }
 
         /// <summary>
         /// A key to many values.
         /// </summary>
-        public KvpOfMany(string key, IEnumerable<string> values) : this(key, () => values)
+        public OneToMany(string key, IEnumerable<string> values) : this(key, () => values)
         { }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Tonga.Map
         /// The function is executed only when the value is requested.
         /// The result is sticky.
         /// </summary>
-        public KvpOfMany(string key, Func<IEnumerable<string>> values) : base(
+        public OneToMany(string key, Func<IEnumerable<string>> values) : base(
             new AsPair<IEnumerable<string>>(key, values)
         )
         { }
@@ -112,7 +112,7 @@ namespace Tonga.Map
     /// <summary>
     /// A key to many values.
     /// </summary>
-    public sealed class OneToMany<TValue> : KvpEnvelope<IEnumerable<TValue>>
+    public sealed class OneToMany<TValue> : PairEnvelope<IEnumerable<TValue>>
     {
         /// <summary>
         /// A key to many strings.
@@ -166,7 +166,7 @@ namespace Tonga.Map
     /// <summary>
     /// A key to many values.
     /// </summary>
-    public sealed class OneToMany<TKey, TValue> : KvpEnvelope<TKey, IEnumerable<TValue>>
+    public sealed class OneToMany<TKey, TValue> : PairEnvelope<TKey, IEnumerable<TValue>>
     {
         /// <summary>
         /// A key to many values.

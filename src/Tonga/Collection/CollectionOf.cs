@@ -9,27 +9,27 @@ namespace Tonga.Collection
     /// Collection out of other things. 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class CollectionOf<T> : CollectionEnvelope<T>
+    public sealed class AsCollection<T> : CollectionEnvelope<T>
     {
         /// <summary>
         /// A collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public CollectionOf(params T[] more) : this(new AsEnumerable<T>(more))
+        public AsCollection(params T[] more) : this(AsEnumerable._(more))
         { }
 
         /// <summary>
         /// A collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public CollectionOf(IEnumerator<T> src) : this(AsEnumerable._(src))
+        public AsCollection(IEnumerator<T> src) : this(AsEnumerable._(src))
         { }
 
         /// <summary>
         /// Makes a collection from an <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public CollectionOf(IEnumerable<T> src) : base(
+        public AsCollection(IEnumerable<T> src) : base(
             () =>
             {
                 ICollection<T> list = new LinkedList<T>();
@@ -43,13 +43,13 @@ namespace Tonga.Collection
         { }
     }
 
-    public static class CollectionOf
+    public static class AsCollection
     {
-        public static ICollection<T> _<T>(params T[] array) => new CollectionOf<T>(array);
+        public static ICollection<T> _<T>(params T[] array) => new AsCollection<T>(array);
 
-        public static ICollection<T> _<T>(IEnumerator<T> src) => new CollectionOf<T>(src);
+        public static ICollection<T> _<T>(IEnumerator<T> src) => new AsCollection<T>(src);
 
-        public static ICollection<T> _<T>(IEnumerable<T> src) => new CollectionOf<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) => new AsCollection<T>(src);
 
     }
 }

@@ -6,11 +6,11 @@ namespace Tonga.Map
     /// Simplification of Kvp-class-building.
     /// Since 9.9.2019
     /// </summary>
-    public abstract class KvpEnvelope : IPair
+    public abstract class PairEnvelope : IPair
     {
         private readonly IPair origin;
 
-        public KvpEnvelope(IPair origin)
+        public PairEnvelope(IPair origin)
         {
             this.origin = origin;
         }
@@ -35,14 +35,14 @@ namespace Tonga.Map
     /// Simplification of Kvp building.
     /// Since 9.9.2019
     /// </summary>
-    public abstract class KvpEnvelope<TValue> : IPair<TValue>
+    public abstract class PairEnvelope<TValue> : IPair<TValue>
     {
         private readonly IPair<TValue> origin;
 
         /// <summary>
         /// Simplification of Kvp building
         /// </summary>
-        public KvpEnvelope(IPair<TValue> origin)
+        public PairEnvelope(IPair<TValue> origin)
         {
             this.origin = origin;
         }
@@ -67,14 +67,14 @@ namespace Tonga.Map
     /// Simplification of Kvp-class-building.
     /// Since 9.9.2019
     /// </summary>
-    public abstract class KvpEnvelope<TKey, TValue> : IPair<TKey, TValue>
+    public abstract class PairEnvelope<TKey, TValue> : IPair<TKey, TValue>
     {
         private readonly IPair<TKey, TValue> origin;
 
         /// <summary>
         /// Simplification of KVP building
         /// </summary>
-        public KvpEnvelope(IPair<TKey, TValue> origin)
+        public PairEnvelope(IPair<TKey, TValue> origin)
         {
             this.origin = origin;
         }

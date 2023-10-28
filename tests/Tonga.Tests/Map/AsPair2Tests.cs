@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Tonga.Map.Tests
 {
-    public sealed class KvpOfTests
+    public sealed class AsPairTests
     {
         [Fact]
         public void BuildsValue()

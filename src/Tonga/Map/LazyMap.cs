@@ -253,20 +253,20 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Value> _<Value>(params IPair<Value>[] kvps)
-            => new LazyDict<Value>(kvps);
+        public static LazyMap<Value> _<Value>(params IPair<Value>[] kvps)
+            => new LazyMap<Value>(kvps);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Value> _<Value>(bool rejectBuildingAllValues, params IPair<Value>[] kvps)
-            => new LazyDict<Value>(kvps);
+        public static LazyMap<Value> _<Value>(bool rejectBuildingAllValues, params IPair<Value>[] kvps)
+            => new LazyMap<Value>(kvps);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static LazyDict<Value> _<Value>(IEnumerable<IPair<Value>> kvps, bool rejectBuildingAllValues = true)
-            => new LazyDict<Value>(kvps, rejectBuildingAllValues);
+        public static LazyMap<Value> _<Value>(IEnumerable<IPair<Value>> kvps, bool rejectBuildingAllValues = true)
+            => new LazyMap<Value>(kvps, rejectBuildingAllValues);
 
         /// <summary>
         /// ctor
@@ -290,7 +290,7 @@ namespace Tonga.Map
     /// <summary>
     /// A dictionary whose values are retrieved only when accessing them.
     /// </summary>
-    public sealed class LazyDict<Value> : IDictionary<string, Value>
+    public sealed class LazyMap<Value> : IDictionary<string, Value>
     {
         private readonly IDictionary<string, Scalar.Sticky<Value>> map;
         private readonly InvalidOperationException rejectReadException = new InvalidOperationException("Writing is not supported, it's a read-only map");
@@ -300,13 +300,13 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(params IPair<Value>[] kvps) : this(new Enumerable.AsEnumerable<IPair<Value>>(kvps), true)
+        public LazyMap(params IPair<Value>[] kvps) : this(new Enumerable.AsEnumerable<IPair<Value>>(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(bool rejectBuildingAllValues, params IPair<Value>[] kvps) : this(
+        public LazyMap(bool rejectBuildingAllValues, params IPair<Value>[] kvps) : this(
             AsEnumerable._(kvps),
             rejectBuildingAllValues
         )
@@ -315,7 +315,7 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyDict(IEnumerable<IPair<Value>> kvps, bool rejectBuildingAllValues = true)
+        public LazyMap(IEnumerable<IPair<Value>> kvps, bool rejectBuildingAllValues = true)
         {
             this.rejectBuildingAllValues = rejectBuildingAllValues;
             this.map =
@@ -541,13 +541,15 @@ namespace Tonga.Map
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyMap(params IPair<Key, Value>[] kvps) : this(Enumerable.AsEnumerable._(kvps), true)
+        public LazyMap(params IPair<Key, Value>[] kvps) : this(AsEnumerable._(kvps), true)
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
-        public LazyMap(bool rejectBuildingAllValues, params IPair<Key, Value>[] kvps) : this(new Enumerable.AsEnumerable<IPair<Key, Value>>(kvps), rejectBuildingAllValues)
+        public LazyMap(bool rejectBuildingAllValues, params IPair<Key, Value>[] kvps) : this(
+            new AsEnumerable<IPair<Key, Value>>(kvps), rejectBuildingAllValues
+        )
         { }
 
         /// <summary>

@@ -114,23 +114,23 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> From<T>(IEnumerable<T> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(IEnumerable<T> source) => new Sticky<T>(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> From<T>(Func<IEnumerable<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(Func<IEnumerable<T>> source) => new Sticky<T>(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> From<T>(IEnumerator<T> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(IEnumerator<T> source) => new Sticky<T>(source);
 
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> From<T>(Func<IEnumerator<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(Func<IEnumerator<T>> source) => new Sticky<T>(source);
     }
 }
 

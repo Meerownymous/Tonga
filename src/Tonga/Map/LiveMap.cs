@@ -69,7 +69,7 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="entries">enumerable of kvps</param>
         public LiveMap(Func<IEnumerable<IPair<Value>>> entries) : this(() =>
-            new LazyDict<Value>(entries(), true)
+            new LazyMap<Value>(entries(), true)
         )
         { }
 

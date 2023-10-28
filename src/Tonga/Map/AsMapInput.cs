@@ -1,6 +1,7 @@
 
 
 using System.Collections.Generic;
+using Tonga.Enumerable;
 using Tonga.List;
 
 namespace Tonga.Map
@@ -14,7 +15,7 @@ namespace Tonga.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public AsMapInput(params IPair[] kvps) : this(AsList._(kvps))
+        public AsMapInput(params IPair[] kvps) : this(AsEnumerable._(kvps))
         { }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Tonga.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public AsMapInput(params IPair<Value>[] kvps) : this(new AsList<IPair<Value>>(kvps))
+        public AsMapInput(params IPair<Value>[] kvps) : this(new AsEnumerable<IPair<Value>>(kvps))
         { }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Tonga.Map
         /// <summary>
         /// MapInput from key-value pairs.
         /// </summary>
-        public AsMapInput(params IPair<Key, Value>[] kvps) : this(new AsList<IPair<Key, Value>>(kvps))
+        public AsMapInput(params IPair<Key, Value>[] kvps) : this(new AsEnumerable<IPair<Key, Value>>(kvps))
         { }
 
         /// <summary>

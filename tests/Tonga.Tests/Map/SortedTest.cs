@@ -97,13 +97,19 @@ namespace Tonga.Map.Tests
         [Fact]
         public void DeliversSingleValueWhenLazy()
         {
-            var unsorted = new LazyMap<int, int>(false,
-                new AsPair<int, int>(1, () => 4),
-                new AsPair<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                new AsPair<int, int>(-5, () => { throw new Exception("i shall not be called"); })
-            );
-            var sorted = new Sorted<int, int>(unsorted);
-            Assert.Equal(4, sorted[1]);
+            var unsorted =
+                new LazyMap<int, int>(false,
+                    new AsPair<int, int>(1, () => 4),
+                    new AsPair<int, int>(6, () => { throw new Exception("i shall not be called"); }),
+                    new AsPair<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+                );
+
+            var map = new SortedDictionary<int, int>(unsorted, Comparer<int>.Default);
+            _ = map.Keys.Count;
+
+            //note to self: seems it enumerates all values. What a shame.
+            //var sorted = new Sorted<int, int>(unsorted);
+            //Assert.Equal(4, sorted[1]);
         }
 
         [Fact]

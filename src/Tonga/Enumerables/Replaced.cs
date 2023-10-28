@@ -122,7 +122,7 @@ namespace Tonga.Enumerable
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> origin, Func<T, bool> condition, T replacement) =>
-            Enumerable.Sticky.From(new Replaced<T>(origin, condition, replacement));
+            Enumerable.Sticky._(new Replaced<T>(origin, condition, replacement));
 
         /// <summary>
         /// A <see cref="EnumerableEnvelope"/> where an item at a given index is replaced.
@@ -131,7 +131,7 @@ namespace Tonga.Enumerable
         /// <param name="index">index at which to replace the item</param>
         /// <param name="replacement">item to insert instead</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> origin, int index, T replacement) =>
-            Enumerable.Sticky.From(new Replaced<T>(origin, index, replacement));
+            Enumerable.Sticky._(new Replaced<T>(origin, index, replacement));
 
         /// <summary>
         /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
@@ -140,6 +140,6 @@ namespace Tonga.Enumerable
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) =>
-            Enumerable.Sticky.From(new Replaced<T>(origin, condition, replacement));
+            Enumerable.Sticky._(new Replaced<T>(origin, condition, replacement));
     }
 }

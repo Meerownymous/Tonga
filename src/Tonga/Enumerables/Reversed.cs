@@ -58,6 +58,6 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> src) =>
-            Enumerable.Sticky.From(new Reversed<T>(src));
+            Enumerable.Sticky._(new Reversed<T>(src));
     }
 }

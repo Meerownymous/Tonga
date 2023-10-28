@@ -62,6 +62,6 @@ namespace Tonga.Enumerable
         /// <param name="enumerable">enumerable to skip items in</param>
         /// <param name="skip">how many to skip</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, int skip) =>
-            Enumerable.Sticky.From(new Skipped<T>(enumerable, skip));
+            Enumerable.Sticky._(new Skipped<T>(enumerable, skip));
     }
 }

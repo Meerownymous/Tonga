@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using Tonga.Enumerable;
 using Tonga.Scalar;
@@ -155,7 +153,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(bool live, params IDictionary<string, Value>[] dicts) : this(
-            new AsEnumerable<IDictionary<string, Value>>(dicts),
+            AsEnumerable._(dicts),
             live
         )
         { }
@@ -163,15 +161,15 @@ namespace Tonga.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<string, Value>> dicts, bool live = false) : base(
+        public Joined(IEnumerable<IDictionary<string, Value>> maps, bool live = false) : base(
             () =>
-                new LazyMap<string, Value>(
+                LazyMap._(
                     Enumerable.Joined._(
-                        Mapped._(dict =>
-                            Mapped._((key) => new AsPair<string, Value>(key, () => dict[key]),
-                                dict.Keys
+                        Mapped._(map =>
+                            Mapped._((key) => new AsPair<string, Value>(key, () => map[key]),
+                                map.Keys
                             ),
-                            dicts
+                            maps
                         )
                     )
                 )
@@ -210,7 +208,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(bool live, params IDictionary<Key, Value>[] dicts) : this(
-            new Enumerable.AsEnumerable<IDictionary<Key, Value>>(dicts),
+            AsEnumerable._(dicts),
             live
         )
         { }
@@ -219,7 +217,7 @@ namespace Tonga.Map
         /// Joined map.
         /// </summary>
         public Joined(params IDictionary<Key, Value>[] dicts) : this(
-            new Enumerable.AsEnumerable<IDictionary<Key, Value>>(dicts),
+            AsEnumerable._(dicts),
             false
         )
         { }
@@ -227,15 +225,17 @@ namespace Tonga.Map
         /// <summary>
         /// Joined map.
         /// </summary>
-        public Joined(IEnumerable<IDictionary<Key, Value>> dicts, bool live = false) : base(
+        public Joined(IEnumerable<IDictionary<Key, Value>> maps, bool live = false) : base(
             () =>
-                new LazyMap<Key, Value>(
+                LazyMap2._(
                     Enumerable.Joined._(
-                        Mapped._(dict =>
-                            Mapped._((key) => AsPair._(key, () => dict[key]),
-                                dict.Keys
+                        Mapped._(
+                            map =>
+                            Mapped._( //new pairs from original maps without asking for a value now
+                                (key) => AsPair._(key, () => map[key]),
+                                map.Keys
                             ),
-                            dicts
+                            maps
                         )
                     )
                 ),

@@ -16,9 +16,10 @@ namespace Tonga.Map
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
-        /// <param name="dict">Map to be sorted</param>
-        public Sorted(IDictionary<Key, Value> dict)
-            : this(dict, Comparer<Key>.Default)
+        /// <param name="map">Map to be sorted</param>
+        public Sorted(IDictionary<Key, Value> map) : this(
+            map, Comparer<Key>.Default
+        )
         { }
 
         /// <summary>
@@ -26,16 +27,18 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public Sorted(IDictionary<Key, Value> dict, Func<Key, Key, int> compare)
-            : this(dict, new SimpleComparer<Key>(compare))
+        public Sorted(IDictionary<Key, Value> map, Func<Key, Key, int> compare) : this(
+            map, new SimpleComparer<Key>(compare)
+        )
         { }
 
         /// <summary>
         /// Sorts the given map with the default comperator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
-        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs)
-            : this(pairs, Comparer<Key>.Default)
+        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs) : this(
+            pairs, Comparer<Key>.Default
+        )
         { }
 
         /// <summary>
@@ -43,8 +46,12 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
-        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<Key, Key, int> compare)
-            : this(pairs, new SimpleComparer<Key>(compare))
+        public Sorted(
+            IEnumerable<KeyValuePair<Key, Value>> pairs,
+            Func<Key, Key, int> compare
+        ) : this(
+            pairs, new SimpleComparer<Key>(compare)
+        )
         { }
 
         /// <summary>
@@ -52,8 +59,13 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="compare">Function to compare two elements</param>
-        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare)
-            : this(pairs, new SimpleComparer<KeyValuePair<Key, Value>>(compare))
+        public Sorted(
+            IEnumerable<KeyValuePair<Key, Value>> pairs,
+            Func<KeyValuePair<Key, Value>, KeyValuePair<Key, Value>, int> compare
+        ) : this(
+            pairs,
+            new SimpleComparer<KeyValuePair<Key, Value>>(compare)
+        )
         { }
 
         /// <summary>
@@ -61,8 +73,13 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<Key> cmp)
-            : this(pairs, new KeyComparer<Key, Value>(cmp))
+        public Sorted(
+            IEnumerable<KeyValuePair<Key, Value>> pairs,
+            IComparer<Key> cmp
+        ) : this(
+            pairs,
+            new KeyComparer<Key, Value>(cmp)
+        )
         { }
 
         /// <summary>
@@ -70,8 +87,10 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         /// <param name="cmp">Comparer comparing elements</param>
-        public Sorted(IEnumerable<KeyValuePair<Key, Value>> pairs, IComparer<KeyValuePair<Key, Value>> cmp)
-            : base(
+        public Sorted(
+            IEnumerable<KeyValuePair<Key, Value>> pairs,
+            IComparer<KeyValuePair<Key, Value>> cmp
+        ) : base(
                 () =>
                 {
                     var items = new List<KeyValuePair<Key, Value>>(pairs);
@@ -87,8 +106,10 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
-        public Sorted(IDictionary<Key, Value> dict, IComparer<Key> cmp)
-            : base(() => new SortedDictionary<Key, Value>(dict, cmp), false)
+        public Sorted(IDictionary<Key, Value> dict, IComparer<Key> cmp) : base(
+            () => new SortedDictionary<Key, Value>(dict, cmp),
+            false
+        )
         { }
     }
 

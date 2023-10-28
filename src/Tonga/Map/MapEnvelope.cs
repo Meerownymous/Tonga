@@ -12,7 +12,7 @@ namespace Tonga.Map
     /// Simplified map building.
     /// Since 9.9.2019
     /// </summary>
-    public abstract class MapEnvelope2 : IDictionary<string, string>
+    public abstract class MapEnvelope : IDictionary<string, string>
     {
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
@@ -23,7 +23,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified map building.
         /// </summary>
-        public MapEnvelope2(Func<IDictionary<string, string>> origin, bool live)
+        public MapEnvelope(Func<IDictionary<string, string>> origin, bool live)
         {
             this.origin = origin;
             this.live = live;
@@ -130,7 +130,7 @@ namespace Tonga.Map
     /// Simplified map building.
     /// Since 9.9.2019
     /// </summary>
-    public abstract class MapEnvelope2<Value> : IDictionary<string, Value>
+    public abstract class MapEnvelope<Value> : IDictionary<string, Value>
     {
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
@@ -141,7 +141,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplified map building.
         /// </summary>
-        public MapEnvelope2(Func<IDictionary<string, Value>> origin, bool live)
+        public MapEnvelope(Func<IDictionary<string, Value>> origin, bool live)
         {
             this.origin = origin;
             this.live = live;
@@ -248,18 +248,22 @@ namespace Tonga.Map
     /// Simplified map building.
     /// Since 9.9.2019
     /// </summary>
-    public abstract class MapEnvelope2<Key, Value> : IDictionary<Key, Value>
+    public abstract class MapEnvelope<Key, Value> : IDictionary<Key, Value>
     {
         private readonly InvalidOperationException rejectWriteExc = new InvalidOperationException("Writing is not supported, it's a read-only map");
 
         private readonly Func<IDictionary<Key, Value>> origin;
+        private readonly Sticky<IDictionary<Key, Value>> fixedOrigin;
+        private readonly bool live;
 
         /// <summary>
         /// Simplified map building.
         /// </summary>
-        public MapEnvelope2(Func<IDictionary<Key, Value>> origin)
+        public MapEnvelope(Func<IDictionary<Key, Value>> origin, bool live)
         {
             this.origin = origin;
+            this.live = live;
+            this.fixedOrigin = Scalar.Sticky._(origin);
         }
 
         public Value this[Key key]
@@ -268,7 +272,7 @@ namespace Tonga.Map
             {
                 try
                 {
-                    return Origin()[key];
+                    return Val()[key];
                 }
                 catch (KeyNotFoundException)
                 {
@@ -278,11 +282,11 @@ namespace Tonga.Map
             set => throw this.rejectWriteExc;
         }
 
-        public ICollection<Key> Keys => Origin().Keys;
+        public ICollection<Key> Keys => Val().Keys;
 
-        public ICollection<Value> Values => Origin().Values;
+        public ICollection<Value> Values => Val().Values;
 
-        public int Count => Origin().Count;
+        public int Count => Val().Count;
 
         public bool IsReadOnly => true;
 
@@ -303,22 +307,22 @@ namespace Tonga.Map
 
         public bool Contains(KeyValuePair<Key, Value> item)
         {
-            return Origin().Contains(item);
+            return Val().Contains(item);
         }
 
         public bool ContainsKey(Key key)
         {
-            return Origin().ContainsKey(key);
+            return Val().ContainsKey(key);
         }
 
         public void CopyTo(KeyValuePair<Key, Value>[] array, int arrayIndex)
         {
-            Origin().CopyTo(array, arrayIndex);
+            Val().CopyTo(array, arrayIndex);
         }
 
         public IEnumerator<KeyValuePair<Key, Value>> GetEnumerator()
         {
-            return Origin().GetEnumerator();
+            return Val().GetEnumerator();
         }
 
         public bool Remove(Key key)
@@ -333,14 +337,26 @@ namespace Tonga.Map
 
         public bool TryGetValue(Key key, out Value value)
         {
-            return Origin().TryGetValue(key, out value);
+            return Val().TryGetValue(key, out value);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return Origin().GetEnumerator();
+            return Val().GetEnumerator();
         }
 
-        private IDictionary<Key, Value> Origin() => this.origin();
+        private IDictionary<Key, Value> Val()
+        {
+            IDictionary<Key, Value> result;
+            if (this.live)
+            {
+                result = this.origin();
+            }
+            else
+            {
+                result = this.fixedOrigin.Value();
+            }
+            return result;
+        }
     }
 }

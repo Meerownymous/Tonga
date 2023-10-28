@@ -97,7 +97,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to sort</param>
         public static IEnumerable<T> Sticky<T>(params T[] src) where T : IComparable<T> =>
-            Enumerable.Sticky.From(new Sorted<T>(src));
+            Enumerable.Sticky._(new Sorted<T>(src));
 
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to sort</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<T> src) where T : IComparable<T> =>
-            Enumerable.Sticky.From(new Sorted<T>(src));
+            Enumerable.Sticky._(new Sorted<T>(src));
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
@@ -113,7 +113,7 @@ namespace Tonga.Enumerable
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
         public static IEnumerable<T> Sticky<T>(Comparer<T> cmp, IEnumerable<T> src) =>
-            Enumerable.Sticky.From(new Sorted<T>(cmp, src));
+            Enumerable.Sticky._(new Sorted<T>(cmp, src));
     }
 }
 

@@ -25,6 +25,22 @@ namespace Tonga.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
+        public AsEnumerable(IEnumerable<T> origin) : this(origin.GetEnumerator)
+        { }
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public AsEnumerable(Func<IEnumerable<T>> origin) : this(
+            () => origin().GetEnumerator()
+        )
+        { }
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
         public AsEnumerable(IEnumerator<T> origin) : this(() => origin)
         { }
 
@@ -59,6 +75,18 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
         public static IEnumerable<T> _<T>(params T[] items) => new AsEnumerable<T>(items);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> from a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public static IEnumerable<T> _<T>(IEnumerable<T> fnc) => new AsEnumerable<T>(fnc);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> form a <see cref="Func{T}"/>"/>.
+        /// </summary>
+        /// <param name="fnc">function which retrieves enumerator</param>
+        public static IEnumerable<T> _<T>(Func<IEnumerable<T>> fnc) => new AsEnumerable<T>(fnc);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.

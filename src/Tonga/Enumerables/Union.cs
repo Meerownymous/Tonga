@@ -47,7 +47,7 @@ namespace Tonga.Enumerable
             this.result =
                 Ternary.From(
                     AsEnumerable._(Produced),
-                    Sticky.From(Produced),
+                    Sticky._(Produced),
                     live
                 );
         }

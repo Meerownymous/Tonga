@@ -100,14 +100,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         public static IEnumerable<T> Sticky<T>(params IEnumerable<T>[] enumerables) =>
-            Enumerable.Sticky.From(new Distinct<T>(enumerables));
+            Enumerable.Sticky._(new Distinct<T>(enumerables));
 
         /// <summary>
         /// The distinct elements of one or multiple Enumerables.
         /// </summary>
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<IEnumerable<T>> enumerables) =>
-            Enumerable.Sticky.From(new Distinct<T>(enumerables));
+            Enumerable.Sticky._(new Distinct<T>(enumerables));
 
         /// <summary>
         /// The distinct elements of one or multiple Enumerables.
@@ -115,7 +115,7 @@ namespace Tonga.Enumerable
         /// <param name="enumerables">enumerables to get distinct elements from</param>
         /// <param name="comparison">comparison to evaluate distinction</param>
         public static IEnumerable<T> Sticky<T>(IEnumerable<IEnumerable<T>> enumerables, Func<T, T, bool> comparison) =>
-            Enumerable.Sticky.From(new Distinct<T>(enumerables, comparison));
+            Enumerable.Sticky._(new Distinct<T>(enumerables, comparison));
 
         /// <summary>
         /// The distinct elements of one or multiple Enumerables.

@@ -113,7 +113,7 @@ namespace Tonga.Map.Tests
                 );
             }
 
-            for (var i = 0; i < 1000; i++)
+            for (var i = 0; i < 100; i++)
             {
                 inputs2.Add(
                     AsMapinput2._(

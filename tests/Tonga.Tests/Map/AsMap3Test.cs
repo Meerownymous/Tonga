@@ -19,7 +19,7 @@ namespace Tonga.Map.Tests
             var one = AsPair._(45, 10);
             var two = AsPair._(33, 20);
 
-            var map = AsLookup._(one, two);
+            var map = AsMap3._(one, two);
 
             Assert.Equal(
                 20,
@@ -34,9 +34,9 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 value,
-                AsLookup._(
-                    AsLookupInput._(AsPair._(12, 39478624)),
-                    AsLookupInput._(AsPair._(24, 60208801))
+                AsMap3._(
+                    AsMapinput2._(AsPair._(12, 39478624)),
+                    AsMapinput2._(AsPair._(24, 60208801))
                 )[key]
             );
         }
@@ -47,7 +47,7 @@ namespace Tonga.Map.Tests
         public void BuildsFromPairs(int key, int value)
         {
             var m =
-                AsLookup._(
+                AsMap3._(
                     AsPair._(9, 0),
                     AsPair._(10, 1)
                 );
@@ -62,7 +62,7 @@ namespace Tonga.Map.Tests
             var random = new Random();
 
             var map =
-                AsLookup._(
+                AsMap3._(
                     Repeated._(
                         () => AsPair._(random.Next(), 1),
                         () =>
@@ -84,7 +84,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "works",
-                AsLookup._(
+                AsMap3._(
                     AsPair._<string,string>("name", () => throw new ApplicationException()),
                     AsPair._<string,string>("anothername", () => "works")
                 )["anothername"]
@@ -94,7 +94,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void WorksWithEmptyList()
         {
-            var map = AsLookup._();
+            var map = AsMap3._();
             Assert.Equal(0, LengthOf._(map.Pairs()).Value());
         }
 
@@ -116,14 +116,14 @@ namespace Tonga.Map.Tests
             for (var i = 0; i < 1000; i++)
             {
                 inputs2.Add(
-                    AsLookupInput._(
+                    AsMapinput2._(
                         AsPair._<string, string>(i.ToString(), Guid.NewGuid().ToString())
                     )
                 );
             }
 
             var map1 = AsMap._(inputs);
-            var map2 = AsLookup._(inputs2);
+            var map2 = AsMap3._(inputs2);
 
             Debug.WriteLine(
                 new ElapsedTime(() =>

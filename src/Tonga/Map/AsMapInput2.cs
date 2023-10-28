@@ -43,7 +43,7 @@ namespace Tonga.Map
     /// <summary>
     /// LookupInput from pairs.
     /// </summary>
-    public static class AsLookupInput
+    public static class AsMapinput2
     {
         /// <summary>
         /// LookupInput from pairs.

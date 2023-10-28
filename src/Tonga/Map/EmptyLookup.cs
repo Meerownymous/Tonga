@@ -35,7 +35,7 @@ namespace Tonga.Map
 
         public IMap<Key, Value> With(IPair<Key, Value> pair)
         {
-            return AsLookup._(pair);
+            return AsMap3._(pair);
         }
     }
 }

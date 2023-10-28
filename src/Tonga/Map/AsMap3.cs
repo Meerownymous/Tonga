@@ -518,7 +518,7 @@ namespace Tonga.Map
         }
     }
 
-    public static class AsLookup
+    public static class AsMap3
     {
         /// <summary>
         /// A map from the given keys and values.

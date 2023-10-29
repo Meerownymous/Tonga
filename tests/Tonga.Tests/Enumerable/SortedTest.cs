@@ -43,7 +43,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Empty(
                 new Sorted<string>(
-                    new None()
+                    None._<string>()
                 )
             );
         }

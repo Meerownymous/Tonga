@@ -11,7 +11,7 @@ namespace Tonga.Enumerable.Test
         public void Empty()
         {
             Assert.Empty(
-                new Divergency<string>(
+                Divergency._(
                     AsEnumerable._("a", "b"),
                     AsEnumerable._("a", "b")
                 )
@@ -25,7 +25,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 expected,
-                new Divergency<string>(
+                Divergency._(
                    a, b
                 )
             );
@@ -38,7 +38,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 expected,
-                new Divergency<int>(a, b)
+                Divergency._(a, b)
             );
         }
     }

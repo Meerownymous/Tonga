@@ -16,7 +16,7 @@ namespace Tonga.Scalar.Tests
         public void AllTrue()
         {
             Assert.True(
-            new And(
+            And._(
                 new True(),
                 new True(),
                 new True()
@@ -80,12 +80,11 @@ namespace Tonga.Scalar.Tests
             var list = new LinkedList<string>();
 
             Assert.True(
-                new And<string>(
-                        str => { list.AddLast(str); return true; },
-                        new None()
-                ).Value() == true,
-                "Can't enumerate a list"
-                );
+                And._(
+                    str => { list.AddLast(str); return true; },
+                    None._<string>()
+                ).Value()
+            );
 
             Assert.True(list.Count == 0);
         }
@@ -93,11 +92,12 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void TestFunc()
         {
-            Assert.True(
-                    new And<int>(
-                        input => input > 0,
-                        1, -1, 0
-                    ).Value() == false);
+            Assert.False(
+                And._(
+                    input => input > 0,
+                    1, -1, 0
+                ).Value()
+            );
         }
 
         [Fact]

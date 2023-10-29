@@ -11,37 +11,41 @@ namespace Tonga.Enumerable.Test
         [Fact]
         public void TransformsList()
         {
-            Assert.True(
-                new LengthOf(
-                    new Joined<string>(
+            Assert.Equal(
+                8,
+                LengthOf._(
+                    Joined._(
                         AsEnumerable._("hello", "world", "друг"),
                         AsEnumerable._("how", "are", "you"),
                         AsEnumerable._("what's", "up")
                     )
-                ).Value() == 8,
-            "Can't concatenate enumerables together");
+                ).Value()
+            );
         }
 
         [Fact]
         public void JoinsEnumerables()
         {
-            Assert.True(
-                new LengthOf(
-                    new Joined<IEnumerable<string>>(
-                        new Mapped<string, IEnumerable<string>>(
+            Assert.Equal(
+                1,
+                LengthOf._(
+                    Joined._(
+                        Mapped._(
                            str => AsEnumerable._(str),
                            AsEnumerable._("x")
                         )
-                )).Value() == 1,
-            "cannot join mapped iterables together");
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
         public void JoinsSingleElemtns()
         {
-            Assert.True(
-                new LengthOf(
-                    new Joined<string>(
+            Assert.Equal(
+                8,
+                LengthOf._(
+                    Joined._(
                         AsEnumerable._("hello", "world", "друг"),
                         "how",
                         "are",
@@ -49,8 +53,8 @@ namespace Tonga.Enumerable.Test
                         "what's",
                         "up"
                     )
-                ).Value() == 8,
-            "Can't concatenate enumerable with ingle values");
+                ).Value()
+            );
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Tonga.Enumerable.Test
         public void MergesEntries()
         {
             Assert.True(
-                new LengthOf(
-                    new Distinct<int>(
+                LengthOf._(
+                    Distinct._(
                         AsEnumerable._(1, 2, 3),
                         AsEnumerable._(10, 2, 30)
                     )
@@ -26,8 +26,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 5,
-                new LengthOf(
-                    new Distinct<INumber>(
+                LengthOf._(
+                    Distinct._(
                         AsEnumerable._(
                             AsEnumerable._(
                                 new NumberOf(1),
@@ -47,27 +47,29 @@ namespace Tonga.Enumerable.Test
         }
 
         [Fact]
-        public void MergesEntriesWithEnumCtor()
+        public void MergesEntriesFromEnumerables()
         {
-            Assert.True(
-                new LengthOf(
-                    new Distinct<int>(
+            Assert.Equal(
+                5,
+                LengthOf._(
+                    Distinct._(
                         AsEnumerable._(
                             AsEnumerable._(1, 2, 3),
                             AsEnumerable._(10, 2, 30)
                         )
                     )
-                ).Value() == 5);
+                ).Value()
+            );
         }
 
         [Fact]
         public void WorksWithEmpties()
         {
             Assert.True(
-                new LengthOf(
-                    new Distinct<string>(
-                        new None(),
-                        new None()
+                LengthOf._(
+                    Distinct._(
+                        None._<string>(),
+                        None._<string>()
                     )
                 ).Value() == 0);
         }
@@ -76,13 +78,13 @@ namespace Tonga.Enumerable.Test
         public void DoubleRunDistinct()
         {
             var dst =
-                new Distinct<string>(
+                Distinct._(
                     AsEnumerable._("test", "test")
                 );
 
             Assert.Equal(
-                new LengthOf(dst).Value(),
-                new LengthOf(dst).Value()
+                LengthOf._(dst).Value(),
+                LengthOf._(dst).Value()
             );
         }
     }

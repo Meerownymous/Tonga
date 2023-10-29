@@ -15,8 +15,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 "HELLO",
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
+                ItemAt._(
+                    Mapped._(
                         input => new Upper(AsText._(input)),
                         AsEnumerable._("hello", "world", "damn")),
                     0
@@ -71,13 +71,14 @@ namespace Tonga.Enumerable.Test
         [Fact]
         public void TransformsEmptyList()
         {
-            Assert.True(
-                new LengthOf(
-                    new Mapped<String, IText>(
+            Assert.Equal(
+                0,
+                LengthOf._(
+                    Mapped._(
                         input => new Upper(AsText._(input)),
-                        new None()
+                        None._<string>()
                     )
-                ).Value() == 0
+                ).Value()
             );
         }
 
@@ -86,11 +87,11 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 "WORLD1",
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
+                ItemAt._(
+                    Mapped._(
                         (input, index) => new Upper(AsText._(input + index)),
                         AsEnumerable._("hello", "world", "damn")
-                        ),
+                    ),
                     1
                 ).Value().AsString()
             );
@@ -101,13 +102,11 @@ namespace Tonga.Enumerable.Test
         public void AdvancesOnlyNecessary()
         {
             var advances = 0;
-            var origin = new AsList<string>("item1", "item2", "item3");
-
             var list =
-                new Mapped<string, string>(
+                Mapped._(
                     item => item,
-                    new Logging<string>(
-                        origin,
+                    Logging._(
+                        AsList._("item1", "item2", "item3"),
                         idx => advances++
                     )
                 );
@@ -122,12 +121,12 @@ namespace Tonga.Enumerable.Test
         public void CopyCtorDoesNotAdvance()
         {
             var advances = 0;
-            var origin = new AsList<string>("item1", "item2", "item3");
+            var origin =  AsList._("item1", "item2", "item3");
 
             var list =
-                new Mapped<string, string>(
+                Mapped._(
                     item => item,
-                    new Logging<string>(
+                    Logging._(
                         origin,
                         idx => advances++
                     )

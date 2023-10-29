@@ -6,14 +6,14 @@ using Tonga.Enumerable;
 
 namespace Tonga.Scalar.Tests
 {
-    public sealed class LastOfTests
+    public sealed class LastTests
     {
         [Fact]
         public void ThrowsCustomException()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                Last.From(
-                    new None(),
+                Last._(
+                    None._<string>(),
                     new InvalidOperationException()
                 ).Value()
             );
@@ -24,8 +24,8 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Equal(
                 "gotcha",
-                Last.From(
-                    new None(),
+                Last._(
+                    None._<string>(),
                     "gotcha"
                 ).Value()
             );
@@ -36,7 +36,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Equal(
                 "Max",
-                Last.From(
+                Last._(
                     AsEnumerable._("hallo", "ich", "heisse", "Max")
                 ).Value()
             );

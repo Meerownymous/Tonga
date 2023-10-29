@@ -42,6 +42,6 @@ namespace Tonga.Enumerable
         /// A <see cref="EnumerableEnvelope"/> that repeats one element infinitely.
         /// </summary>
         /// <param name="elm">element to repeat</param>
-        public static IEnumerable<T> From<T>(T elm) => new Endless<T>(elm);
+        public static IEnumerable<T> _<T>(T elm) => new Endless<T>(elm);
     }
 }

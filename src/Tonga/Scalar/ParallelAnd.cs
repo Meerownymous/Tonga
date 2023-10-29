@@ -130,7 +130,14 @@ namespace Tonga.Scalar
         /// Logical conjunction, in multiple threads. Returns true if all contents return true.
         /// </summary>
         /// <param name="src"></param>
-        public static IScalar<bool> _<T>(IEnumerable<IScalar<bool>> src)
-            => new ParallelAnd<T>(src);
+        public static IScalar<bool> _(params IScalar<bool>[] src)
+            => new ParallelAnd<object>(src);
+
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="src"></param>
+        public static IScalar<bool> _(IEnumerable<IScalar<bool>> src)
+            => new ParallelAnd<object>(src);
     }
 }

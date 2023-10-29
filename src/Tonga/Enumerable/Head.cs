@@ -66,43 +66,20 @@ namespace Tonga.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> enumerable) => new Head<T>(enumerable);
+        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable) => new Head<T>(enumerable);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable) =>
-            Enumerable.Sticky._(new Head<T>(enumerable));
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, int limit) =>
-            Enumerable.Sticky._(new Head<T>(enumerable, limit));
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
-        /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> enumerable, Func<int> limit) =>
-            Enumerable.Sticky._(new Head<T>(enumerable, limit));
+        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
     }
 }

@@ -29,5 +29,7 @@ namespace Tonga.Scalar
             return current < amount;
         })
         { }
+
+        public static IsLess _(int amount, IEnumerable source) => new IsLess(amount, source);
     }
 }

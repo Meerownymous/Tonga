@@ -6,14 +6,14 @@ using Tonga.Enumerable;
 
 namespace Tonga.Scalar.Tests
 {
-    public sealed class FirstOfTests
+    public sealed class FirstTests
     {
         [Fact]
         public void ThrowsCustomException()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new First<string>(
-                    new None(),
+                First._(
+                    None._<string>(),
                     new InvalidOperationException()
                 ).Value()
             );
@@ -24,30 +24,33 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Equal(
                 "gotcha",
-                new First<string>(
-                    new None(), "gotcha").Value()
-                );
+                First._(
+                    None._<string>(),
+                    "gotcha"
+                ).Value()
+            );
         }
 
         [Fact]
         public void ReturnsFirstMatch()
         {
-            var list = Enumerable.AsEnumerable._("hallo", "ich", "heisse", "Max");
-
             Assert.Equal(
                 "Max",
-                new First<string>(item => item.StartsWith("M"), list).Value()
+                First._(
+                    item => item.StartsWith("M"),
+                    AsEnumerable._("hallo", "ich", "heisse", "Max")
+                ).Value()
             );
         }
 
         [Fact]
         public void ReturnsFirstValue()
         {
-            var list = Enumerable.AsEnumerable._("hallo", "ich", "heisse", "Max");
-
             Assert.Equal(
                 "hallo",
-                new First<string>(list).Value()
+                First._(
+                    AsEnumerable._("hallo", "ich", "heisse", "Max")
+                ).Value()
             );
         }
     }

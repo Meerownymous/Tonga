@@ -1,6 +1,7 @@
 
 
 using System.Collections;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -12,10 +13,12 @@ namespace Tonga.Enumerable.Test
         {
             var arr = new ArrayList() { "A", "B", "C" };
 
-            Assert.True(
-                new ItemAt<object>(
+            Assert.Equal(
+                "A",
+                First._(
                     new EnumerabeOfArrayList(arr)
-                ).Value().ToString() == "A");
+                ).Value()
+            );
         }
     }
 }

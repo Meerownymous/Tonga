@@ -8,25 +8,6 @@ namespace Tonga.Enumerable
     /// <summary>
     /// Enumerable which is empty.
     /// </summary>
-    public sealed class None : IEnumerable<string>
-    {
-        /// <summary>
-        /// Enumerable which is empty.
-        /// </summary>
-        public None()
-        { }
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            yield break;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-    }
-
-    /// <summary>
-    /// Enumerable which is empty.
-    /// </summary>
     public sealed class None<T> : IEnumerable<T>
     {
         /// <summary>
@@ -41,5 +22,16 @@ namespace Tonga.Enumerable
         }
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    }
+
+    /// <summary>
+    /// Enumerable which is empty.
+    /// </summary>
+    public static class None
+    {
+        /// <summary>
+        /// Enumerable which is empty.
+        /// </summary>
+        public static None<T> _<T>() => new None<T>();
     }
 }

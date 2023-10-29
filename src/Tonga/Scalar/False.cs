@@ -23,5 +23,10 @@ namespace Tonga.Scalar
         {
             return false;
         }
+
+        /// <summary>
+        /// Logical false.
+        /// </summary>
+        public static False _() => new False();
     }
 }

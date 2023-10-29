@@ -94,24 +94,11 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static IEnumerable<T> From<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
+        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
 
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static IEnumerable<T> From<T>(IEnumerable<T> a, IEnumerable<T> b) => new Divergency<T>(a, b);
-
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) =>
-            new Divergency<T>(a, b, match);
-
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> a, IEnumerable<T> b) =>
-            new Divergency<T>(a, b);
-
+        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b) => new Divergency<T>(a, b);
     }
 }

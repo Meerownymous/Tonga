@@ -16,9 +16,10 @@ namespace Tonga.Collection.Tests
         {
             Assert.Contains(
                 -1,
-                new AsCollection<int>(
-                    Enumerable.AsEnumerable._(1, 2, 0, -1))
-                );
+                AsCollection._(
+                    AsEnumerable._(1, 2, 0, -1)
+                )
+            );
         }
 
         [Fact]
@@ -26,7 +27,7 @@ namespace Tonga.Collection.Tests
         {
             int size = 2;
             var list =
-                new AsCollection<int>(
+                AsCollection._(
                     Repeated._(
                         AsScalar._(() => 0),
                         AsScalar._(() =>
@@ -43,14 +44,16 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 2,
-                new AsCollection<int>(-1, 0).Count);
+                AsCollection._(-1, 0).Count
+            );
         }
 
         [Fact]
         public void Empty()
         {
             Assert.Empty(
-                new AsCollection<int>());
+                AsCollection._<int>()
+            );
         }
 
         [Fact]
@@ -58,7 +61,7 @@ namespace Tonga.Collection.Tests
         {
             Assert.Contains(
                 2,
-                new AsCollection<int>(1, 2)
+                AsCollection._(1, 2)
             );
         }
 
@@ -66,14 +69,16 @@ namespace Tonga.Collection.Tests
         public void RejectsAdd()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new AsCollection<int>(1, 2).Add(1));
+                AsCollection._(1, 2).Add(1)
+            );
         }
 
         [Fact]
         public void RejectsRemove()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new AsCollection<int>(1, 2).Remove(1));
+                AsCollection._(1, 2).Remove(1)
+            );
         }
 
 
@@ -81,7 +86,8 @@ namespace Tonga.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new AsCollection<int>(1, 2).Clear());
+                AsCollection._(1, 2).Clear()
+            );
         }
 
     }

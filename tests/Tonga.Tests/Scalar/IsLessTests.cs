@@ -11,7 +11,7 @@ namespace Tonga.Scalar.Test
         public void DetectsLess()
         {
             Assert.True(
-                new IsLess(
+                IsLess._(
                     3,
                     AsEnumerable._("a", "b")
                 ).Value()
@@ -22,7 +22,7 @@ namespace Tonga.Scalar.Test
         public void NoMatchOnMore()
         {
             Assert.False(
-                new IsLess(
+                IsLess._(
                     3,
                     AsEnumerable._("a", "b", "c", "d")
                 ).Value()
@@ -33,7 +33,7 @@ namespace Tonga.Scalar.Test
         public void NoMatchOnEqual()
         {
             Assert.False(
-                new IsLess(
+                IsLess._(
                     3,
                     AsEnumerable._("a", "b", "c")
                 ).Value()

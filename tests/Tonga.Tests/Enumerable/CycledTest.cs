@@ -11,8 +11,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 "two",
-                new ItemAt<string>(
-                    new Cycled<string>(
+                ItemAt._(
+                    Cycled._(
                         AsEnumerable._("one", "two", "three")
                     ),
                     7

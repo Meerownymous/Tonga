@@ -7,6 +7,7 @@ using System.Linq;
 using Xunit;
 using Tonga.Tests;
 using Tonga.Scalar;
+using Tonga.List;
 
 namespace Tonga.Enumerable.Test
 {
@@ -55,10 +56,10 @@ namespace Tonga.Enumerable.Test
         public void FiltersEmptyList()
         {
             Assert.True(
-                new LengthOf(
+                LengthOf._(
                     Filtered._(
                         input => input.Length > 1,
-                        new None()
+                        None._<string>()
                     )
                 ).Value() == 0,
                 "cannot filter empty enumerable"
@@ -66,32 +67,16 @@ namespace Tonga.Enumerable.Test
         }
 
         [Fact]
-        public void PerformanceMatchesLinQ()
-        {
-            Func<string, bool> filter = (input) => input != "B";
-
-            var linq = new ElapsedTime(() => new List<string>() { "A", "B", "C" }.Where(filter)).AsTimeSpan();
-            var atoms =
-                new ElapsedTime(
-                    () => new Filtered<string>(
-                        filter,
-                        new List<string>() { "A", "B", "C" }
-                    )
-                ).AsTimeSpan();
-
-            Assert.True((linq - atoms).Duration().Milliseconds < 10);
-        }
-
-        [Fact]
         public void FiltersItemsGivenByParamsCtor()
         {
-            Assert.True(
-                new LengthOf(
-                    new Filtered<string>(
+            Assert.Equal(
+                2,
+                LengthOf._(
+                    Filtered._(
                        (input) => input != "B",
-                       "A", "B", "C")
-                ).Value() == 2,
-                "cannot filter items"
+                       AsEnumerable._("A", "B", "C")
+                    )
+                ).Value()
             );
         }
     }

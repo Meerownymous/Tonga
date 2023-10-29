@@ -10,7 +10,7 @@ namespace Tonga.Scalar.Tests
         public void AsValue()
         {
             Assert.False(
-                new False().Value());
+                False._().Value());
         }
     }
 }

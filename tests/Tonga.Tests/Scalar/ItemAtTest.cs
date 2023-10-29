@@ -74,21 +74,22 @@ namespace Tonga.Scalar.Tests
         public void DeliversFallback()
         {
             String fallback = "fallback";
-            Assert.True(
-                new ItemAt<string>(
-                    new None(),
+            Assert.Equal(
+                fallback,
+                ItemAt._(
+                    None._<string>(),
                     12,
                     fallback
-                ).Value() == fallback,
-            "Can't fallback to default value");
+                ).Value()
+            );
         }
 
         [Fact]
         public void FallbackShowsError()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new ItemAt<string>(
-                    new None(),
+                ItemAt._(
+                    None._<string>(),
                     12,
                     (ex, enumerable) => throw ex
                 ).Value()
@@ -99,8 +100,8 @@ namespace Tonga.Scalar.Tests
         public void FallbackShowsGivenErrorWithPosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
-                new ItemAt<string>(
-                    new None(),
+                ItemAt._(
+                    None._<string>(),
                     12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
@@ -111,8 +112,8 @@ namespace Tonga.Scalar.Tests
         public void FallbackShowsGivenErrorWithoutPosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
-                new ItemAt<string>(
-                    new None(),
+                ItemAt._(
+                    None._<string>(),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
             );
@@ -122,8 +123,8 @@ namespace Tonga.Scalar.Tests
         public void FallbackShowsGivenErrorForNegativePosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
-                new ItemAt<string>(
-                    new None(),
+                ItemAt._(
+                    None._<string>(),
                     -12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
@@ -147,7 +148,7 @@ namespace Tonga.Scalar.Tests
         {
             try
             {
-                new ItemAt<string>(
+                ItemAt._(
                     new string[] { "one", "two", "three" },
                     3
                 ).Value();

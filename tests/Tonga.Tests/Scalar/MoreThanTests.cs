@@ -12,7 +12,7 @@ namespace Tonga.Enumerable.Test
         public void DetectsMore()
         {
             Assert.True(
-                new MoreThan(
+                MoreThan._(
                     3,
                     AsEnumerable._("a", "b", "c", "d")
                 ).Value()
@@ -23,7 +23,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnLess()
         {
             Assert.False(
-                new MoreThan(3,
+                MoreThan._(3,
                     AsEnumerable._("a", "b")
                 ).Value()
             );
@@ -33,7 +33,7 @@ namespace Tonga.Enumerable.Test
         public void NoMatchOnEqual()
         {
             Assert.False(
-                new MoreThan(3,
+                MoreThan._(3,
                     AsEnumerable._("a", "b", "c")
                 ).Value()
             );

@@ -12,9 +12,9 @@ namespace Tonga.Enumerable.Test
         public void EmptyEnumerableThrowsExeption()
         {
             Assert.Throws<Exception>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new None<bool>()
+                LengthOf._(
+                    NotEmpty._(
+                        None._<bool>()
                     )
                 ).Value()
             );
@@ -24,8 +24,8 @@ namespace Tonga.Enumerable.Test
         public void NotEmptyEnumerableThrowsNoExeption()
         {
             Assert.True(
-                new LengthOf(
-                    new NotEmpty<bool>(
+                LengthOf._(
+                    NotEmpty._(
                         AsEnumerable._(false)
                     )
                 ).Value() == 1
@@ -36,9 +36,9 @@ namespace Tonga.Enumerable.Test
         public void EmptyCollectionThrowsCustomExeption()
         {
             Assert.Throws<OperationCanceledException>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new None<bool>(),
+                LengthOf._(
+                    NotEmpty._(
+                        None._<object>(),
                         new OperationCanceledException()
                     )
                 ).Value()

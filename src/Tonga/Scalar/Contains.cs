@@ -43,9 +43,11 @@ namespace Tonga.Scalar
     /// <summary>
     /// Lookup if an item is in a enumerable.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public static class Contains
     {
+        /// <summary>
+        /// Lookup if an item is in a enumerable.
+        /// </summary>
         public static Contains<T> _<T>(IEnumerable<T> items, Func<T, bool> match) => new Contains<T>(items, match);
     }
 }

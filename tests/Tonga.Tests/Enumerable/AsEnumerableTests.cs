@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Xunit;
 using Tonga.Text;
 using Tonga.Scalar;
+using Tonga.List;
 
 namespace Tonga.Enumerable.Test
 {
@@ -13,7 +14,7 @@ namespace Tonga.Enumerable.Test
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
-                new LengthOf(
+                LengthOf._(
                     AsEnumerable._(
                         "a", "b", "c"
                     )
@@ -24,25 +25,27 @@ namespace Tonga.Enumerable.Test
         [Fact]
         public void ConvertsScalarsToEnumerableTyped()
         {
-            Assert.True(
-                new LengthOf(
+            Assert.Equal(
+                3,
+                LengthOf._(
                     AsEnumerable._(
                         "a", "b", "c"
                     )
-                ).Value() == 3,
-                "Can't convert scalars to iterable");
+                ).Value()
+            );
         }
 
         [Fact]
         public void ConvertsObjectsToEnumerableTyped()
         {
-            Assert.True(
-                new LengthOf(
+            Assert.Equal(
+                3,
+                LengthOf._(
                     AsEnumerable._(
                         AsText._("a"), AsText._("b"), AsText._("c")
                     )
-                ).Value() == 3,
-            "Can't convert objects to enumerable");
+                ).Value()
+            );
         }
 
         [Fact]
@@ -50,7 +53,7 @@ namespace Tonga.Enumerable.Test
         {
             var lst = new List<string>();
             var length =
-                new LengthOf(
+                LengthOf._(
                     AsEnumerable._(() =>
                     {
                         lst.Add("something");
@@ -64,10 +67,10 @@ namespace Tonga.Enumerable.Test
         }
 
         [Fact]
-        public void NonGenericEnumerates()
+        public void Enumerates()
         {
             Assert.Equal(
-                new List<string>() { "one", "two", "eight" },
+                AsList._("one", "two", "eight" ),
                 AsEnumerable._("one", "two", "eight")
             );
         }
@@ -76,7 +79,7 @@ namespace Tonga.Enumerable.Test
         public void CanBeEmpty()
         {
             Assert.False(
-                new None().GetEnumerator().MoveNext()
+                None._<string>().GetEnumerator().MoveNext()
             );
         }
     }

@@ -12,69 +12,70 @@ namespace Tonga.Enumerable.Test
         [Fact]
         public void EnumeratesOverPrefixOfGivenLength()
         {
-            Assert.True(
+            Assert.Equal(
+                3,
                 new SumOf(
-                    new Head<int>(
+                    Head._(
                         AsEnumerable._(0, 1, 2, 3, 4),
                         3
                     )
-                ).AsInt() == 3,
-            "Can't limit an enumerable with more items");
+                ).AsInt()
+            );
         }
 
         [Fact]
         public void IteratesOverWholeEnumerableIfThereAreNotEnoughItems()
         {
-            Assert.True(
+            Assert.Equal(
+                15,
                 new SumOf(
-                    new Head<int>(
+                    Head._(
                         AsEnumerable._(0, 1, 2, 3, 4, 5),
                         10
                     )
-                ).AsInt() == 15,
-                "Can't limit an enumerable with less items"
+                ).AsInt()
             );
         }
 
         [Fact]
         public void LimitOfZeroProducesEmptyEnumerable()
         {
-            Assert.True(
-                new LengthOf(
-                    new Head<int>(
+            Assert.Equal(
+                0,
+                LengthOf._(
+                    Head._(
                         AsEnumerable._(0, 1, 2, 3, 4),
                         0
                     )
-                ).Value() == 0,
-                "Can't limit an iterable to zero items"
+                ).Value()
             );
         }
 
         [Fact]
         public void NegativeLimitProducesEmptyEnumerable()
         {
-            Assert.True(
-                new LengthOf(
-                    new Head<int>(
+            Assert.Equal(
+                0,
+                LengthOf._(
+                    Head._(
                         AsEnumerable._(0, 1, 2, 3, 4),
                         -1
                     )
-                ).Value() == 0,
-                "Can't limit an iterable to negative number of items"
+                ).Value()
             );
         }
 
         [Fact]
         public void EmptyEnumerableProducesEmptyEnumerable()
         {
-            Assert.True(
-                new LengthOf(
-                    new Head<Nothing>(
-                        new None<Nothing>(),
+            Assert.Equal(
+                0,
+                LengthOf._(
+                    Head._(
+                        None._<Nothing>(),
                         10
                     )
-                ).Value() == 0,
-                "Can't limit an empty enumerable"
+                ).Value()
             );
         }
     }

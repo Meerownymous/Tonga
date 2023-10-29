@@ -68,13 +68,13 @@ namespace Tonga.Enumerable
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> origin) => new NotEmpty<T>(origin);
+        public static IEnumerable<T> _<T>(IEnumerable<T> origin) => new NotEmpty<T>(origin);
 
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
+        public static IEnumerable<T> _<T>(IEnumerable<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
     }
 }

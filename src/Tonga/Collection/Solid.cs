@@ -17,7 +17,6 @@ namespace Tonga.Collection
         /// <param name="array">source items</param>
         public Solid(params T[] items) : this(new AsEnumerable<T>(items))
         { }
-        public static Solid<T> New(params T[] array) => new Solid<T>(array);
 
         /// <summary>
         /// ctor
@@ -25,7 +24,6 @@ namespace Tonga.Collection
         /// <param name="src">source enumerator</param>
         public Solid(IEnumerator<T> src) : this(Enumerable.AsEnumerable._(src))
         { }
-        public static Solid<T> New(IEnumerator<T> src) => new Solid<T>(src);
 
         /// <summary>
         /// ctor
@@ -33,7 +31,6 @@ namespace Tonga.Collection
         /// <param name="src">source enumerable</param>
         public Solid(IEnumerable<T> src) : this(new LiveCollection<T>(src))
         { }
-        public static Solid<T> New(IEnumerable<T> src) => new Solid<T>(src);
 
         /// <summary>
         /// ctor
@@ -45,7 +42,6 @@ namespace Tonga.Collection
             )
         )
         { }
-        public static Solid<T> New(ICollection<T> src) => new Solid<T>(src);
     }
 
     /// A <see cref="ICollection{T}"/> that is both synchronized and sticky.

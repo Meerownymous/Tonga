@@ -18,7 +18,7 @@ namespace Tonga.Scalar.Tests
         void AllTrue()
         {
             var result =
-                new ParallelAnd<bool>(
+                ParallelAnd._(
                     new True(),
                     new True(),
                     new True()
@@ -30,7 +30,7 @@ namespace Tonga.Scalar.Tests
         void OneFalse()
         {
             var result =
-                new ParallelAnd<bool>
+                ParallelAnd._
                 (
                     new True(),
                     new False(),
@@ -43,8 +43,7 @@ namespace Tonga.Scalar.Tests
         void AllFalse()
         {
             var result =
-                new ParallelAnd<bool>
-                (
+                ParallelAnd._(
                     new False(),
                     new False(),
                     new False()
@@ -56,9 +55,8 @@ namespace Tonga.Scalar.Tests
         void EmtpyIterator()
         {
             var result =
-                new ParallelAnd<bool>
-                (
-                    (IEnumerable<IScalar<bool>>)new None<IScalar<bool>>()
+                ParallelAnd._(
+                    None._<IScalar<bool>>()
                 ).Value();
             Assert.True(result);
         }
@@ -68,13 +66,19 @@ namespace Tonga.Scalar.Tests
         {
             var list = new LinkedList<string>();
             Assert.True(
-                new ParallelAnd<bool>(
+                ParallelAnd._(
                     Enumerable.Mapped._(
-                        str => { list.AddLast(str); return (IScalar<bool>)new True(); },
+                        str =>
+                        {
+                            list.AddLast(str);
+                            return new True();
+                        },
                         AsEnumerable._("hello", "world")
                     )
-                ).Value() &&
-                list.Contains("hello") &&
+                ).Value()
+                &&
+                list.Contains("hello")
+                &&
                 list.Contains("world")
             );
         }
@@ -84,54 +88,49 @@ namespace Tonga.Scalar.Tests
         {
             var list = new LinkedList<string>();
             Assert.True(
-                new ParallelAnd<bool>(
+                ParallelAnd._(
                     Enumerable.Mapped._(
                         str => { list.AddLast(str); return (IScalar<bool>)new True(); },
-                        new None()
+                        None._<string>()
                     )
-                ).Value() &&
-                !list.Any()
+                ).Value()
             );
         }
 
         [Fact]
         void WorksWithFunc()
         {
-            var result =
-                new ParallelAnd<int>(
+            Assert.False(
+                ParallelAnd._(
                     new FuncOf<int, bool>(i => i > 0),
                     1,
                     -1,
                     0
-                ).Value();
-            Assert.False(result);
+                ).Value()
+            );
         }
 
         [Fact]
         void WorksWithIterableScalarBool()
         {
-            var result =
-                new ParallelAnd<bool>(
-                    AsList._(
-                        AsEnumerable._(
-                            new True(),
-                            new True()
-                        )
+            Assert.True(
+                ParallelAnd._(
+                    AsEnumerable._(
+                        new True(),
+                        new True()
                     )
-                ).Value();
-            Assert.True(result);
+                ).Value()
+            );
         }
 
         [Fact]
         void WorksWithEmptyIterableScalarBool()
         {
-
-            var result =
-                new ParallelAnd<bool>(
-                    new None<IScalar<bool>>()
-                ).Value();
-
-            Assert.True(result);
+            Assert.True(
+                ParallelAnd._(
+                    None._<IScalar<bool>>()
+                ).Value()
+            );
         }
     }
 }

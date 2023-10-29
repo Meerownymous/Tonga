@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Tonga.Scalar.Tests
 {
-    public sealed class LiveTests
+    public sealed class AsScalarTests
     {
         [Fact]
         public void ReloadsFunc()

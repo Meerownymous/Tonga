@@ -29,5 +29,11 @@ namespace Tonga.Scalar
             return current > amount;
         })
         { }
+
+        /// <summary>
+        /// Tells if an enumerable has more than the specified items.
+        /// </summary>
+        public static MoreThan _(int amount, IEnumerable source) =>
+            new MoreThan(amount, source);
     }
 }

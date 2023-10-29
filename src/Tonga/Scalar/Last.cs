@@ -102,14 +102,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="source"></param>
         /// <param name="ex"></param>
-        public static IScalar<T> From<T>(IEnumerable<T> source, Exception ex)
+        public static IScalar<T> _<T>(IEnumerable<T> source, Exception ex)
             => new Last<T>(source, ex);
 
         /// <summary>
         /// Last element in a <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
-        public static IScalar<T> From<T>(IEnumerable<T> source)
+        public static IScalar<T> _<T>(IEnumerable<T> source)
             => new Last<T>(source);
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> From<T>(IEnumerable<T> source, T fallback)
+        public static IScalar<T> _<T>(IEnumerable<T> source, T fallback)
             => new Last<T>(source, fallback);
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> From<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
+        public static IScalar<T> _<T>(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback)
             => new Last<T>(source, fallback);
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> From<T>(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> _<T>(IEnumerable<T> source, Func<Exception, IEnumerable<T>, T> fallback)
             => new Last<T>(source, fallback);
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> From<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> _<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
             => new Last<T>(source, fallback);
     }
 }

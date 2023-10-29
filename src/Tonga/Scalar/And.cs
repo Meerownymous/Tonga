@@ -30,8 +30,7 @@ namespace Tonga.Scalar
         /// <summary> ctor </summary>
         /// <param name="check"> the condition to apply </param>
         /// <param name="items"> list of items </param>
-        public And(IFunc<In, Boolean> check, IEnumerable<In> items) :
-            this(
+        public And(IFunc<In, Boolean> check, IEnumerable<In> items) : this(
                 Mapped._(
                     new FuncOf<In, IScalar<Boolean>>((item) =>
                         AsScalar._(check.Invoke(item))
@@ -136,6 +135,9 @@ namespace Tonga.Scalar
                 return result;
             })
         { }
+
+        public static And _(params IScalar<Boolean>[] src) =>
+            new And(src);
 
         /// <summary> Logical and. Returns true if all calls to <see cref="Func{In, Out}"/> were true. </summary>
         /// <param name="func"> the condition to apply </param>

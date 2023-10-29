@@ -14,29 +14,33 @@ namespace Tonga.Enumerable.Test
         public void FindsItem()
         {
             Assert.True(
-                new Contains<string>(
+                Contains._(
                     AsEnumerable._("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "cat"
-                    ).Value());
+                ).Value()
+            );
         }
 
         [Fact]
         public void DoesntFindItem()
         {
             Assert.False(
-                new Contains<string>(
+                Contains._(
                     AsEnumerable._("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
-                    ).Value());
+                ).Value()
+            );
         }
 
         [Fact]
         public void DoesntFindInEmtyList()
         {
-            Assert.False(new Contains<string>(
-                new None(),
-                (str) => str == "elephant"
-                ).Value());
+            Assert.False(
+                Contains._(
+                    None._<string>(),
+                    (str) => str == "elephant"
+                ).Value()
+            );
         }
     }
 }

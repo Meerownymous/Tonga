@@ -15,8 +15,8 @@ namespace Tonga.List.Tests
             int size = 2;
             var list =
                 AsList._(
-                    Head.From(
-                        Endless.From(1),
+                    Head._(
+                        Endless._(1),
                         () => Interlocked.Increment(ref size)
                     )
                 );
@@ -96,7 +96,7 @@ namespace Tonga.List.Tests
         {
             Assert.DoesNotContain(
                 "item",
-                new None()
+                None._<string>()
             );
         }
     }

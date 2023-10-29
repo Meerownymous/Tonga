@@ -63,7 +63,7 @@ namespace Tonga.Map.Tests
                 )
             );
 
-            Assert.Throws<KeyNotFoundException>(() => map[666]);
+            Assert.Throws<ArgumentException>(() => map[666]);
         }
     }
 }

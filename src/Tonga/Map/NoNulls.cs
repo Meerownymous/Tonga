@@ -57,6 +57,9 @@ namespace Tonga.Map
 
         public IMap<Key, Value> With(IPair<Key, Value> pair)
         {
+            if (pair.Key() == null)
+                throw new ArgumentException("Key of a new pair must not be null.");
+
             return NoNulls._(this.map.With(pair));
         }
     }

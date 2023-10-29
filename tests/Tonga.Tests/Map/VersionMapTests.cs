@@ -4,82 +4,79 @@ using System;
 using Xunit;
 using Tonga.Map;
 
-namespace Yaapii.Lookup.Tests
+namespace Tonga.Map.Tests
 {
     public sealed class VersionMapTests
     {
         [Fact]
-        public void MatchesKeyLow()
+        public void MatchesLowerEnd()
         {
-            Assert.True(
+            Assert.Equal(
+                "ainz",
                 VersionMap._(
                     true,
                     AsPair._(new Version(1, 0, 0, 0), "ainz"),
                     AsPair._(new Version(2, 0, 0, 0), "zway")
-                )
-                .Keys()
-                .Contains(new Version(1, 0, 0, 0))
+                )[new Version(1, 0, 0, 0)]
             );
         }
 
         [Fact]
         public void MatchesKeyBetween()
         {
-            Assert.True(
+            Assert.Equal(
+                "ainz",
                 VersionMap._(true,
                     AsPair._(new Version(1, 0, 0, 0), "ainz"),
                     AsPair._(new Version(5, 0, 0, 0), "zway")
-                )
-                .Keys()
-                .Contains(new Version(2, 0, 0, 0))
+                )[new Version(2, 0, 0, 0)]
             );
         }
 
         [Fact]
         public void MatchesOpenEnd()
         {
-            Assert.True(
+            Assert.Equal(
+                "zway",
                 VersionMap._(true,
                     AsPair._(new Version(1, 0, 0, 0), "ainz"),
                     AsPair._(new Version(5, 0, 0, 0), "zway")
-                ).Keys()
-                .Contains(new Version(10, 0, 0, 0))
+                )[new Version(10, 0, 0, 0)]
             );
         }
 
         [Fact]
         public void RejectsOverClosedEnd()
         {
-            Assert.False(
+            Assert.Throws<ArgumentException>(() =>
                 VersionMap._(false,
                     AsPair._(new Version(1, 0, 0, 0), "ainz"),
                     AsPair._(new Version(5, 0, 0, 0), "zway")
-                ).Keys()
-                .Contains(new Version(10, 0, 0, 0))
+                )[new Version(10, 0, 0, 0)]
             );
         }
 
         [Fact]
         public void MatchesWithinClosedEnd()
         {
-            Assert.True(
+            Assert.Equal(
+                "ainz",
                 VersionMap._(false,
                     AsPair._(new Version(1, 0, 0, 0), "ainz"),
                     AsPair._(new Version(5, 0, 0, 0), "zway")
-                ).Keys()
-                .Contains(new Version(2, 0, 0, 0))
+                )[new Version(2, 0, 0, 0)]
             );
         }
 
         [Fact]
         public void MatchesEndingZero()
         {
-            Assert.True(
+            Assert.Equal(
+                "ainz",
                 VersionMap._(false,
                     AsPair._(new Version(1, 0, 0, 0), "ainz"),
                     AsPair._(new Version(5, 0, 0, 0), "zway")
-                ).Keys()
-                .Contains(new Version(1, 0))
+                )[new Version(1, 0)]
             );
         }
 

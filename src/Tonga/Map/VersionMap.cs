@@ -20,10 +20,10 @@ namespace Tonga.Map
     {
         private readonly IMap<Version, Value> map;
         private readonly bool openEnd;
-        private readonly Func<Version, IEnumerable<Version>, InvalidOperationException> versionNotFound =
+        private readonly Func<Version, IEnumerable<Version>, ArgumentException> versionNotFound =
             (version, available) =>
-            new InvalidOperationException(
-                $"Cannot find value for version {version.ToString()}, the version must be within: "
+            new ArgumentException(
+                $"Cannot find value for version {version}, the version must be within: "
                 + new Text.Joined(", ",
                     new Mapped<Version, string>(
                         v => v.ToString(),

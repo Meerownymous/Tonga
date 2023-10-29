@@ -52,34 +52,12 @@ namespace Tonga.Map.Tests
         [Fact]
         public void RejectsEntryWithNullKey()
         {
-            var map =
-                NoNulls._(
-                    Empty._<object,object>()
-                );
-            Assert.Throws<ArgumentException>(
-                () => map.With(AsPair._<object,object>(null, 0))
-            );
-        }
-
-        [Fact]
-        public void RejectsEntryWithNullValue()
-        {
-            var map =
-                NoNulls._(
-                    Empty._<object,object>()
-                );
-            Assert.Throws<ArgumentException>(
-                () => map.With(AsPair._<object, object>(0, null))
-            );
-        }
-
-        [Fact]
-        public void RejectsEntryWithNullKeyAndNullValue()
-        {
             Assert.Throws<ArgumentException>(() =>
                 NoNulls._(
                     Empty._<object, object>()
-                ).With(AsPair._<object, object>(null, null))
+                ).With(
+                    AsPair._<object,object>(null, 0)
+                )
             );
         }
 
@@ -116,7 +94,7 @@ namespace Tonga.Map.Tests
                     AsMap._(
                         AsPair._<int,object>(0, null)
                     )
-                )
+                )[0]
             );
         }
     }

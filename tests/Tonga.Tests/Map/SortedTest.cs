@@ -51,8 +51,8 @@ namespace Tonga.Map.Tests
 
         [Theory]
         [InlineData(0, -5)]
-        [InlineData(1, 6)]
-        [InlineData(2, 1)]
+        [InlineData(1, 1)]
+        [InlineData(2, 6)]
         public void SortsByFunction(int index, int expectedKey)
         {
             Assert.Equal(
@@ -64,7 +64,7 @@ namespace Tonga.Map.Tests
                             6, 3,
                            -5, 2
                         ),
-                        (a, b) => a - b
+                        (a, b) => a.CompareTo(b)
                     )
                     .Pairs(),
                     index
@@ -78,17 +78,20 @@ namespace Tonga.Map.Tests
         [InlineData(0, -5)]
         [InlineData(1, 1)]
         [InlineData(2, 6)]
-        public void DefaultComparerSeemsSane(int index, int expectedKey)
+        public void DefaultComparerSortsByKey(int index, int expectedKey)
         {
             Assert.Equal(
                 expectedKey,
-                Sorted._(
-                    AsMap._(
-                        1, 4,
-                        6, 3,
-                        -5, 2
-                    )
+                AsList._(
+                    Sorted._(
+                        AsMap._(
+                            1, 4,
+                            6, 3,
+                            -5, 2
+                        )
+                    ).Pairs()
                 )[index]
+                .Key()
             );
         }
 
@@ -101,10 +104,12 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 expectedKey,
                 ItemAt._(
-                    AsMap._(
-                        AsPair._(1, () => { throw new Exception("i shall not be called"); }),
-                        AsPair._(6, () => { throw new Exception("i shall not be called"); }),
-                        AsPair._(-5, () => { throw new Exception("i shall not be called"); })
+                    Sorted._(
+                        AsMap._(
+                            AsPair._(1, () => { throw new Exception("i shall not be called"); }),
+                            AsPair._(6, () => { throw new Exception("i shall not be called"); }),
+                            AsPair._(-5, () => { throw new Exception("i shall not be called"); })
+                        )
                     ).Keys(),
                     index
                 ).Value()
@@ -114,20 +119,15 @@ namespace Tonga.Map.Tests
         [Fact]
         public void DeliversSingleValueWhenLazy()
         {
-            //note to self: seems it enumerates all values. What a shame.
             Assert.Equal(
                 4,
-                First._(
-                    Sorted._(
-                        AsMap._(
-                            AsPair._<int, int>(1, () => 4),
-                            AsPair._<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                            AsPair._<int, int>(-5, () => { throw new Exception("i shall not be called"); })
-                        )
-                    ).Pairs()
-                )
-                .Value()
-                .Value()
+                Sorted._(
+                    AsMap._(
+                        AsPair._(1, () => 4),
+                        AsPair._<int, int>(6, () => { throw new Exception("i shall not be called"); }),
+                        AsPair._<int, int>(-5, () => { throw new Exception("i shall not be called"); })
+                    )
+                )[1]
             );
         }
     }

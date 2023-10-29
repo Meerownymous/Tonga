@@ -22,24 +22,6 @@ namespace Tonga.Enumerable.Test
         }
 
         [Fact]
-        public void IsSticky()
-        {
-            var lst = new List<string>();
-            var length =
-                new LengthOf(
-                    AsEnumerable._(() =>
-                    {
-                        lst.Add("something");
-                        return lst;
-                    })
-                );
-
-            var a = length.Value();
-            var b = length.Value();
-            Assert.Equal(a, b);
-        }
-
-        [Fact]
         public void ConvertsScalarsToEnumerableTyped()
         {
             Assert.True(

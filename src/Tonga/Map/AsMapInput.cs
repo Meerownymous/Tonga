@@ -2,88 +2,64 @@
 
 using System.Collections.Generic;
 using Tonga.Enumerable;
+using Tonga.Func;
 using Tonga.List;
+using Tonga.Scalar;
 
 namespace Tonga.Map
 {
     /// <summary>
-    /// MapInput from key-value pairs.
-    /// Since 9.9.2019
+    /// LookupInput from pairs.
     /// </summary>
-    public sealed class AsMapInput : MapInputEnvelope
+    public sealed class AsMapInput<Key, Value> : IMapInput<Key, Value>
     {
+        private readonly IEnumerable<IPair<Key, Value>> pairs;
+
         /// <summary>
-        /// MapInput from key-value pairs.
+        /// LookupInput from pairs.
         /// </summary>
-        public AsMapInput(params IPair[] kvps) : this(AsEnumerable._(kvps))
+        public AsMapInput(params IPair<Key, Value>[] pairs) : this(AsEnumerable._(pairs))
         { }
 
         /// <summary>
-        /// MapInput from key-value pairs.
+        /// LookupInput from pairs.
         /// </summary>
-        public AsMapInput(IEnumerable<IPair> kvps) : base(kvps)
-        { }
+        public AsMapInput(IEnumerable<IPair<Key, Value>> kvps)
+        {
+            this.pairs = kvps;
+        }
 
-        /// <summary>
-        /// MapInput from key-value pairs.
-        /// </summary>
-        public static AsMapInput<Value> _<Value>(params IPair<Value>[] kvps)
-            => new AsMapInput<Value>(kvps);
+        public IMap<Key, Value> Merged(IMap<Key, Value> map)
+        {
+            var result = map;
+            Each._(
+                pair => result = result.With(pair),
+                this.pairs
+            ).Invoke();
+            return result;
+        }
 
-        /// <summary>
-        /// MapInput from key-value pairs.
-        /// </summary>
-        public static IMapInput<Value> _<Value>(IEnumerable<IPair<Value>> kvps)
-            => new AsMapInput<Value>(kvps);
-
-        /// <summary>
-        /// MapInput from key-value pairs.
-        /// </summary>
-        public static IMapInput<Key, Value> _<Key, Value>(params IPair<Key, Value>[] kvps)
-            => new AsMapInput<Key, Value>(kvps);
-
-        /// <summary>
-        /// MapInput from key-value pairs.
-        /// </summary>
-        public static IMapInput<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> kvps)
-            => new AsMapInput<Key, Value>(kvps);
+        public IMapInput<Key, Value> Self()
+        {
+            return this;
+        }
     }
 
     /// <summary>
-    /// MapInput from key-value pairs.
-    /// Since 9.9.2019
+    /// LookupInput from pairs.
     /// </summary>
-    public sealed class AsMapInput<Value> : MapInputEnvelope<Value>
+    public static class AsMapInput
     {
         /// <summary>
-        /// MapInput from key-value pairs.
+        /// LookupInput from pairs.
         /// </summary>
-        public AsMapInput(params IPair<Value>[] kvps) : this(new AsEnumerable<IPair<Value>>(kvps))
-        { }
+        public static AsMapInput<Key, Value> _<Key, Value>(params IPair<Key, Value>[] pairs) =>
+            new AsMapInput<Key, Value>(pairs);
 
         /// <summary>
-        /// MapInput from key-value pairs.
+        /// LookupInput from pairs.
         /// </summary>
-        public AsMapInput(IEnumerable<IPair<Value>> kvps) : base(kvps)
-        { }
-    }
-
-    /// <summary>
-    /// MapInput from key-value pairs.
-    /// Since 9.9.2019
-    /// </summary>
-    public sealed class AsMapInput<Key, Value> : MapInputEnvelope<Key, Value>
-    {
-        /// <summary>
-        /// MapInput from key-value pairs.
-        /// </summary>
-        public AsMapInput(params IPair<Key, Value>[] kvps) : this(new AsEnumerable<IPair<Key, Value>>(kvps))
-        { }
-
-        /// <summary>
-        /// MapInput from key-value pairs.
-        /// </summary>
-        public AsMapInput(IEnumerable<IPair<Key, Value>> kvps) : base(kvps)
-        { }
+        public static AsMapInput<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> pairs) =>
+            new AsMapInput<Key, Value>(pairs);
     }
 }

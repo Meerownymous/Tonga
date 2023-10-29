@@ -11,31 +11,14 @@ using Tonga.Enumerable;
 namespace Tonga.Map
 {
     /// <summary>
-    /// A map which matches a version. 
-    /// It can match the version range, not the exact version.
-    /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
-    /// </summary>
-    public sealed class VersionMap : MapEnvelope<Version, string>
-    {
-        public VersionMap(bool openEnd, params IPair<Version, string>[] kvps) : this(
-            AsEnumerable._(kvps), openEnd
-        )
-        { }
-
-        public VersionMap(IEnumerable<IPair<Version, string>> kvps, bool openEnd) : base(() => new VersionMap<string>(kvps, openEnd), false)
-        { }
-    }
-
-    /// <summary>
     /// A dictionary which matches a version. 
     /// It matches the version range, not the exact version.
-    /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
     /// </summary>
     /// <typeparam name="Value"></typeparam>
-    public sealed class VersionMap<Value> : IDictionary<Version, Value>
+    public sealed class VersionMap<Value> : IMap<Version, Value>
     {
-        private readonly IDictionary<Version, Value> map;
-        private readonly InvalidOperationException reject = new InvalidOperationException("Not supported, this is only a lookup map for versions.");
+        private readonly IMap<Version, Value> map;
         private readonly bool openEnd;
         private readonly Func<Version, IEnumerable<Version>, InvalidOperationException> versionNotFound =
             (version, available) =>
@@ -52,115 +35,53 @@ namespace Tonga.Map
         /// <summary>
         /// A dictionary which matches a version. 
         /// It matches the version range, not the exact version.
-        /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+        /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(params IPair<Version, Value>[] kvps) : this(false, kvps)
+        public VersionMap(params IPair<Version, Value>[] pairs) : this(false, pairs)
         { }
 
         /// <summary>
         /// A dictionary which matches a version. 
         /// It matches the version range, not the exact version.
-        /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+        /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(bool openEnd, params IPair<Version, Value>[] kvps) : this(AsEnumerable._(kvps), openEnd)
+        public VersionMap(bool openEnd, params IPair<Version, Value>[] pairs) : this(AsEnumerable._(pairs), openEnd)
         { }
 
         /// <summary>
         /// A dictionary which matches a version. 
         /// It matches the version range, not the exact version.
-        /// This means if you have two kvps inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+        /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
-        public VersionMap(IEnumerable<IPair<Version, Value>> kvps, bool openEnd)
+        public VersionMap(IEnumerable<IPair<Version, Value>> pairs, bool openEnd)
         {
-            this.map = new LazyMap<Version, Value>(kvps);
+            this.map = AsMap._(pairs);
             this.openEnd = openEnd;
         }
 
-        public Value this[Version key] { get => this.Match(key); set => throw this.reject; }
-
-        public ICollection<Version> Keys => this.map.Keys;
-
-        public ICollection<Value> Values => this.map.Values;
-
-        public int Count => this.map.Count;
-
-        public bool IsReadOnly => true;
-
-        public void Add(Version key, Value value)
+        public Value this[Version key]
         {
-            throw this.reject;
+            get => this.Match(key);
         }
 
-        public void Add(KeyValuePair<Version, Value> item)
+        public ICollection<Version> Keys() => this.map.Keys();
+
+        public Func<Value> Lazy(Version version)
         {
-            throw this.reject;
+            return () => this.Match(version);
         }
 
-        public void Clear()
-        {
-            throw this.reject;
-        }
+        public IEnumerable<IPair<Version, Value>> Pairs() =>
+            this.map.Pairs();
 
-        public bool Contains(KeyValuePair<Version, Value> item)
+        public IMap<Version, Value> With(IPair<Version, Value> pair)
         {
-            return this.map.Contains(item);
-        }
-
-        public bool ContainsKey(Version key)
-        {
-            var result = false;
-            try
-            {
-                var value = this.Match(key);
-                result = true;
-            }
-            catch (Exception)
-            {
-
-            }
-            return result;
-        }
-
-        public void CopyTo(KeyValuePair<Version, Value>[] array, int arrayIndex)
-        {
-            throw this.reject;
-        }
-
-        public IEnumerator<KeyValuePair<Version, Value>> GetEnumerator()
-        {
-            return this.map.GetEnumerator();
-        }
-
-        public bool Remove(Version key)
-        {
-            throw this.reject;
-        }
-
-        public bool Remove(KeyValuePair<Version, Value> item)
-        {
-            throw this.reject;
-        }
-
-        public bool TryGetValue(Version key, out Value value)
-        {
-            var result = false;
-            value = default(Value);
-            try
-            {
-                value = this.Match(key);
-                result = true;
-            }
-            catch (Exception) { }
-            return result;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
+            return VersionMap._(this.map.With(pair).Pairs(), this.openEnd);
         }
 
         private Value Match(Version candidate)
         {
+            var versions = this.map.Keys();
             var prettyCandidate = new Version(
                 candidate.Major,
                 candidate.Minor,
@@ -169,7 +90,7 @@ namespace Tonga.Map
             );
             var match = new Version(0, 0);
             var matched = false;
-            foreach (var lowerBound in this.map.Keys)
+            foreach (var lowerBound in versions)
             {
                 if (prettyCandidate >= lowerBound)
                 {
@@ -184,16 +105,25 @@ namespace Tonga.Map
 
             if (matched)
             {
-                if (this.openEnd || new List<Version>(this.map.Keys).IndexOf(match) < this.map.Keys.Count - 1)
+                if (this.openEnd || new List<Version>(versions).IndexOf(match) < versions.Count - 1)
                 {
                     return this.map[match];
                 }
                 else
                 {
-                    throw this.versionNotFound(prettyCandidate, this.map.Keys);
+                    throw this.versionNotFound(prettyCandidate, versions);
                 }
             }
-            throw this.versionNotFound(prettyCandidate, this.map.Keys);
+            throw this.versionNotFound(prettyCandidate, this.map.Keys());
         }
+    }
+
+    public static class VersionMap
+    {
+        public static VersionMap<Value> _<Value>(IEnumerable<IPair<Version,Value>> pairs, bool openEnd) =>
+            new VersionMap<Value>(pairs, openEnd);
+
+        public static VersionMap<Value> _<Value>(bool openEnd, params IPair<Version, Value>[] pairs) =>
+            new VersionMap<Value>(pairs, openEnd);
     }
 }

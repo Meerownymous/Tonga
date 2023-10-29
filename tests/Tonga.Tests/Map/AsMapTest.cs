@@ -6,72 +6,130 @@ using System.Threading;
 using Xunit;
 using Tonga.Enumerable;
 using Tonga.Scalar;
+using Tonga.Tests;
+using System.Diagnostics;
 
 namespace Tonga.Map.Tests
 {
-    public class MapOfTest
+    public class AsMapTests
     {
         [Fact]
-        public void BehavesAsMap()
+        public void MapsKeysToValues()
         {
-            var one = new KeyValuePair<string, string>("hello", "map");
-            var two = new KeyValuePair<string, string>("goodbye", "dictionary");
+            var one = AsPair._(45, 10);
+            var two = AsPair._(33, 20);
 
-            var m = new AsMap(one, two);
+            var map = AsMap._(one, two);
 
-            Assert.True(m.Contains(one) && m.Contains(two));
+            Assert.Equal(
+                20,
+                map[33]
+            );
         }
 
         [Theory]
-        [InlineData("A", "V")]
-        [InlineData("B", "Y")]
-        public void BuildsFromInputs(string key, string value)
+        [InlineData(12, 39478624)]
+        [InlineData(24, 60208801)]
+        public void BuildsFromInputs(int key, int value)
         {
             Assert.Equal(
                 value,
-                new AsMap(
-                    new AsMapInput(new AsPair("A", "V")),
-                    new AsMapInput(new AsPair("B", "Y"))
+                AsMap._(
+                    AsMapInput._(AsPair._(12, 39478624)),
+                    AsMapInput._(AsPair._(24, 60208801))
                 )[key]
             );
         }
 
-        [Fact]
-        public void ConvertsEnumerableToMap()
+        [Theory]
+        [InlineData(9, 0)]
+        [InlineData(10, 1)]
+        public void BuildsFromPairs(int key, int value)
         {
             var m =
-                new AsMap(
-                    new KeyValuePair<string, string>("0", "hello, "),
-                    new KeyValuePair<string, string>("1", "world!")
+                AsMap._(
+                    AsPair._(9, 0),
+                    AsPair._(10, 1)
                 );
 
-
-            Assert.True(m["0"] == "hello, ");
-            Assert.True(m["1"] == "world!");
+            Assert.Equal(m[key], value);
         }
 
         [Fact]
-        public void MakesMapFromArraySequence()
+        public void IgnoresChangesInOriginPairSequence()
+        {
+            int size = 1;
+            var random = new Random();
+
+            var map =
+                AsMap._(
+                    Repeated._(
+                        () => AsPair._(random.Next(), 1),
+                        () =>
+                        {
+                            Interlocked.Increment(ref size);
+                            return size;
+                        }
+                    )
+                );
+
+            Assert.Equal(map.Keys(), map.Keys());
+        }
+
+        [Fact]
+        public void SensesChangesInValues()
+        {
+            var map =
+                AsMap._(
+                    AsPair._(123, () => new Random().NextInt64())
+                );
+
+            Assert.NotEqual(map[123], map[123]);
+        }
+
+        [Fact]
+        public void BuildsOnlyRequestedValue()
         {
             Assert.Equal(
-                "B",
-                new AsMap(
-                    "A", "B",
-                    "C", "D"
-                )["A"]
+                "works",
+                AsMap._(
+                    AsPair._<string, string>("name", () => throw new ApplicationException()),
+                    AsPair._("anothername", () => "works")
+                )["anothername"]
             );
         }
 
         [Fact]
-        public void MakesMapFromEnumerableSequence()
+        public void WorksWithEmptyList()
+        {
+            var map = Empty._<int, int>();
+            Assert.Equal(0, LengthOf._(map.Pairs()).Value());
+        }
+
+
+        [Fact]
+        public void BehavesAsMap()
+        {
+            var m =
+                AsMap._(
+                    AsPair._("hello", "map"),
+                    AsPair._("goodbye", "dictionary")
+                );
+
+            Assert.Equal(
+                "dictionary",
+                m["goodbye"]
+            );
+        }
+
+        [Fact]
+        public void BuildsFromPairParams()
         {
             Assert.Equal(
                 "B",
-                new AsMap(
-                    Enumerable.AsEnumerable._(
-                        "A", "B",
-                        "C", "D"
-                    )
+                AsMap._(
+                    "A", "B",
+                    "C", "D"
                 )["A"]
             );
         }
@@ -80,249 +138,49 @@ namespace Tonga.Map.Tests
         public void RejectsOddValueCount()
         {
             Assert.Throws<ArgumentException>(() =>
-                new AsMap(
-                    Enumerable.AsEnumerable._(
-                        "A", "B",
-                        "C"
-                    )
+                AsMap._(
+                    "A", "B",
+                    "C"
                 )["A"]
             );
         }
 
         [Fact]
-        public void IsContentStickyTypedValue()
+        public void BuildsFromInputsFasterThanMap()
         {
-            int size = 1;
+            var inputs = new List<IMapInput<string, string>>();
+            var inputs2 = new List<IMapInput<string, string>>();
 
-            var map = new AsMap<int>(
-                () =>
-                    new Dictionary<string, int>()
-                    {
-                        { "a", 1 },
-                        { "b", Interlocked.Increment(ref size) }
-                    }
-            );
-
-            Assert.Equal(2, map.Count);
-            Assert.Equal(2, map.Count);
-
-            Assert.Equal(2, map["b"]);
-            Assert.Equal(2, map["b"]);
-        }
-
-        [Fact]
-        public void IsSticky()
-        {
-            int size = 1;
-            var random = new Random();
-
-            var map =
-                new AsMap(
-                    Repeated._(
-                        () => new KeyValuePair<string, string>(random.Next() + "", "1"),
-                        () =>
-                        {
-                            Interlocked.Increment(ref size);
-                            return size;
-                        }
+            for (var i = 0; i < 100; i++)
+            {
+                inputs.Add(
+                    AsMapInput._(
+                        AsPair._<string, string>(i.ToString(), Guid.NewGuid().ToString())
                     )
                 );
+            }
 
-            var a = map.Count;
-            var b = map.Count;
-
-            Assert.Equal(a, b);
-        }
-
-        [Fact]
-        public void BehavesAsMapTypedValue()
-        {
-            var one = new KeyValuePair<string, int>("hello", 10);
-            var two = new KeyValuePair<string, int>("goodbye", 20);
-
-            var m = new AsMap<int>(one, two);
-
-            Assert.True(m.Contains(one) && m.Contains(two));
-        }
-
-        [Theory]
-        [InlineData("A", 39478624)]
-        [InlineData("B", 60208801)]
-        public void BuildsFromInputsTypedValue(string key, int value)
-        {
-            Assert.Equal(
-                value,
-                new AsMap<int>(
-                    new AsMapInput<int>(new AsPair<int>("A", 39478624)),
-                    new AsMapInput<int>(new AsPair<int>("B", 60208801))
-                )[key]
-            );
-        }
-
-        [Theory]
-        [InlineData("hello", 0)]
-        [InlineData("world", 1)]
-        public void ConvertsEnumerableToMapTypedValue(string key, int value)
-        {
-            var m =
-                new AsMap<int>(
-                    new KeyValuePair<string, int>("hello", 0),
-                    new KeyValuePair<string, int>("world", 1)
-                );
-
-
-            Assert.Equal(m[key], value);
-        }
-
-        [Fact]
-        public void IsStickyTypedValue()
-        {
-            int size = 1;
-            var random = new Random();
-
-            var map =
-                new AsMap<int>(
-                    Repeated._(
-                        AsScalar._(() =>
-                            new AsPair<int>(random.Next() + "", 1)),
-                            AsScalar._(() =>
-                            {
-                                Interlocked.Increment(ref size);
-                                return size;
-                            }
-                        )
+            for (var i = 0; i < 100; i++)
+            {
+                inputs2.Add(
+                    AsMapInput._(
+                        AsPair._<string, string>(i.ToString(), Guid.NewGuid().ToString())
                     )
                 );
+            }
 
-            var a = map.Count;
-            var b = map.Count;
+            var map1 = AsMap._(inputs);
+            var map2 = AsMap._(inputs2);
 
-            Assert.Equal(a, b);
-        }
-
-        [Fact]
-        public void BehavesAsMapTypedKeyValue()
-        {
-            var one = new KeyValuePair<int, int>(45, 10);
-            var two = new KeyValuePair<int, int>(33, 20);
-
-            var m = new AsMap<int, int>(one, two);
-
-            Assert.True(m.Contains(one) && m.Contains(two));
-        }
-
-        [Theory]
-        [InlineData(12, 39478624)]
-        [InlineData(24, 60208801)]
-        public void BuildsFromInputsTypedKeyValue(int key, int value)
-        {
-            Assert.Equal(
-                value,
-                new AsMap<int, int>(
-                    new AsMapInput<int, int>(new AsPair<int, int>(12, 39478624)),
-                    new AsMapInput<int, int>(new AsPair<int, int>(24, 60208801))
-                )[key]
+            Debug.WriteLine(
+                new ElapsedTime(() =>
+                    _ = map1["87"]
+                ).AsTimeSpan().TotalMilliseconds
+                + " vs " +
+                new ElapsedTime(() =>
+                    _ = map2["87"]
+                ).AsTimeSpan().TotalMilliseconds
             );
-        }
-
-        [Theory]
-        [InlineData(9, 0)]
-        [InlineData(10, 1)]
-        public void ConvertsEnumerableToMapTypedKeyValue(int key, int value)
-        {
-            var m =
-                new AsMap<int, int>(
-                    new KeyValuePair<int, int>(9, 0),
-                    new KeyValuePair<int, int>(10, 1)
-                );
-
-
-            Assert.Equal(m[key], value);
-        }
-
-        [Fact]
-        public void IsStickyWithTypedKeyValue()
-        {
-            int size = 1;
-            var random = new Random();
-
-            var map =
-                new AsMap<int, int>(
-                    Repeated._(
-                        () => new AsPair<int, int>(random.Next(), 1),
-                        () =>
-                        {
-                            Interlocked.Increment(ref size);
-                            return size;
-                        }
-                    )
-                );
-
-            var a = map.Count;
-            var b = map.Count;
-
-            Assert.Equal(a, b);
-        }
-
-        [Fact]
-        public void DoesNotBuildAllValues()
-        {
-            Assert.Equal(
-                "works",
-                new AsMap(
-                    new AsPair("name", () => throw new ApplicationException()),
-                    new AsPair("anothername", () => "works")
-                )["anothername"]
-            );
-        }
-
-        [Fact]
-        public void IKvpRejectsBuildingAllValues()
-        {
-            var map =
-                new AsMap(
-                    new AsPair("name", () => "also works"),
-                    new AsPair("name2", () => "works")
-                );
-
-            Assert.Throws<InvalidOperationException>(() => map.GetEnumerator());
-        }
-
-        [Fact]
-        public void WorksWithEmptyList()
-        {
-            var map = new AsMap(new None());
-            Assert.Equal(0, map.Keys.Count);
-        }
-
-        [Fact]
-        public void ImplicitCtorWithMapWorks()
-        {
-            var map =
-                AsMap._(
-                    AsPair._("target",
-                        new FallbackMap(
-                            new AsMap(
-                                "CONTAINS", "contains",
-                                "GT", ">",
-                                "LT", "<",
-                                "EQ", "="
-                            ),
-                            unkown => unkown
-                        )
-                    ),
-                    AsPair._("program",
-                        new FallbackMap(
-                            new AsMap(
-                                "CONTAINS", "contains",
-                                "GT", ">",
-                                "LT", "<",
-                                "EQ", "="
-                            ),
-                            unkown => unkown
-                        )
-                    )
-                );
         }
     }
 }

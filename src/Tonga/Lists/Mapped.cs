@@ -50,7 +50,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> Of<In, Out>(IFunc<In, Out> mapping, IEnumerable<In> src)
+        public static IList<Out> _<In, Out>(IFunc<In, Out> mapping, IEnumerable<In> src)
             => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> Of<In, Out>(Func<In, Out> mapping, IEnumerable<In> src)
+        public static IList<Out> _<In, Out>(Func<In, Out> mapping, IEnumerable<In> src)
             => new Mapped<In, Out>(mapping, src);
 
         /// <summary>

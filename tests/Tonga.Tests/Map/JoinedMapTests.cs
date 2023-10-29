@@ -9,32 +9,32 @@ namespace Tonga.Map.Tests
         [Fact]
         public void JoinsInputs()
         {
-            var dict =
-                new Joined(
-                    new LazyMap(new AsPair("A", "I am")),
-                    new LazyMap(new AsPair("B", "trapped in")),
-                    new LazyMap(new AsPair("C", "a dictionary"))
+            var joined =
+                Joined._(
+                    AsMap._(AsPair._("A", "I am")),
+                    AsMap._(AsPair._("B", "trapped in")),
+                    AsMap._(AsPair._("C", "a dictionary"))
                 );
 
             Assert.Equal(
                 "I am trapped in a dictionary",
-                $"{dict["A"]} {dict["B"]} {dict["C"]}"
+                $"{joined["A"]} {joined["B"]} {joined["C"]}"
             );
         }
 
         [Fact]
         public void ReplacesExisting()
         {
-            var dict =
-                new Joined(
-                    new LazyMap(new AsPair("A", "Hakuna")),
-                    new LazyMap(new AsPair("B", "Matata")),
-                    new LazyMap(new AsPair("B", "Banana"))
+            var map =
+                Joined._(
+                    AsMap._(AsPair._("A", "Hakuna")),
+                    AsMap._(AsPair._("B", "Matata")),
+                    AsMap._(AsPair._("B", "Banana"))
                 );
 
             Assert.Equal(
                 "Banana",
-                dict["B"]
+                map["B"]
             );
         }
 
@@ -42,10 +42,10 @@ namespace Tonga.Map.Tests
         public void JoinsInputsTypedValue()
         {
             var dict =
-                new Joined<int>(
-                    new LazyMap<int>(new AsPair<int>("A", 89)),
-                    new LazyMap<int>(new AsPair<int>("B", 17)),
-                    new LazyMap<int>(new AsPair<int>("C", 8))
+                Joined._(
+                    AsMap._(AsPair._("A", 89)),
+                    AsMap._(AsPair._("B", 17)),
+                    AsMap._(AsPair._("C", 8))
                 );
 
             Assert.Equal(
@@ -58,10 +58,10 @@ namespace Tonga.Map.Tests
         public void ReplacesExistingTypedValue()
         {
             var dict =
-                new Joined<int>(
-                    new LazyMap<int>(new AsPair<int>("A", 1)),
-                    new LazyMap<int>(new AsPair<int>("B", 4)),
-                    new LazyMap<int>(new AsPair<int>("B", 19))
+                Joined._(
+                    AsMap._(AsPair._("A", 1)),
+                    AsMap._(AsPair._("B", 4)),
+                    AsMap._(AsPair._("B", 19))
                 );
 
             Assert.Equal(
@@ -74,10 +74,10 @@ namespace Tonga.Map.Tests
         public void JoinsInputsTypedKeyValue()
         {
             var dict =
-                new Joined<int, int>(
-                    new LazyMap<int, int>(new AsPair<int, int>(0, 1)),
-                    new LazyMap<int, int>(new AsPair<int, int>(1, 3)),
-                    new LazyMap<int, int>(new AsPair<int, int>(2, 37))
+                Joined._(
+                    AsMap._(AsPair._(0, 1)),
+                    AsMap._(AsPair._(1, 3)),
+                    AsMap._(AsPair._(2, 37))
                 );
 
             Assert.Equal(
@@ -90,10 +90,10 @@ namespace Tonga.Map.Tests
         public void ReplacesExistingTypedKeyValue()
         {
             var dict =
-                new Joined<int, int>(
-                    new LazyMap<int, int>(new AsPair<int, int>(0, 1)),
-                    new LazyMap<int, int>(new AsPair<int, int>(0, 4)),
-                    new LazyMap<int, int>(new AsPair<int, int>(0, 19))
+                Joined._(
+                    AsMap._(AsPair._(0, 1)),
+                    AsMap._(AsPair._(0, 4)),
+                    AsMap._(AsPair._(0, 19))
                 );
 
             Assert.Equal(
@@ -106,10 +106,10 @@ namespace Tonga.Map.Tests
         public void JoinsLazy()
         {
             var dict =
-                new Joined(
-                    new LazyMap(new AsPair("A", () => "I am")),
-                    new LazyMap(new AsPair("B", () => "trapped in")),
-                    new LazyMap(new AsPair("C", "a dictionary"))
+                Joined._(
+                    AsMap._(AsPair._("A", () => "I am")),
+                    AsMap._(AsPair._("B", () => "trapped in")),
+                    AsMap._(AsPair._("C", "a dictionary"))
                 );
 
             Assert.Equal(

@@ -129,6 +129,7 @@ namespace Tonga.Scalar
             })
         { }
     }
+
     public static class First
     {
         /// <summary>
@@ -136,10 +137,10 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="ex">Exception to throw if no value can be found.</param>
-        public static ScalarEnvelope<T> Of<T>(IEnumerable<T> source, Exception ex)
+        public static ScalarEnvelope<T> _<T>(IEnumerable<T> source, Exception ex)
             => new First<T>(source, ex);
 
-        public static ScalarEnvelope<T> Of<T>(IEnumerable<T> source)
+        public static ScalarEnvelope<T> _<T>(IEnumerable<T> source)
             => new First<T>(source);
 
         /// <summary>
@@ -147,7 +148,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="condition">condition to find the desired item</param>
-        public static ScalarEnvelope<T> Of<T>(Func<T, bool> condition, IEnumerable<T> source)
+        public static ScalarEnvelope<T> _<T>(Func<T, bool> condition, IEnumerable<T> source)
             => new First<T>(condition, source);
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace Tonga.Scalar
         /// <param name="source">source enum</param>
         /// <param name="condition">condition to find the desired item</param>
         /// <param name="ex">Exception to throw if no value can be found.</param>
-        public static ScalarEnvelope<T> Of<T>(Func<T, bool> condition, IEnumerable<T> source, Exception ex)
+        public static ScalarEnvelope<T> _<T>(Func<T, bool> condition, IEnumerable<T> source, Exception ex)
             => new First<T>(condition, source, ex);
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static ScalarEnvelope<T> Of<T>(IEnumerable<T> source, T fallback)
+        public static ScalarEnvelope<T> _<T>(IEnumerable<T> source, T fallback)
             => new First<T>(source, fallback);
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace Tonga.Scalar
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         /// <param name="condition">condition to match in order to find the desired item</param>
-        public static ScalarEnvelope<T> Of<T>(Func<T, bool> condition, IEnumerable<T> source, T fallback)
+        public static ScalarEnvelope<T> _<T>(Func<T, bool> condition, IEnumerable<T> source, T fallback)
             => new First<T>(condition, source, fallback);
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
-        public static ScalarEnvelope<T> Of<T>(IEnumerable<T> source, ScalarEnvelope<T> fallback)
+        public static ScalarEnvelope<T> _<T>(IEnumerable<T> source, ScalarEnvelope<T> fallback)
             => new First<T>(source, fallback);
 
         /// <summary>
@@ -189,7 +190,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fallback">fallback if no match</param>
-        public static ScalarEnvelope<T> Of<T>(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
+        public static ScalarEnvelope<T> _<T>(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
             => new First<T>(src, fallback);
 
         /// <summary>
@@ -198,7 +199,7 @@ namespace Tonga.Scalar
         /// <param name="src">source enumerable</param>
         /// <param name="fallback">fallback if no match</param>
         /// <param name="condition">condition to match</param>
-        public static ScalarEnvelope<T> Of<T>(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
+        public static ScalarEnvelope<T> _<T>(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
             => new First<T>(condition, src, fallback);
 
     }

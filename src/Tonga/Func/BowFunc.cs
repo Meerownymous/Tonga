@@ -15,7 +15,7 @@ namespace Tonga.Func
         private readonly Func<bool> trigger;
         private readonly Action prepare;
         private readonly Action<T> shoot;
-        private readonly IDictionary<string, TimeSpan> timespans;
+        private readonly IMap<string, TimeSpan> timespans;
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
@@ -47,16 +47,17 @@ namespace Tonga.Func
             trigger,
             prepare,
             shoot,
-            new AsMap<TimeSpan>(
-                new AsPair<TimeSpan>("timeout", timeout),
-                new AsPair<TimeSpan>("interval", interval)
-            ))
+            AsMap._(
+                AsPair._("timeout", timeout),
+                AsPair._("interval", interval)
+            )
+        )
         { }
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        private BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, IDictionary<string, TimeSpan> timespans)
+        private BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, IMap<string, TimeSpan> timespans)
         {
             this.trigger = trigger;
             this.prepare = prepare;

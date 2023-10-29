@@ -5,13 +5,13 @@ using Xunit;
 
 namespace Tonga.Map.Tests
 {
-    public sealed class AsPair2Tests
+    public sealed class AsPairTests
     {
         [Fact]
         public void SensesChanges()
         {
             var pair =
-                AsPair2._(1, () => Guid.NewGuid().ToString());
+                AsPair._(1, () => Guid.NewGuid().ToString());
             Assert.NotEqual(pair.Value(), pair.Value());
         }
 
@@ -20,7 +20,7 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "value",
-                AsPair2._("key", () => "value").Value()
+                AsPair._("key", () => "value").Value()
             );
         }
 
@@ -29,24 +29,20 @@ namespace Tonga.Map.Tests
         {
             Assert.Equal(
                 "key",
-                AsPair2._<string, string>("key", () => throw new ApplicationException()).Key()
+                AsPair._<string, int>("key", () => throw new ApplicationException()).Key()
             );
         }
 
         [Fact]
         public void KnowsAboutBeingLazy()
         {
-            Assert.True(
-                AsPair2._("2", () => "4").IsLazy()
-            );
+            Assert.True(AsPair._("2", () => "4").IsLazy());
         }
 
         [Fact]
-        public void KnowsAboutNotBeingLazy()
+        public void KnowsAboutBeingNotLazy()
         {
-            Assert.False(
-                AsPair2._("2", "4").IsLazy()
-            );
+            Assert.False(AsPair._("2", "4").IsLazy());
         }
     }
 }

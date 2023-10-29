@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using Tonga.List;
 
@@ -22,14 +20,16 @@ namespace Tonga.Map
         public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
             () =>
             {
-                Dictionary<Key, IList<Value>> temp = new Dictionary<Key, IList<Value>>();
+                IMap<Key, IList<Value>> temp = new Empty<Key, IList<Value>>();
                 foreach (var entry in src)
                 {
-                    temp[key.Invoke(entry)] = new Mapped<T, Value>(value, src);
+                    temp =
+                        temp.With(
+                            AsPair._(key.Invoke(entry), Mapped._(value, src))
+                        );
                 }
                 return temp;
-            },
-            false
+            }
         )
         { }
     }
@@ -42,7 +42,7 @@ namespace Tonga.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public static IDictionary<Key, IList<Value>> _<T, Key, Value>(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value)
+        public static IMap<Key, IList<Value>> _<T, Key, Value>(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value)
             => new Grouped<T, Key, Value>(src, key, value);
     }
 }

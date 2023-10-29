@@ -8,13 +8,13 @@ namespace Tonga.Func
     /// <summary>
     /// Conditional Action as part of an <see cref="ActionSwitch{In}"/>
     /// </summary>
-    public sealed class ActionIf<In> : PairEnvelope<Action<In>>
+    public sealed class ActionIf<In> : PairEnvelope<string, Action<In>>
     {
         /// <summary>
         /// Conditional Action as part of an <see cref="ActionSwitch{In}"/>
         /// </summary>
         public ActionIf(string condition, Action<In> consequence) : base(
-            new AsPair<Action<In>>(condition, consequence)
+            AsPair._(condition, consequence)
         )
         { }
     }
@@ -22,13 +22,13 @@ namespace Tonga.Func
     /// <summary>
     /// Conditional Action as part of an <see cref="ActionSwitch{In1, In2}"/>
     /// </summary>
-    public sealed class ActionIf<In1, In2> : PairEnvelope<Action<In1, In2>>
+    public sealed class ActionIf<In1, In2> : PairEnvelope<string, Action<In1, In2>>
     {
         /// <summary>
         /// Conditional Action as part of an <see cref="ActionSwitch{In1, In2}"/>
         /// </summary>
         public ActionIf(string condition, Action<In1, In2> consequence) : base(
-            new AsPair<Action<In1, In2>>(condition, consequence)
+            AsPair._(condition, consequence)
         )
         { }
     }
@@ -38,11 +38,11 @@ namespace Tonga.Func
         /// <summary>
         /// ctor
         /// </summary>
-        public static IPair<Action<T>> _<T>(string condition, Action<T> consequence) => new ActionIf<T>(condition, consequence);
+        public static IPair<string, Action<T>> _<T>(string condition, Action<T> consequence) => new ActionIf<T>(condition, consequence);
 
         /// <summary>
         /// ctor
         /// </summary>
-        public static IPair<Action<In1, In2>> _<In1, In2>(string condition, Action<In1, In2> consequence) => new ActionIf<In1, In2>(condition, consequence);
+        public static IPair<string, Action<In1, In2>> _<In1, In2>(string condition, Action<In1, In2> consequence) => new ActionIf<In1, In2>(condition, consequence);
     }
 }

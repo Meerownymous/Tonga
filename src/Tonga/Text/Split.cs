@@ -12,7 +12,7 @@ namespace Tonga.Text
     /// <summary>
     /// A <see cref="IText"/> which has been splitted at the given string.
     /// </summary>
-    public sealed class Split : ManyEnvelope
+    public sealed class Split : EnumerableEnvelope
     {
         /// <summary>
         /// A <see cref="IText"/> which has been splitted at the given string.
@@ -21,8 +21,8 @@ namespace Tonga.Text
         /// <param name="rgx">regex to use for splitting</param>
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(String text, String rgx, bool remBlank = true) : this(
-            new LiveText(text),
-            new LiveText(rgx),
+            AsText._(text),
+            AsText._(rgx),
             remBlank)
         { }
 
@@ -33,7 +33,7 @@ namespace Tonga.Text
         /// <param name="rgx">regex to use for splitting</param>
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(String text, IText rgx, bool remBlank = true) : this(
-            new LiveText(text),
+            AsText._(text),
             rgx,
             remBlank)
         { }
@@ -46,7 +46,7 @@ namespace Tonga.Text
         /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
         public Split(IText text, String rgx, bool remBlank = true) : this(
             text,
-            new LiveText(rgx),
+            AsText._(rgx),
             remBlank
         )
         { }
@@ -60,20 +60,20 @@ namespace Tonga.Text
         public Split(IText text, IText rgx, bool remBlank = true) : base(() =>
             {
                 IEnumerable<string> split =
-                    new LiveMany<string>(
-                        new Regex(rgx.AsString()).Split(text.AsString())
+                    AsEnumerable._(
+                        new Regex(rgx.AsString())
+                            .Split(text.AsString())
                     );
 
                 return
                     remBlank ?
-                    new Filtered<String>(
+                    Filtered._(
                         (str) => !String.IsNullOrWhiteSpace(str),
                         split
                     )
                     :
                     split;
-            },
-            false
+            }
         )
         { }
     }

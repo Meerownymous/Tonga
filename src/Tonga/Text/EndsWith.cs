@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Text.RegularExpressions;
 using Tonga.Scalar;
 
@@ -8,9 +9,9 @@ namespace Tonga.Text
     /// <summary>
     /// Checks if a text ends with a given content.
     /// </summary>
-    public sealed class EndsWith : IScalar<bool>
+    public sealed class EndsWith : ScalarEnvelope<bool>
     {
-        private readonly ScalarOf<bool> result;
+        private readonly Func<bool> result;
 
         /// <summary>
         /// Checks if a <see cref="IText"/> ends with a given <see cref="string"/>
@@ -19,7 +20,7 @@ namespace Tonga.Text
         /// <param name="tail">Ending content to use in the test</param>
         public EndsWith(IText text, string tail) : this(
             text,
-            new LiveText(tail)
+            AsText._(tail)
         )
         { }
 
@@ -28,23 +29,11 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">Text to test</param>
         /// <param name="tail">Ending content to use in the test</param>
-        public EndsWith(IText text, IText tail)
+        public EndsWith(IText text, IText tail) : base(() =>
         {
-            this.result =
-                new ScalarOf<bool>(() =>
-                {
-                    var regex = new Regex(Regex.Escape(tail.AsString()) + "$");
-                    return regex.IsMatch(text.AsString());
-                });
-        }
-
-        /// <summary>
-        /// Gets the result
-        /// </summary>
-        /// <returns>The result</returns>
-        public bool Value()
-        {
-            return this.result.Value();
-        }
+            var regex = new Regex(Regex.Escape(tail.AsString()) + "$");
+            return regex.IsMatch(text.AsString());
+        })
+        { }
     }
 }

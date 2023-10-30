@@ -23,7 +23,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Each(Action<In> proc, params In[] src) : this(new ActionOf<In>(input => proc.Invoke(input)), src)
+        public Each(Action<In> proc, params In[] src) : this(new ActionOf<In>(proc.Invoke), src)
         { }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Each(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(ipt => proc.Invoke(ipt)), src)
+        public Each(Action<In> proc, IEnumerable<In> src) : this(new ActionOf<In>(proc.Invoke), src)
         { }
 
         /// <summary>
@@ -43,7 +43,8 @@ namespace Tonga.Func
         /// <param name="proc">the condition to apply</param>
         /// <param name="src">list of items</param>
         public Each(IAction<In> proc, params In[] src) : this(
-            proc, new ManyOf<In>(src))
+            proc, AsEnumerable._(src)
+            )
         { }
 
 
@@ -81,7 +82,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="act">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static IAction New<In>(Action<In> act, params In[] src)
+        public static IAction _<In>(Action<In> act, params In[] src)
             => new Each<In>(act, src);
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="act">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static IAction New<In>(Action<In> act, IEnumerable<In> src)
+        public static IAction _<In>(Action<In> act, IEnumerable<In> src)
             => new Each<In>(act, src);
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Tonga.Func
         /// <para>Object is <see cref="IAction"/></para>        /// </summary>
         /// <param name="act">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static IAction New<In>(IAction<In> act, params In[] src)
+        public static IAction _<In>(IAction<In> act, params In[] src)
             => new Each<In>(act, src);
 
 
@@ -111,7 +112,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="action"></param>
         /// <param name="enumerable"></param>
-        public static IAction New<In>(IAction<In> action, IEnumerable<In> enumerable)
+        public static IAction _<In>(IAction<In> action, IEnumerable<In> enumerable)
             => new Each<In>(action, enumerable);
     }
 }

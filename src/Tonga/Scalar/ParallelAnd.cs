@@ -20,7 +20,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src"></param>
         public ParallelAnd(params IScalar<bool>[] src) : this(
-            new ManyOf<IScalar<bool>>(src)
+            AsEnumerable._(src)
         )
         { }
 
@@ -40,7 +40,7 @@ namespace Tonga.Scalar
         /// <param name="func"></param>
         /// <param name="src"></param>
         public ParallelAnd(IFunc<T, bool> func, params T[] src) : this(
-            func, new ManyOf<T>(src)
+            func, AsEnumerable._(src)
         )
         { }
 
@@ -60,10 +60,11 @@ namespace Tonga.Scalar
         /// <param name="func"></param>
         /// <param name="src"></param>
         public ParallelAnd(IFunc<T, bool> func, IEnumerable<T> src) : this(
-            new Mapped<T, IScalar<bool>>(
-                i => new ScalarOf<bool>(func.Invoke(i)),
-                src)
+            Mapped._(
+                i => AsScalar._(func.Invoke(i)),
+                src
             )
+        )
         { }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="act"></param>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(IAction<T> act, params T[] src)
+        public static IScalar<bool> _<T>(IAction<T> act, params T[] src)
             => new ParallelAnd<T>(act, src);
 
         /// <summary>
@@ -106,7 +107,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func"></param>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(IFunc<T, bool> func, params T[] src)
+        public static IScalar<bool> _<T>(IFunc<T, bool> func, params T[] src)
             => new ParallelAnd<T>(func, src);
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="proc"></param>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(IAction<T> proc, IEnumerable<T> src)
+        public static IScalar<bool> _<T>(IAction<T> proc, IEnumerable<T> src)
             => new ParallelAnd<T>(proc, src);
 
         /// <summary>
@@ -122,14 +123,21 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func"></param>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(IFunc<T, bool> func, IEnumerable<T> src)
+        public static IScalar<bool> _<T>(IFunc<T, bool> func, IEnumerable<T> src)
             => new ParallelAnd<T>(func, src);
 
         /// <summary>
         /// Logical conjunction, in multiple threads. Returns true if all contents return true.
         /// </summary>
         /// <param name="src"></param>
-        public static IScalar<bool> New<T>(IEnumerable<IScalar<bool>> src)
-            => new ParallelAnd<T>(src);
+        public static IScalar<bool> _(params IScalar<bool>[] src)
+            => new ParallelAnd<object>(src);
+
+        /// <summary>
+        /// Logical conjunction, in multiple threads. Returns true if all contents return true.
+        /// </summary>
+        /// <param name="src"></param>
+        public static IScalar<bool> _(IEnumerable<IScalar<bool>> src)
+            => new ParallelAnd<object>(src);
     }
 }

@@ -29,5 +29,10 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
     }
+
+    public static class Single
+    {
+        public static Single<T> _<T>(T item) => new Single<T>(item);
+    }
 }
 

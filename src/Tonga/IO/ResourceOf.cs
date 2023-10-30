@@ -29,7 +29,7 @@ namespace Tonga.IO
         /// <param name="type">a class that is in the same container (assembly) with the resource</param>
         public ResourceOf(string name, Type type) : this(
             name,
-            new Live<Assembly>(Assembly.GetAssembly(type))
+            AsScalar._(Assembly.GetAssembly(type))
         )
         { }
 
@@ -44,7 +44,7 @@ namespace Tonga.IO
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
         public ResourceOf(string name, Assembly container) : this(
             name,
-            new Live<Assembly>(container)
+            AsScalar._(container)
         )
         { }
 

@@ -15,17 +15,15 @@ namespace Tonga.Collection
         /// ctor
         /// </summary>
         /// <param name="array">source items</param>
-        public Solid(params T[] array) : this(new LiveMany<T>(array))
+        public Solid(params T[] items) : this(new AsEnumerable<T>(items))
         { }
-        public static Solid<T> New(params T[] array) => new Solid<T>(array);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source enumerator</param>
-        public Solid(IEnumerator<T> src) : this(new ManyOf<T>(src))
+        public Solid(IEnumerator<T> src) : this(Enumerable.AsEnumerable._(src))
         { }
-        public static Solid<T> New(IEnumerator<T> src) => new Solid<T>(src);
 
         /// <summary>
         /// ctor
@@ -33,21 +31,17 @@ namespace Tonga.Collection
         /// <param name="src">source enumerable</param>
         public Solid(IEnumerable<T> src) : this(new LiveCollection<T>(src))
         { }
-        public static Solid<T> New(IEnumerable<T> src) => new Solid<T>(src);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">source collection</param>
-        public Solid(ICollection<T> src) : base(
-            () =>
-                new Sync<T>(
-                    src
-                ),
-            false
+        public Solid(ICollection<T> src) : base(() =>
+            new Sync<T>(
+                src
+            )
         )
         { }
-        public static Solid<T> New(ICollection<T> src) => new Solid<T>(src);
     }
 
     /// A <see cref="ICollection{T}"/> that is both synchronized and sticky.
@@ -56,12 +50,12 @@ namespace Tonga.Collection
     ///
     public static class Solid
     {
-        public static ICollection<T> New<T>(params T[] array) => new Solid<T>(array);
+        public static ICollection<T> _<T>(params T[] array) => new Solid<T>(array);
 
-        public static ICollection<T> New<T>(IEnumerator<T> src) => new Solid<T>(src);
+        public static ICollection<T> _<T>(IEnumerator<T> src) => new Solid<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new Solid<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) => new Solid<T>(src);
 
-        public static ICollection<T> New<T>(ICollection<T> src) => new Solid<T>(src);
+        public static ICollection<T> _<T>(ICollection<T> src) => new Solid<T>(src);
     }
 }

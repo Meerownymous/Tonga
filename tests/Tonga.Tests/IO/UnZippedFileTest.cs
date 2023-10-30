@@ -33,7 +33,7 @@ namespace Tonga.IO.Tests
         {
             Assert.Contains(
                 fileName,
-                new LiveText(
+                AsText._(
                     new UnzippedFile(
                        new ResourceOf(
                            "Assets/Zip/ZipWithThreeFiles.zip",

@@ -69,13 +69,13 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">function to call</param>
         /// <param name="max">how often it repeats</param>
-        public static IFunc<In, Out> New<In, Out>(Func<In, Out> fnc, int max) => new RepeatedFunc<In, Out>(fnc, max);
+        public static IFunc<In, Out> _<In, Out>(Func<In, Out> fnc, int max) => new RepeatedFunc<In, Out>(fnc, max);
 
         /// <summary>
         /// Function that repeats its calculation a few times before returning the result.
         /// </summary>
         /// <param name="fnc">function to call</param>
         /// <param name="max">how often it repeats</param>
-        public static IFunc<In, Out> New<In, Out>(IFunc<In, Out> fnc, int max) => new RepeatedFunc<In, Out>(fnc, max);
+        public static IFunc<In, Out> _<In, Out>(IFunc<In, Out> fnc, int max) => new RepeatedFunc<In, Out>(fnc, max);
     }
 }

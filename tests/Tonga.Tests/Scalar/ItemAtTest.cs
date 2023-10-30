@@ -16,7 +16,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3)
+                    Enumerable.AsEnumerable._(1, 2, 3)
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
             );
@@ -28,7 +28,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3),
+                    Enumerable.AsEnumerable._(1, 2, 3),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
@@ -41,7 +41,7 @@ namespace Tonga.Scalar.Tests
             Assert.Equal(
                 2,
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3),
+                    Enumerable.AsEnumerable._(1, 2, 3),
                     1
                 ).Value()
             );
@@ -52,7 +52,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new ItemAt<int>(
-                    new ManyOf<int>(1, 2, 3),
+                    Enumerable.AsEnumerable._(1, 2, 3),
                     1,
                     4
                 ).Value() == 2,
@@ -74,21 +74,22 @@ namespace Tonga.Scalar.Tests
         public void DeliversFallback()
         {
             String fallback = "fallback";
-            Assert.True(
-                new ItemAt<string>(
-                    new ManyOf<string>(),
+            Assert.Equal(
+                fallback,
+                ItemAt._(
+                    None._<string>(),
                     12,
                     fallback
-                ).Value() == fallback,
-            "Can't fallback to default value");
+                ).Value()
+            );
         }
 
         [Fact]
         public void FallbackShowsError()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new ItemAt<string>(
-                    new ManyOf<string>(),
+                ItemAt._(
+                    None._<string>(),
                     12,
                     (ex, enumerable) => throw ex
                 ).Value()
@@ -99,8 +100,8 @@ namespace Tonga.Scalar.Tests
         public void FallbackShowsGivenErrorWithPosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
-                new ItemAt<string>(
-                    new ManyOf<string>(),
+                ItemAt._(
+                    None._<string>(),
                     12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
@@ -111,8 +112,8 @@ namespace Tonga.Scalar.Tests
         public void FallbackShowsGivenErrorWithoutPosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
-                new ItemAt<string>(
-                    new ManyOf<string>(),
+                ItemAt._(
+                    None._<string>(),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
             );
@@ -122,8 +123,8 @@ namespace Tonga.Scalar.Tests
         public void FallbackShowsGivenErrorForNegativePosition()
         {
             Assert.Throws<NotFiniteNumberException>(() =>
-                new ItemAt<string>(
-                    new ManyOf<string>(),
+                ItemAt._(
+                    None._<string>(),
                     -12,
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value()
@@ -131,16 +132,15 @@ namespace Tonga.Scalar.Tests
         }
 
         [Fact]
-        public void IsSticky()
+        public void SensesChanges()
         {
-            var list = new List<string>();
-            list.Add("pre");
-            var sticky = new ItemAt<string>(list);
-            sticky.Value();
+            var list = new List<string>{ "pre" };
+            var transient = new ItemAt<string>(list);
+            transient.Value();
             list.Clear();
             list.Add("post");
 
-            Assert.Equal("pre", sticky.Value());
+            Assert.Equal("post", transient.Value());
         }
 
         [Fact]
@@ -148,7 +148,7 @@ namespace Tonga.Scalar.Tests
         {
             try
             {
-                new ItemAt<string>(
+                ItemAt._(
                     new string[] { "one", "two", "three" },
                     3
                 ).Value();

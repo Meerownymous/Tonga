@@ -11,13 +11,13 @@ namespace Tonga.Text
     /// </summary>
     public sealed class BoolOf : IScalar<Boolean>
     {
-        private readonly ScalarOf<bool> bl;
+        private readonly AsScalar<bool> bl;
 
         /// <summary>
         /// <see cref="string"/> as bool
         /// </summary>
         /// <param name="str">source string</param>
-        public BoolOf(String str) : this(new TextOf(str))
+        public BoolOf(String str) : this(new AsText(str))
         { }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Tonga.Text
         public BoolOf(IText text)
         {
             this.bl =
-                new ScalarOf<bool>(() =>
+                new AsScalar<bool>(() =>
                 {
                     try
                     {

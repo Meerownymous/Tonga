@@ -23,12 +23,9 @@ namespace Tonga.Collection
         public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) :
             this(
                 func,
-                new LiveMany<T>(() =>
+                new Enumerable.AsEnumerable<T>(() =>
                     new Enumerable.Joined<T>(
-                        new ManyOf<T>(
-                            item1,
-                            item2
-                        ),
+                        new Enumerable.AsEnumerable<T>(item1, item2),
                         items
                     ).GetEnumerator()
                 )
@@ -40,7 +37,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
-        public Filtered(Func<T, Boolean> func, IEnumerator<T> src) : this(func, new ManyOf<T>(src))
+        public Filtered(Func<T, Boolean> func, IEnumerator<T> src) : this(func, Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -48,15 +45,12 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
-        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
-            new Live<ICollection<T>>(() =>
-                new LiveCollection<T>(
-                    new Enumerable.Filtered<T>(
-                        func, src
-                    )
+        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(() =>
+            new LiveCollection<T>(
+                Enumerable.Filtered._(
+                    func, src
                 )
-            ),
-            false
+            )
         )
         { }
         
@@ -65,8 +59,8 @@ namespace Tonga.Collection
 
     public static class Filtered
     {
-        public static ICollection<T> New<T>(Func<T, Boolean> func, IEnumerable<T> src) => new Filtered<T>(func, src);
-        public static ICollection<T> New<T>(Func<T, Boolean> func, IEnumerator<T> src) => new Filtered<T>(func, src);
-        public static ICollection<T> New<T>(Func<T, Boolean> func, T item1, T item2, params T[] items) => new Filtered<T>(func, item1, item2, items);
+        public static ICollection<T> _<T>(Func<T, Boolean> func, IEnumerable<T> src) => new Filtered<T>(func, src);
+        public static ICollection<T> _<T>(Func<T, Boolean> func, IEnumerator<T> src) => new Filtered<T>(func, src);
+        public static ICollection<T> _<T>(Func<T, Boolean> func, T item1, T item2, params T[] items) => new Filtered<T>(func, item1, item2, items);
     }
 }

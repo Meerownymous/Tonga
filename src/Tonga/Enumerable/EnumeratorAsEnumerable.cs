@@ -10,7 +10,7 @@ namespace Tonga.Enumerable
     /// <typeparam name="T"></typeparam>
     public sealed class EnumeratorAsEnumerable<T> : IEnumerable<T>
     {
-        private readonly IEnumerator<T> enumerator;
+        private readonly Func<IEnumerator<T>> enumerator;
 
         /// <summary>
         /// A given enumerator as enumerable.
@@ -23,15 +23,16 @@ namespace Tonga.Enumerable
         /// </summary>
         public EnumeratorAsEnumerable(Func<IEnumerator<T>> enumerator)
         {
-            this.enumerator = new Enumerator.Sticky<T>(enumerator);
+            this.enumerator = enumerator;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            this.enumerator.Reset();
-            while (this.enumerator.MoveNext())
+            var enumerator = this.enumerator();
+
+            while (enumerator.MoveNext())
             {
-                yield return this.enumerator.Current;
+                yield return enumerator.Current;
             }
             yield break;
         }

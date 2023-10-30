@@ -18,7 +18,7 @@ namespace Tonga.Collection.Tests
                 2,
                 new ItemAt<int>(
                     new Reversed<int>(
-                        new ManyOf<int>(0, -1, 2))
+                        AsEnumerable._(0, -1, 2))
                 ).Value()
             );
         }
@@ -31,9 +31,10 @@ namespace Tonga.Collection.Tests
                 last,
                 new ItemAt<string>(
                     new Reversed<string>(
-                        new ManyOf<string>(
-                            "item", last)
-                    )).Value());
+                        AsEnumerable._("item", last)
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
@@ -50,9 +51,9 @@ namespace Tonga.Collection.Tests
             Assert.Equal(
                 3,
                 new Reversed<string>(
-                    new ManyOf<string>(
-                        "0", "1", "2")
-                ).Count);
+                    AsEnumerable._("0", "1", "2")
+                ).Count
+            );
         }
 
         [Fact]
@@ -60,10 +61,11 @@ namespace Tonga.Collection.Tests
         {
             Assert.NotEmpty(
                 new Reversed<int>(
-                    new ManyOf<int>(
+                    AsEnumerable._(
                         6, 16
                     )
-                ));
+                )
+            );
         }
 
         [Fact]
@@ -74,9 +76,10 @@ namespace Tonga.Collection.Tests
             Assert.Contains(
                 word,
                 new Reversed<string>(
-                    new ManyOf<string>(
+                    AsEnumerable._(
                         "hello", "elegant", word)
-                ));
+                    )
+                );
         }
 
         [Fact]
@@ -84,7 +87,7 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
               new Reversed<int>(
-                  new ManyOf<int>(
+                  AsEnumerable._(
                       1, 2, 3, 4)
               ).Add(6));
         }
@@ -94,10 +97,11 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new Reversed<int>(
-                    new ManyOf<int>(
+                    AsEnumerable._(
                         1, 2, 3, 4
                     )
-                ).Remove(1));
+                ).Remove(1)
+            );
         }
 
 
@@ -107,9 +111,10 @@ namespace Tonga.Collection.Tests
         {
             Assert.Throws<InvalidOperationException>(() =>
                 new Reversed<int>(
-                    new ManyOf<int>(
+                    AsEnumerable._(
                         1, 2, 3, 4)
-                ).Clear());
+                ).Clear()
+            );
         }
     }
 }

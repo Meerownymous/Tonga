@@ -25,7 +25,7 @@ namespace Tonga.IO.Tests
             ).Value();
 
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputOf(
                         new ReaderOf(
                             new Uri(path)))

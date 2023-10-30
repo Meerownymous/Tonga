@@ -14,22 +14,30 @@ namespace Tonga.IO.Tests
         [Fact]
         public void ReadsSimpleFileContent()
         {
-            var dir = "artifacts/InputStreamOfTest"; var file = "txt-1"; var path = Path.GetFullPath(Path.Combine(dir, file));
-            Directory.CreateDirectory(dir);
-            if (File.Exists(path)) File.Delete(path);
+            using (var file = new TempFile())
+            {
+                String content = "Hello, товарищ!";
+                File.WriteAllBytes(
+                    file.Value(),
+                    new AsBytes(
+                        AsText._(content, Encoding.UTF8)
+                    ).Bytes()
+                );
 
-            String content = "Hello, товарищ!";
-            File.WriteAllBytes(path, new BytesOf(new LiveText(content, Encoding.UTF8)).AsBytes());
+                Assert.Equal(
+                    content,
+                    AsText._(
+                        new InputAsBytes(
+                            new InputOf(
+                                new InputStreamOf(
+                                    new Uri(file.Value())
+                                )
+                            )
+                        )
+                    ).AsString()
+                );
 
-            Assert.True(
-                new LiveText(
-                    new InputAsBytes(
-                        new InputOf(
-                            new InputStreamOf(
-                                new Uri(path))))
-                ).AsString() == content,
-                "Can't read file content");
-
+            }
         }
 
         [Fact]
@@ -37,7 +45,7 @@ namespace Tonga.IO.Tests
         {
             String content = "Hello, дорогой товарищ!";
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputOf(
                         new InputStreamOf(
                             new StreamReader(
@@ -49,8 +57,9 @@ namespace Tonga.IO.Tests
         public void ReadsFromReaderThroughSmallBuffer()
         {
             String content = "Hello, صديق!";
-            Assert.True(
-                new LiveText(
+            Assert.Equal(
+                content,
+                AsText._(
                     new InputOf(
                         new InputStreamOf(
                             new StreamReader(
@@ -58,8 +67,7 @@ namespace Tonga.IO.Tests
                             1
                         )
                     )
-                ).AsString() == content,
-                "Can't read from reader through small buffer"
+                ).AsString()
             );
         }
 
@@ -84,10 +92,10 @@ namespace Tonga.IO.Tests
             if (File.Exists(path)) File.Delete(path);
 
             String content = "Hello, товарищ!";
-            File.WriteAllBytes(path, new BytesOf(new LiveText(content, Encoding.UTF8)).AsBytes());
+            File.WriteAllBytes(path, new AsBytes(AsText._(content, Encoding.UTF8)).Bytes());
 
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputAsBytes(
                         new InputOf(
                             new InputStreamOf(

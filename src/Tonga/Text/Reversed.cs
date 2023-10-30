@@ -23,8 +23,7 @@ namespace Tonga.Text
                    reverseTxt += chararray.GetValue(i);
                }
                return reverseTxt;
-           },
-            false
+           }
         )
         { }
     }

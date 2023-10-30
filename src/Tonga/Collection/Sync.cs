@@ -14,19 +14,6 @@ namespace Tonga.Collection
         /// <summary>
         /// ctor
         /// </summary>
-        public Sync() : this(new object())
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="syncRoot"></param>
-        public Sync(object syncRoot) : this(syncRoot, new LiveCollection<T>())
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
         /// <param name="items">items to make collection from</param>
         public Sync(params T[] items) : this(new LiveCollection<T>(items))
         { }
@@ -43,9 +30,9 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="syncRoot">root object to sync</param>
         /// <param name="col"></param>
-        public Sync(object syncRoot, ICollection<T> col) : base(
+        public Sync(object syncRoot, ICollection<T> col) : base(() =>
             new Scalar.Sync<ICollection<T>>(
-                new Live<ICollection<T>>(() =>
+                AsScalar._<ICollection<T>>(() =>
                 {
                     lock (syncRoot)
                     {
@@ -58,14 +45,13 @@ namespace Tonga.Collection
                     }
                 }
                 )
-            ),
-            false
+            ).Value()
         )
         { }
     }
 
     public static class Sync
     {
-        public static ICollection<T> New<T>(params T[] items) => new Sync<T>(items);
+        public static ICollection<T> From<T>(params T[] items) => new Sync<T>(items);
     }
 }

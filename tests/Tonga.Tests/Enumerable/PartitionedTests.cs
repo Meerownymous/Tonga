@@ -1,6 +1,8 @@
 
 
 using System.Collections.Generic;
+using Tonga.List;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -12,10 +14,9 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 2,
-                new LengthOf(
-                    new Partitioned<string>(
-                        1,
-                        new List<string>() { "hokus", "pokus" }
+                LengthOf._(
+                    Partitioned._(1,
+                        AsList._("hokus", "pokus")
                     )
                 ).Value()
             );

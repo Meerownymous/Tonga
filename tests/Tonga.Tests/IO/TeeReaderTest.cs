@@ -26,7 +26,7 @@ namespace Tonga.IO.Tests
             }
             reader.Dispose();
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputOf(
                         new ReaderOf(baos.ToArray()))
                 ).AsString().CompareTo(content) == 0,

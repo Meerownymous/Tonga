@@ -17,14 +17,14 @@ namespace Tonga.IO.Tests
             byte[] bytes = new RandomBytes(size).ToArray();
 
             var b =
-                new BytesOf(
+                new AsBytes(
                     new TailOf(
                         new InputOf(
-                            new BytesOf(bytes)
+                            new AsBytes(bytes)
                         ),
                         size - 1
                     )
-                ).AsBytes();
+                ).Bytes();
 
             var dest = new byte[bytes.Length - 1];
             Array.Copy(bytes, 1, dest, 0, bytes.Length - 1);
@@ -42,12 +42,12 @@ namespace Tonga.IO.Tests
             byte[] bytes = new RandomBytes(size).ToArray();
 
             var b =
-                new BytesOf(
+                new AsBytes(
                     new TailOf(
-                        new InputOf(new BytesOf(bytes)),
+                        new InputOf(new AsBytes(bytes)),
                         size
                     )
-                ).AsBytes();
+                ).Bytes();
 
             Assert.Equal(
                 b,
@@ -62,13 +62,13 @@ namespace Tonga.IO.Tests
             byte[] bytes = new RandomBytes(size).ToArray();
 
             Assert.Equal(
-                new BytesOf(
+                new AsBytes(
                     new TailOf(
-                        new InputOf(new BytesOf(bytes)),
+                        new InputOf(new AsBytes(bytes)),
                         size,
                         size
                     )
-                ).AsBytes(),
+                ).Bytes(),
                 bytes
             );
         }
@@ -80,12 +80,12 @@ namespace Tonga.IO.Tests
             byte[] bytes = new RandomBytes(size).ToArray();
 
             Assert.Equal(
-                new BytesOf(
+                new AsBytes(
                     new TailOf(
-                        new InputOf(new BytesOf(bytes)),
+                        new InputOf(new AsBytes(bytes)),
                         size + 1
                     )
-                ).AsBytes(),
+                ).Bytes(),
                 bytes
             );
         }
@@ -99,13 +99,13 @@ namespace Tonga.IO.Tests
             var res = new byte[bytes.Length - 1];
             Array.Copy(bytes, 1, res, 0, bytes.Length - 1);
             Assert.Equal(
-                new BytesOf(
+                new AsBytes(
                     new TailOf(
-                        new InputOf(new BytesOf(bytes)),
+                        new InputOf(new AsBytes(bytes)),
                         size - 1,
                         size - 1
                     )
-                ).AsBytes(),
+                ).Bytes(),
                 res
             );
         }
@@ -118,15 +118,15 @@ namespace Tonga.IO.Tests
             Assert.Throws<ArgumentException>(
                 () =>
                 {
-                    new BytesOf(
+                    new AsBytes(
                         new TailOf(
                             new InputOf(
-                                new BytesOf(bytes)
+                                new AsBytes(bytes)
                             ),
                             size,
                             size - 1
                         )
-                    ).AsBytes();
+                    ).Bytes();
                 });
         }
     }

@@ -19,21 +19,21 @@ namespace Tonga.Bytes
         /// Bytes as input.
         /// </summary>
         /// <param name="text">a text</param>
-        public BytesAsInput(IText text) : this(new BytesOf(text))
+        public BytesAsInput(IText text) : this(new AsBytes(text))
         { }
 
         /// <summary>
         /// Bytes as input.
         /// </summary>
         /// <param name="text">a string</param>
-        public BytesAsInput(String text) : this(new BytesOf(text))
+        public BytesAsInput(String text) : this(new AsBytes(text))
         { }
 
         /// <summary>
         /// Bytes as input.
         /// </summary>
         /// <param name="bytes">byte array</param>
-        public BytesAsInput(byte[] bytes) : this(new BytesOf(bytes))
+        public BytesAsInput(byte[] bytes) : this(new AsBytes(bytes))
         { }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Tonga.Bytes
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return new MemoryStream(this.source.AsBytes());
+            return new MemoryStream(this.source.Bytes());
         }
     }
 }

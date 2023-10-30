@@ -4,7 +4,6 @@ namespace Tonga.Text
 {
     /// <summary>
     /// Hexadecimal representation of Bytes.
-    /// This object is sticky by default.
     /// </summary>
     public sealed class HexOf : TextEnvelope
     {
@@ -18,7 +17,7 @@ namespace Tonga.Text
         /// <param name="bytes">bytes</param>
         public HexOf(IBytes bytes) : base(() =>
             {
-                var rawBytes = bytes.AsBytes();
+                var rawBytes = bytes.Bytes();
                 var hex = new char[rawBytes.Length * 2];
                 var chr = -1;
                 for (int i = 0; i < rawBytes.Length; i++)
@@ -28,8 +27,7 @@ namespace Tonga.Text
                     hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
                 }
                 return new string(hex);
-            },
-            false
+            }
         )
         { }
     }

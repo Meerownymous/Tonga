@@ -13,14 +13,14 @@ namespace Tonga.Text
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
-        public SubText(String text, int start) : this(new LiveText(text), start)
+        public SubText(String text, int start) : this(AsText._(text), start)
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="string"/>.
         /// </summary>
         public SubText(String text, int start, int length) : this(
-            new LiveText(text),
+            AsText._(text),
             start,
             length
         )
@@ -31,8 +31,8 @@ namespace Tonga.Text
         /// </summary>
         public SubText(IText text, int start) : this(
             text,
-            new Live<Int32>(start),
-            new Live<Int32>(() => text.AsString().Length - start)
+            AsScalar._(start),
+            AsScalar._(() => text.AsString().Length - start)
         )
         { }
 
@@ -41,38 +41,32 @@ namespace Tonga.Text
         /// </summary>
         public SubText(IText text, int start, int length) : this(
             text,
-            new Live<Int32>(start),
-            new Live<Int32>(length)
+            AsScalar._(start),
+            AsScalar._(length)
         )
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        public SubText(
-            IText text,
-            Live<Int32> start,
-            Live<Int32> length,
-            bool live = false
-        ) : this(
+        public SubText(IText text, IScalar<Int32> start, IScalar<Int32> length) : this(
             text,
-            () => start.Value(),
-            () => length.Value()
+            start.Value,
+            length.Value
         )
         { }
 
         /// <summary>
         /// Extracted subtext from a <see cref="IText"/>.
         /// </summary>
-        public SubText(IText text, Func<Int32> start, Func<Int32> length) : base(() =>
+        public SubText(IText text, Func<int> start, Func<int> length) : base(() =>
             {
                 return
                     text.AsString().Substring(
                         start(),
                         length()
                     );
-            },
-            false
+            }
         )
         { }
     }

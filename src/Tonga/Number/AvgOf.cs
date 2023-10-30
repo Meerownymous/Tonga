@@ -30,7 +30,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">doubles</param>
         public AvgOf(params double[] src) : this(
-            new ManyOf<double>(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers</param>
         public AvgOf(params int[] src) : this(
-            new ManyOf<int>(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(params long[] src) : this(
-            new ManyOf<long>(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">floats</param>
         public AvgOf(params float[] src) : this(
-            new ManyOf<float>(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<double> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -101,7 +101,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -116,7 +116,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -131,7 +131,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;
@@ -160,7 +160,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<int> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -175,7 +175,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -190,7 +190,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -205,7 +205,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;
@@ -234,7 +234,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<long> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -249,7 +249,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -264,7 +264,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -279,7 +279,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;
@@ -308,7 +308,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(IEnumerable<float> src) : base(
-            new ScalarOf<double>(() =>
+            new AsScalar<double>(() =>
             {
                 double sum = 0D;
                 double total = 0D;
@@ -323,7 +323,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<int>(() =>
+            new AsScalar<int>(() =>
             {
                 int sum = 0;
                 int total = 0;
@@ -338,7 +338,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<long>(() =>
+            new AsScalar<long>(() =>
             {
                 long sum = 0L;
                 long total = 0L;
@@ -353,7 +353,7 @@ namespace Tonga.Number
                 }
                 return sum / total;
             }),
-            new ScalarOf<float>(() =>
+            new AsScalar<float>(() =>
             {
                 float sum = 0F;
                 float total = 0F;

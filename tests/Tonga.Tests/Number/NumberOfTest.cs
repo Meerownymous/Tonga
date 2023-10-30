@@ -13,7 +13,7 @@ namespace Tonga.Number.Tests
         {
             Assert.Equal(
                 4673.453,
-                new NumberOf(new TextOf("4673.453")).AsDouble()
+                new NumberOf(AsText._("4673.453")).AsDouble()
             );
         }
 

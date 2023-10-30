@@ -12,22 +12,15 @@ namespace Tonga.Enumerable
     /// <typeparam name="X">type of items in enumerable</typeparam>
     public sealed class Reversed<X> : IEnumerable<X>
     {
-        private readonly IEnumerable<X> src;
-        private readonly Ternary<X> result;
+        private readonly IEnumerable<X> result;
 
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public Reversed(IEnumerable<X> src, bool live = false)
+        public Reversed(IEnumerable<X> src)
         {
-            this.src = src;
-            this.result =
-                Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
-                    live
-                );
+            this.result = AsEnumerable._(() => Produced(src));
         }
 
         public IEnumerator<X> GetEnumerator() => this.result.GetEnumerator();
@@ -37,9 +30,11 @@ namespace Tonga.Enumerable
             return this.GetEnumerator();
         }
 
-        private IEnumerable<X> Produced()
+        private static IEnumerator<X> Produced(IEnumerable<X> source)
         {
-            foreach(var item in this.src.Reverse())
+            var items = new List<X>(source);
+            items.Reverse();
+            foreach(var item in items)
             {
                 yield return item;
             }
@@ -55,6 +50,14 @@ namespace Tonga.Enumerable
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
+        public static IEnumerable<T> From<T>(IEnumerable<T> src) =>
+            new Reversed<T>(src);
+
+        /// <summary>
+        /// A reversed <see cref="IEnumerable{T}"/>
+        /// </summary>
+        /// <param name="src">enumerable to reverse</param>
+        public static IEnumerable<T> Sticky<T>(IEnumerable<T> src) =>
+            Enumerable.Sticky._(new Reversed<T>(src));
     }
 }

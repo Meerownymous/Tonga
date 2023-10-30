@@ -11,12 +11,10 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 "two",
-                new ItemAt<string>(
-                    new Cycled<string>(
-                        new ManyOf<string>(
-                            "one", "two", "three"
-                            )
-                        ),
+                ItemAt._(
+                    Cycled._(
+                        AsEnumerable._("one", "two", "three")
+                    ),
                     7
                 ).Value()
             );

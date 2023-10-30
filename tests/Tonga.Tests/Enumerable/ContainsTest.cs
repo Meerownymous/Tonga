@@ -1,6 +1,9 @@
 
 
 using System;
+using System.Diagnostics;
+using Tonga.Scalar;
+using Tonga.Tests;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -11,29 +14,33 @@ namespace Tonga.Enumerable.Test
         public void FindsItem()
         {
             Assert.True(
-                new Contains<string>(
-                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
+                Contains._(
+                    AsEnumerable._("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "cat"
-                    ).Value());
+                ).Value()
+            );
         }
 
         [Fact]
         public void DoesntFindItem()
         {
             Assert.False(
-                new Contains<string>(
-                    new ManyOf<string>("Hello", "my", "cat", "is", "missing"),
+                Contains._(
+                    AsEnumerable._("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
-                    ).Value());
+                ).Value()
+            );
         }
 
         [Fact]
         public void DoesntFindInEmtyList()
         {
-            Assert.False(new Contains<string>(
-                new ManyOf<String>(),
-                (str) => str == "elephant"
-                ).Value());
+            Assert.False(
+                Contains._(
+                    None._<string>(),
+                    (str) => str == "elephant"
+                ).Value()
+            );
         }
     }
 }

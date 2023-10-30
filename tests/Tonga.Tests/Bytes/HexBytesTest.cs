@@ -13,7 +13,11 @@ namespace Tonga.Bytes.Tests
         {
             Assert.Equal(
                     expected,
-                    new LiveText(new HexBytes(new LiveText(hex))).AsString()
+                    AsText._(
+                        new HexBytes(
+                            AsText._(hex)
+                        )
+                    ).AsString()
                 );
         }
     }

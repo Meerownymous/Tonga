@@ -70,7 +70,7 @@ namespace Tonga.IO.Tests
             var baos = new MemoryStream();
             String content = "Hello, товарищ!";
             Assert.True(
-                new LiveText(
+                AsText._(
                     new TeeInput(
                         new InputOf(content),
                         new OutputTo(baos)
@@ -91,8 +91,8 @@ namespace Tonga.IO.Tests
 
 
             var str =
-                new LiveText(
-                    new BytesOf(
+                AsText._(
+                    new AsBytes(
                         new TeeInput(
                             "Hello, друг!",
                             new OutputTo(new Uri(path))
@@ -101,7 +101,7 @@ namespace Tonga.IO.Tests
                 ).AsString();
 
             Assert.True(
-                str == new LiveText(new InputOf(new Uri(path))).AsString(),
+                str == AsText._(new InputOf(new Uri(path))).AsString(),
                 "Can't copy Input to File and return content");
         }
     }

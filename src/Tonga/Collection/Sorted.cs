@@ -17,7 +17,7 @@ namespace Tonga.Collection
         /// A list with default sorting (ascending)
         /// </summary>
         /// <param name="src">the source enumerable</param>
-        public Sorted(params T[] src) : this(new LiveMany<T>(src))
+        public Sorted(params T[] src) : this(new AsEnumerable<T>(src))
         { }
 
         /// <summary>
@@ -58,12 +58,10 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="cmp">the comparer</param>
         /// <param name="src">the source collection</param>
-        public Sorted(Comparer<T> cmp, ICollection<T> src) : base(
-            () =>
-                new LiveCollection<T>(
-                    new Enumerable.Sorted<T>(cmp, src)
-                ),
-            false
+        public Sorted(Comparer<T> cmp, ICollection<T> src) : base(() =>
+            new LiveCollection<T>(
+                new Enumerable.Sorted<T>(cmp, src)
+            )
         )
         { }
     }
@@ -71,14 +69,14 @@ namespace Tonga.Collection
     public static class Sorted
     {
         /// <summary>
-        public static ICollection<T> New<T>(params T[] src) where T : IComparable<T> => new Sorted<T>(src);
+        public static ICollection<T> _<T>(params T[] src) where T : IComparable<T> => new Sorted<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) where T : IComparable<T> => new Sorted<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) where T : IComparable<T> => new Sorted<T>(src);
 
-        public static ICollection<T> New<T>(Comparer<T> cmp, params T[] src) where T : IComparable<T> => new Sorted<T>(cmp, src);
+        public static ICollection<T> _<T>(Comparer<T> cmp, params T[] src) where T : IComparable<T> => new Sorted<T>(cmp, src);
 
-        public static ICollection<T> New<T>(Comparer<T> cmp, IEnumerator<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
+        public static ICollection<T> _<T>(Comparer<T> cmp, IEnumerator<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
 
-        public static ICollection<T> New<T>(Comparer<T> cmp, ICollection<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
+        public static ICollection<T> _<T>(Comparer<T> cmp, ICollection<T> src) where T : IComparable<T> => new Sorted<T>(cmp, src);
     }
 }

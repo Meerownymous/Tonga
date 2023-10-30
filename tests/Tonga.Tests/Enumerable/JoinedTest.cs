@@ -1,6 +1,7 @@
 
 
 using System.Collections.Generic;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -10,46 +11,50 @@ namespace Tonga.Enumerable.Test
         [Fact]
         public void TransformsList()
         {
-            Assert.True(
-                new LengthOf(
-                    new Joined<string>(
-                        new ManyOf<string>("hello", "world", "друг"),
-                        new ManyOf<string>("how", "are", "you"),
-                        new ManyOf<string>("what's", "up")
+            Assert.Equal(
+                8,
+                LengthOf._(
+                    Joined._(
+                        AsEnumerable._("hello", "world", "друг"),
+                        AsEnumerable._("how", "are", "you"),
+                        AsEnumerable._("what's", "up")
                     )
-                ).Value() == 8,
-            "Can't concatenate enumerables together");
+                ).Value()
+            );
         }
 
         [Fact]
         public void JoinsEnumerables()
         {
-            Assert.True(
-                new LengthOf(
-                    new Joined<IEnumerable<string>>(
-                        new Mapped<string, IEnumerable<string>>(
-                           str => new ManyOf<string>(str),
-                           new ManyOf<string>("x")
+            Assert.Equal(
+                1,
+                LengthOf._(
+                    Joined._(
+                        Mapped._(
+                           str => AsEnumerable._(str),
+                           AsEnumerable._("x")
                         )
-                )).Value() == 1,
-            "cannot join mapped iterables together");
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
         public void JoinsSingleElemtns()
         {
-            Assert.True(
-                new LengthOf(
-                    new Joined<string>(
-                        new ManyOf<string>("hello", "world", "друг"),
+            Assert.Equal(
+                8,
+                LengthOf._(
+                    Joined._(
+                        AsEnumerable._("hello", "world", "друг"),
                         "how",
                         "are",
                         "you",
                         "what's",
                         "up"
                     )
-                ).Value() == 8,
-            "Can't concatenate enumerable with ingle values");
+                ).Value()
+            );
         }
     }
 }

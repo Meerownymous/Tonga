@@ -23,13 +23,13 @@ namespace Tonga.Bytes.Tests
                         new InputOf(
                         String.Join(
                             "",
-                                new HeadOf<string>(
+                                new Head<string>(
                                 new Endless<string>(body),
                                 multiplier
                             )
                         )
                     )
-                ).AsBytes().Length == body.Length * multiplier,
+                ).Bytes().Length == body.Length * multiplier,
                 "Can't read large content from in-memory Input");
         }
 
@@ -42,7 +42,7 @@ namespace Tonga.Bytes.Tests
                 Assert.True(
                     new InputAsBytes(
                         new InputOf(slow)
-                    ).AsBytes().Length == size,
+                    ).Bytes().Length == size,
                     "Can't read large content from Input");
             }
         }
@@ -56,11 +56,11 @@ namespace Tonga.Bytes.Tests
                     Encoding.UTF8.GetString(
                         new InputAsBytes(
                             new InputOf(
-                                new BytesOf(
-                                    new LiveText(content)
+                                new AsBytes(
+                                    AsText._(content)
                                 )
                             )
-                        ).AsBytes()) == content,
+                        ).Bytes()) == content,
                     "cannot read bytes into input");
         }
 
@@ -73,12 +73,12 @@ namespace Tonga.Bytes.Tests
                     Encoding.UTF8.GetString(
                         new InputAsBytes(
                             new InputOf(
-                                new BytesOf(
-                                    new LiveText(content)
+                                new AsBytes(
+                                    AsText._(content)
                                 )
                             ),
                             2
-                        ).AsBytes()) == content,
+                        ).Bytes()) == content,
                     "cannot read bytes with small buffer");
         }
 

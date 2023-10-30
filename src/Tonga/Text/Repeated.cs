@@ -16,7 +16,7 @@ namespace Tonga.Text
         /// <param name="text">text to repeat</param>
         /// <param name="count">how often to repeat</param>
         public Repeated(String text, int count) : this(
-            new LiveText(text),
+            AsText._(text),
             count
         )
         { }
@@ -34,8 +34,7 @@ namespace Tonga.Text
                     output.Append(text.AsString());
                 }
                 return output.ToString();
-            },
-            false
+            }
         )
         { }
     }

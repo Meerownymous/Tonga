@@ -1,6 +1,7 @@
 
 
 using System;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -11,31 +12,37 @@ namespace Tonga.Enumerable.Test
         public void EmptyEnumerableThrowsExeption()
         {
             Assert.Throws<Exception>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ManyOf<bool>()
-                    )).Value());
+                LengthOf._(
+                    NotEmpty._(
+                        None._<bool>()
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
         public void NotEmptyEnumerableThrowsNoExeption()
         {
             Assert.True(
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ManyOf<bool>(false)
-                    )).Value() == 1);
+                LengthOf._(
+                    NotEmpty._(
+                        AsEnumerable._(false)
+                    )
+                ).Value() == 1
+            );
         }
 
         [Fact]
         public void EmptyCollectionThrowsCustomExeption()
         {
             Assert.Throws<OperationCanceledException>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new ManyOf<bool>(),
+                LengthOf._(
+                    NotEmpty._(
+                        None._<object>(),
                         new OperationCanceledException()
-                    )).Value());
+                    )
+                ).Value()
+            );
         }
     }
 }

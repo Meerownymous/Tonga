@@ -1,5 +1,3 @@
-
-
 using Xunit;
 using Tonga.Text;
 
@@ -10,11 +8,12 @@ namespace Tonga.IO.Tests
         [Fact]
         public void ReadsEmptyContent()
         {
-            Assert.True(
-                new LiveText(
+            Assert.Equal(
+                string.Empty,
+                AsText._(
                     new DeadInput())
-                .AsString() == "",
-                "Can't read empty content");
+                .AsString()
+            );
         }
 
     }

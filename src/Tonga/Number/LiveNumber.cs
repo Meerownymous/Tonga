@@ -102,7 +102,7 @@ namespace Tonga.Number
 
         public LiveNumber(Func<INumber> number)
         {
-            this.number = new Live<INumber>(number);
+            this.number = AsScalar._(number);
         }
 
         /// <summary>

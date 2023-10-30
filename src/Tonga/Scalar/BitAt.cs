@@ -40,7 +40,7 @@ namespace Tonga.Scalar
         /// <param name="bytes">Bytes from where the bit is taken</param>
         public BitAt(IBytes bytes) : this(
             bytes,
-            itr => throw new ArgumentException($"Cannot get first bit because there are only {bytes.AsBytes().Length} bytes.")
+            itr => throw new ArgumentException($"Cannot get first bit because there are only {bytes.Bytes().Length} bytes.")
         )
         { }
 
@@ -99,7 +99,7 @@ namespace Tonga.Scalar
         public BitAt(IBytes bytes, int position) : this(
             bytes,
             position,
-            itr => throw new ArgumentException($"Cannot get bit at position {position} because there are only {bytes.AsBytes().Length} bytes.")
+            itr => throw new ArgumentException($"Cannot get bit at position {position} because there are only {bytes.Bytes().Length} bytes.")
         )
         { }
 
@@ -133,7 +133,7 @@ namespace Tonga.Scalar
                 bool result;
                 var byteIndex = position / 8;
                 var bitInByteIndex = position % 8;
-                var bytesArr = bytes.AsBytes();
+                var bytesArr = bytes.Bytes();
                 if (bytesArr.Length > byteIndex)
                 {
                     var relevantByte = bytesArr[byteIndex];

@@ -12,7 +12,7 @@ namespace Tonga.IO
     /// </summary>
     public sealed class AppendTo : IOutput, IDisposable
     {
-        private readonly IScalar<IOutput> _base;
+        private readonly IScalar<IOutput> stream;
 
         /// <summary>
         /// a path
@@ -42,7 +42,8 @@ namespace Tonga.IO
         /// <param name="wtr">a writer</param>
         /// <param name="enc"><see cref="Encoding"/> of the writer</param>
         public AppendTo(StreamWriter wtr, Encoding enc) : this(
-            new WriterAsOutputStream(wtr, enc))
+            new WriterAsOutputStream(wtr, enc)
+        )
         { }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Tonga.IO
         /// Append <see cref="IOutput"/> to a target <see cref="IOutput"/>.
         /// </summary>
         /// <param name="output">target output</param>
-        public AppendTo(IOutput output) : this(new Live<IOutput>(output))
+        public AppendTo(IOutput output) : this(AsScalar._(output))
         { }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace Tonga.IO
         /// <param name="outputSc">target output scalar</param>
         private AppendTo(IScalar<IOutput> outputSc)
         {
-            _base = outputSc;
+            this.stream = (outputSc);
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Tonga.IO
         /// </summary>
         public void Dispose()
         {
-            (_base.Value() as IDisposable)?.Dispose();
+            (stream.Value() as IDisposable)?.Dispose();
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace Tonga.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            var result = _base.Value().Stream();
+            var result = stream.Value().Stream();
             result.Seek(0, SeekOrigin.End);
 
             return result;

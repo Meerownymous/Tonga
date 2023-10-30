@@ -11,15 +11,18 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void NumberTest()
         {
-            Assert.True(
-            new FloatOf("1656.894").Value() == 1656.894F);
+            Assert.Equal(
+                1656.894F,
+                new FloatOf("1656.894").Value()
+            );
         }
 
         [Fact]
         public void FailsIfTextDoesNotRepresentAFloat()
         {
             Assert.Throws<FormatException>(
-                () => new FloatOf("abc").Value());
+                () => new FloatOf("abc").Value()
+            );
         }
     }
 }

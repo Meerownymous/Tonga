@@ -16,7 +16,10 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">function to return first value to compare</param>
         /// <param name="second">function to return second value to compare</param>
-        public Equals(Func<T> first, Func<T> second) : this(new Live<T>(first), new Live<T>(second))
+        public Equals(Func<T> first, Func<T> second) : this(
+            AsScalar._(first),
+            AsScalar._(second)
+        )
         { }
 
         /// <summary>
@@ -24,7 +27,10 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">first value to compare</param>
         /// <param name="second">second value to compare</param>
-        public Equals(T first, T second) : this(new Live<T>(first), new Live<T>(second))
+        public Equals(T first, T second) : this(
+            AsScalar._(first),
+            AsScalar._(second)
+        )
         { }
 
         /// <summary>
@@ -32,8 +38,9 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">scalar of first value to compare</param>
         /// <param name="second">scalar of second value to compare</param>
-        public Equals(IScalar<T> first, IScalar<T> second)
-            : base(() => first.Value().CompareTo(second.Value()) == 0)
+        public Equals(IScalar<T> first, IScalar<T> second) : base(
+            () => first.Value().CompareTo(second.Value()) == 0
+        )
         { }
     }
 
@@ -44,7 +51,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">function to return first value to compare</param>
         /// <param name="second">function to return second value to compare</param>
-        public static Equals<T> New<T>(Func<T> first, Func<T> second)
+        public static Equals<T> _<T>(Func<T> first, Func<T> second)
             where T : IComparable<T>
             => new Equals<T>(first, second);
 
@@ -53,7 +60,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">first value to compare</param>
         /// <param name="second">second value to compare</param>
-        public static Equals<T> New<T>(T first, T second)
+        public static Equals<T> _<T>(T first, T second)
             where T : IComparable<T>
             => new Equals<T>(first, second);
 
@@ -62,7 +69,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">scalar of first value to compare</param>
         /// <param name="second">scalar of second value to compare</param>
-        public static Equals<T> New<T>(IScalar<T> first, IScalar<T> second)
+        public static Equals<T> _<T>(ScalarEnvelope<T> first, ScalarEnvelope<T> second)
             where T : IComparable<T>
             => new Equals<T>(first, second);
     }

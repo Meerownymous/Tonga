@@ -1,5 +1,6 @@
 
 
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -12,27 +13,29 @@ namespace Tonga.Enumerable.Test
             int size = 42;
             int element = 11;
 
-            Assert.True(
-                new LengthOf(
-                        new Filtered<int>(
-                        input => input == element,
-                        new Repeated<int>(
-                                element,
-                                size
-                            )
+            Assert.Equal(
+                size,
+                LengthOf._(
+                    Filtered._(
+                    input => input == element,
+                    Repeated._(
+                            element,
+                            size
+                        )
                     )
-                ).Value() == size,
-            "Can't generate an iterable with fixed size");
+                ).Value()
+            );
         }
 
         [Fact]
         public void EmptyTest()
         {
-            Assert.True(
-                new LengthOf(
-                    new Repeated<int>(0, 0)
-                ).Value() == 0,
-            "Can't generate an empty iterable");
+            Assert.Equal(
+                0,
+                LengthOf._(
+                    Repeated._(0, 0)
+                ).Value()
+            );
         }
     }
 }

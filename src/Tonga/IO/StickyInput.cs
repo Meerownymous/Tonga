@@ -13,7 +13,7 @@ namespace Tonga.IO
         /// <summary>
         /// the cache
         /// </summary>
-        private readonly IScalar<byte[]> _cache;
+        private readonly IScalar<byte[]> cache;
 
         /// <summary>
         /// <see cref="IInput"/> that reads once and then returns from cache.
@@ -22,8 +22,9 @@ namespace Tonga.IO
         /// <param name="input"></param>
         public StickyInput(IInput input)
         {
-            this._cache = new ScalarOf<byte[]>(
-                new Live<byte[]>(() =>
+            this.cache =
+                Sticky._(
+                    AsScalar._(() =>
                     {
                         MemoryStream baos = new MemoryStream();
                         new LengthOf(
@@ -31,7 +32,8 @@ namespace Tonga.IO
                         ).Value();
                         input.Stream().Dispose();
                         return baos.ToArray();
-                    }));
+                    })
+                );
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace Tonga.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return new MemoryStream(this._cache.Value());
+            return new MemoryStream(this.cache.Value());
         }
     }
 }

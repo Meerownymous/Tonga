@@ -26,7 +26,7 @@ namespace Tonga.IO.Tests
 
             Assert.Contains(
                 "tS",
-                new TextOf(new InputOf(stream)).AsString()
+                AsText._(new InputOf(stream)).AsString()
             );
         }
 
@@ -45,7 +45,7 @@ namespace Tonga.IO.Tests
                 skipped
             );
 
-            var input = new TextOf(stream).AsString();
+            var input = AsText._(stream).AsString();
             Assert.Equal(
                 "",
                 input

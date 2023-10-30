@@ -37,7 +37,7 @@ namespace Tonga.IO
         public ZipFiles(IInput input, bool leaveOpen)
         {
             this.files =
-                new ScalarOf<IEnumerable<string>>(() =>
+                new AsScalar<IEnumerable<string>>(() =>
                 {
                     try
                     {

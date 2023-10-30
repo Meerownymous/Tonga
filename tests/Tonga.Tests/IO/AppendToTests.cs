@@ -1,5 +1,3 @@
-
-
 using System;
 using System.IO;
 using Xunit;
@@ -19,18 +17,20 @@ namespace Tonga.IO.Tests
 
             var txt = "Hello, товарищ!";
 
-            var lengthOf = new LengthOf(
-                new TeeInput(
-                    txt,
-                    new AppendTo(
-                        new OutputTo(file)
-                    )));
+            var lengthOf =
+                new LengthOf(
+                    new TeeInput(txt,
+                        new AppendTo(
+                            new OutputTo(file)
+                        )
+                    )
+                );
 
             lengthOf.Value();
             lengthOf.Value();
 
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
                 .AsString() == (txt + txt),
@@ -48,40 +48,39 @@ namespace Tonga.IO.Tests
             }
 
             var txt = "Hello, друг!";
-            var lengthOf = new LengthOf(
-                new TeeInput(
-                    txt,
-                    new AppendTo(
-                        new OutputTo(file))));
+            var lengthOf =
+                new LengthOf(
+                    new TeeInput(txt,
+                        new AppendTo(
+                            new OutputTo(file)
+                        )
+                    )
+                );
 
             lengthOf.Value();
             lengthOf.Value();
 
-            Assert.True(
-                new LiveText(
+            Assert.Equal(
+                txt + txt,
+                AsText._(
                     new InputAsBytes(
                         new InputOf(file)))
-                .AsString() == txt + txt
+                .AsString()
             );
         }
 
         [Fact]
         public void DisposesStream()
         {
-            var temp = Directory.CreateDirectory("artifacts/AppendToTest");
-            var file = new Uri(Path.GetFullPath(Path.Combine(temp.FullName, "file.txt")));
+            using (var temp = new TempFile())
+            {
 
-            var appendTo = new AppendTo(file);
-
-            var stream = appendTo.Stream();
-            Assert.True(stream.CanWrite);
-            stream.Dispose();
-            Assert.False(stream.CanWrite);
-
-            stream = appendTo.Stream();
-            Assert.True(stream.CanWrite);
-            appendTo.Dispose();
-            Assert.False(stream.CanWrite);
+                var appendTo = new AppendTo(temp.Value());
+                var stream = appendTo.Stream();
+                Assert.True(stream.CanWrite);
+                appendTo.Dispose();
+                Assert.False(stream.CanWrite);
+            }
         }
     }
 }

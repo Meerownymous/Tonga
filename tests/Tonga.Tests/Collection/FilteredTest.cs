@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Xunit;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 
 namespace Tonga.Collection.Tests
 {
@@ -24,7 +25,8 @@ namespace Tonga.Collection.Tests
                 new LengthOf(
                     new Filtered<string>(
                         input => input.Length > 4,
-                        new ManyOf<string>("hello", "world", "друг"))
+                        AsEnumerable._("hello", "world", "друг")
+                    )
                 ).Value()
             );
         }
@@ -47,7 +49,7 @@ namespace Tonga.Collection.Tests
                 2,
                 new Filtered<string>(
                     input => input.Length >= 4,
-                    new ManyOf<string>("some", "text", "yes")
+                    AsEnumerable._("some", "text", "yes")
                 ).Count
             );
         }
@@ -58,7 +60,7 @@ namespace Tonga.Collection.Tests
             Assert.NotEmpty(
                 new Filtered<string>(
                     input => input.Length > 4,
-                    new ManyOf<string>("first", "second")
+                    AsEnumerable._("first", "second")
                 )
             );
         }
@@ -69,7 +71,7 @@ namespace Tonga.Collection.Tests
             Assert.Empty(
                 new Filtered<string>(
                     input => input.Length > 16,
-                    new ManyOf<string>("third", "fourth")
+                    AsEnumerable._("third", "fourth")
                 )
             );
         }

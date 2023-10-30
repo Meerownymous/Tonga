@@ -15,7 +15,7 @@ namespace Tonga.Func
         private readonly Func<bool> trigger;
         private readonly Action prepare;
         private readonly Action<T> shoot;
-        private readonly IDictionary<string, TimeSpan> timespans;
+        private readonly IMap<string, TimeSpan> timespans;
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
@@ -47,16 +47,17 @@ namespace Tonga.Func
             trigger,
             prepare,
             shoot,
-            new MapOf<TimeSpan>(
-                new KvpOf<TimeSpan>("timeout", timeout),
-                new KvpOf<TimeSpan>("interval", interval)
-            ))
+            AsMap._(
+                AsPair._("timeout", timeout),
+                AsPair._("interval", interval)
+            )
+        )
         { }
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        private BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, IDictionary<string, TimeSpan> timespans)
+        private BowFunc(Func<bool> trigger, Action prepare, Action<T> shoot, IMap<string, TimeSpan> timespans)
         {
             this.trigger = trigger;
             this.prepare = prepare;
@@ -111,20 +112,20 @@ namespace Tonga.Func
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static IAction<T> New<T>(Func<bool> trigger, Action<T> shoot)
+        public static IAction<T> _<T>(Func<bool> trigger, Action<T> shoot)
             => new BowFunc<T>(trigger, shoot);
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static IAction<T> New<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout)
+        public static IAction<T> _<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout)
             => new BowFunc<T>(trigger, prepare, shoot, timeout);
 
 
         /// <summary>
         /// A Function which waits for a trigger to return true before executing.
         /// </summary>
-        public static IAction<T> New<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval)
+        public static IAction<T> _<T>(Func<bool> trigger, Action prepare, Action<T> shoot, TimeSpan timeout, TimeSpan interval)
             => new BowFunc<T>(trigger, prepare, shoot, timeout, interval);
 
     }

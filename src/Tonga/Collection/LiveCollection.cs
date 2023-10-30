@@ -1,6 +1,7 @@
 
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Tonga.Enumerable;
 
 namespace Tonga.Collection
@@ -16,14 +17,14 @@ namespace Tonga.Collection
         /// Makes a collection from an array
         /// </summary>
         /// <param name="array"></param>
-        public LiveCollection(params T[] array) : this(new LiveMany<T>(array))
+        public LiveCollection(params T[] items) : this(new AsEnumerable<T>(items))
         { }
 
         /// <summary>
         /// Makes a collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public LiveCollection(IEnumerator<T> src) : this(new ManyOf<T>(src))
+        public LiveCollection(IEnumerator<T> src) : this(Enumerable.AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -31,15 +32,14 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="src"></param>
         public LiveCollection(IEnumerable<T> src) : base(
-            () => src.GetEnumerator(),
-            true
+            () => new List<T>(src)
         )
         { }
     }
 
     public static class LiveCollection
     {
-        public static ICollection<T> New<T>(IEnumerator<T> src) => new LiveCollection<T>(src);
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new LiveCollection<T>(src);
+        public static ICollection<T> _<T>(IEnumerator<T> src) => new LiveCollection<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) => new LiveCollection<T>(src);
     }
 }

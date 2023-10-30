@@ -16,12 +16,12 @@ namespace Tonga.IO
         /// <summary>
         /// Path of the directory.
         /// </summary>
-        private readonly IScalar<string> _dir;
+        private readonly IScalar<string> dir;
 
         /// <summary>
         /// include all files from sub directories
         /// </summary>
-        private readonly IScalar<bool> _recursive;
+        private readonly IScalar<bool> recursive;
 
         /// <summary>
         /// Ctor.
@@ -35,11 +35,11 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="dir">DirectoryInfo</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(DirectoryInfo dir, bool recursive) : this(new Live<string>(() =>
+        public DirectoryOf(DirectoryInfo dir, bool recursive) : this(AsScalar._(() =>
             {
                 return dir.FullName;
             }),
-            new Live<bool>(recursive)
+            AsScalar._(recursive)
         )
         { }
 
@@ -55,7 +55,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="file">File as a uri</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(Uri file, bool recursive) : this(new Live<string>(() =>
+        public DirectoryOf(Uri file, bool recursive) : this(AsScalar._(() =>
             {
                 if (file.Scheme != "file")
                 {
@@ -66,7 +66,7 @@ namespace Tonga.IO
                 }
                 return file.AbsolutePath;
             }),
-            new Live<bool>(recursive)
+            AsScalar._(recursive)
         )
         { }
 
@@ -82,7 +82,10 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="file">File as a path to directory.</param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(FileInfo file, bool recursive) : this(new Live<string>(file.Directory.FullName), new Live<bool>(recursive))
+        public DirectoryOf(FileInfo file, bool recursive) : this(
+            AsScalar._(file.Directory.FullName),
+            AsScalar._(recursive)
+        )
         { }
 
         /// <summary>
@@ -97,7 +100,10 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="path"></param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(string path, bool recursive) : this(new Live<string>(path), new Live<bool>(recursive))
+        public DirectoryOf(string path, bool recursive) : this(
+            AsScalar._(path),
+            AsScalar._(recursive)
+        )
         { }
 
         /// <summary>
@@ -114,7 +120,7 @@ namespace Tonga.IO
         /// <param name="recursive">include all files from sub directories</param>
         public DirectoryOf(IScalar<string> path, IScalar<bool> recursive)
         {
-            this._dir = new ScalarOf<string>(() =>
+            this.dir = new AsScalar<string>(() =>
             {
                 var val = Path.GetFullPath(path.Value());
                 try
@@ -136,7 +142,7 @@ namespace Tonga.IO
 
                 return val;
             });
-            this._recursive = recursive;
+            this.recursive = recursive;
         }
 
         /// <summary>
@@ -145,19 +151,20 @@ namespace Tonga.IO
         /// <returns></returns>
         public IEnumerator<string> GetEnumerator()
         {
-            return new Ternary<bool, IEnumerator<string>>(
-                this._recursive,
-                new Sorted<string>(
-                    Directory.EnumerateFiles(_dir.Value(), "*", SearchOption.AllDirectories)
+            return
+                new Ternary<bool, IEnumerator<string>>(
+                    this.recursive,
+                    new Sorted<string>(
+                        Directory.EnumerateFiles(dir.Value(), "*", SearchOption.AllDirectories)
 
-                ).GetEnumerator(),
-                new Sorted<string>(
-                    new Joined<string>(
-                        Directory.EnumerateDirectories(_dir.Value()),
-                        Directory.EnumerateFiles(_dir.Value())
-                    )
-                ).GetEnumerator()
-            ).Value();
+                    ).GetEnumerator(),
+                    new Sorted<string>(
+                        new Joined<string>(
+                            Directory.EnumerateDirectories(dir.Value()),
+                            Directory.EnumerateFiles(dir.Value())
+                        )
+                    ).GetEnumerator()
+                ).Value();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

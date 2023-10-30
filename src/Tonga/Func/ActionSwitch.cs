@@ -12,14 +12,14 @@ namespace Tonga.Func
     /// </summary>
     public sealed class ActionSwitch<In> : IAction<string, In>
     {
-        private readonly MapOf<Action<In>> map;
+        private readonly IMap<string, Action<In>> map;
         private readonly Action<string, In> fallback;
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(params IKvp<Action<In>>[] consequences) : this(
-            new ManyOf<IKvp<Action<In>>>(consequences)
+        public ActionSwitch(params IPair<string, Action<In>>[] consequences) : this(
+            AsEnumerable._(consequences)
         )
         { }
 
@@ -27,10 +27,10 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -42,11 +42,11 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -59,12 +59,12 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -78,13 +78,13 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -99,14 +99,14 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5,
-            IKvp<Action<In>> consequence6
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5,
+            IPair<string, Action<In>> consequence6
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -122,15 +122,15 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5,
-            IKvp<Action<In>> consequence6,
-            IKvp<Action<In>> consequence7
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5,
+            IPair<string, Action<In>> consequence6,
+            IPair<string, Action<In>> consequence7
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -147,16 +147,16 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5,
-            IKvp<Action<In>> consequence6,
-            IKvp<Action<In>> consequence7,
-            IKvp<Action<In>> consequence8
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5,
+            IPair<string, Action<In>> consequence6,
+            IPair<string, Action<In>> consequence7,
+            IPair<string, Action<In>> consequence8
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -174,11 +174,11 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
             Action<string, In> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -190,12 +190,12 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
             Action<string, In> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -208,13 +208,13 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
             Action<string, In> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -228,14 +228,14 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5,
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5,
             Action<string, In> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -250,15 +250,15 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5,
-            IKvp<Action<In>> consequence6,
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5,
+            IPair<string, Action<In>> consequence6,
             Action<string, In> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -274,16 +274,16 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5,
-            IKvp<Action<In>> consequence6,
-            IKvp<Action<In>> consequence7,
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5,
+            IPair<string, Action<In>> consequence6,
+            IPair<string, Action<In>> consequence7,
             Action<string, In> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -300,17 +300,17 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In>> consequence1,
-            IKvp<Action<In>> consequence2,
-            IKvp<Action<In>> consequence3,
-            IKvp<Action<In>> consequence4,
-            IKvp<Action<In>> consequence5,
-            IKvp<Action<In>> consequence6,
-            IKvp<Action<In>> consequence7,
-            IKvp<Action<In>> consequence8,
+            IPair<string, Action<In>> consequence1,
+            IPair<string, Action<In>> consequence2,
+            IPair<string, Action<In>> consequence3,
+            IPair<string, Action<In>> consequence4,
+            IPair<string, Action<In>> consequence5,
+            IPair<string, Action<In>> consequence6,
+            IPair<string, Action<In>> consequence7,
+            IPair<string, Action<In>> consequence8,
             Action<string, In> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -327,7 +327,7 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In>>> consequences) : this(
+        public ActionSwitch(IEnumerable<IPair<string, Action<In>>> consequences) : this(
             consequences,
             (unknown, input) => throw new ArgumentException($"Cannot find action for '{unknown}'")
         )
@@ -336,15 +336,15 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In>>> consequences, Action<string, In> fallback)
+        public ActionSwitch(IEnumerable<IPair<string, Action<In>>> consequences, Action<string, In> fallback)
         {
-            this.map = new MapOf<Action<In>>(consequences);
+            this.map = AsMap._(consequences);
             this.fallback = fallback;
         }
 
         public void Invoke(string condition, In input)
         {
-            if (!this.map.ContainsKey(condition))
+            if (!this.map.Keys().Contains(condition))
             {
                 this.fallback(condition, input);
             }
@@ -360,17 +360,17 @@ namespace Tonga.Func
     /// </summary>
     public sealed class ActionSwitch<In1, In2> : IAction<string, In1, In2>
     {
-        private readonly MapOf<Action<In1, In2>> map;
+        private readonly AsMap<string, Action<In1, In2>> map;
         private readonly Action<string, In1, In2> fallback;
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -382,11 +382,11 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -399,12 +399,12 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -418,13 +418,13 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -439,14 +439,14 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -462,15 +462,15 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -487,16 +487,16 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7,
-            IKvp<Action<In1, In2>> consequence8
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7,
+            IPair<string, Action<In1, In2>> consequence8
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -514,11 +514,11 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
             Action<string, In1, In2> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2
                 ),
@@ -530,12 +530,12 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
             Action<string, In1, In2> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3
@@ -548,13 +548,13 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
             Action<string, In1, In2> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -568,14 +568,14 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
             Action<string, In1, In2> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -590,15 +590,15 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
             Action<string, In1, In2> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -614,16 +614,16 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7,
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7,
             Action<string, In1, In2> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -640,17 +640,17 @@ namespace Tonga.Func
         /// An action fork that is dependant on a named condition.
         /// </summary>
         public ActionSwitch(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7,
-            IKvp<Action<In1, In2>> consequence8,
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7,
+            IPair<string, Action<In1, In2>> consequence8,
             Action<string, In1, In2> fallback
         ) : this(
-                new ManyOf<IKvp<Action<In1, In2>>>(
+                AsEnumerable._(
                     consequence1,
                     consequence2,
                     consequence3,
@@ -667,15 +667,15 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(params IKvp<Action<In1, In2>>[] consequences) : this(
-            new ManyOf<IKvp<Action<In1, In2>>>(consequences)
+        public ActionSwitch(params IPair<string, Action<In1, In2>>[] consequences) : this(
+            AsEnumerable._(consequences)
         )
         { }
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In1, In2>>> consequences) : this(
+        public ActionSwitch(IEnumerable<IPair<string, Action<In1, In2>>> consequences) : this(
             consequences,
             (unknown, input1, input2) => throw new ArgumentException($"Cannot find action for '{unknown}'")
         )
@@ -684,15 +684,15 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public ActionSwitch(IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback)
+        public ActionSwitch(IEnumerable<IPair<string, Action<In1, In2>>> consequences, Action<string, In1, In2> fallback)
         {
-            this.map = new MapOf<Action<In1, In2>>(consequences);
+            this.map = AsMap._(consequences);
             this.fallback = fallback;
         }
 
         public void Invoke(string condition, In1 input1, In2 input2)
         {
-            if (!this.map.ContainsKey(condition))
+            if (!this.map.Keys().Contains(condition))
             {
                 this.fallback(condition, input1, input2);
             }
@@ -708,9 +708,9 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2
         ) => new ActionSwitch<In1, In2>(
             consequence1,
             consequence2
@@ -719,10 +719,10 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3
         ) => new ActionSwitch<In1, In2>(
             consequence1,
             consequence2,
@@ -732,11 +732,11 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4
         ) => new ActionSwitch<In1, In2>(
             consequence1,
             consequence2,
@@ -747,12 +747,12 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5
         ) => new ActionSwitch<In1, In2>(
             consequence1,
             consequence2,
@@ -764,13 +764,13 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6
         ) => new ActionSwitch<In1, In2>(
             consequence1,
             consequence2,
@@ -783,14 +783,14 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7
 
         ) => new ActionSwitch<In1, In2>(
             consequence1,
@@ -805,15 +805,15 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7,
-            IKvp<Action<In1, In2>> consequence8
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7,
+            IPair<string, Action<In1, In2>> consequence8
         ) => new ActionSwitch<In1, In2>(
             consequence1,
             consequence2,
@@ -828,19 +828,19 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
             Action<string, In1, In2> fallback
         ) => new ActionSwitch<In1, In2>(consequence1, consequence2, fallback);
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
             Action<string, In1, In2> fallback
         ) => new ActionSwitch<In1, In2>(
             consequence1,
@@ -854,11 +854,11 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
             Action<string, In1, In2> fallback
         ) => new ActionSwitch<In1, In2>(
             consequence1,
@@ -870,12 +870,12 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
             Action<string, In1, In2> fallback
         ) => new ActionSwitch<In1, In2>(
             consequence1,
@@ -889,13 +889,13 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
             Action<string, In1, In2> fallback
         ) => new ActionSwitch<In1, In2>(
             consequence1,
@@ -910,14 +910,14 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7,
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7,
             Action<string, In1, In2> fallback
         ) => new ActionSwitch<In1, In2>(
             consequence1,
@@ -933,15 +933,15 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(
-            IKvp<Action<In1, In2>> consequence1,
-            IKvp<Action<In1, In2>> consequence2,
-            IKvp<Action<In1, In2>> consequence3,
-            IKvp<Action<In1, In2>> consequence4,
-            IKvp<Action<In1, In2>> consequence5,
-            IKvp<Action<In1, In2>> consequence6,
-            IKvp<Action<In1, In2>> consequence7,
-            IKvp<Action<In1, In2>> consequence8,
+        public static IAction<string, In1, In2> _<In1, In2>(
+            IPair<string, Action<In1, In2>> consequence1,
+            IPair<string, Action<In1, In2>> consequence2,
+            IPair<string, Action<In1, In2>> consequence3,
+            IPair<string, Action<In1, In2>> consequence4,
+            IPair<string, Action<In1, In2>> consequence5,
+            IPair<string, Action<In1, In2>> consequence6,
+            IPair<string, Action<In1, In2>> consequence7,
+            IPair<string, Action<In1, In2>> consequence8,
             Action<string, In1, In2> fallback
         ) => new ActionSwitch<In1, In2>(
             consequence1,
@@ -958,19 +958,19 @@ namespace Tonga.Func
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(params IKvp<Action<In1, In2>>[] consequences) =>
+        public static IAction<string, In1, In2> _<In1, In2>(params IPair<string, Action<In1, In2>>[] consequences) =>
             new ActionSwitch<In1, In2>(consequences);
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences) =>
+        public static IAction<string, In1, In2> _<In1, In2>(IEnumerable<IPair<string, Action<In1, In2>>> consequences) =>
             new ActionSwitch<In1, In2>(consequences);
 
         /// <summary>
         /// An action fork that is dependant on a named condition.
         /// </summary>
-        public static IAction<string, In1, In2> New<In1, In2>(IEnumerable<IKvp<Action<In1, In2>>> consequences, Action<string, In1, In2> fallback) =>
+        public static IAction<string, In1, In2> _<In1, In2>(IEnumerable<IPair<string, Action<In1, In2>>> consequences, Action<string, In1, In2> fallback) =>
             new ActionSwitch<In1, In2>(consequences);
     }
 }

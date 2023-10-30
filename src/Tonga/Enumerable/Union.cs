@@ -45,9 +45,9 @@ namespace Tonga.Enumerable
             this.b = b;
             this.comparison = compare;
             this.result =
-                Ternary.New(
-                    LiveMany.New(Produced),
-                    Sticky.By(Produced),
+                Ternary.From(
+                    AsEnumerable._(Produced),
+                    Sticky._(Produced),
                     live
                 );
         }
@@ -56,7 +56,7 @@ namespace Tonga.Enumerable
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerable<T> Produced()
+        private IEnumerator<T> Produced()
         {
             var set = new HashSet<T>(this.comparison);
             foreach(var element in this.b)
@@ -101,13 +101,13 @@ namespace Tonga.Enumerable
         /// Union objects in two enumerables.
         /// </summary>
         /// <param name="compare">Condition to match</param>
-        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
+        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
             new Union<T>(a, b, compare);
 
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        public static IEnumerable<T> New<T>(IEnumerable<T> a, IEnumerable<T> b) =>
+        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b) =>
             new Union<T>(a, b);
     }
 }

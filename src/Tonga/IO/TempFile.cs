@@ -12,40 +12,41 @@ namespace Tonga.IO
     /// </summary>
     public sealed class TempFile : IScalar<String>, IDisposable
     {
-        private readonly IScalar<string> _path;
+        private readonly IScalar<string> path;
 
         /// <summary>
         /// Temporary file with given extension.
         /// The temporary file is deleted when the object is disposed.
         /// </summary>
         /// <param name="extension">The file extension for the temprary file</param>
-        public TempFile(string extension) : this(new ScalarOf<string>(() =>
-        {
-            var file = Path.GetTempFileName();
-            extension = extension.TrimStart('.');
-            var renamed = $"{file.Substring(0, file.LastIndexOf('.'))}.{extension}";
-            File.Move(file, renamed);
-            return renamed;
-        }))
+        public TempFile(string extension) : this(AsScalar._(() =>
+            {
+                var file = Path.GetTempFileName();
+                extension = extension.TrimStart('.');
+                var renamed = $"{file.Substring(0, file.LastIndexOf('.'))}.{extension}";
+                File.Move(file, renamed);
+                return renamed;
+            })
+        )
         { }
 
         /// <summary>
         /// The temporary file is deleted when the object is disposed.
         /// </summary>
         /// <param name="file">The file</param>
-        public TempFile(FileInfo file) : this(new ScalarOf<string>(() => file.FullName))
+        public TempFile(FileInfo file) : this(new AsScalar<string>(() => file.FullName))
         { }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public TempFile() :
-            this(new ScalarOf<string>(() => Path.GetTempFileName()))
+        public TempFile() : this(
+            AsScalar._(Path.GetTempFileName))
         { }
 
         private TempFile(IScalar<string> path)
         {
-            _path = path;
+            this.path = Sticky._(path);
         }
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace Tonga.IO
         /// </summary>
         public string Value()
         {
-            return _path.Value();
+            return path.Value();
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Tonga.IO
         /// </summary>
         public void Dispose()
         {
-            File.Delete(_path.Value());
+            File.Delete(path.Value());
         }
     }
 }

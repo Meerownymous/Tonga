@@ -16,7 +16,7 @@ namespace Tonga.Enumerable.Test
                 3,
                 new Sibling<int>(
                     2,
-                    new ManyOf<int>(1, 2, 3)
+                    AsEnumerable._(1, 2, 3)
                 ).Value()
             );
         }
@@ -28,7 +28,7 @@ namespace Tonga.Enumerable.Test
                 1,
                 new Sibling<int>(
                     2,
-                    new ManyOf<int>(1, 2, 3),
+                    AsEnumerable._(1, 2, 3),
                     -1
                 ).Value()
             );
@@ -41,7 +41,7 @@ namespace Tonga.Enumerable.Test
                 "15",
                 new Sibling<string>(
                     "1",
-                    new ManyOf<string>("1", "2", "3"),
+                    AsEnumerable._("1", "2", "3"),
                     -1,
                     "15"
                 ).Value()
@@ -55,7 +55,7 @@ namespace Tonga.Enumerable.Test
                 () =>
                     new Sibling<int>(
                         1337,
-                        new ManyOf<int>()
+                        new None<int>()
                     ).Value()
             );
         }
@@ -67,7 +67,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new Sibling<string>(
                     "Not-there",
-                    new ManyOf<string>(),
+                    new None<string>(),
                     12,
                     fallback
                 ).Value() == fallback,
@@ -81,12 +81,11 @@ namespace Tonga.Enumerable.Test
             var provider = CultureInfo.InvariantCulture;
             var nb1 = new FakeSibling(DateTime.ParseExact("11.10.2017", format, provider));
             var nb2 = new FakeSibling(DateTime.ParseExact("10.10.2017", format, provider));
-            var nb3 = new FakeSibling(DateTime.ParseExact("13.10.2017", format, provider));
 
             Assert.True(
                 new Sibling<FakeSibling>(
                     nb1,
-                    new ManyOf<FakeSibling>(nb1, nb2),
+                    AsEnumerable._(nb1, nb2),
                     -1,
                     nb2
                 ).Value().TimeStamp() == nb2.TimeStamp(),

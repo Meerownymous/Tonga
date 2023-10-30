@@ -85,7 +85,7 @@ namespace Tonga.Func
         /// ).Apply("Hello, world!").Length;
         /// </summary>
         /// <param name="func">func to call</param>
-        public static IFunc<In, Task<Out>> New<In, Out>(System.Func<In, Out> func)
+        public static IFunc<In, Task<Out>> _<In, Out>(System.Func<In, Out> func)
             where Out : class
             => new AsyncFunc<In, Out>(func);
 
@@ -98,7 +98,7 @@ namespace Tonga.Func
         /// ).Apply("Hello, world!").Length;
         /// </summary>
         /// <param name="fnc">func to call</param>
-        public static IFunc<In, Task<Out>> New<In, Out>(IFunc<In, Out> fnc)
+        public static IFunc<In, Task<Out>> _<In, Out>(IFunc<In, Out> fnc)
             where Out : class
             => new AsyncFunc<In, Out>(fnc);
     }

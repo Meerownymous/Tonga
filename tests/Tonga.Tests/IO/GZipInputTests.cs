@@ -22,7 +22,7 @@ namespace Tonga.IO.Tests
 
             Assert.Equal(
                 "Hello!",
-                new LiveText(
+                AsText._(
                     new GZipInput(new InputOf(bytes))
                 ).AsString()
             );

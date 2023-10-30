@@ -13,8 +13,7 @@ namespace Tonga.Scalar
         /// Logical negative.
         /// </summary>
         /// <param name="scalar">scalar to negate</param>
-        public Not(IScalar<Boolean> scalar)
-            : base(() => !scalar.Value())
+        public Not(IScalar<Boolean> scalar) : base(() => !scalar.Value())
         { }
     }
 }

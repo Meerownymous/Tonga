@@ -25,7 +25,7 @@ namespace Tonga.IO.Tests
                 ).Value();
 
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputAsBytes(
                         new InputOf(new Uri(file))))
                 .AsString() == content,
@@ -50,7 +50,7 @@ namespace Tonga.IO.Tests
             ).Value();
 
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputAsBytes(
                         new InputOf(file)
                     )

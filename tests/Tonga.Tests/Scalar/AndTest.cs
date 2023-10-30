@@ -16,7 +16,7 @@ namespace Tonga.Scalar.Tests
         public void AllTrue()
         {
             Assert.True(
-            new And(
+            And._(
                 new True(),
                 new True(),
                 new True()
@@ -38,22 +38,24 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void AllFalse()
         {
-            Assert.True(
-                    new And(
-                        new ManyOf<IScalar<Boolean>>(
-                            new False(),
-                            new False(),
-                            new False()
-                        )
-                    ).Value() == false);
+            Assert.False(
+                new And(
+                    Enumerable.AsEnumerable._(
+                        new False(),
+                        new False(),
+                        new False()
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
         public void EmptyIterator()
         {
             Assert.True(
-                    new And(new ManyOf<IScalar<Boolean>>())
-                    .Value() == true);
+                new And((IEnumerable<IScalar<bool>>)new None<IScalar<bool>>())
+                    .Value()
+            );
         }
 
         [Fact]
@@ -63,7 +65,7 @@ namespace Tonga.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        new ManyOf<string>("hello", "world")
+                        Enumerable.AsEnumerable._("hello", "world")
 
                 ).Value() == true);
 
@@ -78,12 +80,11 @@ namespace Tonga.Scalar.Tests
             var list = new LinkedList<string>();
 
             Assert.True(
-                new And<string>(
-                        str => { list.AddLast(str); return true; },
-                        new ManyOf<string>()
-                ).Value() == true,
-                "Can't enumerate a list"
-                );
+                And._(
+                    str => { list.AddLast(str); return true; },
+                    None._<string>()
+                ).Value()
+            );
 
             Assert.True(list.Count == 0);
         }
@@ -91,11 +92,12 @@ namespace Tonga.Scalar.Tests
         [Fact]
         public void TestFunc()
         {
-            Assert.True(
-                    new And<int>(
-                        input => input > 0,
-                        1, -1, 0
-                    ).Value() == false);
+            Assert.False(
+                And._(
+                    input => input > 0,
+                    1, -1, 0
+                ).Value()
+            );
         }
 
         [Fact]

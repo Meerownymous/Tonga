@@ -15,8 +15,10 @@ namespace Tonga.IO
         /// MD5 checksum calculation of IInput.
         /// </summary>
         /// <param name="source">Input</param>
-        public Md5DigestOf(IInput source) :
-            base(source, new Live<HashAlgorithm>(() => new MD5CryptoServiceProvider()))
+        public Md5DigestOf(IInput source) : base(
+            source,
+            AsScalar._<HashAlgorithm>(() => new MD5CryptoServiceProvider())
+        )
         { }
     }
 }

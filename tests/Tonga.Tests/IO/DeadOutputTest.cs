@@ -12,11 +12,13 @@ namespace Tonga.IO.Tests
         {
             Assert.EndsWith(
                 "друг?",
-                new LiveText(
-                new TeeInput(
-                    new InputOf("How are you, мой друг?"),
-                    new DeadOutput()
-                )).AsString());
+                AsText._(
+                    new TeeInput(
+                        new InputOf("How are you, мой друг?"),
+                        new DeadOutput()
+                    )
+                ).AsString()
+            );
         }
     }
 }

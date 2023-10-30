@@ -111,14 +111,14 @@ namespace Tonga.Func
         /// Function with two inputs which returns the output from cache.
         /// </summary>
         /// <param name="fnc">func to cache result from</param>
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(System.Func<In1, In2, Out> fnc) =>
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> fnc) =>
             new StickyBiFunc<In1, In2, Out>(fnc);
 
         /// <summary>
         /// Function with two inputs which returns the output from cache.
         /// </summary>
         /// <param name="fnc">func to cache result from</param>
-        public static IBiFunc<In1, In2, Out> New<In1, In2, Out>(IBiFunc<In1, In2, Out> fnc) =>
+        public static IBiFunc<In1, In2, Out> _<In1, In2, Out>(IBiFunc<In1, In2, Out> fnc) =>
             new StickyBiFunc<In1, In2, Out>(fnc);
     }
 }

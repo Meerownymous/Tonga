@@ -1,6 +1,8 @@
 
 
 using System.Collections.Generic;
+using Tonga.List;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Enumerable.Test
@@ -12,9 +14,9 @@ namespace Tonga.Enumerable.Test
         {
             string result = string.Empty;
 
-            new LengthOf(
-                new Logging<string>(
-                    new List<string>() { "A", "B" },
+            LengthOf._(
+                Logging._(
+                    AsList._( "A", "B" ),
                     item => result += item
                 )
             ).Value();

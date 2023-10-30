@@ -11,15 +11,15 @@ namespace Tonga.Text
     /// <summary>
     /// A float out of text.
     /// </summary>
-    public sealed class FloatOf : IScalar<float>
+    public sealed class FloatOf : Scalar.ScalarEnvelope<float>
     {
-        private readonly ScalarOf<float> val;
+        private readonly AsScalar<float> val;
 
         /// <summary>
         /// A float out of a <see cref="string"/> using invariant culture.
         /// </summary>
         /// <param name="str">a float as a string</param>
-        public FloatOf(String str) : this(new TextOf(str))
+        public FloatOf(String str) : this(new AsText(str))
         { }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="str">a float as a string</param>
         /// <param name="culture">culture of the string</param>
-        public FloatOf(String str, CultureInfo culture) : this(new TextOf(str), culture)
+        public FloatOf(String str, CultureInfo culture) : this(new AsText(str), culture)
         { }
 
         /// <summary>
@@ -42,21 +42,12 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">a float as a text</param>
         /// <param name="culture">a culture of the string</param>
-        public FloatOf(IText text, CultureInfo culture) : this(new Live<float>(() => float.Parse(text.AsString(), culture.NumberFormat)))
+        public FloatOf(IText text, CultureInfo culture) : this(
+            () => float.Parse(text.AsString(), culture.NumberFormat)
+        )
         { }
 
-        public FloatOf(IScalar<float> value)
-        {
-            val = new ScalarOf<float>(value);
-        }
-
-        /// <summary>
-        /// Get the float.
-        /// </summary>
-        /// <returns>the float</returns>
-        public float Value()
-        {
-            return val.Value();
-        }
+        public FloatOf(Func<float> value) : base(value)
+        { }
     }
 }

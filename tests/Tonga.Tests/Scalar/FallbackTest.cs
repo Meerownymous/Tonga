@@ -13,11 +13,12 @@ namespace Tonga.Scalar.Tests
             var fbk = "strong string";
 
             Assert.True(
-                new Fallback<string>(
-                    new Live<string>(
-                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
+                Fallback._(
+                    AsScalar._<string>(
+                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")
+                    ),
                     fbk
-                    ).Value() == fbk);
+                ).Value() == fbk);
         }
 
         [Fact]
@@ -26,8 +27,8 @@ namespace Tonga.Scalar.Tests
             var fbk = "strong string";
 
             Assert.True(
-                new Fallback<string>(
-                    new Live<string>(
+                Fallback._(
+                    AsScalar._<string>(
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
                     () => fbk
                     ).Value() == fbk);
@@ -38,11 +39,13 @@ namespace Tonga.Scalar.Tests
         {
             var notAmused = new Exception("All is broken :(");
 
-            Assert.True(
-                new Fallback<string>(
-                    new Live<string>(
-                        () => throw notAmused),
-                    (ex) => ex.Message).Value() == notAmused.Message);
+            Assert.Equal(
+                notAmused.Message,
+                Fallback._(
+                    AsScalar._<string>(() => throw notAmused),
+                    (ex) => ex.Message
+                ).Value()
+            );
         }
     }
 }

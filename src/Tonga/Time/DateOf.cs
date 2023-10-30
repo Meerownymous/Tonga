@@ -35,7 +35,7 @@ namespace Tonga.Time
         /// <param name="patterns"></param>
         /// <param name="provider"></param>
         public DateOf(string date, IFormatProvider provider, params string[] patterns) : this(
-            new Live<DateTime>(() =>
+            AsScalar._(() =>
             {
                 return DateTime.ParseExact(date, patterns, provider, DateTimeStyles.AssumeUniversal);
             }))
@@ -54,7 +54,7 @@ namespace Tonga.Time
         /// <param name="date">the date as text</param>
         /// <param name="dateFormat">format provider</param>
         public DateOf(IText date, IFormatProvider dateFormat) : this(
-            new Live<DateTime>(
+            AsScalar._(
                 () =>
                     DateTime.Parse(
                         date.AsString(),
@@ -70,7 +70,7 @@ namespace Tonga.Time
         /// <param name="date"></param>
         public DateOf(IScalar<DateTime> date)
         {
-            this.date = new ScalarOf<DateTime>(date);
+            this.date = date;
         }
 
         /// <summary>

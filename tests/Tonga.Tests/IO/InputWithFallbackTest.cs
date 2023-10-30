@@ -13,7 +13,7 @@ namespace Tonga.IO.Tests
         public void ReadsAlternativeInput()
         {
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputWithFallback(
                         new InputOf(
                             new Uri(Path.GetFullPath("/this-file-is-absent-for-sure.txt"))

@@ -19,5 +19,7 @@ namespace Tonga.Text
         {
             return String.Empty;
         }
+
+        public static Blank New() => new Blank();
     }
 }

@@ -11,7 +11,7 @@ namespace Tonga.Text
         /// A <see cref="IText"/>  as lowercase.
         /// </summary>
         /// <param name="text">text to lower</param>
-        public Lower(IText text) : base(() => text.AsString().ToLower(), false)
+        public Lower(IText text) : base(() => text.AsString().ToLower())
         { }
     }
 }

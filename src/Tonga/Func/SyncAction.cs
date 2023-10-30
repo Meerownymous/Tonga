@@ -100,7 +100,7 @@ namespace Tonga.Func
         /// Proc that is threadsafe.
         /// </summary>
         /// <param name="act">proc to make threadsafe</param>
-        public static IAction<In> New<In>(IAction<In> act)
+        public static IAction<In> _<In>(IAction<In> act)
             => new SyncAction<In>(act);
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="act">proc to make threadsafe</param>
         /// <param name="lck">object to lock threadsafe</param>
-        public static IAction<In> New<In>(IAction<In> act, object lck)
+        public static IAction<In> _<In>(IAction<In> act, object lck)
             => new SyncAction<In>(act, lck);
     }
 }

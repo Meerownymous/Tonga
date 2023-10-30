@@ -8,10 +8,8 @@ namespace Tonga.Text
     /// <summary>
     /// Checks if a text starts with a given content.
     /// </summary>
-    public sealed class StartsWith : IScalar<bool>
+    public sealed class StartsWith : ScalarEnvelope<bool>
     {
-        private readonly ScalarOf<bool> result;
-
         /// <summary>
         /// Checks if a <see cref="IText"/> starts with a given <see cref="string"/>
         /// </summary>
@@ -19,7 +17,7 @@ namespace Tonga.Text
         /// <param name="start">Starting content to use in the test</param>
         public StartsWith(IText text, string start) : this(
             text,
-            new LiveText(start)
+            AsText._(start)
         )
         { }
 
@@ -28,23 +26,11 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">Text to test</param>
         /// <param name="start">Starting content to use in the test</param>
-        public StartsWith(IText text, IText start)
+        public StartsWith(IText text, IText start) : base(() =>
         {
-            this.result =
-                new ScalarOf<bool>(() =>
-                {
-                    var regex = new Regex("^" + Regex.Escape(start.AsString()));
-                    return regex.IsMatch(text.AsString());
-                });
-        }
-
-        /// <summary>
-        /// Gets the result
-        /// </summary>
-        /// <returns>The result</returns>
-        public bool Value()
-        {
-            return this.result.Value();
-        }
+            var regex = new Regex("^" + Regex.Escape(start.AsString()));
+            return regex.IsMatch(text.AsString());
+        })
+        { }
     }
 }

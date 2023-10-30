@@ -15,8 +15,8 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Empty(
                 new Union<string>(
-                    new ManyOf<string>("a", "b"),
-                    new ManyOf<string>("c")
+                    AsEnumerable._("a", "b"),
+                    AsEnumerable._("c")
                 )
             );
         }
@@ -54,8 +54,8 @@ namespace Tonga.Enumerable.Test
                 "c:/abraham/a.jpg c:/caesar/c.jpg",
                 new Text.Joined(" ", 
                     new Union<string>(
-                        new ListOf<string>("c:/abraham/a.jpg", "c:/bertram/b.jpg", "c:/caesar/c.jpg"),
-                        new ListOf<string>("a", "c"),
+                        new AsList<string>("c:/abraham/a.jpg", "c:/bertram/b.jpg", "c:/caesar/c.jpg"),
+                        new AsList<string>("a", "c"),
                         (aItem, bItem) =>
                             new Equals<string>(
                                 Path.GetFileNameWithoutExtension(aItem),

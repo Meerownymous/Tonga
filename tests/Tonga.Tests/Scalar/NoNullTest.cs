@@ -12,7 +12,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.Throws<IOException>(
                 () =>
-                new NoNull<string>(null).Value());
+                NoNull._<object>(null).Value());
         }
 
         [Fact]
@@ -20,9 +20,10 @@ namespace Tonga.Scalar.Tests
         {
             var fbk = "Here, take this instead";
             string val = null;
-            Assert.True(
-                new NoNull<string>(val, fbk).Value() == fbk,
-                "can't get fallback value");
+            Assert.Equal(
+                fbk,
+                NoNull._(val, fbk).Value()
+            );
         }
     }
 }

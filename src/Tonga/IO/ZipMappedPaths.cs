@@ -22,7 +22,7 @@ namespace Tonga.IO
         public ZipMappedPaths(Func<string, string> mapping, IInput zip)
         {
             this.input =
-                new ScalarOf<Stream>(() =>
+                new AsScalar<Stream>(() =>
                 {
                     Stream inMemory = new ValidatedZip(zip).Stream();
                     var newMemory = new MemoryStream();

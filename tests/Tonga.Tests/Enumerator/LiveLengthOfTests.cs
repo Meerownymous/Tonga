@@ -13,7 +13,7 @@ namespace Tonga.Enumerator.Test
         {
             Assert.True(
                 new LiveLengthOf(
-                    new ManyOf<int>(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
+                    AsEnumerable._(1, 2, 3, 4, 5).GetEnumerator()).Value() == 5,
                 "cannot count items"
             );
         }

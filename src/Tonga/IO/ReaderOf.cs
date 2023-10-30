@@ -18,7 +18,7 @@ namespace Tonga.IO
         /// <summary>
         /// the source
         /// </summary>
-        private readonly IScalar<StreamReader> _source;
+        private readonly IScalar<StreamReader> source;
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="char"/> array.
@@ -135,7 +135,7 @@ namespace Tonga.IO
         /// A <see cref="StreamReader"/> out of a <see cref="Func{TResult}"/> that returns a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="src">func retrieving a reader</param>
-        private ReaderOf(Func<StreamReader> src) : this(new Live<StreamReader>(src))
+        private ReaderOf(Func<StreamReader> src) : this(AsScalar._(src))
         { }
 
         /// <summary>
@@ -144,62 +144,62 @@ namespace Tonga.IO
         /// <param name="src">scalar of a reader</param>
         private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this._source = new ScalarOf<StreamReader>(src, stream => !stream.BaseStream.CanRead);
+            this.source = Sticky._(src);
         }
 
         public override int Read()
         {
-            return this._source.Value().Read();
+            return this.source.Value().Read();
         }
 
         public override Task<string> ReadToEndAsync()
         {
-            return this._source.Value().ReadToEndAsync();
+            return this.source.Value().ReadToEndAsync();
         }
 
         public override int ReadBlock(char[] buffer, int index, int count)
         {
-            return this._source.Value().ReadBlock(buffer, index, count);
+            return this.source.Value().ReadBlock(buffer, index, count);
         }
 
         public override Task<int> ReadAsync(char[] buffer, int index, int count)
         {
-            return this._source.Value().ReadAsync(buffer, index, count);
+            return this.source.Value().ReadAsync(buffer, index, count);
         }
 
         public override int Read(char[] cbuf, int off, int len)
         {
-            return this._source.Value().Read(cbuf, off, len);
+            return this.source.Value().Read(cbuf, off, len);
         }
 
         public override Task<int> ReadBlockAsync(char[] buffer, int index, int count)
         {
-            return this._source.Value().ReadBlockAsync(buffer, index, count);
+            return this.source.Value().ReadBlockAsync(buffer, index, count);
         }
 
         public override string ReadLine()
         {
-            return this._source.Value().ReadLine();
+            return this.source.Value().ReadLine();
         }
 
         public override Task<string> ReadLineAsync()
         {
-            return this._source.Value().ReadLineAsync();
+            return this.source.Value().ReadLineAsync();
         }
 
         public override string ReadToEnd()
         {
-            return this._source.Value().ReadToEnd();
+            return this.source.Value().ReadToEnd();
         }
 
         public override int Peek()
         {
-            return this._source.Value().Peek();
+            return this.source.Value().Peek();
         }
 
         protected override void Dispose(bool disposing)
         {
-            _source.Value().Dispose();
+            source.Value().Dispose();
             base.Dispose(disposing);
         }
     }

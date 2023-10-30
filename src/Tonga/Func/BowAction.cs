@@ -13,8 +13,8 @@ namespace Tonga.Func
     public sealed class BowAction : IAction
     {
         private readonly Func<bool> trigger;
-        private readonly IDictionary<string, Action> actions;
-        private readonly IDictionary<string, TimeSpan> timespans;
+        private readonly IMap<string, Action> actions;
+        private readonly IMap<string, TimeSpan> timespans;
 
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
@@ -53,20 +53,21 @@ namespace Tonga.Func
 
         public BowAction(Func<bool> trigger, Action prepare, Action shoot, TimeSpan timeout, TimeSpan interval) : this(
             trigger,
-            new MapOf<Action>(
-                new KvpOf<Action>("prepare", prepare),
-                new KvpOf<Action>("shoot", shoot)
+            AsMap._(
+                AsPair._("prepare", prepare),
+                AsPair._("shoot", shoot)
             ),
-            new MapOf<TimeSpan>(
-                new KvpOf<TimeSpan>("timeout", timeout),
-                new KvpOf<TimeSpan>("interval", interval)
-            ))
+            AsMap._(
+                AsPair._("timeout", timeout),
+                AsPair._("interval", interval)
+            )
+        )
         { }
 
         /// <summary>
         /// An action which waits for a trigger to return true before executing.
         /// </summary>
-        private BowAction(Func<bool> trigger, IDictionary<string, Action> actions, IDictionary<string, TimeSpan> timespans)
+        private BowAction(Func<bool> trigger, IMap<string, Action> actions, IMap<string, TimeSpan> timespans)
         {
             this.trigger = trigger;
             this.actions = actions;

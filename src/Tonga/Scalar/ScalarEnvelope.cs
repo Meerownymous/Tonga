@@ -4,17 +4,26 @@ using System;
 
 namespace Tonga.Scalar
 {
+    /// <summary>
+    /// Envelope for scalars.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class ScalarEnvelope<T> : IScalar<T>
     {
-        private readonly ScalarOf<T> result;
+        private readonly Func<T> result;
 
-        public ScalarEnvelope(Func<T> result)
-            : this(new ScalarOf<T>(result))
+        /// <summary>
+        /// Envelope for scalars.
+        /// </summary>
+        public ScalarEnvelope(ScalarEnvelope<T> result) : this(() => result.Value())
         { }
 
-        public ScalarEnvelope(IScalar<T> result)
+        /// <summary>
+        /// Envelope for scalars.
+        /// </summary>
+        public ScalarEnvelope(Func<T> result)
         {
-            this.result = new ScalarOf<T>(result);
+            this.result = result;
         }
 
         /// <summary>
@@ -23,7 +32,7 @@ namespace Tonga.Scalar
         /// <returns>the result</returns>
         public T Value()
         {
-            return result.Value();
+            return result();
         }
     }
 }

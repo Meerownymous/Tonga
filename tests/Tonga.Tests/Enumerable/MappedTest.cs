@@ -4,6 +4,7 @@ using System;
 using Xunit;
 using Tonga.List;
 using Tonga.Text;
+using Tonga.Scalar;
 
 namespace Tonga.Enumerable.Test
 {
@@ -14,27 +15,27 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 "HELLO",
-                new ItemAt<IText>(
-                    new Enumerable.Mapped<String, IText>(
-                        input => new Upper(new LiveText(input)),
-                        new ManyOf<string>("hello", "world", "damn")),
+                ItemAt._(
+                    Mapped._(
+                        input => new Upper(AsText._(input)),
+                        AsEnumerable._("hello", "world", "damn")),
                     0
                 ).Value().AsString()
             );
         }
 
         [Fact]
-        public void MappedResultIsSticky()
+        public void SensesChanges()
         {
             var mappings = 0;
             var mapping =
-                new Enumerable.Mapped<String, IText>(
+                Mapped._(
                     input =>
                     {
                         mappings++;
-                        return new Upper(new LiveText(input));
+                        return Upper._(AsText._(input));
                     },
-                    new ManyOf<string>("hello", "world", "damn")
+                    AsEnumerable._("hello", "world", "damn")
                 );
 
             var enm1 = mapping.GetEnumerator();
@@ -42,7 +43,7 @@ namespace Tonga.Enumerable.Test
             var enm2 = mapping.GetEnumerator();
             enm2.MoveNext(); var current2 = enm2.Current;
 
-            Assert.Equal(1, mappings);
+            Assert.Equal(2, mappings);
         }
 
         [Fact]
@@ -50,14 +51,13 @@ namespace Tonga.Enumerable.Test
         {
             var mappings = 0;
             var mapping =
-                new Enumerable.Mapped<string, string>(
+                new Mapped<string, string>(
                     input =>
                     {
                         mappings++;
                         return input;
                     },
-                    new ManyOf<string>("hello", "world", "damn"),
-                    live: true
+                    AsEnumerable._("hello", "world", "damn")
                 );
 
             var enm1 = mapping.GetEnumerator();
@@ -71,13 +71,14 @@ namespace Tonga.Enumerable.Test
         [Fact]
         public void TransformsEmptyList()
         {
-            Assert.True(
-                new LengthOf(
-                    new Enumerable.Mapped<String, IText>(
-                        input => new Upper(new LiveText(input)),
-                        new ManyOf<string>()
+            Assert.Equal(
+                0,
+                LengthOf._(
+                    Mapped._(
+                        input => new Upper(AsText._(input)),
+                        None._<string>()
                     )
-                ).Value() == 0
+                ).Value()
             );
         }
 
@@ -86,11 +87,11 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 "WORLD1",
-                new ItemAt<IText>(
-                    new Enumerable.Mapped<String, IText>(
-                        (input, index) => new Upper(new LiveText(input + index)),
-                        new ManyOf<string>("hello", "world", "damn")
-                        ),
+                ItemAt._(
+                    Mapped._(
+                        (input, index) => new Upper(AsText._(input + index)),
+                        AsEnumerable._("hello", "world", "damn")
+                    ),
                     1
                 ).Value().AsString()
             );
@@ -101,16 +102,12 @@ namespace Tonga.Enumerable.Test
         public void AdvancesOnlyNecessary()
         {
             var advances = 0;
-            var origin = new ListOf<string>("item1", "item2", "item3");
-
             var list =
-                new Mapped<string, string>(
+                Mapped._(
                     item => item,
-                    new ManyOf<string>(
-                        new Logging<string>(
-                            origin,
-                            idx => advances++
-                        )
+                    Logging._(
+                        AsList._("item1", "item2", "item3"),
+                        idx => advances++
                     )
                 );
 
@@ -124,16 +121,14 @@ namespace Tonga.Enumerable.Test
         public void CopyCtorDoesNotAdvance()
         {
             var advances = 0;
-            var origin = new ListOf<string>("item1", "item2", "item3");
+            var origin =  AsList._("item1", "item2", "item3");
 
             var list =
-                new Mapped<string, string>(
+                Mapped._(
                     item => item,
-                    new ManyOf<string>(
-                        new Logging<string>(
-                            origin,
-                            idx => advances++
-                        )
+                    Logging._(
+                        origin,
+                        idx => advances++
                     )
                 );
             list.GetEnumerator();

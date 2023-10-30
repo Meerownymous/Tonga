@@ -5,6 +5,7 @@ using Tonga;
 
 using Tonga.IO;
 using Tonga.Text;
+using Tonga.Text;
 
 ///<summary>
 ///Zips all Files in a Directory

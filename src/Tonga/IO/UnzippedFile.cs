@@ -16,7 +16,7 @@ namespace Tonga.IO
     {
         private readonly IInput zip;
         private readonly string filePath;
-        private readonly ScalarOf<Stream> stream;
+        private readonly AsScalar<Stream> stream;
         /// <summary>
         /// Content of a file in a zip archive
         /// is tolerant to slash style
@@ -34,7 +34,7 @@ namespace Tonga.IO
             this.zip = zip;
             this.filePath = virtualPath;
 
-            this.stream = new ScalarOf<Stream>(() =>
+            this.stream = new AsScalar<Stream>(() =>
             {
                 Stream content;
                 using (var archive = new ZipArchive(
@@ -43,7 +43,7 @@ namespace Tonga.IO
                                         leaveOpen))
                 {
                     var zipEntry =
-                        new FirstOf<ZipArchiveEntry>(
+                        new First<ZipArchiveEntry>(
                             new Filtered<ZipArchiveEntry>(entry =>
                                 Path.GetFullPath(entry.FullName) == Path.GetFullPath(this.filePath),
                                 archive.Entries

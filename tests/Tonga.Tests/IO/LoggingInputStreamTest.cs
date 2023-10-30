@@ -14,7 +14,7 @@ namespace Tonga.IO.Tests
             var stream =
                 new LoggingInputStream(
                     new MemoryStream(
-                        new BytesOf("").AsBytes()
+                        new AsBytes("").Bytes()
                     ),
                     ""
                 );

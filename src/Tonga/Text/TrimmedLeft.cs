@@ -13,14 +13,17 @@ namespace Tonga.Text
         /// A <see cref="string"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedLeft(string text) : this(new LiveText(text))
+        public TrimmedLeft(string text) : this(AsText._(text))
         { }
 
         /// <summary>
         /// An <see cref="IText"/> trimmed (removed whitespaces) on the left side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public TrimmedLeft(IText text) : this(text, new Live<char[]>(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' }))
+        public TrimmedLeft(IText text) : this(
+            text,
+            AsScalar._(() => new char[] { '\b', '\f', '\n', '\r', '\t', '\v', ' ' })
+        )
         { }
 
         /// <summary>
@@ -28,7 +31,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public TrimmedLeft(string text, char[] trimText) : this(new LiveText(text), trimText)
+        public TrimmedLeft(string text, char[] trimText) : this(AsText._(text), trimText)
         { }
 
         /// <summary>
@@ -36,7 +39,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public TrimmedLeft(IText text, char[] trimText) : this(text, new Live<char[]>(trimText))
+        public TrimmedLeft(IText text, char[] trimText) : this(text, AsScalar._(trimText))
         { }
 
         /// <summary>
@@ -48,8 +51,7 @@ namespace Tonga.Text
             () =>
             {
                 return text.AsString().TrimStart(trimText.Value());
-            },
-            false
+            }
         )
         { }
 
@@ -58,7 +60,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(string text, string removeText) : this(new LiveText(text), new LiveText(removeText))
+        public TrimmedLeft(string text, string removeText) : this(AsText._(text), AsText._(removeText))
         { }
 
         /// <summary>
@@ -66,7 +68,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(string text, IText removeText) : this(new LiveText(text), removeText)
+        public TrimmedLeft(string text, IText removeText) : this(AsText._(text), removeText)
         { }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public TrimmedLeft(IText text, string removeText) : this(text, new LiveText(removeText))
+        public TrimmedLeft(IText text, string removeText) : this(text, AsText._(removeText))
         { }
 
         /// <summary>
@@ -98,6 +100,9 @@ namespace Tonga.Text
         public TrimmedLeft(IText text, IText removeText, bool ignoreCase) : base(
             () =>
             {
+                text = new AsSticky(text);
+                removeText = new AsSticky(removeText);
+
                 string str = text.AsString();
                 string remove = removeText.AsString();
 
@@ -118,8 +123,7 @@ namespace Tonga.Text
                     }
                 }
                 return str;
-            },
-            false
+            }
         )
         { }
     }

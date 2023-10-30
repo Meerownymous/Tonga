@@ -1,8 +1,5 @@
-
-
 using System;
 using System.Collections.Generic;
-using Tonga.Enumerable;
 
 namespace Tonga.List
 {
@@ -26,26 +23,10 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> mapping, IEnumerator<In> src) : base(() =>
-            new Enumerable.Mapped<In, Out>(
-                mapping,
-                new EnumeratorAsEnumerable<In>(src),
-                false
-            ).GetEnumerator(),
-            false
-        )
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="mapping">mapping function</param>
-        /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : base(() =>
-            new ListOf<Out>(
+            new AsList<Out>(
                 new Collection.Mapped<In, Out>(mapping, src)
-            ),
-            false
+            )
         )
         { }
 
@@ -55,8 +36,9 @@ namespace Tonga.List
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
         public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
-            new Enumerable.Mapped<In, Out>(mapping, src, false).GetEnumerator(),
-            false
+            AsList._(
+                Enumerable.Mapped._(mapping, src)
+            )
         )
         { }
     }
@@ -68,7 +50,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> New<In, Out>(IFunc<In, Out> mapping, IEnumerable<In> src)
+        public static IList<Out> _<In, Out>(IFunc<In, Out> mapping, IEnumerable<In> src)
             => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
@@ -76,7 +58,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> New<In, Out>(Func<In, Out> mapping, IEnumerator<In> src)
+        public static IList<Out> _<In, Out>(Func<In, Out> mapping, IEnumerable<In> src)
             => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
@@ -84,7 +66,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> New<In, Out>(Func<In, Out> mapping, IEnumerable<In> src)
+        public static IList<Out> _<In, Out>(Func<In, Out> mapping, ICollection<In> src)
             => new Mapped<In, Out>(mapping, src);
 
         /// <summary>
@@ -92,7 +74,23 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public static IList<Out> New<In, Out>(Func<In, Out> mapping, ICollection<In> src)
-            => new Mapped<In, Out>(mapping, src);
+        public static IList<Out> Sticky<In, Out>(IFunc<In, Out> mapping, IEnumerable<In> src)
+            => List.Sticky._(new Mapped<In, Out>(mapping, src));
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="mapping">mapping function</param>
+        /// <param name="src">source enumerator</param>
+        public static IList<Out> Sticky<In, Out>(Func<In, Out> mapping, IEnumerable<In> src)
+            => List.Sticky._(new Mapped<In, Out>(mapping, src));
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="mapping">mapping function</param>
+        /// <param name="src">source enumerator</param>
+        public static IList<Out> Sticky<In, Out>(Func<In, Out> mapping, ICollection<In> src)
+            => List.Sticky._(new Mapped<In, Out>(mapping, src));
     }
 }

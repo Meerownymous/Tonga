@@ -10,37 +10,37 @@ namespace Tonga.Number
     /// </summary>
     public abstract class NumberEnvelope : INumber
     {
-        private readonly IScalar<double> _dbl;
-        private readonly IScalar<int> _int;
-        private readonly IScalar<long> _lng;
-        private readonly IScalar<float> _flt;
+        private readonly IScalar<double> dbl;
+        private readonly IScalar<int> itg;
+        private readonly IScalar<long> lng;
+        private readonly IScalar<float> flt;
 
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="double"/>
         /// </summary>
         /// <param name="dbl">the double</param>
-        public NumberEnvelope(double dbl) : this(new Live<double>(dbl))
+        public NumberEnvelope(double dbl) : this(AsScalar._(dbl))
         { }
 
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="int"/>
         /// </summary>
         /// <param name="itg">the int</param>
-        public NumberEnvelope(int itg) : this(new Live<int>(itg))
+        public NumberEnvelope(int itg) : this(AsScalar._(itg))
         { }
 
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="long"/>
         /// </summary>
         /// <param name="lng">the long</param>
-        public NumberEnvelope(long lng) : this(new Live<long>(lng))
+        public NumberEnvelope(long lng) : this(AsScalar._(lng))
         { }
 
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="float"/>
         /// </summary>
         /// <param name="flt">the float</param>
-        public NumberEnvelope(float flt) : this(new Live<float>(flt))
+        public NumberEnvelope(float flt) : this(AsScalar._(flt))
         { }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="flt">the float</param>
         public NumberEnvelope(IScalar<float> flt) : this(
-            new Live<double>(() => Convert.ToDouble(flt.Value())),
-            new Live<int>(() => Convert.ToInt32(flt.Value())),
-            new Live<long>(() => Convert.ToInt64(flt.Value())),
+            AsScalar._(() => Convert.ToDouble(flt.Value())),
+            AsScalar._(() => Convert.ToInt32(flt.Value())),
+            AsScalar._(() => Convert.ToInt64(flt.Value())),
             flt)
         { }
 
@@ -59,10 +59,10 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="itg">the int</param>
         public NumberEnvelope(IScalar<int> itg) : this(
-            new Live<double>(() => Convert.ToDouble(itg.Value())),
+            AsScalar._(() => Convert.ToDouble(itg.Value())),
             itg,
-            new Live<long>(() => Convert.ToInt64(itg.Value())),
-            new Live<float>(() => Convert.ToSingle(itg.Value())))
+            AsScalar._(() => Convert.ToInt64(itg.Value())),
+            AsScalar._(() => Convert.ToSingle(itg.Value())))
         { }
 
         /// <summary>
@@ -70,10 +70,10 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="lng">the long</param>
         public NumberEnvelope(IScalar<long> lng) : this(
-            new Live<double>(() => Convert.ToDouble(lng.Value())),
-            new Live<int>(() => Convert.ToInt32(lng.Value())),
+            AsScalar._(() => Convert.ToDouble(lng.Value())),
+            AsScalar._(() => Convert.ToInt32(lng.Value())),
             lng,
-            new Live<float>(() => Convert.ToSingle(lng.Value())))
+            AsScalar._(() => Convert.ToSingle(lng.Value())))
         { }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace Tonga.Number
         /// <param name="dbl"></param>
         public NumberEnvelope(IScalar<double> dbl) : this(
             dbl,
-            new Live<int>(() => Convert.ToInt32(dbl.Value())),
-            new Live<long>(() => Convert.ToInt64(dbl.Value())),
-            new Live<float>(() => Convert.ToSingle(dbl.Value())))
+            AsScalar._(() => Convert.ToInt32(dbl.Value())),
+            AsScalar._(() => Convert.ToInt64(dbl.Value())),
+            AsScalar._(() => Convert.ToSingle(dbl.Value())))
         { }
 
         /// <summary>
@@ -96,10 +96,10 @@ namespace Tonga.Number
         /// <param name="flt"></param>
         public NumberEnvelope(IScalar<double> dbl, IScalar<int> itg, IScalar<long> lng, IScalar<float> flt)
         {
-            _dbl = dbl;
-            _flt = flt;
-            _lng = lng;
-            _int = itg;
+            this.dbl = dbl;
+            this.flt = flt;
+            this.lng = lng;
+            this.itg = itg;
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Tonga.Number
         /// <returns></returns>
         public double AsDouble()
         {
-            return _dbl.Value();
+            return dbl.Value();
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Tonga.Number
         /// <returns></returns>
         public float AsFloat()
         {
-            return _flt.Value();
+            return flt.Value();
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Tonga.Number
         /// <returns></returns>
         public int AsInt()
         {
-            return _int.Value();
+            return itg.Value();
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Tonga.Number
         /// <returns></returns>
         public long AsLong()
         {
-            return _lng.Value();
+            return lng.Value();
         }
     }
 }

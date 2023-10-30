@@ -13,7 +13,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void GroupsList()
         {
-            var srcList = new ListOf<string>("ABC", "ABCD", "ABCDE");
+            var srcList = new AsList<string>("ABC", "ABCD", "ABCDE");
             var keyFunc =
                 new FuncOf<string, double>((str) =>
                     new NumberOf(

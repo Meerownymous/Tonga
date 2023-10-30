@@ -16,7 +16,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="text">the text</param>
         public IsNumber(string text) : this(
-            new TextOf(text),
+            new AsText(text),
             NumberFormatInfo.InvariantInfo
         )
         { }
@@ -27,7 +27,7 @@ namespace Tonga.Scalar
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
         public IsNumber(string text, IFormatProvider provider) : this(
-            new TextOf(text),
+            new AsText(text),
             provider
         )
         { }
@@ -47,8 +47,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
-        public IsNumber(IText text, IFormatProvider provider)
-            : base(() =>
+        public IsNumber(IText text, IFormatProvider provider) : base(() =>
                 double.TryParse(
                     text.AsString(),
                     NumberStyles.Any,

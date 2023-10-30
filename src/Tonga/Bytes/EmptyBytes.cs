@@ -17,7 +17,7 @@ namespace Tonga.Bytes
         /// Get the content as byte array.
         /// </summary>
         /// <returns>content as byte array</returns>
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
             return new byte[] { };
         }

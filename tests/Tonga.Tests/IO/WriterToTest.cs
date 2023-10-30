@@ -22,7 +22,7 @@ namespace Tonga.IO.Tests
             using (var output = new WriterTo(uri))
             {
                 s =
-                    new LiveText(
+                    AsText._(
                         new TeeInput(
                             new InputOf(content),
                                 new WriterAsOutput(
@@ -33,7 +33,7 @@ namespace Tonga.IO.Tests
             }
 
             Assert.True(
-                new LiveText(
+                AsText._(
                     new InputAsBytes(
                         new InputOf(uri)
                     )

@@ -19,7 +19,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), new ManyOf<In>(src))
+        public Or(Func<In, bool> func, params In[] src) : this(new FuncOf<In, bool>(func), AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, new ManyOf<In>(src))
+        public Or(IFunc<In, Boolean> func, params In[] src) : this(func, AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Tonga.Scalar
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
         public Or(IFunc<In, Boolean> func, IEnumerable<In> src) : this(
-            new Enumerable.Mapped<In, IScalar<Boolean>>(
+            new Mapped<In, IScalar<Boolean>>(
                 new FuncOf<In, IScalar<Boolean>>(
-                    (item) => new Live<Boolean>(func.Invoke(item))
+                    (item) => AsScalar._(func.Invoke(item))
                 ),
                 src
             )
@@ -65,7 +65,8 @@ namespace Tonga.Scalar
         /// Functions wich will executed with given input value
         /// </param>
         public Or(In value, params Func<In, bool>[] functions) : this(
-            item => new Or(
+            item =>
+            new Or(
                 new Mapped<Func<In, bool>, bool>(
                     func => func.Invoke(item),
                     functions
@@ -111,7 +112,7 @@ namespace Tonga.Scalar
         /// were true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public Or(params Func<bool>[] funcs) : this(new ManyOf<Func<bool>>(funcs))
+        public Or(params Func<bool>[] funcs) : this(AsEnumerable._(funcs))
         { }
 
         /// <summary>
@@ -119,10 +120,12 @@ namespace Tonga.Scalar
         /// true.
         /// </summary>
         /// <param name="funcs">the conditions to apply</param>
-        public Or(ManyOf<Func<bool>> funcs) : this(
-            new Mapped<Func<bool>, IScalar<bool>>(
-                func => new Live<bool>(func),
-                funcs))
+        public Or(IEnumerable<Func<bool>> funcs) : this(
+            Mapped._(
+                func => AsScalar._(func),
+                funcs
+            )
+        )
         { }
 
         /// <summary>
@@ -130,7 +133,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(params IScalar<Boolean>[] src) : this(
-            new ManyOf<IScalar<Boolean>>(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -138,9 +141,11 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(params bool[] src) : this(
-            new Mapped<bool, IScalar<bool>>(
-                item => new Live<bool>(item),
-                src))
+            Mapped._(
+                item => AsScalar._(item),
+                src
+            )
+        )
         { }
 
         /// <summary>
@@ -148,17 +153,18 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">list of items</param>
         public Or(IEnumerable<bool> src) : this(
-            new Mapped<bool, IScalar<bool>>(
-                item => new Live<bool>(item),
-                src))
+            Mapped._(
+                item => AsScalar._(item),
+                src
+            )
+        )
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        public Or(IEnumerable<IScalar<bool>> src)
-            : base(() =>
+        public Or(IEnumerable<IScalar<bool>> src) : base(() =>
             {
                 bool foundTrue = false;
                 foreach (var item in src)
@@ -179,7 +185,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> New<In>(Func<In, bool> func, params In[] src)
+        public static Or<In> From<In>(Func<In, bool> func, params In[] src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -188,7 +194,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> New<In>(Func<In, bool> func, IEnumerable<In> src)
+        public static Or<In> From<In>(Func<In, bool> func, IEnumerable<In> src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -197,7 +203,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> New<In>(IFunc<In, Boolean> func, params In[] src)
+        public static Or<In> From<In>(IFunc<In, Boolean> func, params In[] src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -205,7 +211,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> New<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
+        public static Or<In> From<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -217,7 +223,7 @@ namespace Tonga.Scalar
         /// <param name="functions">
         /// Functions wich will executed with given input value
         /// </param>
-        public static Or<In> New<In>(In value, params Func<In, bool>[] functions)
+        public static Or<In> From<In>(In value, params Func<In, bool>[] functions)
             => new Or<In>(value, functions);
     }
 }

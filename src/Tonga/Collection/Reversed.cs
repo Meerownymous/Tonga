@@ -16,7 +16,7 @@ namespace Tonga.Collection
         /// ctor
         /// </summary>
         /// <param name="src"></param>
-        public Reversed(params T[] src) : this(new ManyOf<T>(src))
+        public Reversed(params T[] src) : this(Enumerable.AsEnumerable._(src))
         { }
         public static Reversed<T> New(params T[] src) => new Reversed<T>(src);
 
@@ -35,8 +35,7 @@ namespace Tonga.Collection
         public Reversed(ICollection<T> src) : base(
             () => new LiveCollection<T>(
                     new LinkedList<T>(src).Reverse()
-            ),
-            false
+            )
         )
         { }
         public static Reversed<T> New(ICollection<T> src) => new Reversed<T>(src);
@@ -45,10 +44,10 @@ namespace Tonga.Collection
     /// Reversed collection.
     public static class Reversed
     {
-        public static ICollection<T> New<T>(params T[] src) => new Reversed<T>(src);
+        public static ICollection<T> _<T>(params T[] src) => new Reversed<T>(src);
 
-        public static ICollection<T> New<T>(IEnumerable<T> src) => new Reversed<T>(src);
+        public static ICollection<T> _<T>(IEnumerable<T> src) => new Reversed<T>(src);
 
-        public static ICollection<T> New<T>(ICollection<T> src) => new Reversed<T>(src);
+        public static ICollection<T> _<T>(ICollection<T> src) => new Reversed<T>(src);
     }
 }

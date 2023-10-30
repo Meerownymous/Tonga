@@ -26,7 +26,7 @@ namespace Tonga.IO
         /// <summary>
         /// Digest
         /// </summary>
-        public byte[] AsBytes()
+        public byte[] Bytes()
         {
             using (var sha = algorithmFactory.Value())
             {

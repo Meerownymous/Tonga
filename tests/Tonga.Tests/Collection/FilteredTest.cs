@@ -13,7 +13,7 @@ namespace Tonga.Collection.Tests
         public void BehavesAsCollection()
         {
             var col =
-                new Filtered<int>(i => i < 2, 1, 2, 0, -1);
+                Filtered._(i => i < 2, 1, 2, 0, -1);
             Assert.True(col.Contains(1) && col.Contains(-1));
         }
 
@@ -22,8 +22,8 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 2,
-                new LengthOf(
-                    new Filtered<string>(
+                Length._(
+                    Filtered._(
                         input => input.Length > 4,
                         AsEnumerable._("hello", "world", "друг")
                     )
@@ -35,7 +35,7 @@ namespace Tonga.Collection.Tests
         public void FiltersEmptyList()
         {
             var col =
-                new Filtered<string>(
+                Filtered._(
                     input => input.Length > 4,
                     new List<string>()
                 );
@@ -47,7 +47,7 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 2,
-                new Filtered<string>(
+                Filtered._(
                     input => input.Length >= 4,
                     AsEnumerable._("some", "text", "yes")
                 ).Count
@@ -58,7 +58,7 @@ namespace Tonga.Collection.Tests
         public void WithItemsNotEmpty()
         {
             Assert.NotEmpty(
-                new Filtered<string>(
+                Filtered._(
                     input => input.Length > 4,
                     AsEnumerable._("first", "second")
                 )
@@ -69,7 +69,7 @@ namespace Tonga.Collection.Tests
         public void WithoutItemsIsEmpty()
         {
             Assert.Empty(
-                new Filtered<string>(
+                Filtered._(
                     input => input.Length > 16,
                     AsEnumerable._("third", "fourth")
                 )

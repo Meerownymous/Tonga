@@ -15,8 +15,9 @@ namespace Tonga.IO
         /// SHA-1 checksum calculation of IInput.
         /// </summary>
         /// <param name="source">Input</param>
-        public Sha1DigestOf(IInput source) :
-            base(source, AsScalar._<HashAlgorithm>(() => new SHA1CryptoServiceProvider()))
+        public Sha1DigestOf(IInput source) : base(
+            source, AsScalar._<HashAlgorithm>(() => new SHA1CryptoServiceProvider())
+        )
         { }
     }
 }

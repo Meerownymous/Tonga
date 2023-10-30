@@ -7,6 +7,8 @@ using Xunit;
 using Tonga.Bytes;
 using Tonga.Enumerable;
 using Tonga.Text;
+using Tonga.Scalar;
+using Tonga.Func;
 
 namespace Tonga.IO.Tests
 {
@@ -25,8 +27,8 @@ namespace Tonga.IO.Tests
                     var outputPath = Path.GetFullPath(outputFile.Value());
 
                     //Create large file
-                    new LengthOf(
-                        new InputOf(
+                    ReadAll._(
+                        new AsInput(
                             new TeeInputStream(
                                 new MemoryStream(
                                     new AsBytes(
@@ -43,28 +45,32 @@ namespace Tonga.IO.Tests
                                 ).Stream()
                             )
                         )
-                    ).Value();
+                    ).Invoke();
 
-                    Assert.True(
-                        new LengthOf(
-                            new InputOf(
-                                new TeeInputStream(
-                                    new InputOf(
-                                        inputPath
-                                        ).Stream(),
-                                    new WriterAsOutputStream(
-                                        new StreamWriter(outputPath)
-                                        )
-                                    )
+                    var tee =
+                        new AsInput(
+                            new TeeInputStream(
+                                new AsInput(
+                                    inputPath
+                                ).Stream(),
+                                new WriterAsOutputStream(
+                                    new StreamWriter(outputPath)
                                 )
-                            ).Value() ==
-                        new LengthOf(
-                            new InputOf(
-                                new Uri(Path.GetFullPath(outputPath))
-                                )
-                            ).Value(),
-                        "input and output are not the same size"
+                            )
                         );
+
+                    ReadAll._(tee).Invoke();
+
+                    Assert.Equal(
+                        Length._(
+                            tee
+                        ).Value(),
+                        Length._(
+                            new AsInput(
+                                new Uri(Path.GetFullPath(outputPath))
+                            )
+                        ).Value()
+                    );
                 }
             }
         }

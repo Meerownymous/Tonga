@@ -17,7 +17,7 @@ namespace Tonga
     ///   )
     /// ).asString();</code>
     ///
-    /// <para>Here <see cref="IO.InputOf"/> 
+    /// <para>Here <see cref="IO.AsInput"/> 
     /// implements <see cref="IInput"/> and behaves like
     /// one, providing read-only access to the encapsulated <see cref="Uri"/> pointing to a file.</para>
     /// </summary>

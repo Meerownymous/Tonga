@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using Xunit;
 using Tonga.Text;
+using Tonga.Scalar;
+using Tonga.Func;
 
 namespace Tonga.IO.Tests
 {
@@ -18,19 +20,21 @@ namespace Tonga.IO.Tests
             File.Delete(path);
 
             //Create file through reading source
-            new LengthOf(
+            ReadAll._(
                 new TeeInput(
-                    new InputOf(content),
-                    new OutputTo(path))
-            ).Value();
+                    new AsInput(content),
+                    new OutputTo(path)
+                )
+            ).Invoke();
 
-            Assert.True(
+            Assert.Equal(
+                content,
                 AsText._(
-                    new InputOf(
-                        new ReaderOf(
+                    new AsInput(
+                        new AsReader(
                             new Uri(path)))
-                ).AsString() == content,
-                "can't read data from file");
+                ).AsString()
+            );
         }
 
     }

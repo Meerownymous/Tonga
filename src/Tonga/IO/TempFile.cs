@@ -46,7 +46,7 @@ namespace Tonga.IO
 
         private TempFile(IScalar<string> path)
         {
-            this.path = Sticky._(path);
+            this.path = Scalar.Sticky._(path);
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Tonga.Enumerable
             this.b = b;
             this.comparison = compare;
             this.result =
-                Ternary.From(
+                Ternary._(
                     AsEnumerable._(Produced),
                     Sticky._(Produced),
                     live

@@ -42,7 +42,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 0,
-                LengthOf._(
+                Length._(
                     Head._(
                         AsEnumerable._(0, 1, 2, 3, 4),
                         0
@@ -56,7 +56,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 0,
-                LengthOf._(
+                Length._(
                     Head._(
                         AsEnumerable._(0, 1, 2, 3, 4),
                         -1
@@ -70,7 +70,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 0,
-                LengthOf._(
+                Length._(
                     Head._(
                         None._<Nothing>(),
                         10

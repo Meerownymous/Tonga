@@ -50,14 +50,7 @@ namespace Tonga.Enumerable
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> src) =>
+        public static IEnumerable<T> _<T>(IEnumerable<T> src) =>
             new Reversed<T>(src);
-
-        /// <summary>
-        /// A reversed <see cref="IEnumerable{T}"/>
-        /// </summary>
-        /// <param name="src">enumerable to reverse</param>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> src) =>
-            Enumerable.Sticky._(new Reversed<T>(src));
     }
 }

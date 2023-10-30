@@ -12,19 +12,20 @@ namespace Tonga.Func.Tests
         [Fact]
         public void WithoutIterable()
         {
-            Assert.True(
-            new LengthOf(
-                new Filtered<string>(
-                    input => input.EndsWith("XY"),
-                    new Enumerable.Mapped<string, string>(
-                        new ChainedFunc<String, String, String>(
-                            input => input += "X",
-                            input => input += "Y"
-                        ),
-                        AsEnumerable._("public", "final", "class")
-                    ))
-            ).Value() == 3,
-            "cannot chain functions");
+            Assert.Equal(
+                3,
+                Length._(
+                    Filtered._(
+                        input => input.EndsWith("XY"),
+                        Mapped._(
+                            new ChainedFunc<String, String, String>(
+                                input => input += "X",
+                                input => input += "Y"
+                            ),
+                            AsEnumerable._("public", "final", "class")
+                        ))
+                ).Value()
+            );
         }
 
         [Fact]
@@ -32,10 +33,10 @@ namespace Tonga.Func.Tests
         {
             Assert.Equal(
                 2,
-                new LengthOf(
-                    new Filtered<string>(
+                Length._(
+                    Filtered._(
                         input => !input.StartsWith("st") && input.EndsWith("12"),
-                         new Enumerable.Mapped<string, string>(
+                         Enumerable.Mapped._(
                             new ChainedFunc<string, string, string>(
                                 input => input += "1",
                                 AsEnumerable._(

@@ -36,7 +36,7 @@ namespace Tonga.IO
         /// </summary>
         private TempDirectory(IScalar<string> path)
         {
-            this.path = Sticky._(path);
+            this.path = Scalar.Sticky._(path);
         }
 
         public void Dispose()

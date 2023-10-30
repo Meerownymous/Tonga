@@ -13,7 +13,7 @@ namespace Tonga.Enumerable.Test
         public void MergesEntries()
         {
             Assert.True(
-                LengthOf._(
+                Length._(
                     Distinct._(
                         AsEnumerable._(1, 2, 3),
                         AsEnumerable._(10, 2, 30)
@@ -26,7 +26,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 5,
-                LengthOf._(
+                Length._(
                     Distinct._(
                         AsEnumerable._(
                             AsEnumerable._(
@@ -51,7 +51,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 5,
-                LengthOf._(
+                Length._(
                     Distinct._(
                         AsEnumerable._(
                             AsEnumerable._(1, 2, 3),
@@ -66,7 +66,7 @@ namespace Tonga.Enumerable.Test
         public void WorksWithEmpties()
         {
             Assert.True(
-                LengthOf._(
+                Length._(
                     Distinct._(
                         None._<string>(),
                         None._<string>()
@@ -83,8 +83,8 @@ namespace Tonga.Enumerable.Test
                 );
 
             Assert.Equal(
-                LengthOf._(dst).Value(),
-                LengthOf._(dst).Value()
+                Length._(dst).Value(),
+                Length._(dst).Value()
             );
         }
     }

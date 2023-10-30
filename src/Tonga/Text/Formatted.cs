@@ -89,7 +89,7 @@ namespace Tonga.Text
             locale,
             () =>
             {
-                object[] strings = new object[new LengthOf(arguments).Value()];
+                object[] strings = new object[Length._(arguments).Value()];
                 for (int i = 0; i < arguments.Length; i++)
                 {
                     strings[i] = arguments[i].AsString();

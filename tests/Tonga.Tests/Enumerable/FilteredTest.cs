@@ -1,13 +1,7 @@
-
-
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Xunit;
-using Tonga.Tests;
-using Tonga.Scalar;
 using Tonga.List;
+using Tonga.Scalar;
+using Xunit;
 
 namespace Tonga.Enumerable.Test
 {
@@ -17,8 +11,8 @@ namespace Tonga.Enumerable.Test
         public void Filters()
         {
             Assert.True(
-                new LengthOf(
-                    new Filtered<string>(
+                Length._(
+                    Filtered._(
                        (input) => input != "B",
                        new List<string>() { "A", "B", "C" }
                     )
@@ -38,7 +32,7 @@ namespace Tonga.Enumerable.Test
                         filterings++;
                         return input != "B";
                     },
-                    new List<string>() { "A", "B", "C" }
+                    AsList._("A", "B", "C")
                 );
 
             var enm1 = filtered.GetEnumerator();
@@ -55,14 +49,11 @@ namespace Tonga.Enumerable.Test
         [Fact]
         public void FiltersEmptyList()
         {
-            Assert.True(
-                LengthOf._(
-                    Filtered._(
-                        input => input.Length > 1,
-                        None._<string>()
-                    )
-                ).Value() == 0,
-                "cannot filter empty enumerable"
+            Assert.Empty(
+                Filtered._(
+                    input => input.Length > 1,
+                    None._<string>()
+                )
             );
         }
 
@@ -71,7 +62,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 2,
-                LengthOf._(
+                Length._(
                     Filtered._(
                        (input) => input != "B",
                        AsEnumerable._("A", "B", "C")

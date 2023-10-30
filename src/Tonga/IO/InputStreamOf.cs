@@ -25,27 +25,27 @@ namespace Tonga.IO
         /// A readable stream out of a file Uri.
         /// </summary>
         /// <param name="path">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public InputStreamOf(Uri path) : this(new InputOf(path))
+        public InputStreamOf(Uri path) : this(new AsInput(path))
         { }
 
         /// <summary>
         /// A readable stream out of a www Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public InputStreamOf(Url url) : this(new InputOf(url))
+        public InputStreamOf(Url url) : this(new AsInput(url))
         { }
 
         /// <summary>
         /// A readable stream out of Bytes.
         /// </summary>
         /// <param name="bytes">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public InputStreamOf(IBytes bytes) : this(new InputOf(bytes))
+        public InputStreamOf(IBytes bytes) : this(new AsInput(bytes))
         { }
         /// <summary>
         /// A readable stream out of a Byte array.
         /// </summary>
         /// <param name="bytes">a <see cref="byte"/> array</param>
-        public InputStreamOf(byte[] bytes) : this(new InputOf(bytes))
+        public InputStreamOf(byte[] bytes) : this(new AsInput(bytes))
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some string</param>
         public InputStreamOf(String text) : this(
-            new InputOf(text))
+            new AsInput(text))
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Tonga.IO
         /// <param name="text">some <see cref="string"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the string</param>
         public InputStreamOf(String text, Encoding enc) : this(
-            new InputOf(text, enc))
+            new AsInput(text, enc))
         { }
 
         /// <summary>
@@ -78,14 +78,14 @@ namespace Tonga.IO
         /// <param name="text">some <see cref="IText"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the text</param>
         public InputStreamOf(IText text, Encoding enc) : this(
-            new InputOf(text, enc))
+            new AsInput(text, enc))
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a streamreader</param>
-        public InputStreamOf(StreamReader rdr) : this(new InputOf(rdr))
+        public InputStreamOf(StreamReader rdr) : this(new AsInput(rdr))
         { }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Tonga.IO
         /// <param name="rdr">a streamreader</param>
         /// <param name="max">maximum buffer size</param>
         public InputStreamOf(StreamReader rdr, int max = 16 << 10) : this(
-            new InputOf(rdr, Encoding.UTF8, max))
+            new AsInput(rdr, Encoding.UTF8, max))
         { }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Tonga.IO
         /// <param name="rdr">a streamreader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        public InputStreamOf(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new InputOf(rdr, enc, max))
+        public InputStreamOf(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new AsInput(rdr, enc, max))
         { }
 
         /// <summary>

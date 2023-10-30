@@ -15,7 +15,7 @@ namespace Tonga.IO.Tests
             Assert.Contains<string>(
                expected,
                 new ZipFiles(
-                    new ResourceOf(
+                    new Rersource(
                         "Assets/Zip/ZipWithThreeFiles.zip",
                         this.GetType()
                     )
@@ -26,7 +26,7 @@ namespace Tonga.IO.Tests
         [Fact]
         public void InputStreamPositionZero()
         {
-            var res = new ResourceOf(
+            var res = new Rersource(
                         "Assets/Zip/ZipWithThreeFiles.zip",
                         this.GetType());
             new ZipFiles(res);

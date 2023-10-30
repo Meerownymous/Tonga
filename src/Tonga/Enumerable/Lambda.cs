@@ -50,13 +50,13 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which executes a given lambda function when advancing.
         /// </summary>
-        public static Lambda<T> From<T>(Action lambda, IEnumerable<T> origin) =>
+        public static Lambda<T> _<T>(Action lambda, IEnumerable<T> origin) =>
             new Lambda<T>(lambda, origin);
 
         /// <summary>
         /// Enumerable which executes a given lambda function when advancing.
         /// </summary>
-        public static Lambda<T> From<T>(Action<T> lambda, IEnumerable<T> origin) =>
+        public static Lambda<T> _<T>(Action<T> lambda, IEnumerable<T> origin) =>
             new Lambda<T>(lambda, origin);
     }
 }

@@ -11,7 +11,7 @@ namespace Tonga.IO.Tests
         {
             var input =
                 new LoggingInput(
-                    new InputOf(""),
+                    new AsInput(""),
                     ""
                 );
             Assert.Equal(
@@ -25,7 +25,7 @@ namespace Tonga.IO.Tests
         {
             var input =
                 new LoggingInput(
-                    new InputOf(
+                    new AsInput(
                         new byte[] {
                             // @checkstyle MagicNumberCheck (2 lines)
                             (byte) 20,

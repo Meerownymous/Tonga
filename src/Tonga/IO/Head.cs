@@ -7,7 +7,7 @@ namespace Tonga.IO
     /// <summary>
     /// Input that only shows the first N bytes of the original input.
     /// </summary>
-    public sealed class HeadOf : IInput
+    public sealed class Head : IInput
     {
         private readonly IInput origin;
         private readonly int length;
@@ -17,7 +17,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="origin">Input</param>
         /// <param name="length">Length</param>
-        public HeadOf(IInput origin, int length)
+        public Head(IInput origin, int length)
         {
             this.origin = origin;
             this.length = length;

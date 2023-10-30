@@ -14,7 +14,7 @@ namespace Tonga.IO.Tests
                 "друг?",
                 AsText._(
                     new TeeInput(
-                        new InputOf("How are you, мой друг?"),
+                        new AsInput("How are you, мой друг?"),
                         new DeadOutput()
                     )
                 ).AsString()

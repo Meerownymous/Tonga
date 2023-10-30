@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using Xunit;
 using Tonga.Bytes;
+using Tonga.Scalar;
+using Tonga.Func;
 
 namespace Tonga.IO.Tests
 {
@@ -13,9 +15,9 @@ namespace Tonga.IO.Tests
         public void LogsZeroBytesOnEmptyInput()
         {
             var res =
-                new LengthOf(
+                Length._(
                     new TeeInput(
-                        new InputOf(""),
+                        new AsInput(""),
                         new LoggingOutput(
                             new ConsoleOutput(),
                             "memory"
@@ -45,7 +47,7 @@ namespace Tonga.IO.Tests
                     output.Write(new AsBytes("a").Bytes(), 0, 1);
 
                 }
-                var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
+                var inputStream = new AsInput(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
                 {
@@ -77,7 +79,7 @@ namespace Tonga.IO.Tests
                     output.Write(bytes, 0, bytes.Length);
                 }
 
-                var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
+                var inputStream = new AsInput(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
                 {
@@ -96,7 +98,6 @@ namespace Tonga.IO.Tests
         {
             using (var tempfile = new TempFile("txt"))
             {
-
                 using (var append = new AppendTo(tempfile.Value()))
                 {
                     var output =
@@ -105,24 +106,22 @@ namespace Tonga.IO.Tests
                         "text file"
                     ).Stream();
 
-                    var length =
-                        new LengthOf(
-                            new TeeInput(
-                                new ResourceOf("Assets/Txt/large-text.txt", this.GetType()),
-                                new OutputTo(output)
-                            )
-                        ).Value();
-
+                    ReadAll._(
+                        new TeeInput(
+                            new Rersource("Assets/Txt/large-text.txt", this.GetType()),
+                            new OutputTo(output)
+                        )
+                    ).Invoke();
                 }
 
-                var inputStream = new InputOf(new Uri(tempfile.Value())).Stream();
+                var inputStream = new AsInput(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 var input = "";
                 using (var reader = new StreamReader(inputStream))
                 {
                     content = reader.ReadToEnd();
                 }
-                using (var reader = new StreamReader(new ResourceOf("Assets/Txt/large-text.txt", this.GetType()).Stream()))
+                using (var reader = new StreamReader(new Rersource("Assets/Txt/large-text.txt", this.GetType()).Stream()))
                 {
                     input = reader.ReadToEnd();
                 }

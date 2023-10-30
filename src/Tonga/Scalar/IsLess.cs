@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections;
-using Tonga.Scalar;
 
 namespace Tonga.Scalar
 {
@@ -30,6 +29,9 @@ namespace Tonga.Scalar
         })
         { }
 
+        /// <summary>
+        /// Tells if an enumerable has less than the specified items.
+        /// </summary>
         public static IsLess _(int amount, IEnumerable source) => new IsLess(amount, source);
     }
 }

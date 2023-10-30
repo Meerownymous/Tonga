@@ -13,7 +13,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 8,
-                LengthOf._(
+                Length._(
                     Joined._(
                         AsEnumerable._("hello", "world", "друг"),
                         AsEnumerable._("how", "are", "you"),
@@ -28,7 +28,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 1,
-                LengthOf._(
+                Length._(
                     Joined._(
                         Mapped._(
                            str => AsEnumerable._(str),
@@ -44,7 +44,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 8,
-                LengthOf._(
+                Length._(
                     Joined._(
                         AsEnumerable._("hello", "world", "друг"),
                         "how",

@@ -92,7 +92,7 @@ namespace Tonga.Text
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
-        public AsText(Uri uri) : this(new InputOf(uri))
+        public AsText(Uri uri) : this(new AsInput(uri))
         { }
 
         /// <summary>
@@ -100,14 +100,14 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
         /// <param name="encoding">encoding of the data at the uri</param>
-        public AsText(Uri uri, Encoding encoding) : this(new InputOf(uri), encoding)
+        public AsText(Uri uri, Encoding encoding) : this(new AsInput(uri), encoding)
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="FileInfo"/>
         /// </summary>
         /// <param name="file"></param>
-        public AsText(FileInfo file) : this(new InputOf(file))
+        public AsText(FileInfo file) : this(new AsInput(file))
         { }
 
         /// <summary>
@@ -115,14 +115,14 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="file"></param>
         /// <param name="encoding"></param>
-        public AsText(FileInfo file, Encoding encoding) : this(new InputOf(file), encoding)
+        public AsText(FileInfo file, Encoding encoding) : this(new AsInput(file), encoding)
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/></param>
-        public AsText(Stream stream) : this(new InputOf(stream))
+        public AsText(Stream stream) : this(new AsInput(stream))
         { }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Tonga.Text
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
-        public AsText(StringReader rdr) : this(new AsBytes(new InputOf(rdr)))
+        public AsText(StringReader rdr) : this(new AsBytes(new AsInput(rdr)))
         { }
 
         /// <summary>

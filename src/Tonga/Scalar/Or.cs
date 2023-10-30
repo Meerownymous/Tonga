@@ -185,7 +185,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> From<In>(Func<In, bool> func, params In[] src)
+        public static Or<In> _<In>(Func<In, bool> func, params In[] src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> From<In>(Func<In, bool> func, IEnumerable<In> src)
+        public static Or<In> _<In>(Func<In, bool> func, IEnumerable<In> src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> From<In>(IFunc<In, Boolean> func, params In[] src)
+        public static Or<In> _<In>(IFunc<In, Boolean> func, params In[] src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
-        public static Or<In> From<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
+        public static Or<In> _<In>(IFunc<In, Boolean> func, IEnumerable<In> src)
             => new Or<In>(func, src);
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Tonga.Scalar
         /// <param name="functions">
         /// Functions wich will executed with given input value
         /// </param>
-        public static Or<In> From<In>(In value, params Func<In, bool>[] functions)
+        public static Or<In> _<In>(In value, params Func<In, bool>[] functions)
             => new Or<In>(value, functions);
     }
 }

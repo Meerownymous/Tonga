@@ -4,6 +4,8 @@ using System;
 using Xunit;
 using Tonga.Bytes;
 using Tonga.IO;
+using Tonga.Scalar;
+using Tonga.Func;
 
 namespace Tonga.Text.Test
 {
@@ -17,7 +19,7 @@ namespace Tonga.Text.Test
         {
             using (var tempFile = new TempFile("test.txt"))
             {
-                new LengthOf(
+                ReadAll._(
                     new TeeInput(
                         AsText._(
                             new Base64Encoded(
@@ -28,7 +30,7 @@ namespace Tonga.Text.Test
                         ).AsString(),
                         new OutputTo(new Uri(tempFile.Value()))
                     )
-                ).Value();
+                ).Invoke();
 
                 Assert.True(
                     new Comparable(

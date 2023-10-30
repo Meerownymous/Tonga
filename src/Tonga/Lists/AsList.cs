@@ -69,7 +69,7 @@ namespace Tonga.List
         {
             get
             {
-                return new LengthOf(this.origin()).Value();
+                return (int)Length._(this.origin()).Value();
             }
         }
 

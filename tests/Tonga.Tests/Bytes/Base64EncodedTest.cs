@@ -13,10 +13,12 @@ namespace Tonga.Bytes.Tests
                 new BytesEqual(
                     new Base64Encoded(
                         new AsBytes(
-                            "Hello!")
+                            "Hello!"
+                        )
                     ),
                     new AsBytes(
-                        "SGVsbG8h")
+                        "SGVsbG8h"
+                    )
                 ).Value()
             );
         }

@@ -51,9 +51,9 @@ namespace Tonga.IO
             using (var sourceStream = source.Open())
             using (var stream = archive.CreateEntry(mapped).Open())
             {
-                new IO.LengthOf(
+                Length._(
                     new TeeInput(
-                        new InputOf(sourceStream),
+                        new AsInput(sourceStream),
                         new OutputTo(stream)
                     )
                 ).Value();

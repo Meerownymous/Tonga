@@ -37,13 +37,13 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="str">string to decode</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Base64Decoded From(String str) => new Base64Decoded(AsText._(str));
+        public static Base64Decoded _(String str) => new Base64Decoded(AsText._(str));
 
         /// <summary>
         /// A <see cref="IText"/> as Base64 decoded <see cref="IText"/>
         /// </summary>
         /// <param name="text">text to decode</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Base64Decoded From(IText text) => new Base64Decoded(text);
+        public static Base64Decoded _(IText text) => new Base64Decoded(text);
     }
 }

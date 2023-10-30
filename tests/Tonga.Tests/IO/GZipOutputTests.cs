@@ -6,6 +6,8 @@ using System.IO.Compression;
 using Xunit;
 using Tonga.Bytes;
 using Tonga.Text;
+using Tonga.Scalar;
+using Tonga.Func;
 
 namespace Tonga.IO.Tests
 {
@@ -16,17 +18,17 @@ namespace Tonga.IO.Tests
         public void WritesToGzipOutput()
         {
             MemoryStream zipped = new MemoryStream();
-            new LengthOf(
+            ReadAll._(
                 new TeeInput(
                     "Hello!",
                     new GZipOutput(new OutputTo(zipped))
                 )
-            ).Value();
+            ).Invoke();
 
             Assert.Equal(
                 "Hello!",
                 AsText._(
-                    new InputOf(
+                    new AsInput(
                         new GZipStream(
                             new MemoryStream(zipped.ToArray()),
                             CompressionMode.Decompress
@@ -47,7 +49,7 @@ namespace Tonga.IO.Tests
                     var stream = new MemoryStream(new byte[256], true);
                     stream.Close();
 
-                    new LengthOf(
+                    Length._(
                         new TeeInput(
                             "Hello!",
                             new GZipOutput(

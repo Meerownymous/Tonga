@@ -27,7 +27,7 @@ namespace Tonga.IO
         /// <param name="input">input Uri</param>
         /// <param name="output">output Uri</param>
         public TeeInput(Uri input, Uri output) :
-            this(new InputOf(input), new OutputTo(output))
+            this(new AsInput(input), new OutputTo(output))
         { }
 
         /// <summary>

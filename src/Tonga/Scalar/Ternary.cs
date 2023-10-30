@@ -99,7 +99,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> From<In, Out>(
+        public static IScalar<Out> _<In, Out>(
             In input,
             Func<In, Boolean> condition,
             Func<In, Out> consequent,
@@ -114,7 +114,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> From<In, Out>(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
+        public static IScalar<Out> _<In, Out>(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
             => new Ternary<In, Out>(input, condition, consequent, alternative);
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> From<In, Out>(IScalar<bool> condition, Out consequent, Out alternative)
+        public static IScalar<Out> _<In, Out>(IScalar<bool> condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> From<In, Out>(IScalar<bool> condition,
+        public static IScalar<Out> _<In, Out>(IScalar<bool> condition,
             IScalar<Out> consequent, IScalar<Out> alternative
         )
             => new Ternary<In, Out>(condition, consequent, alternative);

@@ -71,7 +71,7 @@ namespace Tonga.IO
         /// <param name="tgt">the target streamwriter</param>
         private WriterTo(IScalar<StreamWriter> tgt) : base(new DeadStream())
         {
-            this.target = Sticky._(tgt);
+            this.target = Scalar.Sticky._(tgt);
         }
 
         #pragma warning disable CS1591

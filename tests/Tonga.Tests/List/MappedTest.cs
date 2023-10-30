@@ -15,8 +15,8 @@ namespace Tonga.List.Tests
         {
             Assert.Equal(
                 "HELLO",
-                new ItemAt<IText>(
-                    new Mapped<String, IText>(
+                ItemAt._(
+                    Mapped._(
                         input => new Upper(AsText._(input)),
                         new AsList<string>("hello", "world", "damn")
                     ),
@@ -30,8 +30,8 @@ namespace Tonga.List.Tests
         {
             Assert.Equal(
                 0,
-                new LengthOf(
-                    new Mapped<String, IText>(
+                Length._(
+                    Mapped._(
                         input => new Upper(AsText._(input)),
                         new AsList<string>()
                     )

@@ -10,12 +10,12 @@ namespace Tonga.IO.Tests
         [Fact]
         public void Maps()
         {
-            Assert.Contains<string>(
+            Assert.Contains(
                 "directory/File1",
                 new ZipFiles(
                     new ZipMappedPaths(
                         path => "directory/" + path,
-                        new ResourceOf(
+                        new Rersource(
                             "Assets/Zip/ZipWithThreeFiles.zip",
                             this.GetType()
                         )

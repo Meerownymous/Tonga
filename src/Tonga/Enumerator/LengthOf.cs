@@ -9,9 +9,9 @@ namespace Tonga.Enumerator
     /// <summary>
     /// Length of an <see cref="IEnumerator"/>
     /// </summary>
-    public sealed class LengthOf : IScalar<Int32>
+    public sealed class LengthOf : IScalar<Int64>
     {
-        private readonly IScalar<int> length;
+        private readonly IScalar<long> length;
 
         /// <summary>
         /// Length of an <see cref="IEnumerator"/>
@@ -19,9 +19,9 @@ namespace Tonga.Enumerator
         /// <param name="items">enumerator to count</param>
         public LengthOf(IEnumerator items)
         {
-            this.length = new AsScalar<int>(() =>
+            this.length = new AsScalar<long>(() =>
             {
-                int size = 0;
+                long size = 0;
                 while (items.MoveNext())
                 {
                     ++size;
@@ -34,7 +34,7 @@ namespace Tonga.Enumerator
         /// Get the length.
         /// </summary>
         /// <returns>the length</returns>
-        public Int32 Value()
+        public Int64 Value()
         {
             return this.length.Value();
         }

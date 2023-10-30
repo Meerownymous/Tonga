@@ -10,7 +10,7 @@ namespace Tonga.Enumerator
     /// </summary>
     public sealed class Array<T> : IEnumerator<T>
     {
-        private readonly int[] cursor;
+        private int cursor;
         private readonly T[] items;
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace Tonga.Enumerator
         /// </summary>
         public Array(params T[] items)
         {
-            this.cursor = new int[1] { -1 };
+            this.cursor = -1;
             this.items = items;
         }
 
@@ -26,8 +26,8 @@ namespace Tonga.Enumerator
         {
             get
             {
-                if (this.cursor[0] < 0) throw new InvalidOperationException("Move the enumerator first.");
-                return this.items[this.cursor[0]];
+                if (this.cursor < 0) throw new InvalidOperationException("Move the enumerator first.");
+                return this.items[this.cursor];
             }
         }
 
@@ -40,17 +40,17 @@ namespace Tonga.Enumerator
 
         public bool MoveNext()
         {
-            bool hasItem = this.cursor[0] < this.items.Length - 1;
+            bool hasItem = this.cursor < this.items.Length - 1;
             if(hasItem)
             {
-                this.cursor[0]++;
+                this.cursor++;
             }
             return hasItem;
         }
 
         public void Reset()
         {
-            this.cursor[0] = -1;
+            this.cursor = -1;
         }
     }
 }

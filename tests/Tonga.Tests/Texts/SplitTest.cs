@@ -11,7 +11,7 @@ namespace Tonga.Text.Test
         {
             Assert.Equal(
                 2,
-                new LengthOf(
+                Length._(
                     Filtered._(
                         s => s == "Hello" || s == "world!",
                         new Split(
@@ -25,10 +25,11 @@ namespace Tonga.Text.Test
         [Fact]
         public void SplitEmptyText()
         {
-            Assert.True(
-                new LengthOf(
-                    new Split("", "\n")).Value() == 0,
-                    "Can't split an empty text");
+            Assert.Equal(
+                0,
+                Length._(
+                    new Split("", "\n")).Value()
+            );
         }
 
         [Fact]
@@ -36,7 +37,7 @@ namespace Tonga.Text.Test
         {
             Assert.Equal(
                 2,
-                new LengthOf(
+                Length._(
                     Filtered._(
                         s => s == "Atoms" || s == "OOP!",
                         new Split(
@@ -53,7 +54,7 @@ namespace Tonga.Text.Test
         {
             Assert.Equal(
                 2,
-                new LengthOf(
+                Length._(
                     Filtered._(
                         s => s == "Atoms" || s == "Primitives!",
                         new Split(
@@ -68,7 +69,7 @@ namespace Tonga.Text.Test
         {
             Assert.Equal(
                 2,
-                new LengthOf(
+                Length._(
                     Filtered._(
                         s => s == "Split" || s == "OOP",
                         new Split(AsText._("Split#OOP!"), "\\W+")
@@ -80,25 +81,28 @@ namespace Tonga.Text.Test
         [Fact]
         public void SplitTextRemoveEmptyStrings()
         {
-            Assert.True(
-                new LengthOf(
+            Assert.Equal(
+                2,
+                Length._(
                     new Split(
                         AsText._("Split##OOP!"),
-                        "\\W+")).Value() == 2,
-                "Can't remove empty strings");
+                        "\\W+")
+                    ).Value()
+                );
         }
 
         [Fact]
         public void SplitTextContainsEmptyStrings()
         {
-            Assert.True(
-                new LengthOf(
+            Assert.Equal(
+                3,
+                Length._(
                     new Split(
                         AsText._("Split##OOP!"),
                         "\\W+",
                         false
                     )
-                ).Value() == 3
+                ).Value()
             );
         }
     }

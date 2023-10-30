@@ -4,6 +4,7 @@ using System;
 using System.Text;
 using Xunit;
 using Tonga.Text;
+using Tonga.Scalar;
 
 namespace Tonga.IO.Tests
 {
@@ -14,9 +15,9 @@ namespace Tonga.IO.Tests
         {
             String text = "What's up, друг?";
             Assert.Equal(
-                new LengthOf(
+                Length._(
                     new SlowInput(
-                        new InputOf(
+                        new AsInput(
                             AsText._(text)
                         )
                     )
@@ -31,7 +32,7 @@ namespace Tonga.IO.Tests
             long size = 100_000L;
             Assert.Equal(
                 size,
-                new LengthOf(
+                Length._(
                     new SlowInput(size)
                 ).Value()
             );

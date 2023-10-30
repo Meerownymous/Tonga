@@ -5,6 +5,7 @@ using Tonga.Func;
 using Tonga.IO;
 using Tonga.List;
 using Tonga.Number;
+using Tonga.Scalar;
 
 namespace Tonga.Map.Tests
 {
@@ -13,11 +14,11 @@ namespace Tonga.Map.Tests
         [Fact]
         public void GroupsList()
         {
-            var srcList = new AsList<string>("ABC", "ABCD", "ABCDE");
+            var srcList = AsList._("ABC", "ABCD", "ABCDE");
             var keyFunc =
                 new FuncOf<string, double>((str) =>
                     new NumberOf(
-                        new IO.LengthOf(new InputOf(str)).Value()
+                        Length._(new AsInput(str)).Value()
                     ).AsDouble()
                 );
 

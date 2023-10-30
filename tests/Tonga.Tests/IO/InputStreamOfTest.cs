@@ -28,7 +28,7 @@ namespace Tonga.IO.Tests
                     content,
                     AsText._(
                         new InputAsBytes(
-                            new InputOf(
+                            new AsInput(
                                 new InputStreamOf(
                                     new Uri(file.Value())
                                 )
@@ -46,10 +46,10 @@ namespace Tonga.IO.Tests
             String content = "Hello, дорогой товарищ!";
             Assert.True(
                 AsText._(
-                    new InputOf(
+                    new AsInput(
                         new InputStreamOf(
                             new StreamReader(
-                                new InputOf(content).Stream())))
+                                new AsInput(content).Stream())))
                 ).AsString() == content);
         }
 
@@ -60,10 +60,10 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 content,
                 AsText._(
-                    new InputOf(
+                    new AsInput(
                         new InputStreamOf(
                             new StreamReader(
-                                new InputOf(content).Stream()),
+                                new AsInput(content).Stream()),
                             1
                         )
                     )
@@ -97,7 +97,7 @@ namespace Tonga.IO.Tests
             Assert.True(
                 AsText._(
                     new InputAsBytes(
-                        new InputOf(
+                        new AsInput(
                             new InputStreamOf(
                                 new Uri(path))))
                 ).AsString() == content,

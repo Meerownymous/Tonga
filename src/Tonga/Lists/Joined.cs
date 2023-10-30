@@ -64,29 +64,21 @@ namespace Tonga.List
         /// </summary>
         /// <param name="origin">a list to join</param>
         /// <param name="src">lists to join</param>
-        public static IList<T> From<T>(IList<T> origin, params IList<T>[] src)
-            => new Joined<T>(origin, src);
-
-        /// <summary>
-        /// Multiple <see cref="IList{T}"/> joined together
-        /// </summary>
-        /// <param name="src">The lists to join together</param>
-        /// <param name="origin">a list to join</param>
-        public static IList<T> From<T>(IList<T> origin, params T[] src)
+        public static IList<T> _<T>(IList<T> origin, params IList<T>[] src)
             => new Joined<T>(origin, src);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
-        public static IList<T> From<T>(params IList<T>[] src)
+        public static IList<T> _<T>(params IList<T>[] src)
             => new Joined<T>(src);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
-        public static IList<T> From<T>(IEnumerable<IList<T>> src)
+        public static IList<T> _<T>(IEnumerable<IList<T>> src)
             => new Joined<T>(src);
     }
 }

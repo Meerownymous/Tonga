@@ -10,7 +10,7 @@ namespace Tonga.Map.Tests
         public void JoinsInputs()
         {
             var joined =
-                Joined._(
+                Merged._(
                     AsMap._(AsPair._("A", "I am")),
                     AsMap._(AsPair._("B", "trapped in")),
                     AsMap._(AsPair._("C", "a dictionary"))
@@ -26,7 +26,7 @@ namespace Tonga.Map.Tests
         public void ReplacesExisting()
         {
             var map =
-                Joined._(
+                Merged._(
                     AsMap._(AsPair._("A", "Hakuna")),
                     AsMap._(AsPair._("B", "Matata")),
                     AsMap._(AsPair._("B", "Banana"))
@@ -42,7 +42,7 @@ namespace Tonga.Map.Tests
         public void JoinsInputsTypedValue()
         {
             var dict =
-                Joined._(
+                Merged._(
                     AsMap._(AsPair._("A", 89)),
                     AsMap._(AsPair._("B", 17)),
                     AsMap._(AsPair._("C", 8))
@@ -58,7 +58,7 @@ namespace Tonga.Map.Tests
         public void ReplacesExistingTypedValue()
         {
             var dict =
-                Joined._(
+                Merged._(
                     AsMap._(AsPair._("A", 1)),
                     AsMap._(AsPair._("B", 4)),
                     AsMap._(AsPair._("B", 19))
@@ -74,7 +74,7 @@ namespace Tonga.Map.Tests
         public void JoinsInputsTypedKeyValue()
         {
             var dict =
-                Joined._(
+                Merged._(
                     AsMap._(AsPair._(0, 1)),
                     AsMap._(AsPair._(1, 3)),
                     AsMap._(AsPair._(2, 37))
@@ -90,7 +90,7 @@ namespace Tonga.Map.Tests
         public void ReplacesExistingTypedKeyValue()
         {
             var dict =
-                Joined._(
+                Merged._(
                     AsMap._(AsPair._(0, 1)),
                     AsMap._(AsPair._(0, 4)),
                     AsMap._(AsPair._(0, 19))
@@ -106,7 +106,7 @@ namespace Tonga.Map.Tests
         public void JoinsLazy()
         {
             var map =
-                Joined._(
+                Merged._(
                     AsMap._(AsPair._("A", () => "I am")),
                     AsMap._(AsPair._("B", () => "trapped in")),
                     AsMap._(AsPair._("C", "a dictionary"))

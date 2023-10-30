@@ -103,7 +103,7 @@ namespace Tonga.Map.Tests
         public void WorksWithEmptyList()
         {
             var map = Empty._<int, int>();
-            Assert.Equal(0, LengthOf._(map.Pairs()).Value());
+            Assert.Equal(0, Length._(map.Pairs()).Value());
         }
 
 

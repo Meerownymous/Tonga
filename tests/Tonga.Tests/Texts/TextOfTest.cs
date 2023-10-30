@@ -121,7 +121,7 @@ namespace Tonga.Text.Test
 
             Assert.True(
             AsText._(
-                new InputOf(content),
+                new AsInput(content),
                 Encoding.UTF8
             ).AsString() == content,
             "Can't read text from Input");
@@ -133,7 +133,7 @@ namespace Tonga.Text.Test
             var content = "Hello, друг! with default charset";
             Assert.True(
                 AsText._(
-                    new InputOf(content)
+                    new AsInput(content)
                 ).AsString() == content,
                 "Can't read text from Input with default charset");
         }
@@ -222,7 +222,7 @@ namespace Tonga.Text.Test
 
             Assert.True(
                     AsText._(
-                        new InputOf(content),
+                        new AsInput(content),
                         2,
                         Encoding.UTF8
                     ).AsString() == content,
@@ -236,7 +236,7 @@ namespace Tonga.Text.Test
 
             Assert.True(
                     AsText._(
-                        new InputOf(content),
+                        new AsInput(content),
                         2
                     ).AsString() == content,
                     "Can't read text with a small reading buffer and default charset");

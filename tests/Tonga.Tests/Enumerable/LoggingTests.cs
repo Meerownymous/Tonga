@@ -14,7 +14,7 @@ namespace Tonga.Enumerable.Test
         {
             string result = string.Empty;
 
-            LengthOf._(
+            Length._(
                 Logging._(
                     AsList._( "A", "B" ),
                     item => result += item

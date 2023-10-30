@@ -21,7 +21,7 @@ namespace Tonga.IO.Error
                 "Resource '{0}' not found.\r\n{1} resources are available\r\n{2}",
                 missing,
                 container.GetManifestResourceNames().Length,
-                new Joined("\r\n", container.GetManifestResourceNames()).AsString()
+                Joined._("\r\n", container.GetManifestResourceNames()).AsString()
             ).AsString()
         )
         { }

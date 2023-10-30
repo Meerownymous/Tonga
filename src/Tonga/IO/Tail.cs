@@ -9,7 +9,7 @@ namespace Tonga.IO
     /// <summary>
     /// Input showing only last N bytes of the stream.
     /// </summary>
-    public sealed class TailOf : IInput, IDisposable
+    public sealed class Tail : IInput, IDisposable
     {
 
         private readonly IInput input;
@@ -23,7 +23,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="input"></param>
         /// <param name="bytes"></param>
-        public TailOf(IInput input, int bytes) : this(input, bytes, 16384)
+        public Tail(IInput input, int bytes) : this(input, bytes, 16384)
         { }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Tonga.IO
         /// <param name="input"></param>
         /// <param name="bytes"></param>
         /// <param name="max"></param>
-        public TailOf(IInput input, int bytes, int max)
+        public Tail(IInput input, int bytes, int max)
         {
             this.input = input;
             this.count = bytes;

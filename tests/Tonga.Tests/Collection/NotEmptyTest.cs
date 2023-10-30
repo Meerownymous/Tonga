@@ -13,10 +13,12 @@ namespace Tonga.Collection.Tests
         public void EmptyCollectionThrowsExeption()
         {
             Assert.Throws<Exception>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new LiveCollection<bool>()
-                    )).Value());
+                Length._(
+                    NotEmpty._(
+                        AsCollection._<bool>()
+                    )
+                ).Value()
+            );
         }
 
         [Fact]
@@ -24,9 +26,9 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 1,
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new LiveCollection<bool>(false)
+                Length._(
+                    NotEmpty._(
+                        AsCollection._(false)
                     )
                 ).Value()
             );
@@ -36,9 +38,9 @@ namespace Tonga.Collection.Tests
         public void EmptyCollectionThrowsCustomExeption()
         {
             Assert.Throws<OperationCanceledException>(() =>
-                new LengthOf(
-                    new NotEmpty<bool>(
-                        new LiveCollection<bool>(),
+                Length._(
+                    NotEmpty._(
+                        AsCollection._<bool>(),
                         new OperationCanceledException()
                     )
                 ).Value()

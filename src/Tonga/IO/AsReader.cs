@@ -13,7 +13,7 @@ namespace Tonga.IO
     /// <summary>
     /// A <see cref="StreamReader"/> out of other objects.
     /// </summary>
-    public sealed class ReaderOf : StreamReader, IDisposable
+    public sealed class AsReader : StreamReader, IDisposable
     {
         /// <summary>
         /// the source
@@ -24,7 +24,7 @@ namespace Tonga.IO
         /// A <see cref="StreamReader"/> out of a <see cref="char"/> array.
         /// </summary>
         /// <param name="chars">some chars</param>
-        public ReaderOf(params char[] chars) : this(new InputOf(chars))
+        public AsReader(params char[] chars) : this(new AsInput(chars))
         { }
 
         /// <summary>
@@ -32,14 +32,14 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="chars">some chars</param>
         /// <param name="enc">encoding of the chars</param>
-        public ReaderOf(char[] chars, Encoding enc) : this(new InputOf(chars, enc))
+        public AsReader(char[] chars, Encoding enc) : this(new AsInput(chars, enc))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="byte"/> array.
         /// </summary>
         /// <param name="bytes">some bytes</param>
-        public ReaderOf(byte[] bytes) : this(new InputOf(bytes))
+        public AsReader(byte[] bytes) : this(new AsInput(bytes))
         { }
 
         /// <summary>
@@ -47,42 +47,42 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="bytes">some bytes</param>
         /// <param name="enc">encoding of the bytes</param>
-        public ReaderOf(byte[] bytes, Encoding enc) : this(new InputOf(bytes), enc)
+        public AsReader(byte[] bytes, Encoding enc) : this(new AsInput(bytes), enc)
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="Url"/> array.
         /// </summary>
         /// <param name="url">a www url starting with http:// or https://</param>
-        public ReaderOf(Url url) : this(new InputOf(url))
+        public AsReader(Url url) : this(new AsInput(url))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="string"/>.
         /// </summary>
         /// <param name="content">a string</param>
-        public ReaderOf(string content) : this(new InputOf(content))
+        public AsReader(string content) : this(new AsInput(content))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a file <see cref="Uri"/> array.
         /// </summary>
         /// <param name="uri">a file Uri, create with Path.GetFullPath(absOrRelativePath) or prefix with file:/// </param>
-        public ReaderOf(Uri uri) : this(new InputOf(uri))
+        public AsReader(Uri uri) : this(new AsInput(uri))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="IBytes"/> object.
         /// </summary>
         /// <param name="bytes">a <see cref="IBytes"/> object</param>
-        public ReaderOf(IBytes bytes) : this(new InputOf(bytes))
+        public AsReader(IBytes bytes) : this(new AsInput(bytes))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="IText"/> object.
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
-        public ReaderOf(IText text) : this(new InputOf(text))
+        public AsReader(IText text) : this(new AsInput(text))
         { }
 
         /// <summary>
@@ -90,14 +90,14 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
         /// <param name="enc">encoding of the text</param>
-        public ReaderOf(IText text, Encoding enc) : this(new InputOf(text, enc))
+        public AsReader(IText text, Encoding enc) : this(new AsInput(text, enc))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="IInput"/> object.
         /// </summary>
         /// <param name="input">a input</param>
-        public ReaderOf(IInput input) : this(input, Encoding.UTF8)
+        public AsReader(IInput input) : this(input, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="input">a input</param>
         /// <param name="enc">encoding of the input</param>
-        public ReaderOf(IInput input, Encoding enc) : this(
+        public AsReader(IInput input, Encoding enc) : this(
             () => new StreamReader(input.Stream(), enc))
         { }
 
@@ -113,7 +113,7 @@ namespace Tonga.IO
         /// A <see cref="StreamReader"/> out of a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">a stream</param>
-        public ReaderOf(Stream stream) : this(stream, Encoding.UTF8)
+        public AsReader(Stream stream) : this(stream, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -121,30 +121,30 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="stream">a stream</param>
         /// <param name="enc">encoding of the stream</param>
-        public ReaderOf(Stream stream, Encoding enc) : this(new StreamReader(stream, enc))
+        public AsReader(Stream stream, Encoding enc) : this(new StreamReader(stream, enc))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a reader</param>
-        private ReaderOf(StreamReader rdr) : this(() => rdr)
+        private AsReader(StreamReader rdr) : this(() => rdr)
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> out of a <see cref="Func{TResult}"/> that returns a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="src">func retrieving a reader</param>
-        private ReaderOf(Func<StreamReader> src) : this(AsScalar._(src))
+        private AsReader(Func<StreamReader> src) : this(AsScalar._(src))
         { }
 
         /// <summary>
         /// A <see cref="StreamReader"/> encapsulated in a <see cref="IScalar{T}"/>.
         /// </summary>
         /// <param name="src">scalar of a reader</param>
-        private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
+        private AsReader(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this.source = Sticky._(src);
+            this.source = Scalar.Sticky._(src);
         }
 
         public override int Read()

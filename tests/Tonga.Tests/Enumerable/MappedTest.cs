@@ -73,7 +73,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 0,
-                LengthOf._(
+                Length._(
                     Mapped._(
                         input => new Upper(AsText._(input)),
                         None._<string>()

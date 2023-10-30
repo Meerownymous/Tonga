@@ -14,7 +14,7 @@ namespace Tonga.Enumerable.Test
         public void ConvertsScalarsToEnumerable()
         {
             Assert.True(
-                LengthOf._(
+                Length._(
                     AsEnumerable._(
                         "a", "b", "c"
                     )
@@ -27,7 +27,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 3,
-                LengthOf._(
+                Length._(
                     AsEnumerable._(
                         "a", "b", "c"
                     )
@@ -40,7 +40,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 3,
-                LengthOf._(
+                Length._(
                     AsEnumerable._(
                         AsText._("a"), AsText._("b"), AsText._("c")
                     )
@@ -53,7 +53,7 @@ namespace Tonga.Enumerable.Test
         {
             var lst = new List<string>();
             var length =
-                LengthOf._(
+                Length._(
                     AsEnumerable._(() =>
                     {
                         lst.Add("something");

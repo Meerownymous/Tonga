@@ -144,7 +144,7 @@ namespace Tonga.IO
         /// <param name="src">scalar of a reader</param>
         private ReaderOf(IScalar<StreamReader> src) : base(new DeadInput().Stream())
         {
-            this.source = Sticky._(src);
+            this.source = Scalar.Sticky._(src);
         }
 
         public override int Read()

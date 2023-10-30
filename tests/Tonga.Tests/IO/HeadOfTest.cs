@@ -2,6 +2,7 @@
 
 using Xunit;
 using Tonga.Text;
+using Tonga.Scalar;
 
 namespace Tonga.IO.Tests
 {
@@ -34,7 +35,7 @@ namespace Tonga.IO.Tests
 
             Assert.Equal(
                 5,
-                new LengthOf(
+                Length._(
                     new InputOf(
                         res
                     )

@@ -24,14 +24,13 @@ namespace Tonga.Bytes
             {
                 var baos = new MemoryStream();
                 byte[] output;
-                using (var source = input.Stream())
-                using (var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream())
-                {
-                    byte[] readBuffer = new byte[max];
-                    while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
-                    { }
-                    output = baos.ToArray();
-                }
+                var source = input.Stream();
+                var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream();
+                byte[] readBuffer = new byte[max];
+                while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
+                { }
+                stream.Flush();
+                output = baos.ToArray();
                 return output;
             });
         }

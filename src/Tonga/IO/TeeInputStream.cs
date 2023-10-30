@@ -107,7 +107,8 @@ namespace Tonga.IO
 
         public override void Flush()
         {
-            input.Flush();
+            this.input.Flush();
+            this.output.Flush();
         }
 
         public override long Seek(long offset, SeekOrigin origin)

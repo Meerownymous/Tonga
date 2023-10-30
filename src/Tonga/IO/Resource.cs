@@ -12,7 +12,7 @@ namespace Tonga.IO
     /// <summary>
     /// <para>An embedded resource.</para>
     /// </summary>
-    public class ResourceOf : IInput
+    public class Rersource : IInput
     {
         private readonly string name;
         private readonly IScalar<Assembly> container;
@@ -27,7 +27,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="name">name of the resource</param>
         /// <param name="type">a class that is in the same container (assembly) with the resource</param>
-        public ResourceOf(string name, Type type) : this(
+        public Rersource(string name, Type type) : this(
             name,
             AsScalar._(Assembly.GetAssembly(type))
         )
@@ -42,7 +42,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="name">name of the resource</param>
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
-        public ResourceOf(string name, Assembly container) : this(
+        public Rersource(string name, Assembly container) : this(
             name,
             AsScalar._(container)
         )
@@ -57,7 +57,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="name">name of the resource</param>
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
-        public ResourceOf(string name, IScalar<Assembly> container) : this(
+        public Rersource(string name, IScalar<Assembly> container) : this(
             name,
             container,
             new List<char>()
@@ -77,7 +77,7 @@ namespace Tonga.IO
         /// <param name="name">name of the resource</param>
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
         /// <param name="symbols">list of symbols which has to be encoded.</param>
-        public ResourceOf(string name, IScalar<Assembly> container, IEnumerable<char> symbols)
+        public Rersource(string name, IScalar<Assembly> container, IEnumerable<char> symbols)
         {
             this.name = name;
             this.container = container;

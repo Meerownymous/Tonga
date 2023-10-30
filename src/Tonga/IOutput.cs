@@ -22,7 +22,7 @@ namespace Tonga
     /// <para>Here <see cref="IO.OutputTo"/> implements {@link Output} and behaves like
     /// one, providing write-only access to the encapsulated
     /// <see cref="Uri"/>. The <see cref="TeeInput"/> copies the content of the
-    /// input to the output. The <see cref="LengthOf"/>
+    /// input to the output. The <see cref="Length"/>
     /// calculates the size of the copied data.</para>
     ///
     /// <para>There is no thread-safety guarantee.</para>

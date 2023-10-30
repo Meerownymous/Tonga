@@ -3,6 +3,8 @@ using System.IO;
 using Xunit;
 using Tonga.Bytes;
 using Tonga.Text;
+using Tonga.Scalar;
+using Tonga.Func;
 
 namespace Tonga.IO.Tests
 {
@@ -17,17 +19,15 @@ namespace Tonga.IO.Tests
 
             var txt = "Hello, товарищ!";
 
-            var lengthOf =
-                new LengthOf(
-                    new TeeInput(txt,
-                        new AppendTo(
-                            new OutputTo(file)
-                        )
+            var pipe =
+                new TeeInput(txt,
+                    new AppendTo(
+                        new OutputTo(file)
                     )
                 );
 
-            lengthOf.Value();
-            lengthOf.Value();
+            ReadAll._(pipe).Invoke();
+            ReadAll._(pipe).Invoke();
 
             Assert.True(
                 AsText._(
@@ -48,24 +48,23 @@ namespace Tonga.IO.Tests
             }
 
             var txt = "Hello, друг!";
-            var lengthOf =
-                new LengthOf(
-                    new TeeInput(txt,
-                        new AppendTo(
-                            new OutputTo(file)
-                        )
+            var pipe =
+                new TeeInput(txt,
+                    new AppendTo(
+                        new OutputTo(file)
                     )
                 );
 
-            lengthOf.Value();
-            lengthOf.Value();
+            ReadAll._(pipe).Invoke();
+            ReadAll._(pipe).Invoke();
 
             Assert.Equal(
                 txt + txt,
                 AsText._(
                     new InputAsBytes(
-                        new InputOf(file)))
-                .AsString()
+                        new InputOf(file)
+                    )
+                ).AsString()
             );
         }
 

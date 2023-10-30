@@ -36,7 +36,7 @@ namespace Tonga.IO.Tests
                 "34f80bdab9b93af514004f127e440139aad63e2d",
                 new HexOf(
                     new Sha1DigestOf(
-                        new ResourceOf(
+                        new Rersource(
                             "IO/Resources/digest-calculation.txt",
                             this.GetType()
                         )

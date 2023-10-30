@@ -5,6 +5,7 @@ using System.IO;
 using Xunit;
 using Tonga.Bytes;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 
 namespace Tonga.IO.Tests
 {
@@ -23,7 +24,7 @@ namespace Tonga.IO.Tests
             if (File.Exists(outputPath)) File.Delete(outputPath);
 
             //Create large file
-            new LengthOf(
+            Length._(
                 new InputOf(
                     new TeeInputStream(
                         new MemoryStream(
@@ -48,7 +49,7 @@ namespace Tonga.IO.Tests
 
             long left;
             left =
-                new LengthOf(
+                Length._(
                     new TeeInput(
                         new InputOf(
                             new Uri(Path.GetFullPath(inputPath))
@@ -60,7 +61,7 @@ namespace Tonga.IO.Tests
                 ).Value();
 
             long right =
-                new LengthOf(
+                Length._(
                     new InputOf(
                         new Uri(Path.GetFullPath(outputPath))
                     )

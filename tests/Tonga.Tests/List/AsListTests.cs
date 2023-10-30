@@ -22,8 +22,8 @@ namespace Tonga.List.Tests
                 );
 
             Assert.NotEqual(
-                new Scalar.LengthOf(list).Value(),
-                new Scalar.LengthOf(list).Value()
+                Length._(list).Value(),
+                Length._(list).Value()
             );
         }
 

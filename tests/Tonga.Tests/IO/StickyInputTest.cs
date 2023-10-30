@@ -7,49 +7,53 @@ using Tonga.Bytes;
 using Tonga.Enumerable;
 using Tonga.Func;
 using Tonga.Text;
+using Tonga.Scalar;
+using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 
 namespace Tonga.IO.Tests
 {
-    public sealed class StickyInputTest
+    public sealed class StickyTest
     {
         [Fact]
         public void ReadsFileContent()
         {
-            var dir = "artifacts/StickyInputTest"; var file = "large-text.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));
+            var dir = "artifacts/StickyInputTest";
+            var file = "large-text.txt";
+            var path = Path.GetFullPath(Path.Combine(dir, file));
             Directory.CreateDirectory(dir);
             if (File.Exists(path)) File.Delete(path);
 
             var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
 
-            var length =
-                new LengthOf(
-                    new InputOf(
-                        new TeeInputStream(
-                            new MemoryStream(
-                                new AsBytes(
-                                    new Text.Joined(lmt,
-                                        new Head<string>(
-                                            new Endless<string>(str),
-                                            times
-                                        )
+            ReadAll._(
+                new InputOf(
+                    new TeeInputStream(
+                        new MemoryStream(
+                            new AsBytes(
+                                new Text.Joined(lmt,
+                                    Head._(
+                                        Endless._(str),
+                                        times
                                     )
-                                ).Bytes()
-                            ),
-                            new OutputTo(
-                                new Uri(path)
-                            ).Stream()
-                        )
+                                )
+                            ).Bytes()
+                        ),
+                        new OutputTo(
+                            new Uri(path)
+                        ).Stream()
                     )
-                ).Value();
+                )
+            ).Invoke();
 
-            var ipt = new StickyInput(new InputOf(new Uri(path)));
+            var ipt = new Sticky(new InputOf(new Uri(path)));
 
-            Assert.True(
-                new RepeatedFunc<IInput, Boolean>(
-                    input => new AsBytes(input).Bytes().Length == length,
-                    10
-                ).Invoke(ipt),
-                "can't return the same result every time");
+            var length = new AsBytes(ipt).Bytes().Length;
+            ipt.Stream().Seek(0, SeekOrigin.Begin);
+            File.Delete(path);
+            Assert.Equal(
+                length,
+                new AsBytes(ipt).Bytes().Length
+            );
         }
 
         [Fact]
@@ -58,7 +62,7 @@ namespace Tonga.IO.Tests
             Assert.Contains(
                 "<html",
                 AsText._(
-                    new StickyInput(
+                    new Sticky(
                         new InputOf(
                             new Url("http://www.google.de")
                         )
@@ -72,8 +76,8 @@ namespace Tonga.IO.Tests
         {
             long size = 100_000L;
             Assert.True(
-                new LengthOf(
-                    new StickyInput(
+                Length._(
+                    new Sticky(
                         new SlowInput(size)
                     )
                 ).Value() == size,
@@ -85,13 +89,13 @@ namespace Tonga.IO.Tests
         public void ReadsFileContentSlowly()
         {
             int size = 130_000;
-            Assert.True(
+            Assert.Equal(
+                size,
                 new AsBytes(
-                    new StickyInput(
+                    new Sticky(
                         new SlowInput(size)
                     )
-                ).Bytes().Length == size,
-                "Can't read bytes from a large source slowly"
+                ).Bytes().Length
             );
         }
     }

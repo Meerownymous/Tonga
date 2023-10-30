@@ -1,6 +1,7 @@
 
 
 using System.Collections.Generic;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.List.Tests
@@ -12,11 +13,11 @@ namespace Tonga.List.Tests
         {
             Assert.Equal(
                 8,
-                new Scalar.LengthOf(
-                    new Joined<string>(
+                Length._(
+                    Joined._(
                         AsList._("hello", "world", "друг"),
-                        new AsList<string>("how", "are", "you"),
-                        new AsList<string>("what's", "up")
+                        AsList._("how", "are", "you"),
+                        AsList._("what's", "up")
                     )
                 ).Value()
             );
@@ -27,30 +28,12 @@ namespace Tonga.List.Tests
         {
             Assert.Equal(
                 1,
-                new Scalar.LengthOf(
-                    new Joined<string>(
-                        new Mapped<string, IList<string>>(
-                           str => new AsList<string>(str),
-                           new AsList<string>("x")
+                Length._(
+                    Joined._(
+                        Mapped._(
+                           str => AsList._(str),
+                           AsList._("x")
                         )
-                    )
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void JoinsSingleElemtns()
-        {
-            Assert.Equal(
-                8,
-                new Scalar.LengthOf(
-                    new Joined<string>(
-                        new AsList<string>("hello", "world", "друг"),
-                        "how",
-                        "are",
-                        "you",
-                        "what's",
-                        "up"
                     )
                 ).Value()
             );

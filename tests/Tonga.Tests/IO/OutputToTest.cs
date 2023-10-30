@@ -5,6 +5,8 @@ using System.IO;
 using Xunit;
 using Tonga.Bytes;
 using Tonga.Text;
+using Tonga.Scalar;
+using Tonga.Func;
 
 namespace Tonga.IO.Tests
 {
@@ -18,11 +20,12 @@ namespace Tonga.IO.Tests
             if (File.Exists(file)) File.Delete(file);
 
             String content = "Hello, товарищ!";
-            new LengthOf(
+            ReadAll._(
                 new TeeInput(
                     content,
-                    new OutputTo(file))
-                ).Value();
+                    new OutputTo(file)
+                )
+            ).Invoke();
 
             Assert.True(
                 AsText._(
@@ -43,20 +46,20 @@ namespace Tonga.IO.Tests
             }
 
             String txt = "Hello, друг!";
-            new LengthOf(
+            ReadAll._(
                 new TeeInput(
                     txt,
                     new OutputTo(file))
-            ).Value();
+            ).Invoke();
 
-            Assert.True(
+            Assert.Equal(
+                txt,
                 AsText._(
                     new InputAsBytes(
                         new InputOf(file)
                     )
                 )
-                .AsString() == txt,
-                "Can't write file content"
+                .AsString()
             );
         }
     }

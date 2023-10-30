@@ -1,20 +1,22 @@
 
 
+using System;
 using System.IO;
 using System.IO.Compression;
+using Tonga.Scalar;
 
 namespace Tonga.IO
 {
     /// <summary>
-    /// A output that compresses.
+    /// An output that compresses.
     /// </summary>
     public sealed class GZipOutput : IOutput
     {
         // The input.
-        private readonly IOutput _output;
+        private readonly StickyIf<GZipStream> output;
 
         // The buffer size.
-        private readonly CompressionLevel _level;
+        private readonly CompressionLevel level;
 
         /// <summary>
         /// The output as a gzip output. It compresses with level 'optimal'.
@@ -30,8 +32,12 @@ namespace Tonga.IO
         /// <param name="level">the compression level</param>
         public GZipOutput(IOutput output, CompressionLevel level)
         {
-            this._output = output;
-            this._level = level;
+            this.output =
+                StickyIf._(
+                    stream => stream.CanWrite,
+                    AsScalar._(() => new GZipStream(output.Stream(), this.level, true))
+                );
+            this.level = level;
         }
 
         /// <summary>
@@ -40,7 +46,7 @@ namespace Tonga.IO
         /// <returns></returns>
         public Stream Stream()
         {
-            return new GZipStream(this._output.Stream(), this._level, true);
+            return this.output.Value();
         }
     }
 }

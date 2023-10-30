@@ -48,7 +48,6 @@ namespace Tonga.Collection
             }
         )
         { }
-        public static NotEmpty<T> New(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
     }
 
     /// <summary>
@@ -57,6 +56,8 @@ namespace Tonga.Collection
     public static class NotEmpty
     {
         public static ICollection<T> _<T>(ICollection<T> origin) => new NotEmpty<T>(origin);
+
+        public static ICollection<T> _<T>(ICollection<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
 
         public static ICollection<T> _<T>(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
     }

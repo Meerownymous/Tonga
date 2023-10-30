@@ -1,6 +1,8 @@
 
 
+using System;
 using System.IO;
+using Tonga.Func;
 using Tonga.Scalar;
 
 namespace Tonga.IO
@@ -8,31 +10,31 @@ namespace Tonga.IO
     /// <summary>
     /// <see cref="IInput"/> that reads once and then returns from cache.
     /// </summary>
-    public sealed class StickyInput : IInput
+    public sealed class Sticky : IInput
     {
         /// <summary>
         /// the cache
         /// </summary>
-        private readonly IScalar<byte[]> cache;
+        private readonly Lazy<MemoryStream> cache;
 
         /// <summary>
         /// <see cref="IInput"/> that reads once and then returns from cache.
         /// Closes the input stream after first read.
         /// </summary>
         /// <param name="input"></param>
-        public StickyInput(IInput input)
+        public Sticky(IInput input)
         {
             this.cache =
-                Sticky._(
-                    AsScalar._(() =>
+                new Lazy<MemoryStream>(() =>
                     {
-                        MemoryStream baos = new MemoryStream();
-                        new LengthOf(
-                            new TeeInput(input, new OutputTo(baos))
-                        ).Value();
+                        MemoryStream copy = new MemoryStream();
+                        ReadAll._(
+                            new TeeInput(input, new OutputTo(copy))
+                        ).Invoke();
                         input.Stream().Dispose();
-                        return baos.ToArray();
-                    })
+                        copy.Seek(0, SeekOrigin.Begin);
+                        return copy;
+                    }
                 );
         }
 
@@ -42,7 +44,7 @@ namespace Tonga.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return new MemoryStream(this.cache.Value());
+            return this.cache.Value;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Tonga.IO
         /// <param name="tgt">the target</param>
         private OutputStreamTo(IScalar<Stream> tgt) : base()
         {
-            this.target = Sticky._(tgt);
+            this.target = Scalar.Sticky._(tgt);
         }
 
         public async new void WriteAsync(byte[] buffer, int offset, int length)

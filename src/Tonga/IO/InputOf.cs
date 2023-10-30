@@ -11,12 +11,10 @@ using Tonga.Scalar;
 
 namespace Tonga.IO
 {
-#pragma warning disable MaxClassLength // Class length max
-
     /// <summary>
     /// Input out of other things.
     /// </summary>
-    public sealed class InputOf : IInput, IDisposable //@TODO IDisposable interface needs to be replaced with a better approach.
+    public sealed class InputOf : IInput, IDisposable
     {
         /// <summary>
         /// the input
@@ -213,7 +211,7 @@ namespace Tonga.IO
                     var b = src.Bytes();
                     var m = new MemoryStream();
                     m.Write(b, 0, b.Length);
-                    m.Position = 0;
+                    m.Seek(0, SeekOrigin.Begin);
                     return m;
                 }
             )

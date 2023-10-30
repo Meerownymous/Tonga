@@ -14,7 +14,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 2,
-                LengthOf._(
+                Length._(
                     Partitioned._(1,
                         AsList._("hokus", "pokus")
                     )

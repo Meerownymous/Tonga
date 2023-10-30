@@ -36,7 +36,7 @@ namespace Tonga.IO.Tests
                 "162665ab3d58424724f83f28e7a147d6",
                 new HexOf(
                     new Md5DigestOf(
-                        new ResourceOf(
+                        new Rersource(
                             "IO/Resources/digest-calculation.txt",
                             this.GetType()
                         )

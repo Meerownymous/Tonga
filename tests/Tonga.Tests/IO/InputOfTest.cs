@@ -8,6 +8,11 @@ using Xunit;
 using Tonga.Bytes;
 using Tonga.Enumerable;
 using Tonga.Text;
+using Tonga.Tests;
+using System.Linq;
+using System.Diagnostics;
+using Tonga.Scalar;
+using Tonga.Func;
 
 #pragma warning disable MaxPublicMethodCount
 
@@ -15,6 +20,50 @@ namespace Tonga.IO.Tests
 {
     public sealed class InputOfTest
     {
+        [Fact]
+        public void OpenCloseIsSlowerThanReusing()
+        {
+            var content = new RandomBytes(1024).ToArray();
+            var times = 1000;
+
+            Debug.WriteLine(
+                new ElapsedTime(() =>
+                {
+                    for(var i=0;i<times;i++)
+                    {
+                        using (var stream = new MemoryStream(content))
+                        {
+                            byte[] buf = new byte[16 << 10];
+
+                            int bytesRead;
+                            while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
+                            {
+                                _ = (long)bytesRead;
+                            }
+                            stream.Seek(0, SeekOrigin.Begin);
+                        }
+                    }
+                }).AsTimeSpan().TotalMilliseconds
+                + "vs " +
+                new ElapsedTime(() =>
+                {
+                    using (var stream = new MemoryStream(content))
+                    {
+                        for (var i = 0; i < times; i++)
+                        {
+                            byte[] buf = new byte[16 << 10];
+
+                            int bytesRead;
+                            while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
+                            {
+                                _ = (long)bytesRead;
+                            }
+                            stream.Seek(0, SeekOrigin.Begin);
+                        }
+                    }
+                }).AsTimeSpan().TotalMilliseconds
+            );
+        }
 
         [Fact]
         public void ReadsAlternativeInputForFileCase()
@@ -38,7 +87,7 @@ namespace Tonga.IO.Tests
             Directory.CreateDirectory(dir);
             String content = "Hello, товарищ!";
 
-            new IO.LengthOf(
+            ReadAll._(
                 new InputOf(
                     new TeeInputStream(
                         new MemoryStream(
@@ -55,7 +104,7 @@ namespace Tonga.IO.Tests
                         ).Stream()
                     )
                 )
-            ).Value();
+            ).Invoke();
 
             Assert.True(
                     AsText._(
@@ -87,7 +136,7 @@ namespace Tonga.IO.Tests
             Directory.CreateDirectory(dir);
             if (File.Exists(path)) File.Delete(path);
 
-            new LengthOf(
+            ReadAll._(
                 new InputOf(
                     new TeeInputStream(
                         new MemoryStream(
@@ -105,8 +154,7 @@ namespace Tonga.IO.Tests
                         ).Stream()
                     )
                 )
-            ).Value();
-
+            ).Invoke();
 
             Assert.StartsWith(
                 "Hello World",
@@ -114,10 +162,10 @@ namespace Tonga.IO.Tests
                     new AsBytes(
                         new InputOf(
                             new Uri(Path.GetFullPath(path))
-                            )
-                        ).Bytes()
-                    ).AsString()
-                );
+                        )
+                    ).Bytes()
+                ).AsString()
+            );
         }
 
         [Fact]
@@ -151,28 +199,28 @@ namespace Tonga.IO.Tests
             Directory.CreateDirectory(dir);
             if (File.Exists(path)) File.Delete(path);
 
-            var length =
-                new LengthOf(
-                    new InputOf(
-                        new TeeInputStream(
-                            new MemoryStream(
-                                new AsBytes(
-                                    new Text.Joined("\r\n",
-                                    new Head<string>(
-                                        new Endless<string>("Hello World"),
-                                        1000
-                                    )
+            ReadAll._(
+                new InputOf(
+                    new TeeInputStream(
+                        new MemoryStream(
+                            new AsBytes(
+                                new Text.Joined("\r\n",
+                                Head._(
+                                    Endless._("Hello World"),
+                                    1000
                                 )
-                            ).Bytes()
-                        ),
-                        new OutputTo(
-                            new Uri(path)).Stream()
-                        )
+                            )
+                        ).Bytes()
+                    ),
+                    new OutputTo(
+                        new Uri(path)).Stream()
                     )
-                ).Value();
+                )
+            ).Invoke();
 
-            Assert.True(
-                new Scalar.LengthOf(
+            Assert.Equal(
+                1000,
+                Length._(
                     new Split(
                         AsText._(
                             new AsBytes(
@@ -181,7 +229,8 @@ namespace Tonga.IO.Tests
                                 )
                             )
                         ), "\r\n")
-                ).Value() == 1000);
+                ).Value()
+            );
         }
 
         [Fact]

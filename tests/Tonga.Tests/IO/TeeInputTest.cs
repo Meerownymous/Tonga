@@ -6,6 +6,7 @@ using System.Text;
 using Xunit;
 using Tonga.Bytes;
 using Tonga.Text;
+using Tonga.Func;
 
 namespace Tonga.IO.Tests
 {
@@ -17,12 +18,12 @@ namespace Tonga.IO.Tests
             using (var directory = new TempDirectory())
             {
                 var directoryPath = directory.Value().FullName;
-                new LengthOf(
+                ReadAll._(
                     new TeeInput(
                         new Uri("http://www.google.de"),
                         new Uri($@"file://{directoryPath}\output.txt")
                     )
-                ).Value();
+                ).Invoke();
 
                 Assert.True(
                     File.ReadAllText(
@@ -46,12 +47,12 @@ namespace Tonga.IO.Tests
                     "this is a test"
                 );
 
-                new LengthOf(
+                ReadAll._(
                     new TeeInput(
                         new Uri($@"{directoryPath}\input.txt"),
                         new Uri($@"{directoryPath}\output.txt")
                     )
-                ).Value();
+                ).Invoke();
 
                 Assert.True(
                     File.ReadAllText(
@@ -100,9 +101,10 @@ namespace Tonga.IO.Tests
                     )
                 ).AsString();
 
-            Assert.True(
-                str == AsText._(new InputOf(new Uri(path))).AsString(),
-                "Can't copy Input to File and return content");
+            Assert.Equal(
+                str,
+                AsText._(new InputOf(new Uri(path))).AsString()
+            );
         }
     }
 }

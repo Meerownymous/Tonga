@@ -2,8 +2,10 @@
 using System.IO;
 using System.IO.Compression;
 using Tonga;
-
+using Tonga.Bytes;
+using Tonga.Func;
 using Tonga.IO;
+using Tonga.Scalar;
 using Tonga.Text;
 using Tonga.Text;
 
@@ -36,12 +38,15 @@ public sealed class Zip : IInput
             foreach (var file in Directory.GetFiles(this.path, "*", SearchOption.AllDirectories))
             {
                 var entry = zip.CreateEntry(file);
-                new LengthOf(
-                    new TeeInput(
-                        new InputOf(file),
-                        new OutputTo(entry.Open())
-                    )
-                ).Value();
+                using (var entryStream = entry.Open())
+                {
+                    ReadAll._(
+                        new TeeInput(
+                            new InputOf(file),
+                            new OutputTo(entryStream)
+                        )
+                    ).Invoke();
+                }
             }
         }
         return memory;

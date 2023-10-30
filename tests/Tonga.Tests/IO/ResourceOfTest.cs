@@ -14,7 +14,7 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 "Hello from Embedded!",
                 AsText._(
-                    new ResourceOf("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
+                    new Rersource("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
                 ).AsString()
             );
         }
@@ -25,7 +25,7 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 "Hello from Embedded!",
                 AsText._(
-                    new ResourceOf("IO/Resources/test.txt", this.GetType())
+                    new Rersource("IO/Resources/test.txt", this.GetType())
                 ).AsString()
             );
         }
@@ -38,7 +38,7 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 "Hello from Embedded!",
                 AsText._(
-                    new ResourceOf(
+                    new Rersource(
                         name,
                         this.GetType())
                 ).AsString()

@@ -15,7 +15,7 @@ namespace Tonga.Enumerable.Test
 
             Assert.Equal(
                 size,
-                LengthOf._(
+                Length._(
                     Filtered._(
                     input => input == element,
                     Repeated._(
@@ -32,7 +32,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 0,
-                LengthOf._(
+                Length._(
                     Repeated._(0, 0)
                 ).Value()
             );

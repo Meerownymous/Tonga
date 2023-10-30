@@ -18,7 +18,7 @@ namespace Tonga.Bytes.Tests
                 AsText._(
                     new ReaderAsBytes(
                         new StreamReader(
-                            new InputOf("hello, друг!").Stream())
+                            new AsInput("hello, друг!").Stream())
                     )
                 ).AsString()
             );

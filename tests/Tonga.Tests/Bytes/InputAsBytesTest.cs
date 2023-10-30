@@ -20,7 +20,7 @@ namespace Tonga.Bytes.Tests
             String body = "1234567890";
             Assert.True(
                 new InputAsBytes(
-                        new InputOf(
+                        new AsInput(
                         String.Join(
                             "",
                                 new Head<string>(
@@ -41,7 +41,7 @@ namespace Tonga.Bytes.Tests
             {
                 Assert.True(
                     new InputAsBytes(
-                        new InputOf(slow)
+                        new AsInput(slow)
                     ).Bytes().Length == size,
                     "Can't read large content from Input");
             }
@@ -55,7 +55,7 @@ namespace Tonga.Bytes.Tests
             Assert.True(
                     Encoding.UTF8.GetString(
                         new InputAsBytes(
-                            new InputOf(
+                            new AsInput(
                                 new AsBytes(
                                     AsText._(content)
                                 )
@@ -72,7 +72,7 @@ namespace Tonga.Bytes.Tests
             Assert.True(
                     Encoding.UTF8.GetString(
                         new InputAsBytes(
-                            new InputOf(
+                            new AsInput(
                                 new AsBytes(
                                     AsText._(content)
                                 )

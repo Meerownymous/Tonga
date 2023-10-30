@@ -18,8 +18,8 @@ namespace Tonga.IO.Tests
 
             var b =
                 new AsBytes(
-                    new TailOf(
-                        new InputOf(
+                    new Tail(
+                        new AsInput(
                             new AsBytes(bytes)
                         ),
                         size - 1
@@ -43,8 +43,8 @@ namespace Tonga.IO.Tests
 
             var b =
                 new AsBytes(
-                    new TailOf(
-                        new InputOf(new AsBytes(bytes)),
+                    new Tail(
+                        new AsInput(new AsBytes(bytes)),
                         size
                     )
                 ).Bytes();
@@ -63,8 +63,8 @@ namespace Tonga.IO.Tests
 
             Assert.Equal(
                 new AsBytes(
-                    new TailOf(
-                        new InputOf(new AsBytes(bytes)),
+                    new Tail(
+                        new AsInput(new AsBytes(bytes)),
                         size,
                         size
                     )
@@ -81,8 +81,8 @@ namespace Tonga.IO.Tests
 
             Assert.Equal(
                 new AsBytes(
-                    new TailOf(
-                        new InputOf(new AsBytes(bytes)),
+                    new Tail(
+                        new AsInput(new AsBytes(bytes)),
                         size + 1
                     )
                 ).Bytes(),
@@ -100,8 +100,8 @@ namespace Tonga.IO.Tests
             Array.Copy(bytes, 1, res, 0, bytes.Length - 1);
             Assert.Equal(
                 new AsBytes(
-                    new TailOf(
-                        new InputOf(new AsBytes(bytes)),
+                    new Tail(
+                        new AsInput(new AsBytes(bytes)),
                         size - 1,
                         size - 1
                     )
@@ -119,8 +119,8 @@ namespace Tonga.IO.Tests
                 () =>
                 {
                     new AsBytes(
-                        new TailOf(
-                            new InputOf(
+                        new Tail(
+                            new AsInput(
                                 new AsBytes(bytes)
                             ),
                             size,

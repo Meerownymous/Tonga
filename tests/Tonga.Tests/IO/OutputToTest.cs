@@ -30,7 +30,7 @@ namespace Tonga.IO.Tests
             Assert.True(
                 AsText._(
                     new InputAsBytes(
-                        new InputOf(new Uri(file))))
+                        new AsInput(new Uri(file))))
                 .AsString() == content,
                 "Can't write path content");
         }
@@ -56,7 +56,7 @@ namespace Tonga.IO.Tests
                 txt,
                 AsText._(
                     new InputAsBytes(
-                        new InputOf(file)
+                        new AsInput(file)
                     )
                 )
                 .AsString()

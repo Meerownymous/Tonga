@@ -25,7 +25,7 @@ namespace Tonga.IO.Tests
 
             //Create large file
             Length._(
-                new InputOf(
+                new AsInput(
                     new TeeInputStream(
                         new MemoryStream(
                             new AsBytes(
@@ -51,7 +51,7 @@ namespace Tonga.IO.Tests
             left =
                 Length._(
                     new TeeInput(
-                        new InputOf(
+                        new AsInput(
                             new Uri(Path.GetFullPath(inputPath))
                         ),
                         new WriterAsOutput(
@@ -62,7 +62,7 @@ namespace Tonga.IO.Tests
 
             long right =
                 Length._(
-                    new InputOf(
+                    new AsInput(
                         new Uri(Path.GetFullPath(outputPath))
                     )
                 ).Value();

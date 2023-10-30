@@ -15,7 +15,7 @@ namespace Tonga.IO.Tests
             var content = "Hello, товарищ!";
 
             var reader = new TeeReader(
-                new ReaderOf(content),
+                new AsReader(content),
                 new WriterTo(
                     new OutputTo(baos))
             );
@@ -27,8 +27,8 @@ namespace Tonga.IO.Tests
             reader.Dispose();
             Assert.True(
                 AsText._(
-                    new InputOf(
-                        new ReaderOf(baos.ToArray()))
+                    new AsInput(
+                        new AsReader(baos.ToArray()))
                 ).AsString().CompareTo(content) == 0,
                 "Can't read content");
         }

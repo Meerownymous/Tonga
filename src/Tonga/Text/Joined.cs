@@ -19,7 +19,8 @@ namespace Tonga.Text
         /// <param name="live">should the object build its value live, every time it is used?</param>
         public Joined(String delimit, IEnumerable<string> strs) : this(
             AsText._(delimit),
-                Mapped._(AsText._,
+                Mapped._(
+                    AsText._,
                     strs
                 )
             )

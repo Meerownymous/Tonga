@@ -6,7 +6,7 @@ using Tonga.Scalar;
 
 namespace Tonga.IO.Tests
 {
-    public sealed class HeadOfTest
+    public sealed class HeadTest
     {
         [Fact]
         void ReadsHeadOfLongerInput()
@@ -14,8 +14,8 @@ namespace Tonga.IO.Tests
             Assert.Contains(
                 "reads",
                 AsText._(
-                    new HeadOf(
-                        new InputOf("readsHeadOfLongInput"),
+                    new Head(
+                        new AsInput("readsHeadOfLongInput"),
                         5
                     )
                 ).AsString()
@@ -27,8 +27,8 @@ namespace Tonga.IO.Tests
         {
             var res =
                 AsText._(
-                    new HeadOf(
-                        new InputOf("readsHeadOfLongInput"),
+                    new Head(
+                        new AsInput("readsHeadOfLongInput"),
                         5
                     )
                 ).AsString();
@@ -36,7 +36,7 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 5,
                 Length._(
-                    new InputOf(
+                    new AsInput(
                         res
                     )
                 ).Value()
@@ -49,8 +49,8 @@ namespace Tonga.IO.Tests
             Assert.Contains(
                 "",
                 AsText._(
-                    new HeadOf(
-                        new InputOf("readsEmptyHeadOfInput"),
+                    new Head(
+                        new AsInput("readsEmptyHeadOfInput"),
                         0
                     )
                 ).AsString()
@@ -64,8 +64,8 @@ namespace Tonga.IO.Tests
             Assert.Contains(
                 input,
                 AsText._(
-                    new HeadOf(
-                        new InputOf(input),
+                    new Head(
+                        new AsInput(input),
                         35
                     )
                 ).AsString()

@@ -47,7 +47,7 @@ namespace Tonga.List.Tests
             var advances = 0;
             var list =
                 AsList._(
-                    Lambda.From(() => advances++,
+                    Lambda._(() => advances++,
                         AsEnumerable._("item1", "item2", "item3")
                     )
                 );

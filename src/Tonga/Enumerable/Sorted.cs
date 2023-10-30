@@ -73,7 +73,7 @@ namespace Tonga.Enumerable
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> From<T>(params T[] src) where T : IComparable<T> =>
+        public static IEnumerable<T> _<T>(params T[] src) where T : IComparable<T> =>
             new Sorted<T>(src);
 
 
@@ -81,7 +81,7 @@ namespace Tonga.Enumerable
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> From<T>(IEnumerable<T> src) where T : IComparable<T> =>
+        public static IEnumerable<T> _<T>(IEnumerable<T> src) where T : IComparable<T> =>
             new Sorted<T>(src);
 
         /// <summary>
@@ -89,31 +89,8 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> From<T>(Comparer<T> cmp, IEnumerable<T> src) =>
+        public static IEnumerable<T> _<T>(Comparer<T> cmp, IEnumerable<T> src) =>
             new Sorted<T>(cmp, src);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
-        /// </summary>
-        /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> Sticky<T>(params T[] src) where T : IComparable<T> =>
-            Enumerable.Sticky._(new Sorted<T>(src));
-
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
-        /// </summary>
-        /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> Sticky<T>(IEnumerable<T> src) where T : IComparable<T> =>
-            Enumerable.Sticky._(new Sorted<T>(src));
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
-        /// </summary>
-        /// <param name="cmp">comparer</param>
-        /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> Sticky<T>(Comparer<T> cmp, IEnumerable<T> src) =>
-            Enumerable.Sticky._(new Sorted<T>(cmp, src));
     }
 }
 

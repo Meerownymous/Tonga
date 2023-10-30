@@ -18,7 +18,7 @@ namespace Tonga.Map.Tests
             var keyFunc =
                 new FuncOf<string, double>((str) =>
                     new NumberOf(
-                        Length._(new InputOf(str)).Value()
+                        Length._(new AsInput(str)).Value()
                     ).AsDouble()
                 );
 

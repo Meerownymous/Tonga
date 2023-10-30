@@ -25,7 +25,7 @@ namespace Tonga.Bytes
                 var baos = new MemoryStream();
                 byte[] output;
                 var source = input.Stream();
-                var stream = new TeeInput(new InputOf(source), new OutputTo(baos)).Stream();
+                var stream = new TeeInput(new AsInput(source), new OutputTo(baos)).Stream();
                 byte[] readBuffer = new byte[max];
                 while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
                 { }

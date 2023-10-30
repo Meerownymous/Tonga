@@ -13,7 +13,7 @@ namespace Tonga.Bytes.Tests
             var calls = 0;
             var bytes =
                 new Sticky(() =>
-                    new InputOf(() =>
+                    new AsInput(() =>
                     {
                         ++calls;
                         return new InputStreamOf("");

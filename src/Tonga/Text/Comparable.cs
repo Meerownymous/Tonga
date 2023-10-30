@@ -25,6 +25,9 @@ namespace Tonga.Text
             return this.text.AsString().CompareTo(((IText)obj).AsString());
         }
 
-        public static Comparable From(IText text) => new Comparable(text);
+        /// <summary>
+        /// A Text that can be compared using the Equals method.
+        /// </summary>
+        public static Comparable _(IText text) => new Comparable(text);
     }
 }

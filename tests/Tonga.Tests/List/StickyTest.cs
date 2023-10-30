@@ -12,7 +12,7 @@ namespace Tonga.List.Tests
             var advances = 0;
             var sticky =
                 Sticky._(
-                    Lambda.From(() => advances++,
+                    Lambda._(() => advances++,
                         AsEnumerable._("one", "two", "three")
                     )
                 );
@@ -27,7 +27,7 @@ namespace Tonga.List.Tests
             var advances = 0;
             var sticky =
                 Sticky._(
-                    Lambda.From(() => advances++,
+                    Lambda._(() => advances++,
                         AsEnumerable._("one", "two", "three")
                     )
                 );
@@ -42,7 +42,7 @@ namespace Tonga.List.Tests
             var advances = 0;
             var sticky =
                 Sticky._(
-                    Lambda.From(() => advances++,
+                    Lambda._(() => advances++,
                         AsEnumerable._("one", "two", "three")
                     )
                 );
@@ -57,7 +57,7 @@ namespace Tonga.List.Tests
             var advances = 0;
             var sticky =
                 Sticky._(
-                    Lambda.From(() => advances++,
+                    Lambda._(() => advances++,
                         AsEnumerable._("one", "two", "three")
                     )
                 );
@@ -72,7 +72,7 @@ namespace Tonga.List.Tests
             var advances = 0;
             var sticky =
                 Sticky._(
-                    Lambda.From(() => advances++,
+                    Lambda._(() => advances++,
                         AsEnumerable._("one", "two", "three")
                     )
                 );

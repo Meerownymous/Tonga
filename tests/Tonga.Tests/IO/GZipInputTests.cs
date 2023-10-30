@@ -24,7 +24,7 @@ namespace Tonga.IO.Tests
                 "Hello!",
                 AsText._(
                     new GZipInput(
-                        new InputOf(bytes)
+                        new AsInput(bytes)
                     )
                 ).AsString()
             );

@@ -28,7 +28,7 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 "Hello!",
                 AsText._(
-                    new InputOf(
+                    new AsInput(
                         new GZipStream(
                             new MemoryStream(zipped.ToArray()),
                             CompressionMode.Decompress

@@ -78,7 +78,7 @@ namespace Tonga.Enumerable
         /// <param name="item1">first item to filter</param>
         /// <param name="item2">secound item to filter</param>
         /// <param name="items">other items to filter</param>
-        public static IEnumerable<T> From<T>(Func<T, Boolean> fnc, T item1, T item2, params T[] items) =>
+        public static IEnumerable<T> _<T>(Func<T, Boolean> fnc, T item1, T item2, params T[] items) =>
             new Filtered<T>(fnc, item1, item2, items);
 
         /// <summary>

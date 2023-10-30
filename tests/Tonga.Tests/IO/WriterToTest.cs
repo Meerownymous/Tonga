@@ -24,7 +24,7 @@ namespace Tonga.IO.Tests
                 s =
                     AsText._(
                         new TeeInput(
-                            new InputOf(content),
+                            new AsInput(content),
                                 new WriterAsOutput(
                                     output
                                 )
@@ -35,7 +35,7 @@ namespace Tonga.IO.Tests
             Assert.True(
                 AsText._(
                     new InputAsBytes(
-                        new InputOf(uri)
+                        new AsInput(uri)
                     )
                 ).AsString().CompareTo(s) == 0 //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
             );

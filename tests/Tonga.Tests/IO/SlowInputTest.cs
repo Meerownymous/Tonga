@@ -17,7 +17,7 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 Length._(
                     new SlowInput(
-                        new InputOf(
+                        new AsInput(
                             AsText._(text)
                         )
                     )

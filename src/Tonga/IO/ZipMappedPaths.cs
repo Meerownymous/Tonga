@@ -53,7 +53,7 @@ namespace Tonga.IO
             {
                 Length._(
                     new TeeInput(
-                        new InputOf(sourceStream),
+                        new AsInput(sourceStream),
                         new OutputTo(stream)
                     )
                 ).Value();

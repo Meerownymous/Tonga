@@ -42,7 +42,7 @@ public sealed class Zip : IInput
                 {
                     ReadAll._(
                         new TeeInput(
-                            new InputOf(file),
+                            new AsInput(file),
                             new OutputTo(entryStream)
                         )
                     ).Invoke();

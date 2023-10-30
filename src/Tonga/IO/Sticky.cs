@@ -19,7 +19,7 @@ namespace Tonga.IO
 
         /// <summary>
         /// <see cref="IInput"/> that reads once and then returns from cache.
-        /// Closes the input stream after first read.
+        /// Closes the input stream after copzing.
         /// </summary>
         /// <param name="input"></param>
         public Sticky(IInput input)

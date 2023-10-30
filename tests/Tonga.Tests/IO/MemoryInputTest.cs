@@ -13,7 +13,7 @@ namespace Tonga.IO.Tests
         {
             var memoryInput =
                 new MemoryInput(
-                    new InputOf(
+                    new AsInput(
                         "This is my input!"
                     )
                 );
@@ -36,7 +36,7 @@ namespace Tonga.IO.Tests
 
             var memoryInput =
                 new MemoryInput(
-                    new InputOf(
+                    new AsInput(
                         ""
                     )
                 );

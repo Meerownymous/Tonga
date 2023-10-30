@@ -101,7 +101,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> From<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
+        public static IEnumerable<T> _<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 
 
@@ -110,33 +110,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> From<T, TKey>(Func<T, TKey> swap, IEnumerable<T> src) where TKey : IComparable<TKey> =>
-            new SortedBy<T, TKey>(swap, src);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
-        /// </summary>
-        /// <param name="swap">func to swap the type to a sortable type</param>
-        /// <param name="cmp">comparer</param>
-        /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> From<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) where TKey : IComparable<TKey> =>
-            new SortedBy<T, TKey>(swap, cmp, src);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
-        /// </summary>
-        /// <param name="swap">func to swap the type to a sortable type</param>
-        /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> Sticky<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
-            new SortedBy<T, TKey>(swap, src);
-
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
-        /// </summary>
-        /// <param name="swap">func to swap the type to a sortable type</param>
-        /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> Sticky<T, TKey>(Func<T, TKey> swap, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+        public static IEnumerable<T> _<T, TKey>(Func<T, TKey> swap, IEnumerable<T> src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 
         /// <summary>
@@ -145,7 +119,7 @@ namespace Tonga.Enumerable
         /// <param name="swap">func to swap the type to a sortable type</param>
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
-        public static IEnumerable<T> Sticky<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) where TKey : IComparable<TKey> =>
+        public static IEnumerable<T> _<T, TKey>(Func<T, TKey> swap, Comparer<TKey> cmp, IEnumerable<T> src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, cmp, src);
     }
 }

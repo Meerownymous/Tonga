@@ -26,12 +26,12 @@ namespace Tonga.IO.Tests
             var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
 
             ReadAll._(
-                new InputOf(
+                new AsInput(
                     new TeeInputStream(
                         new MemoryStream(
                             new AsBytes(
                                 new Text.Joined(lmt,
-                                    Head._(
+                                    Enumerable.Head._(
                                         Endless._(str),
                                         times
                                     )
@@ -45,7 +45,7 @@ namespace Tonga.IO.Tests
                 )
             ).Invoke();
 
-            var ipt = new Sticky(new InputOf(new Uri(path)));
+            var ipt = new Sticky(new AsInput(new Uri(path)));
 
             var length = new AsBytes(ipt).Bytes().Length;
             ipt.Stream().Seek(0, SeekOrigin.Begin);
@@ -63,7 +63,7 @@ namespace Tonga.IO.Tests
                 "<html",
                 AsText._(
                     new Sticky(
-                        new InputOf(
+                        new AsInput(
                             new Url("http://www.google.de")
                         )
                     )

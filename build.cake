@@ -13,7 +13,7 @@ var configuration           = "Release";
 ///////////////////////////////////////////////////////////////////////////////
 var buildArtifacts          = Directory("./artifacts");
 var deployment              = Directory("./artifacts/deployment");
-var version                 = "3.0.0";
+var version                 = "0.1.0";
 
 ///////////////////////////////////////////////////////////////////////////////
 // MODULES
@@ -31,8 +31,8 @@ var isAppVeyor              = AppVeyor.IsRunningOnAppVeyor;
 var isWindows               = IsRunningOnWindows();
 
 // For GitHub release
-var owner                   = "icarus-consulting";
-var repository              = "Yaapii.Atoms";
+var owner                   = "NACLWARE";
+var repository              = "Tonga";
 
 // For NuGetFeed
 var nuGetSource             = "https://api.nuget.org/v3/index.json";
@@ -40,8 +40,6 @@ var appVeyorNuGetFeed       = "https://ci.appveyor.com/nuget/icarus/api/v2/packa
 
 // API key tokens for deployment
 var nugetReleaseToken       = "";
-var appVeyorFeedToken       = "";
-var codeCovToken            = "";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Version
@@ -216,20 +214,6 @@ Task("GenerateCoverage")
 });
 
 ///////////////////////////////////////////////////////////////////////////////
-// Upload Coverage
-///////////////////////////////////////////////////////////////////////////////
-Task("UploadCoverage")
-.IsDependentOn("GenerateCoverage")
-.IsDependentOn("Credentials")
-.WithCriteria(() => isAppVeyor)
-.Does(() =>
-{
-    Information(Figlet("Upload Coverage"));
-    
-    Codecov($"{buildArtifacts.Path}/coverage.xml", codeCovToken);
-});
-
-///////////////////////////////////////////////////////////////////////////////
 // Assert Packages
 ///////////////////////////////////////////////////////////////////////////////
 Task("AssertPackages")
@@ -340,16 +324,6 @@ Task("Credentials")
     {
         throw new Exception("Environment variable 'NUGET_TOKEN' is not set");
     }
-    appVeyorFeedToken = EnvironmentVariable("APPVEYOR_TOKEN");
-    if (string.IsNullOrEmpty(appVeyorFeedToken))
-    {
-        throw new Exception("Environment variable 'APPVEYOR_TOKEN' is not set");
-    }
-    codeCovToken = EnvironmentVariable("CODECOV_TOKEN");
-    if (string.IsNullOrEmpty(codeCovToken))
-    {
-        throw new Exception("Environment variable 'CODECOV_TOKEN' is not set");
-    }
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -366,26 +340,13 @@ Task("NuGetFeed")
     var nugets = GetFiles($"{buildArtifacts.Path}/*.nupkg");
     foreach(var package in nugets)
     {
-        if (package.GetFilename().ToString().Contains(".Sources"))
-        {
-            NuGetPush(
-                package,
-                new NuGetPushSettings {
-                    Source = appVeyorNuGetFeed,
-                    ApiKey = appVeyorFeedToken
-                }
-            );
-        }
-        else
-        {
-            NuGetPush(
-                package,
-                new NuGetPushSettings {
-                    Source = nuGetSource,
-                    ApiKey = nugetReleaseToken
-                }
-            );
-        }
+        NuGetPush(
+            package,
+            new NuGetPushSettings {
+                Source = nuGetSource,
+                ApiKey = nugetReleaseToken
+            }
+        );
     }
     var symbols = GetFiles($"{buildArtifacts.Path}/*.snupkg");
     foreach(var symbol in symbols)

@@ -118,7 +118,7 @@ namespace Tonga.Text
         private Joined(IText delimit, Func<IEnumerable<IText>> txts) : base(() =>
             String.Join(
                 delimit.AsString(),
-                new Mapped<IText, string>(
+                Mapped._(
                     text => text.AsString(),
                     txts()
                 )

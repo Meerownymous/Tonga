@@ -11,10 +11,10 @@ namespace Tonga.Swap.Tests
         public void ChoosesCorrectFunc()
         {
             Assert.True(
-                new SwapSwitch<string, bool>(
-                    "true", new SwapOf<string,bool>(()=>true),
-                    "false", new SwapOf<string, bool>(() => false)
-                ).Flip("true","")
+                SwapSwitch._(
+                    "true", AsSwap._<string,bool>((irrelevant) => true),
+                    "false", AsSwap._<string,bool>((irrelevant) => false)
+                ).Flip("true","irrelevant")
             );
         }
     }

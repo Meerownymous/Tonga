@@ -30,7 +30,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">doubles</param>
         public AvgOf(params double[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers</param>
         public AvgOf(params int[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src"></param>
         public AvgOf(params long[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">floats</param>
         public AvgOf(params float[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>

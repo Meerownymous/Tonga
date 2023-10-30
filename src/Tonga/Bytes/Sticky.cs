@@ -8,32 +8,32 @@ namespace Tonga.Bytes
     /// <summary>
     /// Bytes out of other objects that are reloaded on every call
     /// </summary>
-    public sealed class LiveBytes : IBytes
+    public sealed class Sticky : IBytes
     {
-        private readonly IScalar<IBytes> bytes;
+        private readonly Lazy<byte[]> bytes;
 
         /// <summary>
         /// Reloads the bytes input on every call
         /// </summary>
         /// <param name="input">The input</param>
-        public LiveBytes(Func<IInput> input) : this(() => new AsBytes(input()))
+        public Sticky(Func<IInput> input) : this(() => new AsBytes(input()))
         { }
 
         /// <summary>
         /// Relaods the bytes on every call
         /// </summary>
         /// <param name="bytes"></param>
-        public LiveBytes(Func<IBytes> bytes) : this(AsScalar._(bytes))
+        public Sticky(IScalar<IBytes> bytes) : this(() => bytes.Value())
         { }
 
-        private LiveBytes(IScalar<IBytes> bytes)
+        public Sticky(Func<IBytes> bytes)
         {
-            this.bytes = bytes;
+            this.bytes = new Lazy<byte[]>(() => bytes().Bytes());
         }
 
         public byte[] Bytes()
         {
-            return this.bytes.Value().Bytes();
+            return this.bytes.Value;
         }
     }
 }

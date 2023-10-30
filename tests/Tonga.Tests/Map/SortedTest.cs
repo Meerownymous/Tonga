@@ -1,11 +1,6 @@
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Tonga.Enumerable;
 using Tonga.List;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Map.Tests

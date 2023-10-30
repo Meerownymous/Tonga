@@ -11,7 +11,7 @@ namespace Tonga.Bytes.Tests
         {
             Assert.True(
                 new BytesEqual(
-                    new Base64Bytes(
+                    new Base64Decoded(
                         new AsBytes(
                             "SGVsbG8h")
                     ),

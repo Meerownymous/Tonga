@@ -23,7 +23,7 @@ namespace Tonga.Text
         /// <param name="text">text to encode</param>
         public TextAsBase64(IText text) : base(
             AsText._(
-                new BytesAsBase64(
+                new Base64Encoded(
                     new AsBytes(text)
                 )
             )

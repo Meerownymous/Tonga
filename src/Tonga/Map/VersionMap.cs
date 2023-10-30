@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Tonga.Enumerable;
+using Tonga.List;
 
 #pragma warning disable NoProperties // No Properties
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
@@ -24,8 +25,9 @@ namespace Tonga.Map
             (version, available) =>
             new ArgumentException(
                 $"Cannot find value for version {version}, the version must be within: "
-                + new Text.Joined(", ",
-                    new Mapped<Version, string>(
+                +
+                Text.Joined._(", ",
+                    Enumerable.Mapped._(
                         v => v.ToString(),
                         available
                     )
@@ -105,7 +107,7 @@ namespace Tonga.Map
 
             if (matched)
             {
-                if (this.openEnd || new List<Version>(versions).IndexOf(match) < versions.Count - 1)
+                if (this.openEnd || AsList._(versions).IndexOf(match) < versions.Count - 1)
                 {
                     return this.map[match];
                 }

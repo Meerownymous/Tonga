@@ -11,7 +11,7 @@ namespace Tonga.Text
     /// </summary>
     public sealed class IsBlank : IScalar<Boolean>
     {
-        private readonly AsScalar<bool> result;
+        private readonly Func<bool> result;
 
         /// <summary>
         /// Checks if a A <see cref="string"/> is whitespace.
@@ -28,7 +28,7 @@ namespace Tonga.Text
         /// <param name="text">text to check</param>
         public IsBlank(IText text)
         {
-            this.result = new AsScalar<bool>(() => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + "")));
+            this.result = () => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + ""));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Tonga.Text
         /// <returns>the result</returns>
         public Boolean Value()
         {
-            return this.result.Value();
+            return this.result();
         }
     }
 }

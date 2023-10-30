@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Tonga.Enumerable;
+using Tonga.Func;
 using Tonga.Scalar;
 
 namespace Tonga.Map
@@ -472,10 +473,10 @@ namespace Tonga.Map
             () =>
             {
                 IMap<Key, Value> map = new Empty<Key, Value>();
-                foreach (IMapInput<Key, Value> input in inputs)
-                {
-                    map = input.Merged(map);
-                }
+                Each._(
+                    input => map = input.Merged(map),
+                    inputs
+                ).Invoke();
                 return map.Pairs();
             }
         )

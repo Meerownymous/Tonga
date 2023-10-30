@@ -17,12 +17,6 @@ namespace Tonga.Map
         /// <summary>
         /// A map whose keys and values are sticky per value once retrieved for the first time time.
         /// </summary>
-        public Sticky(IMap<Key, Value> source) : this(() => source)
-        { }
-
-        /// <summary>
-        /// A map whose keys and values are sticky per value once retrieved for the first time time.
-        /// </summary>
         public Sticky(Func<IMap<Key, Value>> source)
         {
             this.source = AsMap._(() => source().Pairs());

@@ -20,7 +20,7 @@ namespace Tonga.Text.Test
                 new LengthOf(
                     new TeeInput(
                         AsText._(
-                            new BytesAsBase64(
+                            new Base64Encoded(
                                 new AsBytes(
                                     AsText._(text)
                                 )
@@ -52,7 +52,7 @@ namespace Tonga.Text.Test
         {
             Assert.Equal(
                 AsText._(
-                    new BytesAsBase64(
+                    new Base64Encoded(
                         new AsBytes(
                             AsText._(text)
                         )

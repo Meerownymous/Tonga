@@ -12,7 +12,7 @@ namespace Tonga.Number.Tests
         {
             Assert.True(
                 new AvgOf(
-                    new None<long>()
+                    None._<long>()
                 ).AsLong() == 0L);
         }
 

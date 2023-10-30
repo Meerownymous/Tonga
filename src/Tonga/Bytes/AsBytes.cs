@@ -72,7 +72,9 @@ namespace Tonga.Bytes
         /// <param name="rdr">the reader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">max buffer size of the reader</param>
-        public AsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new ReaderAsBytes(rdr, enc, max))
+        public AsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(
+            new ReaderAsBytes(rdr, enc, max)
+        )
         { }
 
         /// <summary>
@@ -152,22 +154,21 @@ namespace Tonga.Bytes
         /// Bytes out of IBytes object.
         /// </summary>
         /// <param name="bytes">bytes</param>
-        public AsBytes(IBytes bytes) : this(
-                () => bytes.Bytes())
+        public AsBytes(IBytes bytes) : this(bytes.Bytes)
         { }
 
         /// <summary>
         /// Bytes out of function which returns a byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public AsBytes(Func<byte[]> bytes) : this(new AsScalar<Byte[]>(bytes))
+        public AsBytes(Func<byte[]> bytes) : this(AsScalar._(bytes))
         { }
 
         /// <summary>
         /// Bytes out of byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public AsBytes(params Byte[] bytes) : this(new AsScalar<Byte[]>(bytes))
+        public AsBytes(params Byte[] bytes) : this(AsScalar._(bytes))
         { }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="number">an int</param>
         public AsBytes(int number) : this(
-            new AsScalar<Byte[]>(() =>
+            AsScalar._(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -186,7 +187,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="number">a long</param>
         public AsBytes(long number) : this(
-            new AsScalar<Byte[]>(() =>
+            AsScalar._(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -197,7 +198,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="number">a float</param>
         public AsBytes(float number) : this(
-            new AsScalar<Byte[]>(() =>
+            AsScalar._(() =>
                 BitConverter.GetBytes(number)
             )
         )
@@ -208,7 +209,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="number">a double</param>
         public AsBytes(double number) : this(
-            new AsScalar<Byte[]>(() =>
+            AsScalar._(() =>
                 BitConverter.GetBytes(number)
             )
         )

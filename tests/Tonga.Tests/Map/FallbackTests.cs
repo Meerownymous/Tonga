@@ -1,7 +1,4 @@
-
-
 using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Tonga.Map.Tests
@@ -55,13 +52,13 @@ namespace Tonga.Map.Tests
         {
             var map =
                 Fallback._(
-                AsMap._(
-                    AsPair._(7, 42)
-                ),
-                AsMap._(
-                    AsPair._(13, 37)
-                )
-            );
+                    AsMap._(
+                        AsPair._(7, 42)
+                    ),
+                    AsMap._(
+                        AsPair._(13, 37)
+                    )
+                );
 
             Assert.Throws<ArgumentException>(() => map[666]);
         }

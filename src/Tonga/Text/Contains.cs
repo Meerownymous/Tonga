@@ -6,10 +6,8 @@ using Tonga.Scalar;
 namespace Tonga.Text
 {
     /// <summary> Check if a text contains a pattern </summary>
-    public sealed class Contains : Scalar.ScalarEnvelope<bool>
+    public sealed class Contains : ScalarEnvelope<bool>
     {
-        private readonly AsScalar<bool> result;
-
         /// <summary> Checks if a text contains a pattern using strings </summary>
         /// <param name="inputStr"> text as string </param>
         /// <param name="patternStr"> pattern as string </param>

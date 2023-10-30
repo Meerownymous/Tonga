@@ -9,7 +9,7 @@ namespace Tonga.Bytes
     /// <summary>
     /// Origin bytes decoded using the Base64 encoding scheme.
     /// </summary>
-    public sealed class Base64Bytes : IBytes
+    public sealed class Base64Decoded : IBytes
     {
         private readonly IScalar<byte[]> bytes;
 
@@ -17,7 +17,7 @@ namespace Tonga.Bytes
         /// Origin bytes decoded using the Base64 encoding scheme.
         /// </summary>
         /// <param name="bytes">origin bytes</param>
-        public Base64Bytes(IBytes bytes)
+        public Base64Decoded(IBytes bytes)
         {
             this.bytes = new AsScalar<byte[]>(() =>
             {

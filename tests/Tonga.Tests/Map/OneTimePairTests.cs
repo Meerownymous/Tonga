@@ -26,9 +26,7 @@ namespace Tonga.Map.Tests
 
             pair.Value();
 
-            Assert.Throws<InvalidOperationException>(() =>
-                pair.Value()
-            );
+            Assert.Throws<InvalidOperationException>(pair.Value);
         }
     }
 }

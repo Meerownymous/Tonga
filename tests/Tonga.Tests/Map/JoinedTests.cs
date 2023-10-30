@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Tonga.Map.Tests
 {
-    public sealed class JoinedMapTests
+    public sealed class JoinedTests
     {
         [Fact]
         public void JoinsInputs()
@@ -105,7 +105,7 @@ namespace Tonga.Map.Tests
         [Fact]
         public void JoinsLazy()
         {
-            var dict =
+            var map =
                 Joined._(
                     AsMap._(AsPair._("A", () => "I am")),
                     AsMap._(AsPair._("B", () => "trapped in")),
@@ -114,7 +114,7 @@ namespace Tonga.Map.Tests
 
             Assert.Equal(
                 "I am trapped in a dictionary",
-                $"{dict["A"]} {dict["B"]} {dict["C"]}"
+                $"{map["A"]} {map["B"]} {map["C"]}"
             );
         }
     }

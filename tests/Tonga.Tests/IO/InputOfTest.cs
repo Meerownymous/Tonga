@@ -195,42 +195,42 @@ namespace Tonga.IO.Tests
         [Fact]
         public void ReadsFile()
         {
-            var dir = "artifacts/InputOfTest"; var file = "large-text.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));
-            Directory.CreateDirectory(dir);
-            if (File.Exists(path)) File.Delete(path);
-
-            ReadAll._(
-                new AsInput(
-                    new TeeInputStream(
-                        new MemoryStream(
-                            new AsBytes(
-                                new Text.Joined("\r\n",
-                                Enumerable.Head._(
-                                    Endless._("Hello World"),
-                                    1000
-                                )
-                            )
-                        ).Bytes()
-                    ),
-                    new OutputTo(
-                        new Uri(path)).Stream()
+            using (var file = new TempFile())
+            {
+                ReadAll._(
+                    new AsInput(
+                        new TeeInputStream(
+                            new MemoryStream(
+                                new AsBytes(
+                                    new Text.Joined("\r\n",
+                                        Enumerable.Head._(
+                                            Endless._("Hello World"),
+                                            1000
+                                        )
+                                    )
+                                ).Bytes()
+                            ),
+                            new OutputTo(
+                                new Uri(file.Value())
+                            ).Stream()
+                        )
                     )
-                )
-            ).Invoke();
+                ).Invoke();
 
-            Assert.Equal(
-                1000,
-                Length._(
-                    new Split(
-                        AsText._(
-                            new AsBytes(
-                                new AsInput(
-                                    new Uri(path)
+                Assert.Equal(
+                    1000,
+                    Length._(
+                        new Split(
+                            AsText._(
+                                new AsBytes(
+                                    new AsInput(
+                                        new Uri(file.Value())
+                                    )
                                 )
-                            )
-                        ), "\r\n")
-                ).Value()
-            );
+                            ), "\r\n")
+                    ).Value()
+                );
+            }
         }
 
         [Fact]

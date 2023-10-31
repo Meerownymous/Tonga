@@ -6,7 +6,7 @@ namespace Tonga.Func
     /// <summary>
     /// Reads all content of a given input and then resets it.
     /// </summary>
-    public sealed class ReadAll : IAction<bool>
+    public sealed class ReadAll : IAction<bool, bool>
     {
         private readonly IInput input;
 
@@ -18,7 +18,7 @@ namespace Tonga.Func
             this.input = input;
         }
 
-        public void Invoke(bool flush = true)
+        public void Invoke(bool flush = true, bool close = true)
         {
             long size = 0;
             var stream = input.Stream();
@@ -35,6 +35,7 @@ namespace Tonga.Func
             if (stream.CanSeek)
                 stream.Seek(memorizedPosition, System.IO.SeekOrigin.Begin);
             if (flush) this.input.Stream().Flush();
+            if (close) this.input.Stream().Close();
         }
 
         public static ReadAll _(IInput input) => new ReadAll(input);

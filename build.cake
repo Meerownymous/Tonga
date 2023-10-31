@@ -1,9 +1,7 @@
-#tool nuget:?package=GitReleaseManager&version=0.12.1
-#tool nuget:?package=OpenCover&version=4.7.922
-#tool nuget:?package=Codecov&version=1.12.3
-#addin nuget:?package=Cake.Figlet&version=1.3.1
-#addin nuget:?package=Cake.Codecov&version=0.9.1
-#addin nuget:?package=Cake.Incubator&version=5.1.0
+#tool nuget:?package=GitReleaseManager
+#tool nuget:?package=OpenCover
+#tool nuget:?package=Codecov
+#addin nuget:?package=Cake.Incubator&version=8.0.0
 
 var target                  = Argument("target", "Default");
 var configuration           = "Release";
@@ -48,8 +46,6 @@ Task("Version")
 .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
 .Does(() => 
 {
-    Information(Figlet("Version"));
-    
     version = BuildSystem.AppVeyor.Environment.Repository.Tag.Name;
     Information($"Set version to '{version}'");
 });
@@ -59,9 +55,7 @@ Task("Version")
 ///////////////////////////////////////////////////////////////////////////////
 Task("Clean")
 .Does(() =>
-{
-    Information(Figlet("Clean"));
-    
+{   
     CleanDirectories(new DirectoryPath[] { buildArtifacts });
     foreach(var module in GetSubDirectories(modules))
     {
@@ -85,8 +79,6 @@ Task("Clean")
 Task("Restore")
 .Does(() =>
 {
-    Information(Figlet("Restore"));
-    
     NuGetRestore($"./{repository}.sln");
 });
 
@@ -99,14 +91,12 @@ Task("Build")
 .IsDependentOn("Restore")
 .Does(() =>
 {
-    Information(Figlet("Build"));
-
     var settings = 
-        new DotNetCoreBuildSettings()
+        new DotNetBuildSettings()
         {
             Configuration = configuration,
             NoRestore = true,
-            MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version)
+            MSBuildSettings = new DotNetMSBuildSettings().SetVersionPrefix(version)
         };
         var skipped = new List<string>();
     foreach(var module in GetSubDirectories(modules))
@@ -116,7 +106,7 @@ Task("Build")
         {
             Information($"Building {name}");
             
-            DotNetCoreBuild(
+            DotNetBuild(
                 module.FullPath,
                 settings
             );
@@ -143,10 +133,8 @@ Task("UnitTests")
 .IsDependentOn("Build")
 .Does(() => 
 {
-    Information(Figlet("Unit Tests"));
-
     var settings = 
-        new DotNetCoreTestSettings()
+        new DotNetTestSettings()
         {
             Configuration = configuration,
             NoRestore = true
@@ -162,7 +150,7 @@ Task("UnitTests")
         else if(!name.StartsWith("TmxTest"))
         {
             Information($"Testing {name}");
-            DotNetCoreTest(
+            DotNetTest(
                 test.FullPath,
                 settings
             );
@@ -185,16 +173,14 @@ Task("GenerateCoverage")
 .IsDependentOn("Build")
 .Does(() => 
 {
-    Information(Figlet("Generate Coverage"));
-    
     try
     {
         OpenCover(
             tool => 
             {
-                tool.DotNetCoreTest(
+                tool.DotNetTest(
                     "./tests/Yaapii.Atoms.Tests/",
-                    new DotNetCoreTestSettings
+                    new DotNetTestSettings
                     {
                         Configuration = configuration
                     }
@@ -219,8 +205,6 @@ Task("GenerateCoverage")
 Task("AssertPackages")
 .Does(() => 
 {
-    Information(Figlet("Assert Packages"));
-
     foreach (var module in GetSubDirectories(modules))
     {
         var name = module.GetDirectoryName();
@@ -265,19 +249,18 @@ Task("NuGet")
 .IsDependentOn("Build")
 .Does(() =>
 {
-    Information(Figlet("NuGet"));
     Information($"Building NuGet Package for Version {version}");
     
-    var settings = new DotNetCorePackSettings()
+    var settings = new DotNetPackSettings()
     {
         Configuration = configuration,
         OutputDirectory = buildArtifacts,
         NoRestore = true
     };
     settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
-    settings.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
+    settings.MSBuildSettings = new DotNetMSBuildSettings().SetVersionPrefix(version);
 
-    var settingsSources = new DotNetCorePackSettings()
+    var settingsSources = new DotNetPackSettings()
     {
         Configuration = "ReleaseSources",
         OutputDirectory = buildArtifacts,
@@ -285,20 +268,20 @@ Task("NuGet")
         NoBuild = false,
         VersionSuffix = ""
     };
-    settingsSources.MSBuildSettings = new DotNetCoreMSBuildSettings().SetVersionPrefix(version);
+    settingsSources.MSBuildSettings = new DotNetMSBuildSettings().SetVersionPrefix(version);
 
     foreach (var module in GetSubDirectories(modules))
     {
         var name = module.GetDirectoryName();
         if(!blacklistedModules.Contains(name))
         {
-            DotNetCorePack(
+            DotNetPack(
                 module.ToString(),
                 settings
             );
 
             settingsSources.ArgumentCustomization = args => args.Append($"-p:PackageId={name}.Sources").Append("-p:IncludeBuildOutput=false");
-            DotNetCorePack(
+            DotNetPack(
                 module.ToString(),
                 settingsSources
             );
@@ -317,8 +300,6 @@ Task("Credentials")
 .WithCriteria(() => isAppVeyor && BuildSystem.AppVeyor.Environment.Repository.Tag.IsTag)
 .Does(() =>
 {
-    Information(Figlet("Credentials"));
-   
     nugetReleaseToken = EnvironmentVariable("NUGET_TOKEN");
     if (string.IsNullOrEmpty(nugetReleaseToken))
     {
@@ -335,8 +316,6 @@ Task("NuGetFeed")
 .IsDependentOn("Credentials")
 .Does(() => 
 {
-    Information(Figlet("NuGet Feed"));
-    
     var nugets = GetFiles($"{buildArtifacts.Path}/*.nupkg");
     foreach(var package in nugets)
     {
@@ -371,8 +350,6 @@ Task("Default")
 .IsDependentOn("Restore")
 .IsDependentOn("Build")
 .IsDependentOn("UnitTests")
-.IsDependentOn("GenerateCoverage")
-.IsDependentOn("UploadCoverage")
 .IsDependentOn("AssertPackages")
 .IsDependentOn("NuGet")
 .IsDependentOn("NuGetFeed");

@@ -223,7 +223,8 @@ public sealed class NugetReleaseTask : FrostingTask<BuildContext>
                     new NuGetPushSettings
                     {
                         Source = Settings.NugetSource,
-                        ApiKey = Settings.NugetReleaseToken
+                        ApiKey = Settings.NugetReleaseToken,
+                        SkipDuplicate = true
                     }
                 );
             }

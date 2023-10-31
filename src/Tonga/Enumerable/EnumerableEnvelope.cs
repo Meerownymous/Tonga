@@ -54,20 +54,20 @@ namespace Tonga.Enumerable
     /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class ManyEnvelope<T> : IEnumerable<T>
+    public abstract class EnumerableEnvelope<T> : IEnumerable<T>
     {
         private readonly IEnumerable<T> content;
 
         /// <summary>
         /// Envelope for Enumerable.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerable<T>> origin) : this(() => origin().GetEnumerator())
+        public EnumerableEnvelope(Func<IEnumerable<T>> origin) : this(() => origin().GetEnumerator())
         { }
 
         /// <summary>
         /// Envelope for Enumerables.
         /// </summary>
-        public ManyEnvelope(Func<IEnumerator<T>> origin)
+        public EnumerableEnvelope(Func<IEnumerator<T>> origin)
         {
             this.content = new EnumeratorAsEnumerable<T>(origin);
         }

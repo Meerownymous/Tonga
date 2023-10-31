@@ -157,21 +157,22 @@ public sealed class NugetBuildTask : FrostingTask<BuildContext>
         {
             Configuration = Settings.Configuration,
             OutputDirectory = Settings.ArtifactPath,
-            NoRestore = true
+            NoRestore = true,
+            IncludeSymbols = true
         };
         settings.ArgumentCustomization = args => args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg");
         settings.MSBuildSettings =
             new DotNetMSBuildSettings()
                 .SetVersionPrefix(Settings.Version);
 
-        foreach (var module in context.GetSubDirectories(Settings.ModulePath))
-        {
-            var name = module.GetDirectoryName();
-            context.DotNetPack(
-                module.ToString(),
-                settings
-            );
-        }
+        //foreach (var module in context.GetSubDirectories(Settings.ModulePath))
+        //{
+        //    var name = module.GetDirectoryName();
+        //    context.DotNetPack(
+        //        module.ToString(),
+        //        settings
+        //    );
+        //}
     }
 }
 

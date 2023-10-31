@@ -9,7 +9,7 @@ using Tonga.Text;
 
 namespace Tonga.IO.Tests
 {
-    public sealed class InputStreamOfTest
+    public sealed class AsInputStreamTest
     {
         [Fact]
         public void ReadsSimpleFileContent()

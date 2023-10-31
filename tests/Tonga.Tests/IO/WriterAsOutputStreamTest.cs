@@ -59,7 +59,7 @@ namespace Tonga.IO.Tests
                             )
                         );
 
-                    ReadAll._(tee).Invoke();
+                    ReadAll._(tee).Invoke(flush: true, close: false);
 
                     Assert.Equal(
                         Length._(

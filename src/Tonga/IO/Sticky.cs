@@ -31,7 +31,6 @@ namespace Tonga.IO
                         ReadAll._(
                             new TeeInput(input, new OutputTo(copy))
                         ).Invoke();
-                        copy.Seek(0, SeekOrigin.Begin);
                         input.Stream().Dispose();
                         return copy.ToArray();
                     }

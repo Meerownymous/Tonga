@@ -35,6 +35,7 @@ public static class Settings
     public static string NugetReleaseToken = String.Empty;
     public static string NugetSource = "https://api.nuget.org/v3/index.json";
 
+    public static FilePath SolutionPath = new FilePath($"../{Settings.ModuleName}.sln");
     public static DirectoryPath ModulePath = new DirectoryPath("../src");
     public static DirectoryPath TestModulePath = new DirectoryPath("../tests");
     public static DirectoryPath ArtifactPath = new DirectoryPath("../artifacts");
@@ -86,7 +87,7 @@ public sealed class RestoreTask : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
-        context.NuGetRestore($"./{Settings.ModuleName}.sln");
+        context.NuGetRestore(Settings.SolutionPath);
     }
 }
 

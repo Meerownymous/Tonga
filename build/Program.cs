@@ -68,8 +68,8 @@ public sealed class CleanTask : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
-        context.CleanDirectories("./artifacts");
-        foreach (var module in context.GetSubDirectories("./src"))
+        context.CleanDirectories(Settings.ArtifactPath.FullPath);
+        foreach (var module in context.GetSubDirectories(Settings.ModulePath))
         {
             context.CleanDirectories(
                 new List<string> {

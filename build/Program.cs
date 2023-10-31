@@ -35,9 +35,9 @@ public static class Settings
     public static string NugetReleaseToken = String.Empty;
     public static string NugetSource = "https://api.nuget.org/v3/index.json";
 
-    public static DirectoryPath ModulePath = new DirectoryPath("./src");
-    public static DirectoryPath TestModulePath = new DirectoryPath("./tests");
-    public static DirectoryPath ArtifactPath = new DirectoryPath("./artifacts");
+    public static DirectoryPath ModulePath = new DirectoryPath("../src");
+    public static DirectoryPath TestModulePath = new DirectoryPath("../tests");
+    public static DirectoryPath ArtifactPath = new DirectoryPath("../artifacts");
 }
 
 public class BuildContext : FrostingContext

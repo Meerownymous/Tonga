@@ -40,32 +40,29 @@ namespace Tonga.IO.Tests
         [Fact]
         public void WritesSimpleFileContent()
         {
-            var temp = Directory.CreateDirectory("artifacts/AppendToTest");
-            var file = new Uri(Path.GetFullPath(Path.Combine(temp.FullName, "file.txt")));
-            if (File.Exists(file.AbsolutePath))
+            using (var file = new TempFile())
             {
-                File.Delete(file.AbsolutePath);
-            }
+                var txt = "Hello, Objects!";
+                var pipe =
+                    new TeeInput(txt,
+                        new AppendTo(
+                            new OutputTo(file.Value())
+                        )
+                    );
 
-            var txt = "Hello, друг!";
-            var pipe =
-                new TeeInput(txt,
-                    new AppendTo(
-                        new OutputTo(file)
-                    )
+                ReadAll._(pipe).Invoke();
+                ReadAll._(pipe).Invoke();
+                pipe.Stream().Close();
+
+                Assert.Equal(
+                    txt + txt,
+                    AsText._(
+                        new InputAsBytes(
+                            new AsInput(new FileInfo(file.Value()))
+                        )
+                    ).AsString()
                 );
-
-            ReadAll._(pipe).Invoke();
-            ReadAll._(pipe).Invoke();
-
-            Assert.Equal(
-                txt + txt,
-                AsText._(
-                    new InputAsBytes(
-                        new AsInput(file)
-                    )
-                ).AsString()
-            );
+            }
         }
 
         [Fact]
@@ -74,7 +71,7 @@ namespace Tonga.IO.Tests
             using (var temp = new TempFile())
             {
 
-                var appendTo = new AppendTo(temp.Value());
+                var appendTo = new AppendTo(new Uri(temp.Value()));
                 var stream = appendTo.Stream();
                 Assert.True(stream.CanWrite);
                 appendTo.Dispose();

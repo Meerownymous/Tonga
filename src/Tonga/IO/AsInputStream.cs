@@ -14,7 +14,7 @@ namespace Tonga.IO
     /// <summary>
     /// A readable stream out of other objects.
     /// </summary>
-    public sealed class InputStreamOf : Stream, IDisposable
+    public sealed class AsInputStream : Stream, IDisposable
     {
         /// <summary>
         /// the source
@@ -25,41 +25,41 @@ namespace Tonga.IO
         /// A readable stream out of a file Uri.
         /// </summary>
         /// <param name="path">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public InputStreamOf(Uri path) : this(new AsInput(path))
+        public AsInputStream(Uri path) : this(new AsInput(path))
         { }
 
         /// <summary>
         /// A readable stream out of a www Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public InputStreamOf(Url url) : this(new AsInput(url))
+        public AsInputStream(Url url) : this(new AsInput(url))
         { }
 
         /// <summary>
         /// A readable stream out of Bytes.
         /// </summary>
         /// <param name="bytes">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public InputStreamOf(IBytes bytes) : this(new AsInput(bytes))
+        public AsInputStream(IBytes bytes) : this(new AsInput(bytes))
         { }
         /// <summary>
         /// A readable stream out of a Byte array.
         /// </summary>
         /// <param name="bytes">a <see cref="byte"/> array</param>
-        public InputStreamOf(byte[] bytes) : this(new AsInput(bytes))
+        public AsInputStream(byte[] bytes) : this(new AsInput(bytes))
         { }
 
         /// <summary>
         /// A readable stream out of a Text.
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
-        public InputStreamOf(IText text) : this(text, Encoding.UTF8)
+        public AsInputStream(IText text) : this(text, Encoding.UTF8)
         { }
 
         /// <summary>
         /// A readable stream out of a string.
         /// </summary>
         /// <param name="text">some string</param>
-        public InputStreamOf(String text) : this(
+        public AsInputStream(String text) : this(
             new AsInput(text))
         { }
 
@@ -68,7 +68,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some <see cref="string"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the string</param>
-        public InputStreamOf(String text, Encoding enc) : this(
+        public AsInputStream(String text, Encoding enc) : this(
             new AsInput(text, enc))
         { }
 
@@ -77,7 +77,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the text</param>
-        public InputStreamOf(IText text, Encoding enc) : this(
+        public AsInputStream(IText text, Encoding enc) : this(
             new AsInput(text, enc))
         { }
 
@@ -85,7 +85,7 @@ namespace Tonga.IO
         /// A readable stream out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a streamreader</param>
-        public InputStreamOf(StreamReader rdr) : this(new AsInput(rdr))
+        public AsInputStream(StreamReader rdr) : this(new AsInput(rdr))
         { }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="rdr">a streamreader</param>
         /// <param name="max">maximum buffer size</param>
-        public InputStreamOf(StreamReader rdr, int max = 16 << 10) : this(
+        public AsInputStream(StreamReader rdr, int max = 16 << 10) : this(
             new AsInput(rdr, Encoding.UTF8, max))
         { }
 
@@ -103,30 +103,32 @@ namespace Tonga.IO
         /// <param name="rdr">a streamreader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        public InputStreamOf(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new AsInput(rdr, enc, max))
+        public AsInputStream(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(
+            new AsInput(rdr, enc, max)
+        )
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(IInput input) : this(AsScalar._(input.Stream))
+        public AsInputStream(IInput input) : this(AsScalar._(input.Stream))
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="Func"/> that returns a <see cref="Stream"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        public InputStreamOf(Func<Stream> input) : this(AsScalar._(input))
+        public AsInputStream(Func<Stream> input) : this(AsScalar._(input))
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="IScalar{T}"/> that encapsulates a <see cref="Stream"/>.
         /// </summary>
         /// <param name="src">the source</param>
-        private InputStreamOf(IScalar<Stream> src) : base()
+        private AsInputStream(IScalar<Stream> src) : base()
         {
-            this.source = src;
+            this.source = Scalar.Sticky._(src.Value);
         }
 
         public override int Read(byte[] buf, int offset, int len)
@@ -150,7 +152,7 @@ namespace Tonga.IO
             }
             set
             {
-                throw new NotImplementedException(); //intended
+                throw new InvalidOperationException("Setting the position is not supported."); //intended
             }
         }
 
@@ -166,12 +168,12 @@ namespace Tonga.IO
 
         public override void SetLength(long value)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Setting the length is not supported."); //intended
         }
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Writing is not supported."); //intended
         }
 
         public void Dispose()

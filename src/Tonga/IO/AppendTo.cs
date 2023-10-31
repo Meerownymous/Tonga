@@ -15,13 +15,6 @@ namespace Tonga.IO
         private readonly IScalar<IOutput> stream;
 
         /// <summary>
-        /// a path
-        /// </summary>
-        /// <param name="path"></param>
-        public AppendTo(string path) : this(new Uri(path))
-        { }
-
-        /// <summary>
         /// Append <see cref="IOutput"/> to a target file Uri.
         /// </summary>
         /// <param name="path">a file uri, retrieve with Path.GetFullPath(absOrRelativePath) or prefix with file://. Must be absolute</param>

@@ -33,7 +33,6 @@ namespace Tonga.IO
             this.output = tgt;
         }
 
-#pragma warning disable CS1591
         public int Read()
         {
             var data = (Byte)this.input.ReadByte();
@@ -92,7 +91,7 @@ namespace Tonga.IO
             try
             {
                 this.input.Flush();
-                input.Dispose();
+                this.input.Dispose();
             }
             catch (Exception) { }
             try
@@ -123,7 +122,7 @@ namespace Tonga.IO
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Writing is not supported.");
         }
     }
 }

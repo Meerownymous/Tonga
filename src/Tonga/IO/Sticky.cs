@@ -15,7 +15,7 @@ namespace Tonga.IO
         /// <summary>
         /// the cache
         /// </summary>
-        private readonly Lazy<MemoryStream> cache;
+        private readonly Lazy<byte[]> cache;
 
         /// <summary>
         /// <see cref="IInput"/> that reads once and then returns from cache.
@@ -25,15 +25,15 @@ namespace Tonga.IO
         public Sticky(IInput input)
         {
             this.cache =
-                new Lazy<MemoryStream>(() =>
+                new Lazy<byte[]>(() =>
                     {
                         MemoryStream copy = new MemoryStream();
                         ReadAll._(
                             new TeeInput(input, new OutputTo(copy))
                         ).Invoke();
-                        input.Stream().Dispose();
                         copy.Seek(0, SeekOrigin.Begin);
-                        return copy;
+                        input.Stream().Dispose();
+                        return copy.ToArray();
                     }
                 );
         }
@@ -44,7 +44,7 @@ namespace Tonga.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return this.cache.Value;
+            return new MemoryStream(this.cache.Value);
         }
     }
 }

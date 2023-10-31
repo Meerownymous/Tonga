@@ -36,7 +36,7 @@ namespace Tonga.IO.Tests
         {
             using (var tempfile = new TempFile("txt"))
             {
-                using (var append = new AppendTo(tempfile.Value()))
+                using (var append = new AppendTo(new Uri(tempfile.Value())))
                 {
                     var output =
                         new LoggingOutput(
@@ -67,7 +67,7 @@ namespace Tonga.IO.Tests
             {
                 var bytes = new AsBytes("Hello World!").Bytes();
 
-                using (var append = new AppendTo(tempfile.Value()))
+                using (var append = new AppendTo(new Uri(tempfile.Value())))
                 {
                     var output =
                     new LoggingOutput(
@@ -98,7 +98,7 @@ namespace Tonga.IO.Tests
         {
             using (var tempfile = new TempFile("txt"))
             {
-                using (var append = new AppendTo(tempfile.Value()))
+                using (var append = new AppendTo(new Uri(tempfile.Value())))
                 {
                     var output =
                     new LoggingOutput(

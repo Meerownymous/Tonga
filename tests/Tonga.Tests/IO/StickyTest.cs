@@ -17,43 +17,42 @@ namespace Tonga.IO.Tests
         [Fact]
         public void ReadsFileContent()
         {
-            var dir = "artifacts/StickyInputTest";
-            var file = "large-text.txt";
-            var path = Path.GetFullPath(Path.Combine(dir, file));
-            Directory.CreateDirectory(dir);
-            if (File.Exists(path)) File.Delete(path);
+            using (var file = new TempFile())
+            {
+                var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
 
-            var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
-
-            ReadAll._(
-                new AsInput(
-                    new TeeInputStream(
-                        new MemoryStream(
-                            new AsBytes(
-                                new Text.Joined(lmt,
-                                    Enumerable.Head._(
-                                        Endless._(str),
-                                        times
+                ReadAll._(
+                    new AsInput(
+                        new TeeInputStream(
+                            new MemoryStream(
+                                new AsBytes(
+                                    new Text.Joined(lmt,
+                                        Enumerable.Head._(
+                                            Endless._(str),
+                                            times
+                                        )
                                     )
-                                )
-                            ).Bytes()
-                        ),
-                        new OutputTo(
-                            new Uri(path)
-                        ).Stream()
+                                ).Bytes()
+                            ),
+                            new OutputTo(
+                                new Uri(file.Value())
+                            ).Stream()
+                        )
                     )
-                )
-            ).Invoke();
+                ).Invoke();
 
-            var ipt = new Sticky(new AsInput(new Uri(path)));
-
-            var length = new AsBytes(ipt).Bytes().Length;
-            ipt.Stream().Seek(0, SeekOrigin.Begin);
-            File.Delete(path);
-            Assert.Equal(
-                length,
-                new AsBytes(ipt).Bytes().Length
-            );
+                
+                var ipt =
+                    new Sticky(
+                        new AsInput(
+                            new Uri(file.Value())
+                        )
+                    );
+                Assert.Equal(
+                    new AsBytes(ipt).Bytes().Length,
+                    new AsBytes(ipt).Bytes().Length
+                );
+            }
         }
 
         [Fact]

@@ -16,7 +16,7 @@ namespace Tonga.Bytes.Tests
                     new AsInput(() =>
                     {
                         ++calls;
-                        return new InputStreamOf("");
+                        return new AsInputStream("");
                     })
                 );
             bytes.Bytes();

@@ -29,7 +29,7 @@ namespace Tonga.IO.Tests
                     AsText._(
                         new InputAsBytes(
                             new AsInput(
-                                new InputStreamOf(
+                                new AsInputStream(
                                     new Uri(file.Value())
                                 )
                             )
@@ -47,7 +47,7 @@ namespace Tonga.IO.Tests
             Assert.True(
                 AsText._(
                     new AsInput(
-                        new InputStreamOf(
+                        new AsInputStream(
                             new StreamReader(
                                 new AsInput(content).Stream())))
                 ).AsString() == content);
@@ -61,7 +61,7 @@ namespace Tonga.IO.Tests
                 content,
                 AsText._(
                     new AsInput(
-                        new InputStreamOf(
+                        new AsInputStream(
                             new StreamReader(
                                 new AsInput(content).Stream()),
                             1
@@ -76,7 +76,7 @@ namespace Tonga.IO.Tests
         {
             String content = "Hello,חבר!";
             Assert.True(
-                new InputStreamOf(content).Length > 0,
+                new AsInputStream(content).Length > 0,
                 "Can't show that data is available"
             );
         }
@@ -98,7 +98,7 @@ namespace Tonga.IO.Tests
                 AsText._(
                     new InputAsBytes(
                         new AsInput(
-                            new InputStreamOf(
+                            new AsInputStream(
                                 new Uri(path))))
                 ).AsString() == content,
                 "Can't read file content"

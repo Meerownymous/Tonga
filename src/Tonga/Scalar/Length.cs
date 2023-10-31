@@ -30,6 +30,7 @@ namespace Tonga.Scalar
             if(stream.CanSeek)
             {
                 result = input.Stream().Length;
+                input.Stream().Close();
             }
             else
             {
@@ -45,6 +46,7 @@ namespace Tonga.Scalar
                     size += (long)bytesRead;
                 }
                 result = size;
+                stream.Close();
             }
             return result;
         });

@@ -47,7 +47,7 @@ namespace Tonga.IO.Tests
                         )
                     ).Invoke();
 
-                    var tee =
+                    using (var tee =
                         new AsInput(
                             new TeeInputStream(
                                 new AsInput(
@@ -57,20 +57,23 @@ namespace Tonga.IO.Tests
                                     new StreamWriter(outputPath)
                                 )
                             )
+                        )
+                    )
+                    {
+
+                        ReadAll._(tee).Invoke(flush: true, close: false);
+
+                        Assert.Equal(
+                            Length._(
+                                tee
+                            ).Value(),
+                            Length._(
+                                new AsInput(
+                                    new Uri(Path.GetFullPath(outputPath))
+                                )
+                            ).Value()
                         );
-
-                    ReadAll._(tee).Invoke(flush: true, close: false);
-
-                    Assert.Equal(
-                        Length._(
-                            tee
-                        ).Value(),
-                        Length._(
-                            new AsInput(
-                                new Uri(Path.GetFullPath(outputPath))
-                            )
-                        ).Value()
-                    );
+                    }
                 }
             }
         }

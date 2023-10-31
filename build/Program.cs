@@ -165,14 +165,14 @@ public sealed class NugetBuildTask : FrostingTask<BuildContext>
             new DotNetMSBuildSettings()
                 .SetVersionPrefix(Settings.Version);
 
-        //foreach (var module in context.GetSubDirectories(Settings.ModulePath))
-        //{
-        //    var name = module.GetDirectoryName();
-        //    context.DotNetPack(
-        //        module.ToString(),
-        //        settings
-        //    );
-        //}
+        foreach (var module in context.GetSubDirectories(Settings.ModulePath))
+        {
+            var name = module.GetDirectoryName();
+            context.DotNetPack(
+                module.ToString(),
+                settings
+            );
+        }
     }
 }
 

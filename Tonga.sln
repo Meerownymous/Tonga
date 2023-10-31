@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{5FD313
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{466C3FC5-7B3E-4102-B705-6787D47E8893}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "build\Build.csproj", "{F43D035F-2535-4972-A9EE-5BC2043CDEC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF7ABB27-5BCB-4CFF-AE84-7CC7CEEA8A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F43D035F-2535-4972-A9EE-5BC2043CDEC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F43D035F-2535-4972-A9EE-5BC2043CDEC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F43D035F-2535-4972-A9EE-5BC2043CDEC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F43D035F-2535-4972-A9EE-5BC2043CDEC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

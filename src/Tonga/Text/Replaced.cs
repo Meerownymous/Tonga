@@ -15,8 +15,10 @@ namespace Tonga.Text
         /// <param name="text">text to replace contents in</param>
         /// <param name="find">part to replace</param>
         /// <param name="replace">replacement to insert</param>
-        public Replaced(IText text, String find, String replace) : base(() =>
-            text.AsString().Replace(find, replace)
+        public Replaced(IText text, String find, String replace) : base(
+            AsText._(() =>
+                text.AsString().Replace(find, replace)
+            )
         )
         { }
     }

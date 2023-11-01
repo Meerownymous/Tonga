@@ -23,12 +23,12 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to decode</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        public Base64Decoded(IText text) : base(() =>
+        public Base64Decoded(IText text) : base(
             AsText._(
                 new Bytes.Base64Decoded(
                     new AsBytes(text)
                 )
-            ).AsString()
+            )
         )
         { }
 

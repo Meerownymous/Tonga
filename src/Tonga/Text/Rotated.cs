@@ -14,7 +14,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">text to rotate</param>
         /// <param name="shift">direction and amount of chars to rotate (minus means rotate left, plus means rotate right)</param>
-        public Rotated(IText text, int shift) : base(() =>
+        public Rotated(IText text, int shift) : base(AsText._(() =>
             {
                 var str = text.AsString();
                 int length = str.Length;
@@ -33,7 +33,7 @@ namespace Tonga.Text
                     ).ToString();
                 }
                 return str;
-            }
+            })
         )
         { }
     }

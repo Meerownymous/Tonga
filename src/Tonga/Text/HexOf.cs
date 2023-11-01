@@ -15,7 +15,8 @@ namespace Tonga.Text
         /// Hexadecimal representation of Bytes.
         /// </summary>
         /// <param name="bytes">bytes</param>
-        public HexOf(IBytes bytes) : base(() =>
+        public HexOf(IBytes bytes) : base(
+            AsText._(() =>
             {
                 var rawBytes = bytes.Bytes();
                 var hex = new char[rawBytes.Length * 2];
@@ -27,7 +28,7 @@ namespace Tonga.Text
                     hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
                 }
                 return new string(hex);
-            }
+            })
         )
         { }
     }

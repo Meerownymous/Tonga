@@ -129,7 +129,9 @@ namespace Tonga.Text
             CultureInfo locale,
             Func<object[]> arguments
         ) : base(
-            () => String.Format(locale, ptn.AsString(), arguments())
+            AsText._(
+                () => String.Format(locale, ptn.AsString(), arguments())
+            )
         )
         { }
 

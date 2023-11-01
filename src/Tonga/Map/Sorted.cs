@@ -92,12 +92,13 @@ namespace Tonga.Map
             IEnumerable<IPair<Key, Value>> pairs,
             IComparer<IPair<Key, Value>> cmp
         ) : base(
-                () =>
-                {
-                    var items = new List<IPair<Key, Value>>(pairs);
-                    items.Sort(cmp);
-                    return AsMap._(items);
-                }
+                AsMap._(
+                    () =>
+                    {
+                        var items = new List<IPair<Key, Value>>(pairs);
+                        items.Sort(cmp);
+                        return items;
+                    })
             )
         { }
 
@@ -107,12 +108,12 @@ namespace Tonga.Map
         /// <param name="dict">Map to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
         public Sorted(IMap<Key, Value> map, IComparer<Key> cmp) : base(
-            () =>
+            AsMap._(() =>
             {
                 var items = new List<IPair<Key,Value>>(map.Pairs());
                 items.Sort(new KeyComparer<Key,Value>(cmp));
-                return AsMap._(items);
-            }
+                return items;
+            })
         )
         { }
     }

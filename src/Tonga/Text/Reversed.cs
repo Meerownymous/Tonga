@@ -13,7 +13,7 @@ namespace Tonga.Text
         /// A <see cref="IText"/> which has been reversed.
         /// </summary>
         /// <param name="text">text to reverse</param>
-        public Reversed(IText text) : base(() =>
+        public Reversed(IText text) : base(AsText._(() =>
            {
                char[] chararray = text.AsString().ToCharArray();
                Array.Reverse(chararray);
@@ -23,7 +23,7 @@ namespace Tonga.Text
                    reverseTxt += chararray.GetValue(i);
                }
                return reverseTxt;
-           }
+           })
         )
         { }
     }

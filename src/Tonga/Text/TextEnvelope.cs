@@ -11,16 +11,7 @@ namespace Tonga.Text
     /// </summary>
     public abstract class TextEnvelope : IText
     {
-        private readonly Func<string> origin;
-
-        /// <summary>
-        /// A <see cref="IText"/> envelope.
-        /// The envelope can work in live or in sticky mode.
-        /// </summary>
-        /// <param name="text">Origin text</param>
-        /// <param name="live">should the value be created every time the object is used?</param>
-        public TextEnvelope(IText text) : this(text.AsString)
-        { }
+        private readonly IText origin;
 
         /// <summary>
         /// A <see cref="IText"/> envelope.
@@ -28,7 +19,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="origin">How to create the value</param>
         /// <param name="live">should the value be created every time the object is used?</param>
-        public TextEnvelope(Func<string> origin)
+        public TextEnvelope(IText origin)
         {
             this.origin = origin;
         }
@@ -39,7 +30,7 @@ namespace Tonga.Text
         /// <returns></returns>
         public String AsString()
         {
-            return this.origin.Invoke();
+            return this.origin.AsString();
         }
     }
 }

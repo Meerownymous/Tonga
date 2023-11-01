@@ -28,7 +28,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="origin">List</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public NotEmpty(IList<T> origin, Exception ex) : base(() =>
+        public NotEmpty(IList<T> origin, Exception ex) : base(
             AsList._(new Enumerable.NotEmpty<T>(origin, ex))
         )
         { }

@@ -28,14 +28,14 @@ namespace Tonga.Collection
         /// A collection which is mapped to the output type.
         /// </summary>
         public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : this(
-            mapping, new LiveCollection<In>(src))
+            mapping, new AsCollection<In>(src))
         { }
 
         /// <summary>
         /// A collection which is mapped to the output type.
         /// </summary>
-        public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
-            AsList._(
+        public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(
+            AsCollection._(
                 Enumerable.Mapped._(mapping, src)
             )
         )

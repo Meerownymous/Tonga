@@ -35,17 +35,15 @@ namespace Tonga.Collection
         /// <summary>
         /// Ensures that <see cref="ICollection{T}" /> is not empty/>
         /// </summary>
-        /// <param name="origin">Collection</param>
-        /// <param name="ex">Execption to be thrown if empty</param>
         public NotEmpty(ICollection<T> origin, Func<ICollection<T>> fallback) : base(
-            () =>
+            AsCollection._(() =>
             {
                 if (!origin.GetEnumerator().MoveNext())
                 {
                     origin = fallback();
                 }
                 return origin;
-            }
+            })
         )
         { }
     }
@@ -55,10 +53,19 @@ namespace Tonga.Collection
     /// </summary>
     public static class NotEmpty
     {
+        /// <summary>
+        /// Ensures that <see cref="ICollection{T}" /> is not empty/>
+        /// </summary>
         public static ICollection<T> _<T>(ICollection<T> origin) => new NotEmpty<T>(origin);
 
+        /// <summary>
+        /// Ensures that <see cref="ICollection{T}" /> is not empty/>
+        /// </summary>
         public static ICollection<T> _<T>(ICollection<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
 
+        /// <summary>
+        /// Ensures that <see cref="ICollection{T}" /> is not empty/>
+        /// </summary>
         public static ICollection<T> _<T>(ICollection<T> origin, Func<ICollection<T>> fallback) => new NotEmpty<T>(origin, fallback);
     }
 }

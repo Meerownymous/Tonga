@@ -13,7 +13,8 @@ namespace Tonga.Collection
         /// An ArrayList as a collection.
         /// </summary>
         /// <param name="src">source ArrayList</param>
-        public ArrayListAsCollection(ArrayList src) : base(() =>
+        public ArrayListAsCollection(ArrayList src) : base(
+            AsCollection._(() =>
             {
                 var col = new Collection<object>();
                 foreach (var lst in src)
@@ -21,7 +22,7 @@ namespace Tonga.Collection
                     new Each<object>(item => col.Add(item), lst).Invoke();
                 }
                 return col;
-            }
+            })
         )
         { }
     }

@@ -48,10 +48,7 @@ namespace Tonga.Text
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
         public TrimmedLeft(IText text, IScalar<char[]> trimText) : base(
-            () =>
-            {
-                return text.AsString().TrimStart(trimText.Value());
-            }
+            AsText._(() => text.AsString().TrimStart(trimText.Value()))
         )
         { }
 
@@ -98,7 +95,7 @@ namespace Tonga.Text
         /// <param name="removeText">text that is removed from the text</param>
         /// <param name="ignoreCase">Trim by disregarding case.</param>
         public TrimmedLeft(IText text, IText removeText, bool ignoreCase) : base(
-            () =>
+            AsText._(() =>
             {
                 text = new AsSticky(text);
                 removeText = new AsSticky(removeText);
@@ -123,7 +120,7 @@ namespace Tonga.Text
                     }
                 }
                 return str;
-            }
+            })
         )
         { }
     }

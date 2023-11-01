@@ -23,9 +23,9 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : base(() =>
-            new AsList<Out>(
-                new Collection.Mapped<In, Out>(mapping, src)
+        public Mapped(Func<In, Out> mapping, IEnumerable<In> src) : base(
+            AsList._(
+                Collection.Mapped._(mapping, src)
             )
         )
         { }
@@ -35,7 +35,7 @@ namespace Tonga.List
         /// </summary>
         /// <param name="mapping">mapping function</param>
         /// <param name="src">source enumerator</param>
-        public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(() =>
+        public Mapped(Func<In, Out> mapping, ICollection<In> src) : base(
             AsList._(
                 Enumerable.Mapped._(mapping, src)
             )

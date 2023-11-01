@@ -18,7 +18,7 @@ namespace Tonga.Map
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
         public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
-            () =>
+            AsMap._(() =>
             {
                 IMap<Key, IList<Value>> temp = new Empty<Key, IList<Value>>();
                 foreach (var entry in src)
@@ -28,8 +28,8 @@ namespace Tonga.Map
                             AsPair._(key.Invoke(entry), Mapped._(value, src))
                         );
                 }
-                return temp;
-            }
+                return temp.Pairs();
+            })
         )
         { }
     }

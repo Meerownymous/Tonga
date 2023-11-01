@@ -49,7 +49,7 @@ namespace Tonga.List
         /// ctor
         /// </summary>
         /// <param name="src">The lists to join together</param>
-        public Joined(IEnumerable<IList<T>> src) : base(() =>
+        public Joined(IEnumerable<IList<T>> src) : base(
             AsList._(
                 Enumerable.Joined._<T>(src)
             )

@@ -43,24 +43,34 @@ namespace Tonga.Collection
         /// <summary>
         /// A <see cref="ICollection{T}"/> filtered by the given <see cref="Func{T, TResult}"/>
         /// </summary>
-        /// <param name="func">filter func</param>
-        /// <param name="src">items to filter</param>
-        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(() =>
-            new LiveCollection<T>(
+        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
+            AsCollection._(
                 Enumerable.Filtered._(
                     func, src
                 )
             )
         )
         { }
-        
-
     }
 
+    /// <summary>
+    /// A <see cref="ICollection{T}"/> filtered by the given <see cref="Func{T, TResult}"/>
+    /// </summary>
     public static class Filtered
     {
+        /// <summary>
+        /// A <see cref="ICollection{T}"/> filtered by the given <see cref="Func{T, TResult}"/>
+        /// </summary>
         public static ICollection<T> _<T>(Func<T, Boolean> func, IEnumerable<T> src) => new Filtered<T>(func, src);
+
+        /// <summary>
+        /// A <see cref="ICollection{T}"/> filtered by the given <see cref="Func{T, TResult}"/>
+        /// </summary>
         public static ICollection<T> _<T>(Func<T, Boolean> func, IEnumerator<T> src) => new Filtered<T>(func, src);
+
+        /// <summary>
+        /// A <see cref="ICollection{T}"/> filtered by the given <see cref="Func{T, TResult}"/>
+        /// </summary>
         public static ICollection<T> _<T>(Func<T, Boolean> func, T item1, T item2, params T[] items) => new Filtered<T>(func, item1, item2, items);
     }
 }

@@ -37,15 +37,14 @@ namespace Tonga.Map
         /// Merged map.
         /// </summary>
         public Merged(IEnumerable<IMap<Key, Value>> maps) : base(
-            () =>
-                AsMap._(
-                    Enumerable.Joined._(
-                        Mapped._(
-                            map => map.Pairs(),
-                            maps
-                        )
+            AsMap._(
+                Joined._(
+                    Mapped._(
+                        map => map.Pairs(),
+                        maps
                     )
                 )
+            )
         )
         { }
     }

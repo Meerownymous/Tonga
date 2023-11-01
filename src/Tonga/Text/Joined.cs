@@ -116,12 +116,14 @@ namespace Tonga.Text
         /// <param name="delimit">delimiter</param>
         /// <param name="txts">scalars of texts to join</param>
         /// <param name="live">should the object build its value live, every time it is used?</param>
-        private Joined(IText delimit, Func<IEnumerable<IText>> txts) : base(() =>
-            String.Join(
-                delimit.AsString(),
-                Mapped._(
-                    text => text.AsString(),
-                    txts()
+        private Joined(IText delimit, Func<IEnumerable<IText>> txts) : base(
+            AsText._(() =>
+                String.Join(
+                    delimit.AsString(),
+                    Mapped._(
+                        text => text.AsString(),
+                        txts()
+                    )
                 )
             )
         )

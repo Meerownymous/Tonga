@@ -137,24 +137,25 @@ namespace Tonga.Text
         /// <param name="candidate">The canidate to check for valid texts</param>
         /// <param name="valid">The valid texts</param>
         /// <param name="stringComparer">Ignore case in the canidate and valid texts</param>
-        private Strict(IText candidate, IEnumerable<IText> valid, IScalar<StringComparison> stringComparer) : base(() =>
-        {
-            var result = false;
-            var str = candidate.AsString();
-            foreach (var txt in valid)
-            {
-                if (txt.AsString().Equals(str, stringComparer.Value()))
+        private Strict(IText candidate, IEnumerable<IText> valid, IScalar<StringComparison> stringComparer) : base(
+            AsText._(() => {
+                var result = false;
+                var str = candidate.AsString();
+                foreach (var txt in valid)
                 {
-                    result = true;
-                    break;
+                    if (txt.AsString().Equals(str, stringComparer.Value()))
+                    {
+                        result = true;
+                        break;
+                    }
                 }
-            }
-            if (!result)
-            {
-                throw new ArgumentException($"'{str}' is not valid here - expected: {new Joined(", ", valid).AsString()}");
-            }
-            return str;
-        })
+                if (!result)
+                {
+                    throw new ArgumentException($"'{str}' is not valid here - expected: {new Joined(", ", valid).AsString()}");
+                }
+                return str;
+            })
+        )
         { }
     }
 }

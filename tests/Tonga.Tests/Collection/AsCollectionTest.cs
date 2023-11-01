@@ -9,7 +9,7 @@ using System;
 
 namespace Tonga.Collection.Tests
 {
-    public sealed class CollectionOfTest
+    public sealed class AsCollectionTest
     {
         [Fact]
         public void BehavesAsCollection()
@@ -44,15 +44,15 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 2,
-                AsCollection._(-1, 0).Count
+                new AsCollection<int>(-1, 0).Count
             );
         }
 
         [Fact]
-        public void Empty()
+        public void CanBeEmpty()
         {
             Assert.Empty(
-                AsCollection._<int>()
+                new AsCollection<int>()
             );
         }
 
@@ -61,7 +61,7 @@ namespace Tonga.Collection.Tests
         {
             Assert.Contains(
                 2,
-                AsCollection._(1, 2)
+                new AsCollection<int>(1, 2)
             );
         }
 
@@ -69,7 +69,7 @@ namespace Tonga.Collection.Tests
         public void RejectsAdd()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                AsCollection._(1, 2).Add(1)
+                new AsCollection<int>(1, 2).Add(1)
             );
         }
 
@@ -77,7 +77,7 @@ namespace Tonga.Collection.Tests
         public void RejectsRemove()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                AsCollection._(1, 2).Remove(1)
+                new AsCollection<int>(1, 2).Remove(1)
             );
         }
 
@@ -86,9 +86,45 @@ namespace Tonga.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                AsCollection._(1, 2).Clear()
+                new AsCollection<int>(1, 2).Clear()
             );
         }
 
+        [Fact]
+        public void BuildsCollection()
+        {
+            Assert.Contains(
+                -1,
+                new AsCollection<int>(1, 2, 0, -1)
+            );
+        }
+
+        [Fact]
+        public void BuildsCollectionFromEnumerator()
+        {
+            Assert.Contains(
+                -1,
+                AsCollection._(
+                    AsEnumerable._(1, 2, 0, -1).GetEnumerator())
+            );
+        }
+
+        [Fact]
+        public void SensesChanges()
+        {
+            var count = 1;
+            var col =
+                AsCollection._(() =>
+                    Repeated._(
+                        () =>
+                        {
+                            count++;
+                            return 0;
+                        },
+                        count
+                    ).GetEnumerator()
+                );
+            Assert.NotEqual(col.Count, col.Count);
+        }
     }
 }

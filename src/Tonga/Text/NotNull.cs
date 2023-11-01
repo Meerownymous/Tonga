@@ -13,14 +13,14 @@ namespace Tonga.Text
         /// A <see cref="IText"/>  that can't accept null.
         /// </summary>
         /// <param name="text"></param>
-        public NotNull(IText text) : base(() =>
+        public NotNull(IText text) : base(AsText._(() =>
             {
                 if (text == null)
                 {
                     throw new IOException("invalid text (null)");
                 }
                 return text.AsString();
-            }
+            })
         )
         { }
     }

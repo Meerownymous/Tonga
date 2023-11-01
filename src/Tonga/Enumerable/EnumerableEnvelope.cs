@@ -59,17 +59,11 @@ namespace Tonga.Enumerable
         private readonly IEnumerable<T> content;
 
         /// <summary>
-        /// Envelope for Enumerable.
-        /// </summary>
-        public EnumerableEnvelope(Func<IEnumerable<T>> origin) : this(() => origin().GetEnumerator())
-        { }
-
-        /// <summary>
         /// Envelope for Enumerables.
         /// </summary>
-        public EnumerableEnvelope(Func<IEnumerator<T>> origin)
+        public EnumerableEnvelope(IEnumerable<T> origin)
         {
-            this.content = new EnumeratorAsEnumerable<T>(origin);
+            this.content = origin;
         }
 
         /// <summary>

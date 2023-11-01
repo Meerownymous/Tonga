@@ -22,13 +22,13 @@ namespace Tonga.Text
         /// <param name="text">Text to be accessed thread safe</param>
         /// <param name="lck">Object to be locked to ensure thread safety</param>
         /// <returns></returns>
-        public Synced(IText text, Object lck) : base(() =>
+        public Synced(IText text, Object lck) : base(AsText._(() =>
             {
                 lock (lck)
                 {
                     return text.AsString();
                 }
-            }
+            })
         )
         { }
     }

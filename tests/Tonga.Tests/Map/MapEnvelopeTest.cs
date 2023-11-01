@@ -28,7 +28,7 @@ namespace Tonga.Map.Tests
 
         private class NonAbstractIntEnvelope : MapEnvelope<int, int>
         {
-            public NonAbstractIntEnvelope(IMap<int, int> map) : base(() => map)
+            public NonAbstractIntEnvelope(IMap<int, int> map) : base(map)
             { }
         }
     }

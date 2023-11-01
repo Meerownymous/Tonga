@@ -6,48 +6,52 @@ using Tonga.Enumerable;
 
 namespace Tonga.Collection
 {
-    /// Reversed collection.
-    ///
-    /// <para>There is no thread-safety guarantee.</para>
-    ///
+    /// <summary>
+    /// Reversed collection
+    /// </summary>
     public class Reversed<T> : CollectionEnvelope<T>
     {
         /// <summary>
-        /// ctor
+        /// Reversed collection
         /// </summary>
-        /// <param name="src"></param>
-        public Reversed(params T[] src) : this(Enumerable.AsEnumerable._(src))
+        public Reversed(params T[] src) : this(AsEnumerable._(src))
         { }
-        public static Reversed<T> New(params T[] src) => new Reversed<T>(src);
 
         /// <summary>
-        /// ctor
+        /// Reversed collection
         /// </summary>
-        /// <param name="src">source collection</param>
-        public Reversed(IEnumerable<T> src) : this(new LiveCollection<T>(src))
+        public Reversed(IEnumerable<T> src) : this(new AsCollection<T>(src))
         { }
-        public static Reversed<T> New(IEnumerable<T> src) => new Reversed<T>(src);
 
         /// <summary>
-        /// ctor
+        /// Reversed collection
         /// </summary>
-        /// <param name="src">source collection</param>
         public Reversed(ICollection<T> src) : base(
-            () => new LiveCollection<T>(
-                    new LinkedList<T>(src).Reverse()
+            new AsCollection<T>(() =>
+                src.Reverse()
             )
         )
         { }
-        public static Reversed<T> New(ICollection<T> src) => new Reversed<T>(src);
     }
 
-    /// Reversed collection.
+    /// <summary>
+    /// Reversed collection
+    /// </summary>
     public static class Reversed
     {
+        /// <summary>
+        /// Reversed collection
+        /// </summary>
         public static ICollection<T> _<T>(params T[] src) => new Reversed<T>(src);
 
+        /// <summary>
+        /// Reversed collection
+        /// </summary>
         public static ICollection<T> _<T>(IEnumerable<T> src) => new Reversed<T>(src);
 
+        /// <summary>
+        /// Reversed collection
+        /// </summary>
         public static ICollection<T> _<T>(ICollection<T> src) => new Reversed<T>(src);
     }
 }

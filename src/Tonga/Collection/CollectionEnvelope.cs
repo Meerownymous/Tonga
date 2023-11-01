@@ -18,9 +18,9 @@ namespace Tonga.Collection
         /// scalar of collection
         /// </summary>
         private readonly InvalidOperationException readonlyError = new InvalidOperationException("The collection is readonly");
-        private readonly Func<ICollection<T>> origin;
+        private readonly ICollection<T> origin;
 
-        public CollectionEnvelope(Func<ICollection<T>> col)
+        public CollectionEnvelope(ICollection<T> col)
         {
             this.origin = col;
         }
@@ -30,7 +30,7 @@ namespace Tonga.Collection
         /// </summary>
         public int Count
         {
-            get => this.origin().Count;
+            get => this.origin.Count;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="item">Item to lookup</param>
         /// <returns>True if item is found</returns>
-        public bool Contains(T item) => this.origin().Contains(item);
+        public bool Contains(T item) => this.origin.Contains(item);
 
         /// <summary>
         /// Copies items from given index to target array
@@ -69,14 +69,14 @@ namespace Tonga.Collection
         /// <param name="arrayIndex">Index to start</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            this.origin().CopyTo(array, arrayIndex);
+            this.origin.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
         /// A enumerator to iterate through the items.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<T> GetEnumerator() => this.origin().GetEnumerator();
+        public IEnumerator<T> GetEnumerator() => this.origin.GetEnumerator();
 
         /// <summary>
         /// Remove an item

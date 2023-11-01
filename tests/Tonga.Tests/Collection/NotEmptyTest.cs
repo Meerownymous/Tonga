@@ -15,7 +15,7 @@ namespace Tonga.Collection.Tests
             Assert.Throws<Exception>(() =>
                 Length._(
                     NotEmpty._(
-                        AsCollection._<bool>()
+                        Empty._<bool>()
                     )
                 ).Value()
             );
@@ -28,7 +28,9 @@ namespace Tonga.Collection.Tests
                 1,
                 Length._(
                     NotEmpty._(
-                        AsCollection._(false)
+                        AsCollection._(
+                            AsEnumerable._(false)
+                        )
                     )
                 ).Value()
             );
@@ -40,7 +42,7 @@ namespace Tonga.Collection.Tests
             Assert.Throws<OperationCanceledException>(() =>
                 Length._(
                     NotEmpty._(
-                        AsCollection._<bool>(),
+                        Empty._<bool>(),
                         new OperationCanceledException()
                     )
                 ).Value()

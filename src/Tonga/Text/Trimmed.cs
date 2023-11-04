@@ -98,8 +98,8 @@ namespace Tonga.Text
         public Trimmed(IText text, IText removeText, bool ignoreCase) : base(
             AsText._(() =>
             {
-                text = new AsSticky(text);
-                removeText = new AsSticky(removeText);
+                text = Sticky._(text);
+                removeText = Sticky._(removeText);
 
                 string str = text.AsString();
                 string remove = removeText.AsString();
@@ -111,7 +111,6 @@ namespace Tonga.Text
 
                     while (str.StartsWith(remove) || str.EndsWith(remove))
                     {
-
                         if (lower.StartsWith(remLower))
                         {
                             str = str.Remove(0, remove.Length);

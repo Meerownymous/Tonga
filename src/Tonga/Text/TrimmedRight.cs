@@ -93,8 +93,8 @@ namespace Tonga.Text
         public TrimmedRight(IText text, IText removeText, bool ignoreCase) : base(
             AsText._(() =>
             {
-                text = new AsSticky(text);
-                removeText = new AsSticky(removeText);
+                text = Sticky._(text);
+                removeText = Sticky._(removeText);
 
                 string str = text.AsString();
                 string remove = removeText.AsString();

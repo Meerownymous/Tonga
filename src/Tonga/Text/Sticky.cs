@@ -4,14 +4,14 @@ namespace Tonga.Text
     /// <summary>
     /// Text which is sticky - it remembers its output instead of regenerating every time.
     /// </summary>
-    public sealed class AsSticky : IText
+    public sealed class Sticky : IText
     {
         private Lazy<string> result;
 
         /// <summary>
         /// Text which is sticky - it remembers its output instead of regenerating every time.
         /// </summary>
-        public AsSticky(IText origin)
+        public Sticky(IText origin)
         {
             this.result = new Lazy<string>(origin.AsString);
         }
@@ -21,7 +21,7 @@ namespace Tonga.Text
             return this.result.Value;
         }
 
-        public static AsSticky From(IText origin) => new AsSticky(origin);
+        public static Sticky _(IText origin) => new Sticky(origin);
     }
 }
 

@@ -43,8 +43,7 @@ namespace Tonga.Map
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public AsPair(Func<KeyValuePair<TKey, TValue>> kvp)
-            : this(() =>
+        public AsPair(Func<KeyValuePair<TKey, TValue>> kvp) : this(() =>
             {
                 var simple = kvp.Invoke();
                 return new KeyValuePair<TKey, Func<TValue>>(simple.Key, () => simple.Value);

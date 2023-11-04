@@ -114,6 +114,11 @@ namespace Tonga.Collection
         /// <summary>
         /// A collection out of an <see cref="IEnumerable{T}"/>
         /// </summary>
+        public static ICollection<string> _(params string[] src) => new AsCollection<string>(src);
+
+        /// <summary>
+        /// A collection out of an <see cref="IEnumerable{T}"/>
+        /// </summary>
         public static ICollection<T> _<T>(Func<IEnumerator<T>> src) => new AsCollection<T>(src);
 
         /// <summary>

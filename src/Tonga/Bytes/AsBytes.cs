@@ -354,13 +354,13 @@ namespace Tonga.Bytes
         /// Bytes out of a double.
         /// </summary>
         /// <param name="number">a double</param>
-        public AsBytes _(double number) => new AsBytes(number);
+        public static AsBytes _(double number) => new AsBytes(number);
 
         /// <summary>
         /// Bytes out of other objects.
         /// </summary>
         /// <param name="bytes">scalar of bytes</param>
-        public AsBytes _(IScalar<Byte[]> bytes) =>
+        public static AsBytes _(IScalar<Byte[]> bytes) =>
             new AsBytes(bytes.Value);
     }
 }

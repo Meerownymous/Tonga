@@ -543,7 +543,7 @@ namespace Tonga.Map
         /// A map from the given keys and values.
         /// </summary>
         public static AsMap<string, string> _(
-            string key, string value, params string[] pairs
+            params string[] pairs
         )
         => new AsMap<string, string>(
             AsEnumerable._(() =>
@@ -551,7 +551,8 @@ namespace Tonga.Map
                 var enumerator = AsEnumerable._(pairs).GetEnumerator();
                 var current = 0;
                 var result = new List<IPair<string, string>>();
-                result.Add(AsPair._(key, value));
+                var key = string.Empty;
+                var value = string.Empty;
                 while(enumerator.MoveNext())
                 {
                     if(++current % 2 != 0) //even

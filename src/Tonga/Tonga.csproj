@@ -4,19 +4,17 @@
     <TargetFrameworks>net7.0</TargetFrameworks>
     <DocumentationFile>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\Yaapii.Atoms.xml</DocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Authors>ICARUS Consulting GmbH</Authors>
+    <Authors>Miro Tunk</Authors>
     <Description>Ported .NET version of Cactoos by Yegor Bugayenko.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) 2023 ICARUS Consulting GmbH</Copyright>
+    <Copyright>Copyright (c) 2023 NACLWARE</Copyright>
     <PackageTags>yaapii, elegant objects, cactoos, oop, encapsulation, primitives</PackageTags>
-    <PackageProjectUrl>https://github.com/icarus-consulting/Yaapii.Atoms</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/icarus-consulting/Yaapii.Atoms.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Meerownymous/Tonga</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Meerownymous/Tonga.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>https://github.com/icarus-consulting/Yaapii.Atoms/releases</PackageReleaseNotes>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\sgKey.snk</AssemblyOriginatorKeyFile>
+    <PackageReleaseNotes>https://github.com/Meerownymous/Tonga/releases</PackageReleaseNotes>
     <Configurations>Release;Debug</Configurations>
   </PropertyGroup>
 

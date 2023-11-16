@@ -10,10 +10,9 @@ namespace Tonga.Text.Test
         [Fact]
         public void IsBlank()
         {
-            Assert.True(
-                string.IsNullOrEmpty(
-                    new Blank().AsString()
-                )
+            Assert.Equal(
+                string.Empty,
+                new Empty().AsString()
             );
         }
     }

@@ -1,25 +1,16 @@
-
-
 using System;
-
 namespace Tonga.Text
 {
     /// <summary>
-    /// A blank text.
+    /// Space.
     /// </summary>
-    public sealed class Blank : IText
+    public sealed class Blank : TextEnvelope
     {
         /// <summary>
-        /// A blank text.
+        /// Space.
         /// </summary>
-        public Blank()
+        public Blank() : base(AsText._(" "))
         { }
-
-        public string AsString()
-        {
-            return String.Empty;
-        }
-
-        public static Blank New() => new Blank();
     }
 }
+

@@ -8,11 +8,26 @@ using Tonga.Enumerable;
 using Tonga.Scalar;
 using Tonga.Tests;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Tonga.Map.Tests
 {
-    public class AsMapTests
+    public sealed class AsMapTests
     {
+        [Fact]
+        public void IsThreadSafe()
+        {
+            IMap<string, string> oldMap = AsMap._();
+            Parallel.For(0, 10000, (index) =>
+            {
+                oldMap = oldMap.With(AsPair._(index.ToString(), index.ToString()));
+                oldMap.Keys();
+                _ = oldMap[index.ToString()];
+                _ = oldMap.Lazy(index.ToString())();
+            });
+            Assert.Equal(10000, oldMap.Keys().Count);
+        }
+
         [Fact]
         public void MapsKeysToValues()
         {

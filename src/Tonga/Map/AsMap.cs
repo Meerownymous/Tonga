@@ -11,6 +11,7 @@ namespace Tonga.Map
     /// </summary>
     public sealed class AsMap<Key, Value> : IMap<Key, Value>
     {
+        private readonly object lck;
         private readonly Lazy<IDictionary<Key, IPair<Key, Value>>> map;
 
         /// <summary>
@@ -497,16 +498,20 @@ namespace Tonga.Map
         /// <param name="input">input dictionary</param>
         public AsMap(Func<IEnumerable<IPair<Key, Value>>> pairs)
         {
+            this.lck = new object();
             this.map = new Lazy<IDictionary<Key, IPair<Key, Value>>>(
                 () =>
-            {
-                var dict = new Dictionary<Key, IPair<Key, Value>>();
-                foreach (var pair in pairs())
                 {
-                    dict[pair.Key()] = pair;
-                }
-                return dict;
-            });
+                    lock (this.lck)
+                    {
+                        var dict = new Dictionary<Key, IPair<Key, Value>>();
+                        foreach (var pair in pairs())
+                        {
+                            dict[pair.Key()] = pair;
+                        }
+                        return dict;
+                    }
+                });
         }
 
         public Value this[Key key] =>
@@ -532,7 +537,10 @@ namespace Tonga.Map
 
         public IMap<Key, Value> With(IPair<Key, Value> pair)
         {
-            this.map.Value[pair.Key()] = pair;
+            lock (this.lck)
+            {
+                this.map.Value[pair.Key()] = pair;
+            }
             return this;
         }
     }
@@ -553,9 +561,9 @@ namespace Tonga.Map
                 var result = new List<IPair<string, string>>();
                 var key = string.Empty;
                 var value = string.Empty;
-                while(enumerator.MoveNext())
+                while (enumerator.MoveNext())
                 {
-                    if(++current % 2 != 0) //even
+                    if (++current % 2 != 0) //even
                     {
                         key = enumerator.Current;
                     }

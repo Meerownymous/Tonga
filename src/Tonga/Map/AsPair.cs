@@ -1,12 +1,8 @@
-
-
 using System;
 using System.Collections.Generic;
-using Tonga.Scalar;
 
 namespace Tonga.Map
 {
-
     /// <summary>
     /// Key-value pair matching a key type to specified type value.
     /// </summary>
@@ -23,7 +19,7 @@ namespace Tonga.Map
             () => new KeyValuePair<TKey, Func<TValue>>(key, value),
             true
         )
-        { }
+        {   }
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.

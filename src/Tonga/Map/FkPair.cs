@@ -1,11 +1,9 @@
-
-
 using System;
 
 namespace Tonga.Map
 {
     /// <summary>
-    /// Fake Kvp
+    /// Fake Pair
     /// </summary>
     public sealed class FkPair<TKey, TValue> : IPair<TKey, TValue>
     {

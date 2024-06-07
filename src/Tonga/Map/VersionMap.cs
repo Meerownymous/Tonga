@@ -1,7 +1,4 @@
-
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Tonga.Enumerable;
 using Tonga.List;
@@ -12,7 +9,7 @@ using Tonga.List;
 namespace Tonga.Map
 {
     /// <summary>
-    /// A dictionary which matches a version. 
+    /// A dictionary which matches a version.
     /// It matches the version range, not the exact version.
     /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
     /// </summary>
@@ -35,7 +32,7 @@ namespace Tonga.Map
             );
 
         /// <summary>
-        /// A dictionary which matches a version. 
+        /// A dictionary which matches a version.
         /// It matches the version range, not the exact version.
         /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
@@ -43,7 +40,7 @@ namespace Tonga.Map
         { }
 
         /// <summary>
-        /// A dictionary which matches a version. 
+        /// A dictionary which matches a version.
         /// It matches the version range, not the exact version.
         /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
@@ -51,7 +48,7 @@ namespace Tonga.Map
         { }
 
         /// <summary>
-        /// A dictionary which matches a version. 
+        /// A dictionary which matches a version.
         /// It matches the version range, not the exact version.
         /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
         /// </summary>
@@ -61,10 +58,7 @@ namespace Tonga.Map
             this.openEnd = openEnd;
         }
 
-        public Value this[Version key]
-        {
-            get => this.Match(key);
-        }
+        public Value this[Version key] => this.Match(key);
 
         public ICollection<Version> Keys() => this.map.Keys();
 

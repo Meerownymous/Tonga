@@ -15,7 +15,7 @@ namespace Tonga.IO.Tests
                 new ZipFiles(
                     new ZipMappedPaths(
                         path => "directory/" + path,
-                        new Rersource(
+                        new Resource(
                             "Assets/Zip/ZipWithThreeFiles.zip",
                             this.GetType()
                         )

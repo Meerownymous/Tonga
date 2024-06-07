@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Tonga.Map
 {
@@ -12,7 +10,7 @@ namespace Tonga.Map
     {
         private readonly IMap<Key, Value> source;
         private readonly IDictionary<Key, IPair<Key, Value>> memory;
-        private bool allCopied = false;
+        private bool allCopied;
 
         /// <summary>
         /// A map whose keys and values are sticky per value once retrieved for the first time time.
@@ -23,10 +21,7 @@ namespace Tonga.Map
             this.memory = new Dictionary<Key, IPair<Key,Value>>();
         }
 
-        public Value this[Key key]
-        {
-            get => MemorizedValue(key, this.source, this.memory);
-        }
+        public Value this[Key key] => MemorizedValue(key, this.source, this.memory);
 
         public ICollection<Key> Keys() => this.source.Keys();
 

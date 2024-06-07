@@ -29,13 +29,7 @@ namespace Tonga.Map
             this.shallow = origin;
         }
 
-        public Value this[Surface key]
-        {
-            get
-            {
-                return this.deep[this.digDown(key)];
-            }
-        }
+        public Value this[Surface key] => this.deep[this.digDown(key)];
 
         public ICollection<Surface> Keys()
         {

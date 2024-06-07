@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Tonga.Enumerable;
-using Tonga.Scalar;
 
 namespace Tonga.Map
 {
@@ -28,8 +27,8 @@ namespace Tonga.Map
         /// <summary>
         /// Merged map.
         /// </summary>
-        public Merged(params IMap<Key, Value>[] dicts) : this(
-            AsEnumerable._(dicts)
+        public Merged(params IMap<Key, Value>[] maps) : this(
+            AsEnumerable._(maps)
         )
         { }
 
@@ -64,8 +63,8 @@ namespace Tonga.Map
         /// <summary>
         /// Merged map.
         /// </summary>
-        public static IMap<string, Value> _<Value>(params IMap<string, Value>[] dicts)
-            => new Merged<string, Value>(dicts);
+        public static IMap<string, Value> _<Value>(params IMap<string, Value>[] maps)
+            => new Merged<string, Value>(maps);
 
         /// <summary>
         /// Merged map.

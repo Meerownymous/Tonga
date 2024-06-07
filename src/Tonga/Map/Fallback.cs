@@ -23,8 +23,9 @@ namespace Tonga.Map
         /// </summary>
         /// <param name="map">Map returning existing values</param>
         /// <param name="fallbackMap">Fallback map containing missing values</param>
-        public Fallback(IMap<Key, Value> map, IMap<Key, Value> fallbackMap)
-            : this(() => map, fallbackMap)
+        public Fallback(IMap<Key, Value> map, IMap<Key, Value> fallbackMap) : this(
+            () => map, fallbackMap
+                        )
         { }
 
         /// <summary>

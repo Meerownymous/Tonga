@@ -24,14 +24,14 @@ namespace Tonga.Enumerable
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
-        public AsEnumerable(IEnumerable<T> origin) : this(origin.GetEnumerator)
+        /// <param name="origin">function which retrieves enumerator</param>
+        public AsEnumerable(IEnumerable<T> origin) : this(() => origin.GetEnumerator())
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
+        /// <param name="origin">function which retrieves enumerator</param>
         public AsEnumerable(Func<IEnumerable<T>> origin) : this(
             () => origin().GetEnumerator()
         )
@@ -40,14 +40,14 @@ namespace Tonga.Enumerable
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
+        /// <param name="origin">function which retrieves enumerator</param>
         public AsEnumerable(IEnumerator<T> origin) : this(() => origin)
         { }
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
+        /// <param name="origin">function which retrieves enumerator</param>
         public AsEnumerable(Func<IEnumerator<T>> origin)
         {
             this.origin = origin;
@@ -73,7 +73,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
+        /// <param name="items">enumerated content</param>
         public static IEnumerable<T> _<T>(params T[] items) => new AsEnumerable<T>(items);
 
         /// <summary>

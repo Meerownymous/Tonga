@@ -108,7 +108,7 @@ namespace Tonga.IO.Tests
 
                     ReadAll._(
                         new TeeInput(
-                            new Rersource("Assets/Txt/large-text.txt", this.GetType()),
+                            new Resource("Assets/Txt/large-text.txt", this.GetType()),
                             new OutputTo(output)
                         )
                     ).Invoke();
@@ -121,7 +121,7 @@ namespace Tonga.IO.Tests
                 {
                     content = reader.ReadToEnd();
                 }
-                using (var reader = new StreamReader(new Rersource("Assets/Txt/large-text.txt", this.GetType()).Stream()))
+                using (var reader = new StreamReader(new Resource("Assets/Txt/large-text.txt", this.GetType()).Stream()))
                 {
                     input = reader.ReadToEnd();
                 }

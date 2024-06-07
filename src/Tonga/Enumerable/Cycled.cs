@@ -43,7 +43,7 @@ namespace Tonga.Enumerable
             }
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
@@ -52,7 +52,6 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A <see cref="IEnumerable{T}"/> that starts from the beginning when ended.
     /// </summary>
-    /// <typeparam name="T">type of the contents</typeparam>
     public static class Cycled
     {
         public static IEnumerable<T> _<T>(IEnumerable<T> enumerable) => new Cycled<T>(enumerable);

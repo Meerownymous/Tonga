@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using Tonga.Enumerable;
@@ -19,9 +17,9 @@ namespace Tonga.Map
         public OneToMany(TKey key, params Func<TValue>[] many) : this(key, () =>
         {
             var lst = new List<TValue>();
-            for (var i = 0; i < many.Length; i++)
+            foreach (var item in many)
             {
-                lst.Add(many[i]());
+                lst.Add(item());
             }
             return lst;
         }

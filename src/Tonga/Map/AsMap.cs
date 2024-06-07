@@ -18,10 +18,10 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key
+            Key key1, Value value1
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key)
+                AsPair._(key1, value1)
             )
         )
         { }
@@ -30,11 +30,11 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2)
             )
         )
@@ -44,12 +44,12 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3)
             )
@@ -60,13 +60,13 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4)
@@ -78,14 +78,14 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
             Key key5, Value value5
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -98,7 +98,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -106,7 +106,7 @@ namespace Tonga.Map
             Key key6, Value value6
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -120,7 +120,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -129,7 +129,7 @@ namespace Tonga.Map
             Key key7, Value value7
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -144,7 +144,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -154,7 +154,7 @@ namespace Tonga.Map
             Key key8, Value value8
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -170,7 +170,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -181,7 +181,7 @@ namespace Tonga.Map
             Key key9, Value value9
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -198,7 +198,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -207,10 +207,10 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8,
             Key key9, Value value9,
-            Key key10, Value Key0
+            Key key10, Value value10
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -219,7 +219,7 @@ namespace Tonga.Map
                 AsPair._(key7, value7),
                 AsPair._(key8, value8),
                 AsPair._(key9, value9),
-                AsPair._(key10, Key0)
+                AsPair._(key10, value10)
             )
         )
         { }
@@ -228,7 +228,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -237,11 +237,11 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8,
             Key key9, Value value9,
-            Key key10, Value Key0,
-            Key key11, Value Key1
+            Key key10, Value value10,
+            Key key11, Value value11
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -250,8 +250,8 @@ namespace Tonga.Map
                 AsPair._(key7, value7),
                 AsPair._(key8, value8),
                 AsPair._(key9, value9),
-                AsPair._(key10, Key0),
-                AsPair._(key11, Key1)
+                AsPair._(key10, value10),
+                AsPair._(key11, value11)
             )
         )
         { }
@@ -260,7 +260,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -269,12 +269,12 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8,
             Key key9, Value value9,
-            Key key10, Value Key0,
-            Key key11, Value Key1,
-            Key key12, Value Key2
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -283,9 +283,9 @@ namespace Tonga.Map
                 AsPair._(key7, value7),
                 AsPair._(key8, value8),
                 AsPair._(key9, value9),
-                AsPair._(key10, Key0),
-                AsPair._(key11, Key1),
-                AsPair._(key12, Key2)
+                AsPair._(key10, value10),
+                AsPair._(key11, value11),
+                AsPair._(key12, value12)
             )
         )
         { }
@@ -294,7 +294,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -303,13 +303,13 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8,
             Key key9, Value value9,
-            Key key10, Value Key0,
-            Key key11, Value Key1,
-            Key key12, Value Key2,
-            Key key13, Value Key3
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -318,10 +318,10 @@ namespace Tonga.Map
                 AsPair._(key7, value7),
                 AsPair._(key8, value8),
                 AsPair._(key9, value9),
-                AsPair._(key10, Key0),
-                AsPair._(key11, Key1),
-                AsPair._(key12, Key2),
-                AsPair._(key13, Key3)
+                AsPair._(key10, value10),
+                AsPair._(key11, value11),
+                AsPair._(key12, value12),
+                AsPair._(key13, value13)
             )
         )
         { }
@@ -330,7 +330,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -339,14 +339,14 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8,
             Key key9, Value value9,
-            Key key10, Value Key0,
-            Key key11, Value Key1,
-            Key key12, Value Key2,
-            Key key13, Value Key3,
-            Key key14, Value Key4
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13,
+            Key key14, Value value14
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -355,11 +355,11 @@ namespace Tonga.Map
                 AsPair._(key7, value7),
                 AsPair._(key8, value8),
                 AsPair._(key9, value9),
-                AsPair._(key10, Key0),
-                AsPair._(key11, Key1),
-                AsPair._(key12, Key2),
-                AsPair._(key13, Key3),
-                AsPair._(key14, Key4)
+                AsPair._(key10, value10),
+                AsPair._(key11, value11),
+                AsPair._(key12, value12),
+                AsPair._(key13, value13),
+                AsPair._(key14, value14)
             )
         )
         { }
@@ -368,7 +368,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -377,15 +377,15 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8,
             Key key9, Value value9,
-            Key key10, Value Key0,
-            Key key11, Value Key1,
-            Key key12, Value Key2,
-            Key key13, Value Key3,
-            Key key14, Value Key4,
-            Key key15, Value Key5
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13,
+            Key key14, Value value14,
+            Key key15, Value value15
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -394,12 +394,12 @@ namespace Tonga.Map
                 AsPair._(key7, value7),
                 AsPair._(key8, value8),
                 AsPair._(key9, value9),
-                AsPair._(key10, Key0),
-                AsPair._(key11, Key1),
-                AsPair._(key12, Key2),
-                AsPair._(key13, Key3),
-                AsPair._(key14, Key4),
-                AsPair._(key15, Key5)
+                AsPair._(key10, value10),
+                AsPair._(key11, value11),
+                AsPair._(key12, value12),
+                AsPair._(key13, value13),
+                AsPair._(key14, value14),
+                AsPair._(key15, value15)
             )
         )
         { }
@@ -408,7 +408,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(
-            Key key1, Value Key,
+            Key key1, Value value1,
             Key key2, Value value2,
             Key key3, Value value3,
             Key key4, Value value4,
@@ -417,16 +417,16 @@ namespace Tonga.Map
             Key key7, Value value7,
             Key key8, Value value8,
             Key key9, Value value9,
-            Key key10, Value Key0,
-            Key key11, Value Key1,
-            Key key12, Value Key2,
-            Key key13, Value Key3,
-            Key key14, Value Key4,
-            Key key15, Value Key5,
-            Key key16, Value Key6
+            Key key10, Value value10,
+            Key key11, Value value11,
+            Key key12, Value value12,
+            Key key13, Value value13,
+            Key key14, Value value14,
+            Key key15, Value value15,
+            Key key16, Value value16
         ) : this(
             AsEnumerable._(
-                AsPair._(key1, Key),
+                AsPair._(key1, value1),
                 AsPair._(key2, value2),
                 AsPair._(key3, value3),
                 AsPair._(key4, value4),
@@ -435,13 +435,13 @@ namespace Tonga.Map
                 AsPair._(key7, value7),
                 AsPair._(key8, value8),
                 AsPair._(key9, value9),
-                AsPair._(key10, Key0),
-                AsPair._(key11, Key1),
-                AsPair._(key12, Key2),
-                AsPair._(key13, Key3),
-                AsPair._(key14, Key4),
-                AsPair._(key15, Key5),
-                AsPair._(key16, Key6)
+                AsPair._(key10, value10),
+                AsPair._(key11, value11),
+                AsPair._(key12, value12),
+                AsPair._(key13, value13),
+                AsPair._(key14, value14),
+                AsPair._(key15, value15),
+                AsPair._(key16, value16)
             )
         )
         { }
@@ -450,7 +450,7 @@ namespace Tonga.Map
         /// A map from the given KeyValuePairs
         /// </summary>
         public AsMap(IPair<Key, Value> item, params IPair<Key, Value>[] more) : this(
-            Enumerable.Joined._(
+            Joined._(
                 AsEnumerable._(more),
                 item
             )
@@ -486,7 +486,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given dictionary.
         /// </summary>
-        /// <param name="input">input dictionary</param>
+        /// <param name="pairs">map content</param>
         public AsMap(IEnumerable<IPair<Key, Value>> pairs) : this(
             () => pairs
         )
@@ -495,7 +495,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given dictionary.
         /// </summary>
-        /// <param name="input">input dictionary</param>
+        /// <param name="pairs">map content</param>
         public AsMap(Func<IEnumerable<IPair<Key, Value>>> pairs)
         {
             this.lck = new object();

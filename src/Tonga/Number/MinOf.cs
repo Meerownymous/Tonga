@@ -16,7 +16,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params int[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>
@@ -27,10 +27,13 @@ namespace Tonga.Number
             new AsScalar<double>(() =>
             {
                 var min = double.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
+                using var e = src.GetEnumerator();
                 {
-                    if (e.Current < min) min = e.Current;
+                    while (e.MoveNext())
+                    {
+                        if (e.Current < min) min = e.Current;
+                    }
+
                 }
                 return min;
             }),
@@ -72,7 +75,7 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">integers to find max in</param>
         public MinOf(params double[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            AsEnumerable._(src))
         { }
 
         /// <summary>

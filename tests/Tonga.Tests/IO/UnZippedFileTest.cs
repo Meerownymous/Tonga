@@ -16,7 +16,7 @@ namespace Tonga.IO.Tests
         {
             Assert.True(
                     new UnzippedFile(
-                            new Rersource(
+                            new Resource(
                                 "Assets/Zip/ZipWithThreeFiles.zip",
                                 this.GetType()
                             ),
@@ -35,7 +35,7 @@ namespace Tonga.IO.Tests
                 fileName,
                 AsText._(
                     new UnzippedFile(
-                       new Rersource(
+                       new Resource(
                            "Assets/Zip/ZipWithThreeFiles.zip",
                            this.GetType()
                        ),
@@ -51,7 +51,7 @@ namespace Tonga.IO.Tests
             Assert.Throws<InvalidOperationException>(() =>
             {
                 new UnzippedFile(
-                    new Rersource(
+                    new Resource(
                         "Assets/Zip/NotAZip",
                         this.GetType()
                     ),

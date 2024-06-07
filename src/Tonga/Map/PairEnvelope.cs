@@ -1,5 +1,3 @@
-
-
 namespace Tonga.Map
 {
     /// <summary>
@@ -12,7 +10,7 @@ namespace Tonga.Map
         /// <summary>
         /// Simplification of Pair building
         /// </summary>
-        public PairEnvelope(IPair<TKey, TValue> origin)
+        protected PairEnvelope(IPair<TKey, TValue> origin)
         {
             this.origin = origin;
         }

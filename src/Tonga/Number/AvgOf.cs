@@ -92,7 +92,7 @@ namespace Tonga.Number
                 double total = 0D;
                 foreach (double val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0D)
@@ -107,7 +107,7 @@ namespace Tonga.Number
                 int total = 0;
                 foreach (int val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -122,7 +122,7 @@ namespace Tonga.Number
                 long total = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -133,11 +133,11 @@ namespace Tonga.Number
             }),
             new AsScalar<float>(() =>
             {
-                float sum = 0F;
-                float total = 0F;
+                var sum = 0F;
+                var total = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -166,7 +166,7 @@ namespace Tonga.Number
                 double total = 0D;
                 foreach (double val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0D)
@@ -179,9 +179,9 @@ namespace Tonga.Number
             {
                 int sum = 0;
                 int total = 0;
-                foreach (int val in src)
+                foreach (var val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -196,7 +196,7 @@ namespace Tonga.Number
                 long total = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -211,7 +211,7 @@ namespace Tonga.Number
                 float total = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -240,7 +240,7 @@ namespace Tonga.Number
                 double total = 0D;
                 foreach (double val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0D)
@@ -255,7 +255,7 @@ namespace Tonga.Number
                 int total = 0;
                 foreach (int val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -270,7 +270,7 @@ namespace Tonga.Number
                 long total = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -285,7 +285,7 @@ namespace Tonga.Number
                 float total = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -314,7 +314,7 @@ namespace Tonga.Number
                 double total = 0D;
                 foreach (double val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0D)
@@ -329,7 +329,7 @@ namespace Tonga.Number
                 int total = 0;
                 foreach (int val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -344,7 +344,7 @@ namespace Tonga.Number
                 long total = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)
@@ -359,7 +359,7 @@ namespace Tonga.Number
                 float total = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                     ++total;
                 }
                 if (total == 0)

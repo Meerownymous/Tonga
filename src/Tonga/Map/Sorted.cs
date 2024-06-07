@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Tonga.Enumerable;
 
 namespace Tonga.Map
 {
@@ -14,7 +13,7 @@ namespace Tonga.Map
     public sealed class Sorted<Key, Value> : MapEnvelope<Key, Value>
     {
         /// <summary>
-        /// Sorts the given map with the default comperator of the key
+        /// Sorts the given map with the default comparator of the key
         /// </summary>
         /// <param name="map">Map to be sorted</param>
         public Sorted(IMap<Key, Value> map) : this(
@@ -25,7 +24,7 @@ namespace Tonga.Map
         /// <summary>
         /// Sorts the given map with the given compare function
         /// </summary>
-        /// <param name="dict">Map to be sorted</param>
+        /// <param name="map">Map to be sorted</param>
         /// <param name="compare">Function to compare two keys</param>
         public Sorted(IMap<Key, Value> map, Func<Key, Key, int> compare) : this(
             map, new SimpleComparer<Key>(compare)
@@ -33,7 +32,7 @@ namespace Tonga.Map
         { }
 
         /// <summary>
-        /// Sorts the given map with the default comperator of the key
+        /// Sorts the given map with the default comparator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         public Sorted(IEnumerable<IPair<Key, Value>> pairs) : this(
@@ -105,7 +104,7 @@ namespace Tonga.Map
         /// <summary>
         /// Sorts the given map with the given comparer
         /// </summary>
-        /// <param name="dict">Map to be sorted</param>
+        /// <param name="map">Map to be sorted</param>
         /// <param name="cmp">Comparer comparing keys</param>
         public Sorted(IMap<Key, Value> map, IComparer<Key> cmp) : base(
             AsMap._(() =>
@@ -153,7 +152,7 @@ namespace Tonga.Map
         /// <summary>
         /// Comparer comparing two KeyValuePairs by key
         /// </summary>
-        /// <param name="cmp">Comparer compairing the key type</param>
+        /// <param name="cmp">Comparer comparing the key type</param>
         public KeyComparer(IComparer<Key> cmp)
         {
             this.cmp = cmp;
@@ -171,7 +170,7 @@ namespace Tonga.Map
     public static class Sorted
     {
         /// <summary>
-        /// Sorts the given map with the default comperator of the key
+        /// Sorts the given map with the default comparator of the key
         /// </summary>
         /// <param name="dict">Map to be sorted</param>
         public static IMap<Key, Value> _<Key, Value>(IMap<Key, Value> dict)
@@ -186,7 +185,7 @@ namespace Tonga.Map
             => new Sorted<Key, Value>(dict, compare);
 
         /// <summary>
-        /// Sorts the given map with the default comperator of the key
+        /// Sorts the given map with the default comparator of the key
         /// </summary>
         /// <param name="pairs">Map elements to be sorted</param>
         public static IMap<Key, Value> _<Key, Value>(IEnumerable<IPair<Key, Value>> pairs)

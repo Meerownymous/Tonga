@@ -16,10 +16,10 @@ namespace Tonga.Number
         /// A <see cref="IText"/> as a <see cref="INumber"/>
         /// </summary>
         /// <param name="text">text to parse</param>
-        /// <param name="blockSeperator">seperator for blocks, for example 1.000</param>
-        /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
-        public LiveNumber(Func<string> text, string decimalSeperator, string blockSeperator) : this(
-            () => new NumberOf(text(), decimalSeperator, blockSeperator)
+        /// <param name="blockSeparator">separator for blocks, for example 1.000</param>
+        /// <param name="decimalSeparator">separator for floating point numbers, for example 16,235 </param>
+        public LiveNumber(Func<string> text, string decimalSeparator, string blockSeparator) : this(
+            () => new NumberOf(text(), decimalSeparator, blockSeparator)
         )
         { }
 
@@ -32,11 +32,11 @@ namespace Tonga.Number
         )
         { }
 
-        /// <summary>	
-        /// A <see cref="string"/> as a <see cref="INumber"/>	
-        /// </summary>	
-        /// <param name="str">The string</param>	
-        /// <param name="provider">a number format provider</param>	
+        /// <summary>
+        /// A <see cref="string"/> as a <see cref="INumber"/>
+        /// </summary>
+        /// <param name="str">The string</param>
+        /// <param name="provider">a number format provider</param>
         public LiveNumber(Func<string> str, IScalar<IFormatProvider> provider) : this(
            () => new NumberOf(str(), provider)
         )

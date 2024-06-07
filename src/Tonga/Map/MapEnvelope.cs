@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Tonga.Map
@@ -19,13 +18,7 @@ namespace Tonga.Map
             this.origin = origin;
         }
 
-        public Value this[Key key]
-        {
-            get
-            {
-                return Origin()[key];
-            }
-        }
+        public Value this[Key key] => Origin()[key];
 
         public ICollection<Key> Keys() => Origin().Keys();
 

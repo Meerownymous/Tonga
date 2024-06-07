@@ -56,25 +56,6 @@ namespace Tonga.Map
         /// <summary>
         /// Merged map.
         /// </summary>
-        public static IMap<string, Value> _<Value>(
-            IMapInput<string, Value> input, IMap<string, Value> origin)
-            => new Merged<string, Value>(input, origin);
-
-        /// <summary>
-        /// Merged map.
-        /// </summary>
-        public static IMap<string, Value> _<Value>(params IMap<string, Value>[] maps)
-            => new Merged<string, Value>(maps);
-
-        /// <summary>
-        /// Merged map.
-        /// </summary>
-        public static IMap<string, Value> _<Value>(IEnumerable<IMap<string, Value>> maps)
-            => new Merged<string, Value>(maps);
-
-        /// <summary>
-        /// Merged map.
-        /// </summary>
         public static IMap<Key, Value> _<Key, Value>(IPair<Key, Value> pair, IMap<Key, Value> origin)
             => new Merged<Key, Value>(pair, origin);
 
@@ -83,12 +64,6 @@ namespace Tonga.Map
         /// </summary>
         public static IMap<Key, Value> _<Key, Value>(IMapInput<Key, Value> input, IMap<Key, Value> origin)
             => new Merged<Key, Value>(input, origin);
-
-        /// <summary>
-        /// Merged map.
-        /// </summary>
-        public static IMap<Key, Value> _<Key, Value>(bool live, params IMap<Key, Value>[] maps)
-            => new Merged<Key, Value>(maps);
 
         /// <summary>
         /// Merged map.

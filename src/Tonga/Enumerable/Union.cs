@@ -30,20 +30,18 @@ namespace Tonga.Enumerable
         )
         { }
 
-        public IEnumerator<T> GetEnumerator() => Produced(a, b, comparison);
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-
-        private static IEnumerator<T> Produced(IEnumerable<T> a, IEnumerable<T> b, IEqualityComparer<T> comparison)
+        public IEnumerator<T> GetEnumerator()
         {
             var union = new HashSet<T>(comparison);
 
             foreach(var element in Joined._(a, b))
             {
-                union.Add(element);
+                if(union.Add(element)) yield return element;
             }
-            return union.GetEnumerator();
         }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
 
         private sealed class Comparison(Func<T, T, bool> comparison) : IEqualityComparer<T>
         {

@@ -49,26 +49,20 @@ namespace Tonga.Enumerable
         )
         { }
 
-        public IEnumerator<T> GetEnumerator() => Produced(a, b, comparison);
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-
-        private static IEnumerator<T> Produced(IEnumerable<T> left, IEnumerable<T> right, IEqualityComparer<T> comparison)
+        public IEnumerator<T> GetEnumerator()
         {
-            var set = new HashSet<T>(right, comparison);
-            var intersection = new List<T>();
-
-            foreach (var item in left)
+            var set = new HashSet<T>(b, comparison);
+            foreach (var item in a)
             {
                 if (set.Contains(item))
                 {
-                    intersection.Add(item);
                     set.Remove(item); // Ensures each item is added only once
+                    yield return item;
                 }
             }
-
-            return intersection.GetEnumerator();
         }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         private sealed class Comparison(Func<T, T, bool> comparison) : IEqualityComparer<T>
         {

@@ -13,7 +13,7 @@ namespace Tonga.Enumerable
     /// Last element in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Last<T> : Scalar.ScalarEnvelope<T>
+    public sealed class Last<T> : ScalarEnvelope<T>
     {
         /// <summary>
         /// Last element in <see cref="IEnumerable{T}"/> with given Exception thrown on fallback

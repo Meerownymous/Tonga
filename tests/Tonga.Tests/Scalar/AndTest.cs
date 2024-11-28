@@ -53,7 +53,7 @@ namespace Tonga.Scalar.Tests
         public void EmptyIterator()
         {
             Assert.True(
-                new And((IEnumerable<IScalar<bool>>)new None<IScalar<bool>>())
+                new And((IEnumerable<Tonga.IScalar<bool>>)new None<Tonga.IScalar<bool>>())
                     .Value()
             );
         }

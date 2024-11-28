@@ -12,7 +12,7 @@ namespace Tonga.Enumerable
     /// Element before another element in a <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of element</typeparam>
-    public sealed class Sibling<T> : Scalar.ScalarEnvelope<T>
+    public sealed class Sibling<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>

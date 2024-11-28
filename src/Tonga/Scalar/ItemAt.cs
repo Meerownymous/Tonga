@@ -13,7 +13,7 @@ namespace Tonga.Enumerable
     /// Element from position in a <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of element</typeparam>
-    public sealed class ItemAt<T> : Scalar.ScalarEnvelope<T>
+    public sealed class ItemAt<T> : ScalarEnvelope<T>
     {
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/> with given Exception thrwon on fallback

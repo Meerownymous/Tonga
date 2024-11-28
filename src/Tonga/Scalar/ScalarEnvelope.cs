@@ -15,7 +15,7 @@ namespace Tonga.Scalar
         /// <summary>
         /// Envelope for scalars.
         /// </summary>
-        public ScalarEnvelope(ScalarEnvelope<T> result) : this(() => result.Value())
+        public ScalarEnvelope(ScalarEnvelope<T> result) : this(result.Value)
         { }
 
         /// <summary>

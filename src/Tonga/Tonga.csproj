@@ -16,6 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>https://github.com/Meerownymous/Tonga/releases</PackageReleaseNotes>
     <Configurations>Release;Debug</Configurations>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'ReleaseSources'">

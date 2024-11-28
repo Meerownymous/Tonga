@@ -9,7 +9,7 @@ namespace Tonga.Text
     /// <summary>
     /// Text as long
     /// </summary>
-    public sealed class LongOf : Scalar.ScalarEnvelope<long>
+    public sealed class LongOf : ScalarEnvelope<long>
     {
         private readonly AsScalar<long> val;
 

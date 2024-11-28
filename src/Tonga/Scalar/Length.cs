@@ -50,5 +50,5 @@ namespace Tonga.Scalar
             }
             return result;
         });
-    }    
+    }
 }

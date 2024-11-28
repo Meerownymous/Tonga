@@ -117,7 +117,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="func"></param>
         public static FuncOf<In1, In2, Out> _<In1, In2, Out>(System.Func<In1, In2, Out> func) =>
-            new FuncOf<In1, In2, Out>(func);
+            new(func);
     }
 
     /// <summary>
@@ -155,7 +155,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="func"></param>
         public static FuncOf<In1, In2, In3, Out> _<In1, In2, In3, Out>(System.Func<In1, In2, In3, Out> func) =>
-            new FuncOf<In1, In2, In3, Out>(func);
+            new(func);
     }
 
     public static class FuncOf

@@ -11,7 +11,7 @@ namespace Tonga.Enumerable
     /// Find the smallest item in a <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Min<T> : Scalar.ScalarEnvelope<T>
+    public sealed class Min<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>

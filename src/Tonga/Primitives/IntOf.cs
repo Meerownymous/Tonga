@@ -9,7 +9,7 @@ namespace Tonga.Text
     /// <summary>
     /// A <see cref="int"/> of a text.
     /// </summary>
-    public sealed class IntOf : Scalar.ScalarEnvelope<int>
+    public sealed class IntOf : ScalarEnvelope<int>
     {
         private readonly AsScalar<int> val;
 

@@ -63,7 +63,7 @@ namespace Tonga.Scalar
         public static AsScalar<T> _<T>(T src) => new AsScalar<T>(src);
 
         /// <summary>
-        /// A s<see cref="ScalarEnvelope{T}"/> that will return the same value from a cache as long the reload condition is false.
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="srcFunc">func to cache result from</param>
         /// <param name="shouldReload">reload condition func</param>

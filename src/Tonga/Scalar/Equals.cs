@@ -69,7 +69,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="first">scalar of first value to compare</param>
         /// <param name="second">scalar of second value to compare</param>
-        public static Equals<T> _<T>(ScalarEnvelope<T> first, ScalarEnvelope<T> second)
+        public static Equals<T> _<T>(IScalar<T> first, IScalar<T> second)
             where T : IComparable<T>
             => new Equals<T>(first, second);
     }

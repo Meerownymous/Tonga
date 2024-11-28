@@ -1,17 +1,16 @@
-
-
 using System;
 using System.Globalization;
 using Tonga.Scalar;
+using Tonga.Text;
 
 #pragma warning disable CS1591
 
-namespace Tonga.Text
+namespace Tonga.Primitives
 {
     /// <summary>
     /// A float out of text.
     /// </summary>
-    public sealed class FloatOf : Scalar.ScalarEnvelope<float>
+    public sealed class FloatOf : ScalarEnvelope<float>
     {
         private readonly AsScalar<float> val;
 

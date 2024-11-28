@@ -35,8 +35,8 @@ namespace Tonga.Enumerable.Test
         }
 
         [Theory]
-        [InlineData(new int[] { 1, 2 }, new int[] { 1, 2 }, new int[] { 1, 2 })]
-        [InlineData(new int[] { 1, 2 }, new int[] { 1 }, new int[] { 1 })]
+        [InlineData(new[] { 1, 1, 2 }, new[] { 1, 2, 2 }, new[] { 1, 2 })]
+        [InlineData(new[] { 1, 2 }, new[] { 1 }, new[] { 1 })]
         public void MatchesInt(IEnumerable<int> a, IEnumerable<int> b, IEnumerable<int> expected)
         {
             Assert.Equal(
@@ -52,7 +52,7 @@ namespace Tonga.Enumerable.Test
         {
             Assert.Equal(
                 "c:/abraham/a.jpg c:/caesar/c.jpg",
-                new Text.Joined(" ", 
+                new Text.Joined(" ",
                     new Union<string>(
                         new AsList<string>("c:/abraham/a.jpg", "c:/bertram/b.jpg", "c:/caesar/c.jpg"),
                         new AsList<string>("a", "c"),

@@ -36,7 +36,6 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to filter</param>
         /// <param name="pass">filter function</param>
-        /// <param name="live">live or sticky</param>
         public Filtered(Func<T, Boolean> pass, IEnumerable<T> src)
         {
             this.result = AsEnumerable._(() => Produced(src, pass));

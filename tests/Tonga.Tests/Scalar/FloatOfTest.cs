@@ -1,10 +1,8 @@
-
-
 using System;
+using Tonga.Primitives;
 using Xunit;
-using Tonga.Text;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class FloatOfTest
     {

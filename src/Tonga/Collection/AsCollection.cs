@@ -9,19 +9,17 @@ using Tonga.Enumerable;
 namespace Tonga.Collection
 {
     /// <summary>
-    /// Collection out of other things. 
+    /// Collection out of other things.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class AsCollection<T> : ICollection<T>
     {
-        private static InvalidOperationException readOnlyException =
-            new InvalidOperationException("Collection is readonly.");
+        private static readonly InvalidOperationException readOnlyException = new("Collection is readonly.");
         private readonly Func<ICollection<T>> items;
 
         /// <summary>
         /// A collection from an array
         /// </summary>
-        /// <param name="array"></param>
         public AsCollection(params T[] more) : this(AsEnumerable._(more))
         { }
 

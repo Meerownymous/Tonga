@@ -15,14 +15,14 @@ namespace Tonga.Scalar
         private volatile object cache;
 
         /// <summary>
-        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe.
+        /// A <see cref="IScalar{T}"/> that is threadsafe.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         public Solid(Func<T> src) : this(src, src)
         { }
 
         /// <summary>
-        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe and sticky.
+        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">the object to lock</param>
@@ -30,14 +30,14 @@ namespace Tonga.Scalar
         { }
 
         /// <summary>
-        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe and sticky.
+        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         public Solid(IScalar<T> src) : this(src, src)
         { }
 
         /// <summary>
-        /// A <see cref="ScalarEnvelope{T}"/> that is threadsafe and sticky.
+        /// A <see cref="IScalar{T}"/> that is threadsafe and sticky.
         /// </summary>
         /// <param name="src">the scalar to make operate threadsafe</param>
         /// <param name="lck">object to lock while using scalar</param>

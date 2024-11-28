@@ -6,13 +6,13 @@ using Tonga.Func;
 namespace Tonga.Scalar
 {
     /// <summary>
-    /// <see cref="ScalarEnvelope{T}"/> which will retry multiple times before throwing an exception.
+    /// <see cref="IScalar{T}"/> which will retry multiple times before throwing an exception.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class Retry<T> : ScalarEnvelope<T>
     {
         /// <summary>
-        /// <see cref="ScalarEnvelope{T}"/> which will retry multiple times before throwing an exception.
+        /// <see cref="IScalar{T}"/> which will retry multiple times before throwing an exception.
         /// </summary>
         /// <param name="scalar">func to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
@@ -23,7 +23,7 @@ namespace Tonga.Scalar
         { }
 
         /// <summary>
-        /// <see cref="ScalarEnvelope{T}"/> which will retry multiple times before throwing an exception.
+        /// <see cref="IScalar{T}"/> which will retry multiple times before throwing an exception.
         /// </summary>
         /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
@@ -32,7 +32,7 @@ namespace Tonga.Scalar
         { }
 
         /// <summary>
-        /// <see cref="ScalarEnvelope{T}"/> which will retry until the given condition <see cref="IFunc{In, Out}"/> matches before throwing an exception.
+        /// <see cref="IScalar{T}"/> which will retry until the given condition <see cref="IFunc{In, Out}"/> matches before throwing an exception.
         /// </summary>
         /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="exit"></param>
@@ -64,7 +64,7 @@ namespace Tonga.Scalar
             => new Retry<T>(scalar, attempts);
 
         /// <summary>
-        /// <see cref="ScalarEnvelope{T}"/> which will retry until the given condition <see cref="IFunc{In, Out}"/> matches before throwing an exception.
+        /// <see cref="IScalar{T}"/> which will retry until the given condition <see cref="IFunc{In, Out}"/> matches before throwing an exception.
         /// </summary>
         /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="exit"></param>

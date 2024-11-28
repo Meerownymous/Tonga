@@ -1,13 +1,9 @@
-
 using System.IO;
 using System.IO.Compression;
-using Tonga;
-using Tonga.Bytes;
 using Tonga.Func;
-using Tonga.IO;
-using Tonga.Scalar;
 using Tonga.Text;
-using Tonga.Text;
+
+namespace Tonga.IO;
 
 ///<summary>
 ///Zips all Files in a Directory

@@ -10,7 +10,7 @@ namespace Tonga.Text
     /// <summary>
     /// A double out of text.
     /// </summary>
-    public sealed class DoubleOf : Scalar.ScalarEnvelope<double>
+    public sealed class DoubleOf : ScalarEnvelope<double>
     {
         /// <summary>
         /// A double out of <see cref="string"/>.

@@ -140,16 +140,16 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
-        public static Formatted From(String ptn, params IText[] arguments) =>
-            new Formatted(ptn, arguments);
+        public static Formatted _(String ptn, params IText[] arguments) =>
+            new(ptn, arguments);
 
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
         /// </summary>
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
-        public static Formatted From(String ptn, params object[] arguments) =>
-            new Formatted(ptn, arguments);
+        public static Formatted _(String ptn, params object[] arguments) =>
+            new(ptn, arguments);
 
 
         /// <summary>
@@ -157,8 +157,8 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="arguments">arguments to apply</param>
-        public static Formatted From(IText ptn, params object[] arguments) =>
-            new Formatted(ptn, arguments);
+        public static Formatted _(IText ptn, params object[] arguments) =>
+            new(ptn, arguments);
 
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
@@ -166,8 +166,8 @@ namespace Tonga.Text
         /// <param name="ptn">pattern</param>
         /// <param name="local">CultureInfo</param>
         /// <param name="arguments">arguments to apply</param>
-        public static Formatted From(IText ptn, CultureInfo local, params object[] arguments) =>
-            new Formatted(ptn, local, arguments);
+        public static Formatted _(IText ptn, CultureInfo local, params object[] arguments) =>
+            new(ptn, local, arguments);
 
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
@@ -175,8 +175,8 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
-        public static Formatted From(String ptn, CultureInfo locale, params object[] arguments) =>
-            new Formatted(ptn, locale, arguments);
+        public static Formatted _(String ptn, CultureInfo locale, params object[] arguments) =>
+            new(ptn, locale, arguments);
 
         /// <summary>
         ///  A <see cref="IText"/> formatted with arguments.
@@ -184,10 +184,8 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-
         public static Formatted From(string ptn, CultureInfo locale, params IText[] arguments) =>
-            new Formatted(ptn, locale, arguments);
+            new(ptn, locale, arguments);
 
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
@@ -195,9 +193,8 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Formatted From(IText ptn, CultureInfo locale, IScalar<object[]> arguments) =>
-            new Formatted(ptn, locale, arguments);
+        public static Formatted _(IText ptn, CultureInfo locale, IScalar<object[]> arguments) =>
+            new(ptn, locale, arguments);
 
         /// <summary>
         /// A <see cref="IText"/> formatted with arguments.
@@ -205,8 +202,7 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-        public static Formatted From(IText ptn, CultureInfo locale, Func<object[]> arguments) =>
-            new Formatted(ptn, locale, arguments);
+        public static Formatted _(IText ptn, CultureInfo locale, Func<object[]> arguments) =>
+            new(ptn, locale, arguments);
     }
 }

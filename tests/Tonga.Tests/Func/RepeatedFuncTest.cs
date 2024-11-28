@@ -42,17 +42,17 @@ namespace Tonga.Func.Tests
         [Fact]
         public void DoesntRepeatAny()
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>((Func<object>)(() =>
                 new RepeatedFunc<bool, IScalar<int>>(
-                    input =>
+                    (Func<bool, IScalar<int>>)(                    input =>
                     {
                         return
                             (IScalar<int>)AsScalar._(
                                 new Random().Next()
                             );
-                    },
+                    }),
                     0
-                ).Invoke(true)
+                ).Invoke(true))
             );
         }
     }

@@ -11,7 +11,7 @@ namespace Tonga.Enumerable
     /// The greatest item in the given <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Max<T> : Scalar.ScalarEnvelope<T>
+    public sealed class Max<T> : ScalarEnvelope<T>
         where T : IComparable<T>
     {
         /// <summary>

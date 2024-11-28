@@ -9,66 +9,41 @@ namespace Tonga.Enumerable
     /// <summary>
     /// Union objects in two enumerables.
     /// </summary>
-    public class Union<T> : IEnumerable<T>
+    public class Union<T>(IEnumerable<T> a, IEnumerable<T> b, IEqualityComparer<T> comparison) : IEnumerable<T>
     {
-        private readonly IEnumerable<T> a;
-        private readonly IEnumerable<T> b;
-        private readonly IEqualityComparer<T> comparison;
-        private readonly Ternary<T> result;
-
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        /// <param name="compare">Condition to match</param>
-        public Union(IEnumerable<T> a, IEnumerable<T> b, bool live = false) : this(
-            a, b, new Comparison<T>((left,right) => left.Equals(right)), live
+        public Union(IEnumerable<T> a, IEnumerable<T> b) : this(
+            a, b, new Comparison<T>((left,right) => left.Equals(right))
         )
         { }
 
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare, bool live = false) : this(
+        public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) : this(
             a,
             b,
-            new Comparison<T>(compare),
-            live
+            new Comparison<T>(compare)
         )
         { }
 
-        /// <summary>
-        /// Union objects in two enumerables.
-        /// </summary>
-        public Union(IEnumerable<T> a, IEnumerable<T> b, IEqualityComparer<T> compare, bool live = false)
-        {
-            this.a = a;
-            this.b = b;
-            this.comparison = compare;
-            this.result =
-                Ternary._(
-                    AsEnumerable._(Produced),
-                    Sticky._(Produced),
-                    live
-                );
-        }
-
-        public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
+        public IEnumerator<T> GetEnumerator() => Produced(a, b, comparison);
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private IEnumerator<T> Produced()
+        private static IEnumerator<T> Produced(IEnumerable<T> a, IEnumerable<T> b, IEqualityComparer<T> comparison)
         {
-            var set = new HashSet<T>(this.comparison);
-            foreach(var element in this.b)
-            {
-                set.Add(element);
-            }
+            var all = new HashSet<T>(comparison);
+            var union = new HashSet<T>(comparison);
 
-            foreach (T element in this.a)
+            foreach(var element in Joined._(a, b))
             {
-                if(!set.Add(element))
-                    yield return element;
+                if(!all.Add(element))
+                    union.Add(element);
             }
+            return union.GetEnumerator();
         }
 
         private sealed class Comparison<TItem> : IEqualityComparer<T>

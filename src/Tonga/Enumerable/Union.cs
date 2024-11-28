@@ -33,10 +33,10 @@ namespace Tonga.Enumerable
         public IEnumerator<T> GetEnumerator()
         {
             var union = new HashSet<T>(comparison);
-
             foreach(var element in Joined._(a, b))
             {
-                if(union.Add(element)) yield return element;
+                if(union.Add(element))
+                    yield return element;
             }
         }
 

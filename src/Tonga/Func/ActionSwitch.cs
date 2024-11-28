@@ -329,7 +329,7 @@ namespace Tonga.Func
         /// </summary>
         public ActionSwitch(IEnumerable<IPair<string, Action<In>>> consequences) : this(
             consequences,
-            (unknown, input) => throw new ArgumentException($"Cannot find action for '{unknown}'")
+            (unknown, _) => throw new ArgumentException($"Cannot find action for '{unknown}'")
         )
         { }
 

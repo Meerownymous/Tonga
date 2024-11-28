@@ -19,7 +19,7 @@ public sealed class OptEmptyTests
     {
         bool performed = false;
         new OptEmpty<int>().IfNot(() => performed = true);
-        Assert.False(performed);
+        Assert.True(performed);
     }
 
     [Fact]

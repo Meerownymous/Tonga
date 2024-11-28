@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Tonga.Enumerable
 {
@@ -15,7 +16,7 @@ namespace Tonga.Enumerable
         /// Union objects in two enumerables.
         /// </summary>
         public Union(IEnumerable<T> a, IEnumerable<T> b) : this(
-            a, b, new Comparison<T>((left,right) => left.Equals(right))
+            a, b, new Comparison((left,right) => left.Equals(right))
         )
         { }
 
@@ -25,7 +26,7 @@ namespace Tonga.Enumerable
         public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) : this(
             a,
             b,
-            new Comparison<T>(compare)
+            new Comparison(compare)
         )
         { }
 
@@ -35,35 +36,19 @@ namespace Tonga.Enumerable
 
         private static IEnumerator<T> Produced(IEnumerable<T> a, IEnumerable<T> b, IEqualityComparer<T> comparison)
         {
-            var all = new HashSet<T>(comparison);
             var union = new HashSet<T>(comparison);
 
             foreach(var element in Joined._(a, b))
             {
-                if(!all.Add(element))
-                    union.Add(element);
+                union.Add(element);
             }
             return union.GetEnumerator();
         }
 
-        private sealed class Comparison<TItem> : IEqualityComparer<T>
+        private sealed class Comparison(Func<T, T, bool> comparison) : IEqualityComparer<T>
         {
-            private readonly Func<T, T, bool> comparison;
-
-            public Comparison(Func<T, T, bool> comparison)
-            {
-                this.comparison = comparison;
-            }
-
-            public bool Equals(T x, T y)
-            {
-                return this.comparison.Invoke(y, x);
-            }
-
-            public int GetHashCode(T obj)
-            {
-                return 0;
-            }
+            public bool Equals(T x, T y) => comparison(y, x);
+            public int GetHashCode(T obj) => 0;
         }
     }
 

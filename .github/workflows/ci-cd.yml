@@ -1,0 +1,132 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+
+env:
+  PROJECTS_TO_BUILD: |
+    src/Tonga/Tonga.csproj
+    tests/Tonga.Tests/Tonga.Tests.csproj
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.x'
+
+      - name: Restore Dependencies
+        run: |
+          for project in $PROJECTS_TO_BUILD; do
+            echo "Restoring dependencies for $project"
+            dotnet restore "$project"
+          done
+        shell: bash
+
+      - name: Build Projects
+        run: |
+          for project in $PROJECTS_TO_BUILD; do
+            echo "Building $project"
+            dotnet build "$project" --no-restore --configuration Release
+          done
+        shell: bash
+
+      - name: Run Tests
+        run: |
+          for project in $PROJECTS_TO_BUILD; do
+            if [[ $project == *"TEST"* ]]; then
+              echo "Running tests for $project"
+              dotnet test "$project" --no-build --verbosity normal --configuration Release
+            fi
+          done
+        shell: bash
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Current Tag
+        shell: bash
+        run: |
+          CURRENT_TAG=$(git describe --tags --abbrev=0)
+          echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
+
+      - name: Debug Current Tag
+        shell: bash
+        run: |
+          echo "Current Tag: $CURRENT_TAG"
+
+      - name: Restore Dependencies
+        run: |
+          for project in $PROJECTS_TO_BUILD; do
+            echo "Restoring dependencies for $project"
+            dotnet restore "$project"
+          done
+        shell: bash
+
+      - name: Pack NuGet Package
+        run: |
+          for project in $PROJECTS_TO_BUILD; do
+            if [[ $project != *"TEST"* ]]; then
+              echo "Packing $(basename "$project" .csproj) from $project with version $CURRENT_TAG"
+              dotnet pack "$project" --configuration Release --output "./artifacts" -p:PackageVersion=$CURRENT_TAG
+            fi
+          done
+        shell: bash
+        env:
+          CURRENT_TAG: ${{ env.CURRENT_TAG }}
+
+      - name: Log Files Before Upload
+        shell: pwsh
+        run: |
+          echo "Files ready for upload:"
+          Get-ChildItem -Path .\artifacts\ -File
+
+      - name: Upload NuGet Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuget-package
+          path: ./artifacts/*.nupkg
+
+  publish:
+    name: Publish to NuGet
+    runs-on: windows-latest
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download NuGet Package
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget-package
+          path: ./
+
+      - name: Log Downloaded Artifacts
+        shell: pwsh
+        run: |
+          echo "Downloaded artifacts:"
+          Get-ChildItem -Path .\ -File
+
+      - name: Publish to NuGet
+        shell: bash
+        run: |
+          for nupkg in ./*.nupkg; do
+            echo "Publishing $nupkg"
+            dotnet nuget push "$nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+          done

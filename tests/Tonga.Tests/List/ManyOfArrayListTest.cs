@@ -15,7 +15,7 @@ namespace Tonga.List.Tests
 
             Assert.Equal("A",
                 new ItemAt<object>(
-                    new EnumerabeOfArrayList(arr)
+                    new EnumerableOfArrayList(arr)
                 ).Value().ToString()
             );
         }

@@ -11,9 +11,10 @@ namespace Tonga.Enumerable
     /// Pass a filter function which will applied to all items, similar to List{T}.Where(...) in LinQ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : IEnumerable<T>
+    public sealed class Filtered<T>(Func<T, Boolean> pass, IEnumerable<T> src) : IEnumerable<T>
     {
-        private readonly IEnumerable<T> result;
+        private readonly IEnumerable<T> result =
+            new AsEnumerable<T>(() => Produced(src, pass));
 
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
@@ -31,25 +32,11 @@ namespace Tonga.Enumerable
         )
         { }
 
-        /// <summary>
-        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
-        /// </summary>
-        /// <param name="src">enumerable to filter</param>
-        /// <param name="pass">filter function</param>
-        public Filtered(Func<T, Boolean> pass, IEnumerable<T> src)
-        {
-            this.result = AsEnumerable._(() => Produced(src, pass));
-        }
+        public IEnumerator<T> GetEnumerator() =>
+            this.result.GetEnumerator();
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.result.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() =>
+            this.GetEnumerator();
 
         private static IEnumerator<T> Produced(IEnumerable<T> source, Func<T, Boolean> pass)
         {
@@ -86,5 +73,29 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to filter</param>
         /// <param name="fnc">filter function</param>
         public static IEnumerable<T> _<T>(Func<T, Boolean> fnc, IEnumerable<T> src) => new Filtered<T>(fnc, src);
+
+        /// <summary>
+        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
+        /// </summary>
+        /// <param name="src">enumerable to filter</param>
+        /// <param name="fnc">filter function</param>
+        public static IEnumerable<T> _<T>(this IEnumerable<T> src, Func<T, Boolean> fnc) => new Filtered<T>(fnc, src);
+    }
+
+    public static class FilteredSmarts
+    {
+        /// <summary>
+        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
+        /// </summary>
+        /// <param name="fnc">filter function</param>
+        public static IEnumerable<T> Filtered<T>(this T[] items, Func<T, Boolean> fnc) =>
+            new Filtered<T>(fnc, items);
+
+        /// <summary>
+        /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
+        /// </summary>
+        /// <param name="src">enumerable to filter</param>
+        /// <param name="fnc">filter function</param>
+        public static IEnumerable<T> Filtered<T>(this IEnumerable<T> src, Func<T, Boolean> fnc) => new Filtered<T>(fnc, src);
     }
 }

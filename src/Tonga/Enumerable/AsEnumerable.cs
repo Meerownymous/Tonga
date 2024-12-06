@@ -8,10 +8,9 @@ namespace Tonga.Enumerable
     /// A <see cref="IEnumerable{T}"/> out of other objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class AsEnumerable<T> : IEnumerable<T>
+    public sealed class AsEnumerable<T>(Func<IEnumerator<T>> source) :
+        IEnumerable<T>
     {
-        private readonly Func<IEnumerator<T>> origin;
-
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> out of an array.
         /// </summary>
@@ -25,7 +24,7 @@ namespace Tonga.Enumerable
         /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
         /// </summary>
         /// <param name="origin">function which retrieves enumerator</param>
-        public AsEnumerable(IEnumerable<T> origin) : this(() => origin.GetEnumerator())
+        public AsEnumerable(IEnumerable<T> origin) : this(origin.GetEnumerator)
         { }
 
         /// <summary>
@@ -44,28 +43,14 @@ namespace Tonga.Enumerable
         public AsEnumerable(IEnumerator<T> origin) : this(() => origin)
         { }
 
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
-        /// </summary>
-        /// <param name="origin">function which retrieves enumerator</param>
-        public AsEnumerable(Func<IEnumerator<T>> origin)
-        {
-            this.origin = origin;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            var enumerator = this.origin();
+            var enumerator = source();
             while(enumerator.MoveNext())
-            {
                 yield return enumerator.Current;
-            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     public static class AsEnumerable
@@ -99,5 +84,21 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="fnc">function which retrieves enumerator</param>
         public static IEnumerable<T> _<T>(Func<IEnumerator<T>> fnc) => new AsEnumerable<T>(fnc);
+    }
+
+    public static class EnumerableSmarts
+    {
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this TItem[] source) =>
+            new AsEnumerable<TItem>(source);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this Func<IEnumerable<TItem>> source) =>
+            new AsEnumerable<TItem>(source);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this Func<IEnumerator<TItem>> origin) =>
+            new AsEnumerable<TItem>(origin);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this IEnumerator<TItem> origin) =>
+            new AsEnumerable<TItem>(origin);
     }
 }

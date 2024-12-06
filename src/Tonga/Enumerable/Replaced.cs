@@ -11,9 +11,10 @@ namespace Tonga.Enumerable
     /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
     /// </summary>
     /// <typeparam name="T">type of items in enumerable</typeparam>
-    public sealed class Replaced<T> : IEnumerable<T>
+    public sealed class Replaced<T>(IEnumerable<T> origin, Func<T, bool> condition, T replacement) : IEnumerable<T>
     {
-        private readonly IEnumerable<T> result;
+        private readonly IEnumerable<T> result =
+            new AsEnumerable<T>(() => Produced(origin, condition, replacement));
 
         /// <summary>
         /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
@@ -39,36 +40,18 @@ namespace Tonga.Enumerable
                 (item, itemIndex) => itemIndex == index ? replacement : item,
                 origin
             ),
-            item => false,
+            _ => false,
             replacement
         )
         { }
 
-        /// <summary>
-        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
-        /// </summary>
-        /// <param name="origin">enumerable</param>
-        /// <param name="condition">matching condition</param>
-        /// <param name="replacement">item to insert instead</param>
-        public Replaced(IEnumerable<T> origin, Func<T, bool> condition, T replacement)
-        {
-            this.result = AsEnumerable._(() => Produced(origin, condition, replacement));
-        }
+        public IEnumerator<T> GetEnumerator() => this.result.GetEnumerator();
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.result.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         private static IEnumerator<T> Produced(IEnumerable<T> origin, Func<T, bool> condition, T replacement)
         {
             var e = origin.GetEnumerator();
-
             while (e.MoveNext())
             {
                 if (condition.Invoke(e.Current))
@@ -113,6 +96,30 @@ namespace Tonga.Enumerable
         /// <param name="condition">matching condition</param>
         /// <param name="replacement">item to insert instead</param>
         public static IEnumerable<T> _<T>(IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) =>
+            new Replaced<T>(origin, condition, replacement);
+    }
+
+    /// <summary>
+    /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
+    /// </summary>
+    public static class ReplacedSmarts
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable<T>"/> whose items are replaced if they match a condition.
+        /// </summary>
+        public static IEnumerable<T> Replaced<T>(this IEnumerable<T> origin, Func<T, bool> condition, T replacement) =>
+            new Replaced<T>(origin, condition, replacement);
+
+        /// <summary>
+        /// A <see cref="EnumerableEnvelope"/> where an item at a given index is replaced.
+        /// </summary>
+        public static IEnumerable<T> Replaced<T>(this IEnumerable<T> origin, int index, T replacement) =>
+            new Replaced<T>(origin, index, replacement);
+
+        /// <summary>
+        /// A <see cref="EnumerableEnvelope"/> whose items are replaced if they match a condition.
+        /// </summary>
+        public static IEnumerable<T> Replaced<T>(this IEnumerable<T> origin, IFunc<T, bool> condition, T replacement) =>
             new Replaced<T>(origin, condition, replacement);
     }
 }

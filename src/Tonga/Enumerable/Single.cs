@@ -7,32 +7,19 @@ namespace Tonga.Enumerable
     /// <summary>
     /// Enumeration of a single item.
     /// </summary>
-    public class Single<T> : IEnumerable<T>
+    public class Single<T>(T item) : IEnumerable<T>
     {
-        private readonly T item;
-
-        /// <summary>
-        /// Enumeration of a single item.
-        /// </summary>
-        public Single(T item)
-        {
-            this.item = item;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            yield return this.item;
+            yield return item;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     public static class Single
     {
-        public static Single<T> _<T>(T item) => new Single<T>(item);
+        public static Single<T> _<T>(T item) => new(item);
     }
 }
 

@@ -88,4 +88,19 @@ namespace Tonga.Enumerable
         public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b) =>
             new Intersection<T>(a, b);
     }
+
+    public static class IntersectionSmarts
+    {
+        /// <summary>
+        /// Intersection of two enumerables.
+        /// </summary>
+        public static IEnumerable<T> Intersection<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
+            new Intersection<T>(a, b, compare);
+
+        /// <summary>
+        /// Union objects in two enumerables.
+        /// </summary>
+        public static IEnumerable<T> Intersection<T>(IEnumerable<T> a, IEnumerable<T> b) =>
+            new Intersection<T>(a, b);
+    }
 }

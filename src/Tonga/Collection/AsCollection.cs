@@ -140,4 +140,25 @@ namespace Tonga.Collection
         public static ICollection<T> _<T>(Func<ICollection<T>> src) => new AsCollection<T>(src);
 
     }
+
+    public static class CollectionSmarts
+    {
+        public static ICollection<TItem> AsCollection<TItem>(this ICollection<TItem> item) =>
+            new AsCollection<TItem>(item);
+
+        public static ICollection<TItem> AsCollection<TItem>(this TItem[] items) =>
+            new AsCollection<TItem>(items);
+
+        public static ICollection<TItem> AsCollection<TItem>(this Func<IEnumerator<TItem>> items) =>
+            new AsCollection<TItem>(items);
+
+        public static ICollection<TItem> AsCollection<TItem>(this IEnumerator<TItem> items) =>
+            new AsCollection<TItem>(items);
+
+        public static ICollection<TItem> AsCollection<TItem>(this IEnumerable<TItem> items) =>
+            new AsCollection<TItem>(items);
+
+        public static ICollection<TItem> AsCollection<TItem>(this System.Func<IEnumerable<TItem>> items) =>
+            new AsCollection<TItem>(items);
+    }
 }

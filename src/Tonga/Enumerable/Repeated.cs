@@ -11,11 +11,8 @@ namespace Tonga.Enumerable
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <typeparam name="T">type of element to repeat</typeparam>
-    public sealed class Repeated<T> : IEnumerable<T>
+    public sealed class Repeated<T>(IScalar<T> elm, IScalar<int> cnt) : IEnumerable<T>
     {
-        private readonly IScalar<T> element;
-        private readonly IScalar<int> times;
-
         /// <summary>
         /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
         /// </summary>
@@ -57,30 +54,16 @@ namespace Tonga.Enumerable
         )
         { }
 
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="elm">scalar to get element to repeat</param>
-        /// <param name="cnt">how often to repeat</param>
-        public Repeated(IScalar<T> elm, IScalar<int> cnt)
-        {
-            this.element = elm;
-            this.times = cnt;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            var times = this.times.Value();
+            var times = cnt.Value();
             for (int i = 0; i < times; i++)
             {
-                yield return this.element.Value();
+                yield return elm.Value();
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     /// <summary>
@@ -122,6 +105,44 @@ namespace Tonga.Enumerable
         /// <param name="elm">scalar to get element to repeat</param>
         /// <param name="cnt">how often to repeat</param>
         public static IEnumerable<T> _<T>(IScalar<T> elm, IScalar<int> cnt) => new Repeated<T>(elm, cnt);
+    }
+
+    public static class RepeatedSmarts
+    {
+        /// <summary>
+        /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+        /// </summary>
+        /// <param name="elm">function to get element to repeat</param>
+        /// <param name="cnt">how often to repeat</param>
+        public static IEnumerable<T> Repeated<T>(this Func<T> elm, int cnt) => new Repeated<T>(elm, cnt);
+
+        /// <summary>
+        /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+        /// </summary>
+        /// <param name="elm">function to get element to repeat</param>
+        /// <param name="cnt">how often to repeat</param>
+        public static IEnumerable<T> Repeated<T>(this Func<T> elm, Func<int> cnt) => new Repeated<T>(elm, cnt);
+
+        /// <summary>
+        /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+        /// </summary>
+        /// <param name="elm">element to repeat</param>
+        /// <param name="cnt">how often to repeat</param>
+        public static IEnumerable<T> Repeated<T>(this T elm, int cnt) => new Repeated<T>(elm, cnt);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="elm">scalar to get element to repeat</param>
+        /// <param name="cnt">how often to repeat</param>
+        public static IEnumerable<T> Repeated<T>(this IScalar<T> elm, int cnt) => new Repeated<T>(elm, cnt);
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="elm">scalar to get element to repeat</param>
+        /// <param name="cnt">how often to repeat</param>
+        public static IEnumerable<T> Repeated<T>(this IScalar<T> elm, IScalar<int> cnt) => new Repeated<T>(elm, cnt);
     }
 }
 

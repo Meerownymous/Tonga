@@ -11,11 +11,8 @@ namespace Tonga.Enumerable
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Sorted<T> : IEnumerable<T>
+    public sealed class Sorted<T>(Comparer<T> cmp, IEnumerable<T> src) : IEnumerable<T>
     {
-        private readonly IEnumerable<T> source;
-        private readonly Comparer<T> comparer;
-
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
@@ -30,30 +27,16 @@ namespace Tonga.Enumerable
         public Sorted(IEnumerable<T> src) : this(Comparer<T>.Default, src)
         { }
 
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
-        /// </summary>
-        /// <param name="cmp">comparer</param>
-        /// <param name="src">enumerable to sort</param>
-        public Sorted(Comparer<T> cmp, IEnumerable<T> src)
-        {
-            this.source = src;
-            this.comparer = cmp;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            var sorted = SortedCopy(this.source, this.comparer);
+            var sorted = SortedCopy(src, cmp);
             foreach(var item in sorted)
             {
                 yield return item;
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         private static List<T> SortedCopy(IEnumerable<T> source, Comparer<T> comparer)
         {
@@ -90,6 +73,32 @@ namespace Tonga.Enumerable
         /// <param name="cmp">comparer</param>
         /// <param name="src">enumerable to sort</param>
         public static IEnumerable<T> _<T>(Comparer<T> cmp, IEnumerable<T> src) =>
+            new Sorted<T>(cmp, src);
+    }
+
+    /// <summary>
+    /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+    /// </summary>
+    public static class SortedSmarts
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
+        /// </summary>
+        /// <param name="src">enumerable to sort</param>
+        public static IEnumerable<T> Sorted<T>(this T[] src) where T : IComparable<T> =>
+            new Sorted<T>(src);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        /// <param name="src">enumerable to sort</param>
+        public static IEnumerable<T> Sorted<T>(this IEnumerable<T> src) where T : IComparable<T> =>
+            new Sorted<T>(src);
+
+        /// <summary>
+        /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
+        /// </summary>
+        public static IEnumerable<T> Sorted<T>(this IEnumerable<T> src, Comparer<T> cmp) =>
             new Sorted<T>(cmp, src);
     }
 }

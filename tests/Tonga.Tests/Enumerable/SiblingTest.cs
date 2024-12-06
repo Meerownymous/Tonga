@@ -2,7 +2,6 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using Xunit;
 
 namespace Tonga.Enumerable.Test

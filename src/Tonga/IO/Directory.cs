@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Tonga.Enumerable;
+using Tonga.Fact;
 using Tonga.Scalar;
 using Tonga.Text;
 
@@ -21,7 +22,7 @@ namespace Tonga.IO
         /// <summary>
         /// include all files from sub directories
         /// </summary>
-        private readonly IScalar<bool> recursive;
+        private readonly IFact recursive;
 
         /// <summary>
         /// Ctor.
@@ -39,7 +40,7 @@ namespace Tonga.IO
             {
                 return dir.FullName;
             }),
-            AsScalar._(recursive)
+            new AsFact(recursive)
         )
         { }
 
@@ -66,7 +67,7 @@ namespace Tonga.IO
                 }
                 return file.AbsolutePath;
             }),
-            AsScalar._(recursive)
+            new AsFact(recursive)
         )
         { }
 
@@ -84,7 +85,7 @@ namespace Tonga.IO
         /// <param name="recursive">include all files from sub directories</param>
         public DirectoryOf(FileInfo file, bool recursive) : this(
             AsScalar._(file.Directory.FullName),
-            AsScalar._(recursive)
+            new AsFact(recursive)
         )
         { }
 
@@ -102,7 +103,7 @@ namespace Tonga.IO
         /// <param name="recursive">include all files from sub directories</param>
         public DirectoryOf(string path, bool recursive) : this(
             AsScalar._(path),
-            AsScalar._(recursive)
+            new AsFact(recursive)
         )
         { }
 
@@ -118,7 +119,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="path"></param>
         /// <param name="recursive">include all files from sub directories</param>
-        public DirectoryOf(IScalar<string> path, IScalar<bool> recursive)
+        public DirectoryOf(IScalar<string> path, IFact recursive)
         {
             this.dir = new AsScalar<string>(() =>
             {

@@ -99,23 +99,23 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(IEnumerable<T> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(IEnumerable<T> source) => new(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(Func<IEnumerable<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(Func<IEnumerable<T>> source) => new(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(IEnumerator<T> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(IEnumerator<T> source) => new(source);
 
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(Func<IEnumerator<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(Func<IEnumerator<T>> source) => new(source);
     }
 
     public static class StickySmarts

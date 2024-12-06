@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using Tonga.Enumerable;
 using Tonga.Func;
+using Tonga.Scalar;
 
-namespace Tonga.Scalar
+namespace Tonga.Fact
 {
     /// <summary>
     /// Logical or. Returns true if any contents return true.
     /// </summary>
     /// <typeparam name="In"></typeparam>
-    public sealed class Or<In> : IScalar<Boolean>
+    public sealed class Or<In> : FactEnvelope
     {
         private readonly Or or;
 
@@ -46,9 +47,9 @@ namespace Tonga.Scalar
         /// <param name="func">the condition to apply</param>
         /// <param name="src">list of items</param>
         public Or(IFunc<In, Boolean> func, IEnumerable<In> src) : this(
-            new Mapped<In, IScalar<Boolean>>(
-                new FuncOf<In, IScalar<Boolean>>(
-                    (item) => AsScalar._(func.Invoke(item))
+            new Mapped<In, IFact>(
+                new FuncOf<In, IFact>(
+                    item => new AsFact(func.Invoke(item))
                 ),
                 src
             )
@@ -71,7 +72,7 @@ namespace Tonga.Scalar
                     func => func.Invoke(item),
                     functions
                 )
-            ).Value(),
+            ).IsTrue(),
             value
         )
         { }
@@ -80,32 +81,21 @@ namespace Tonga.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        private Or(IEnumerable<IScalar<bool>> src) : this(new Or(src))
+        private Or(IEnumerable<IFact> src) : this(new Or(src))
         { }
 
         /// <summary>
         /// Private primary ctor
         /// </summary>
         /// <param name="or">Non generic or</param>
-        private Or(Or or)
-        {
-            this.or = or;
-        }
-
-        /// <summary>
-        /// Get the value.
-        /// </summary>
-        /// <returns>the value</returns>
-        public Boolean Value()
-        {
-            return or.Value();
-        }
+        private Or(Or or) : base(or)
+        { }
     }
 
     /// <summary>
     /// Logical or. Returns true if any contents return true.
     /// </summary>
-    public sealed class Or : ScalarEnvelope<bool>
+    public sealed class Or : FactEnvelope
     {
         /// <summary>
         /// Logical or. Returns true if any calls to <see cref="Func{In, Out}"/>
@@ -122,7 +112,7 @@ namespace Tonga.Scalar
         /// <param name="funcs">the conditions to apply</param>
         public Or(IEnumerable<Func<bool>> funcs) : this(
             Mapped._(
-                func => AsScalar._(func),
+                func => new AsFact(func),
                 funcs
             )
         )
@@ -132,7 +122,7 @@ namespace Tonga.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        public Or(params IScalar<Boolean>[] src) : this(
+        public Or(params IFact[] src) : this(
             AsEnumerable._(src))
         { }
 
@@ -142,7 +132,7 @@ namespace Tonga.Scalar
         /// <param name="src">list of items</param>
         public Or(params bool[] src) : this(
             Mapped._(
-                item => AsScalar._(item),
+                item => new AsFact(item),
                 src
             )
         )
@@ -154,7 +144,7 @@ namespace Tonga.Scalar
         /// <param name="src">list of items</param>
         public Or(IEnumerable<bool> src) : this(
             Mapped._(
-                item => AsScalar._(item),
+                item => new AsFact(item),
                 src
             )
         )
@@ -164,12 +154,12 @@ namespace Tonga.Scalar
         /// ctor
         /// </summary>
         /// <param name="src">list of items</param>
-        public Or(IEnumerable<IScalar<bool>> src) : base(() =>
+        public Or(IEnumerable<IFact> src) : base(new AsFact(() =>
             {
                 bool foundTrue = false;
                 foreach (var item in src)
                 {
-                    if (item.Value())
+                    if (item.IsTrue())
                     {
                         foundTrue = true;
                         break;
@@ -177,6 +167,7 @@ namespace Tonga.Scalar
                 }
                 return foundTrue;
             })
+        )
         { }
 
         /// <summary>

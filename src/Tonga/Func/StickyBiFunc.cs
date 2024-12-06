@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 
 namespace Tonga.Func
 {

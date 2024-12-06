@@ -22,48 +22,62 @@ namespace Tonga.Enumerable
         {
             var trace = new Queue<T>();
             var itemFound = false;
-            T result = default;
-            using var enumerator = source.GetEnumerator();
-
-            while (enumerator.MoveNext())
+            var siblingFound = false;
+            var enumerator = source.GetEnumerator();
+            T result = default(T);
+            while (!siblingFound && enumerator.MoveNext())
             {
                 if (!itemFound && item.CompareTo(enumerator.Current) == 0)
                 {
                     itemFound = true;
                 }
-
                 if (relativeposition < 0)
                 {
                     if (!itemFound)
                     {
                         trace.Enqueue(enumerator.Current);
-                        if (trace.Count > -relativeposition)
+                        if (trace.Count > Math.Abs(relativeposition))
                         {
                             trace.Dequeue();
                         }
                     }
                     else
                     {
-                        result = trace.Count < -relativeposition
-                            ? fallback.Invoke(source)
-                            : trace.ToArray()[-relativeposition - 1];
+                        if (trace.Count < Math.Abs(relativeposition))
+                        {
+                            result = fallback.Invoke(source);
+                        }
+                        else
+                        {
+                            result = trace.ToArray()[Math.Abs(relativeposition)-1];
+                            siblingFound = true;
+                        }
                         break;
                     }
                 }
-                else if (itemFound)
+                else
                 {
-                    for (int i = 0; i < relativeposition && enumerator.MoveNext(); i++) { }
-
-                    result = relativeposition > 0 ? fallback.Invoke(source) : enumerator.Current;
-                    break;
+                    if (itemFound)
+                    {
+                        while (relativeposition > 0 && enumerator.MoveNext())
+                        {
+                            relativeposition--;
+                        }
+                        if (relativeposition > 0)
+                        {
+                            result = fallback.Invoke(source);
+                        }
+                        else
+                        {
+                            result = enumerator.Current;
+                            siblingFound = true;
+                            break;
+                        }
+                    }
                 }
             }
-
-            if (result == null || !itemFound)
-            {
+            if (!siblingFound)
                 result = fallback.Invoke(source);
-            }
-
             return result;
 
         })

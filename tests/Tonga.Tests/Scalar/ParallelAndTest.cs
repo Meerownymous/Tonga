@@ -1,12 +1,10 @@
 
 
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 using Tonga.Enumerable;
 using Tonga.Func;
-using Tonga.List;
-using System;
+using Tonga.Fact;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Tonga.Scalar.Tests
@@ -22,7 +20,7 @@ namespace Tonga.Scalar.Tests
                     new True(),
                     new True(),
                     new True()
-                ).Value();
+                ).IsTrue();
             Assert.True(result);
         }
 
@@ -35,7 +33,7 @@ namespace Tonga.Scalar.Tests
                     new True(),
                     new False(),
                     new True()
-                ).Value();
+                ).IsTrue();
             Assert.False(result);
         }
 
@@ -47,7 +45,7 @@ namespace Tonga.Scalar.Tests
                     new False(),
                     new False(),
                     new False()
-                ).Value();
+                ).IsTrue();
             Assert.False(result);
         }
 
@@ -56,8 +54,8 @@ namespace Tonga.Scalar.Tests
         {
             var result =
                 ParallelAnd._(
-                    None._<IScalar<bool>>()
-                ).Value();
+                    None._<IFact>()
+                ).IsTrue();
             Assert.True(result);
         }
 
@@ -67,7 +65,7 @@ namespace Tonga.Scalar.Tests
             var list = new LinkedList<string>();
             Assert.True(
                 ParallelAnd._(
-                    Enumerable.Mapped._(
+                    Mapped._(
                         str =>
                         {
                             list.AddLast(str);
@@ -75,7 +73,7 @@ namespace Tonga.Scalar.Tests
                         },
                         AsEnumerable._("hello", "world")
                     )
-                ).Value()
+                ).IsTrue()
                 &&
                 list.Contains("hello")
                 &&
@@ -89,11 +87,11 @@ namespace Tonga.Scalar.Tests
             var list = new LinkedList<string>();
             Assert.True(
                 ParallelAnd._(
-                    Enumerable.Mapped._(
-                        str => { list.AddLast(str); return (IScalar<bool>)new True(); },
+                    Mapped._(
+                        str => { list.AddLast(str); return new True(); },
                         None._<string>()
                     )
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -106,7 +104,7 @@ namespace Tonga.Scalar.Tests
                     1,
                     -1,
                     0
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -119,7 +117,7 @@ namespace Tonga.Scalar.Tests
                         new True(),
                         new True()
                     )
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -128,8 +126,8 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 ParallelAnd._(
-                    None._<IScalar<bool>>()
-                ).Value()
+                    None._<IFact>()
+                ).IsTrue()
             );
         }
     }

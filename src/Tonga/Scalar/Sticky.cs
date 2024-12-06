@@ -13,7 +13,6 @@ namespace Tonga.Scalar
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
-        /// <param name="shouldReload">reload condition func</param>
         public Sticky(IScalar<T> src) : this(src.Value)
         { }
 
@@ -21,7 +20,6 @@ namespace Tonga.Scalar
         /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
         /// </summary>
         /// <param name="src">scalar to cache result from</param>
-        /// <param name="shouldReload">reload condition func</param>
         public Sticky(Func<T> src)
         {
             this.origin = new Lazy<T>(src);
@@ -39,9 +37,9 @@ namespace Tonga.Scalar
 
     public static class Sticky
     {
-        public static Sticky<T> _<T>(IScalar<T> src) => new Sticky<T>(src);
+        public static Sticky<T> _<T>(IScalar<T> src) => new(src);
 
-        public static Sticky<T> _<T>(Func<T> src) => new Sticky<T>(src);
+        public static Sticky<T> _<T>(Func<T> src) => new(src);
     }
 }
 

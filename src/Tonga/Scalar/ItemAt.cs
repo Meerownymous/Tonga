@@ -1,13 +1,9 @@
-
-
 using System;
 using System.Collections.Generic;
-
 using Tonga.Func;
-using Tonga.Scalar;
 using Tonga.Text;
 
-namespace Tonga.Enumerable
+namespace Tonga.Scalar
 {
     /// <summary>
     /// Element from position in a <see cref="IEnumerable{T}"/>.

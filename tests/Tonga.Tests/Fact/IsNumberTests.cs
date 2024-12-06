@@ -1,9 +1,9 @@
-
-
-using Xunit;
+using Tonga.Fact;
+using Tonga.Scalar;
 using Tonga.Text;
+using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Fact
 {
     public sealed class IsNumberTests
     {
@@ -13,7 +13,7 @@ namespace Tonga.Scalar.Tests
             Assert.True(
                 new IsNumber(
                     "1,234.56"
-                ).Value(),
+                ).IsTrue(),
                 "Can't read number from string"
             );
         }
@@ -28,7 +28,7 @@ namespace Tonga.Scalar.Tests
                     {
                         NumberDecimalSeparator = ","
                     }
-                ).Value(),
+                ).IsTrue(),
                 "Can't read number from string using custom format provider"
             );
         }
@@ -41,7 +41,7 @@ namespace Tonga.Scalar.Tests
                     AsText._(
                         "1,234.56"
                     )
-                ).Value(),
+                ).IsTrue(),
                 "Can't read number from text"
             );
         }
@@ -58,7 +58,7 @@ namespace Tonga.Scalar.Tests
                     {
                         NumberDecimalSeparator = ","
                     }
-                ).Value(),
+                ).IsTrue(),
                 "Can't read number from text using custom format provider"
             );
         }
@@ -69,7 +69,7 @@ namespace Tonga.Scalar.Tests
             Assert.False(
                 new IsNumber(
                     "not a number"
-                ).Value(),
+                ).IsTrue(),
                 "Falsely recognized a string as a number"
             );
         }
@@ -82,7 +82,7 @@ namespace Tonga.Scalar.Tests
                     AsText._(
                         "not a number"
                     )
-                ).Value(),
+                ).IsTrue(),
                 "Falsely recognized a text as a number"
             );
         }

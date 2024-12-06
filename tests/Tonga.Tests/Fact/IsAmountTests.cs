@@ -1,10 +1,9 @@
 using Xunit;
-using Tonga.Enumerable;
-using Tonga.Scalar;
+using Tonga.Fact;
 
 namespace Tonga.Enumerable.Test
 {
-    public sealed class ExactAmountTests
+    public sealed class IsAmountTests
     {
         [Fact]
         public void DetectsMatch()
@@ -12,7 +11,7 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 new IsAmount(3,
                     AsEnumerable._("a", "b", "c")
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -22,7 +21,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new IsAmount(3,
                     AsEnumerable._("a", "b")
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -32,7 +31,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 new IsAmount(3,
                     AsEnumerable._("a", "b", "c", "d")
-                ).Value()
+                ).IsTrue()
             );
         }
     }

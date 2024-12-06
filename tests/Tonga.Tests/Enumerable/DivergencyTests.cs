@@ -19,21 +19,21 @@ namespace Tonga.Enumerable.Test
         }
 
         [Theory]
-        [InlineData(new string[] { "a", "b", "c" }, new string[] { "a", "b", "e" }, new string[] { "c", "e" })]
-        [InlineData(new string[] { "a", "b" }, new string[] { "c", "d" }, new string[] { "a", "b", "c", "d" })]
+        [InlineData(new[] { "a", "b", "c" }, new[] { "a", "b", "e" }, new[] { "c", "e" })]
+        [InlineData(new[] { "a", "b" }, new[] { "c", "d" }, new[] { "a", "b", "c", "d" })]
         public void MatchesString(IEnumerable<string> a, IEnumerable<string> b, IEnumerable<string> expected)
         {
             Assert.Equal(
                 expected,
                 Divergency._(
-                   a, b
+                   b, a
                 )
             );
         }
 
         [Theory]
-        [InlineData(new int[] { 5, 6 }, new int[] { 1, 2 }, new int[] { 5, 6, 1, 2 })]
-        [InlineData(new int[] { 1, 2 }, new int[] { 1 }, new int[] { 2 })]
+        [InlineData(new[] { 5, 6 }, new[] { 1, 2 }, new[] { 1, 2, 5, 6 })]
+        [InlineData(new[] { 1, 2 }, new[] { 1 }, new[] { 2 })]
         public void MatchesInt(IEnumerable<int> a, IEnumerable<int> b, IEnumerable<int> expected)
         {
             Assert.Equal(

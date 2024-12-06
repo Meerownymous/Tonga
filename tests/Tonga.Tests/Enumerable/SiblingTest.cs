@@ -1,15 +1,14 @@
-
-
 using System;
 using System.Globalization;
+using Tonga.Enumerable;
 using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public class SiblingTest
     {
         [Fact]
-        public void Next()
+        public void FindsNext()
         {
             Assert.Equal(
                 3,
@@ -93,18 +92,18 @@ namespace Tonga.Enumerable.Test
 
         internal class FakeSibling : IComparable<FakeSibling>
         {
-            private readonly DateTime _stmp;
+            private readonly DateTime stmp;
 
             public FakeSibling(DateTime stmp)
             {
-                _stmp = stmp;
+                this.stmp = stmp;
             }
 
-            public DateTime TimeStamp() { return _stmp; }
+            public DateTime TimeStamp() { return stmp; }
 
             public int CompareTo(FakeSibling obj)
             {
-                return _stmp.CompareTo(obj.TimeStamp());
+                return stmp.CompareTo(obj.TimeStamp());
             }
         }
     }

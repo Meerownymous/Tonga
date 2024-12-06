@@ -1,8 +1,7 @@
-
-
+using Tonga.Fact;
 using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Fact
 {
     public sealed class FalseTest
     {
@@ -10,7 +9,7 @@ namespace Tonga.Scalar.Tests
         public void AsValue()
         {
             Assert.False(
-                False._().Value());
+                new False().IsTrue());
         }
     }
 }

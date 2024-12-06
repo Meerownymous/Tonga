@@ -1,13 +1,10 @@
-
-
 using System;
 using System.IO;
+using Tonga.Fact;
+using Tonga.IO;
 using Xunit;
-using Tonga.Enumerable;
-using Tonga.Tests;
-using Tonga.Scalar;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class DirectoryOfTests
     {
@@ -29,11 +26,11 @@ namespace Tonga.IO.Tests
                     new Contains<string>(
                         new DirectoryOf(Path.GetFullPath(dir)),
                         file1
-                    ).Value() &&
+                    ).IsTrue() &&
                     new Contains<string>(
                         new DirectoryOf(Path.GetFullPath(dir)),
                         file2
-                    ).Value()
+                    ).IsTrue()
                 );
 
             },
@@ -53,7 +50,7 @@ namespace Tonga.IO.Tests
                 new Contains<string>(
                     new DirectoryOf(dir),
                     subdir
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -94,7 +91,7 @@ namespace Tonga.IO.Tests
                     new Contains<string>(
                         new DirectoryOf(dir, true),
                         file
-                    ).Value()
+                    ).IsTrue()
                 );
             }
         }

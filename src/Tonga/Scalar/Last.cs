@@ -1,13 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
-
+using Tonga.Enumerable;
 using Tonga.Func;
-using Tonga.Scalar;
 using Tonga.Text;
 
-namespace Tonga.Enumerable
+namespace Tonga.Scalar
 {
     /// <summary>
     /// Last element in a <see cref="IEnumerable{T}"/>
@@ -64,7 +61,7 @@ namespace Tonga.Enumerable
         /// <param name="fallback">fallback func</param>
         public Last(IEnumerable<T> source, IFunc<IEnumerable<T>, T> fallback) : this(
             source,
-            (ex, enumerable) => fallback.Invoke(enumerable)
+            (_, enumerable) => fallback.Invoke(enumerable)
         )
         { }
 

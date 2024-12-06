@@ -9,7 +9,11 @@ namespace Tonga.Collection
     /// A collection which is limited to a number of elements.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Head<T> : CollectionEnvelope<T>
+    public sealed class Head<T>(int lmt, ICollection<T> src) : CollectionEnvelope<T>(
+        new AsCollection<T>(
+            new Enumerable.Head<T>(src, lmt)
+        )
+    )
     {
         /// <summary>
         /// ctor
@@ -33,18 +37,6 @@ namespace Tonga.Collection
         /// <param name="lmt">requested number of items</param>
         /// <param name="src">enumerable of items</param>
         public Head(int lmt, IEnumerable<T> src) : this(lmt, AsCollection._(src))
-        { }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="src">source collection</param>
-        /// <param name="lmt">requested number of elements</param>
-        public Head(int lmt, ICollection<T> src) : base(
-            AsCollection._(
-                Enumerable.Head._(src, lmt)
-            )
-        )
         { }
     }
 

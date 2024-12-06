@@ -1,14 +1,11 @@
-
-
-using System;
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
+using Tonga.Fact;
 using Tonga.Func;
-using Tonga.Text;
+using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Fact
 {
     public sealed class AndTest
     {
@@ -16,11 +13,12 @@ namespace Tonga.Scalar.Tests
         public void AllTrue()
         {
             Assert.True(
-            And._(
-                new True(),
-                new True(),
-                new True()
-            ).Value() == true);
+                And._(
+                    new True(),
+                    new True(),
+                    new True()
+                ).IsTrue()
+            );
         }
 
         [Fact]
@@ -31,7 +29,7 @@ namespace Tonga.Scalar.Tests
                     new True(),
                     new False(),
                     new True()
-                ).Value() == false
+                ).IsFalse()
             );
         }
 
@@ -40,12 +38,12 @@ namespace Tonga.Scalar.Tests
         {
             Assert.False(
                 new And(
-                    Enumerable.AsEnumerable._(
+                    AsEnumerable._(
                         new False(),
                         new False(),
                         new False()
                     )
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -53,8 +51,8 @@ namespace Tonga.Scalar.Tests
         public void EmptyIterator()
         {
             Assert.True(
-                new And((IEnumerable<Tonga.IScalar<bool>>)new None<Tonga.IScalar<bool>>())
-                    .Value()
+                new And(new None<IFact>())
+                    .IsTrue()
             );
         }
 
@@ -65,9 +63,10 @@ namespace Tonga.Scalar.Tests
             Assert.True(
                 new And<string>(
                         str => { list.AddLast(str); return true; },
-                        Enumerable.AsEnumerable._("hello", "world")
+                        AsEnumerable._("hello", "world")
 
-                ).Value() == true);
+                ).IsTrue()
+            );
 
             Assert.True(
                 new Text.Joined(" ", list).AsString() == "hello world",
@@ -83,7 +82,7 @@ namespace Tonga.Scalar.Tests
                 And._(
                     str => { list.AddLast(str); return true; },
                     None._<string>()
-                ).Value()
+                ).IsTrue()
             );
 
             Assert.True(list.Count == 0);
@@ -96,7 +95,7 @@ namespace Tonga.Scalar.Tests
                 And._(
                     input => input > 0,
                     1, -1, 0
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -104,10 +103,11 @@ namespace Tonga.Scalar.Tests
         public void TestIFunc()
         {
             Assert.True(
-                    new And<int>(
-                        new FuncOf<int, bool>(input => input > 0),
-                        1, 2, 3
-                    ).Value());
+                new And<int>(
+                    input => input > 0,
+                    1, 2, 3
+                ).IsTrue()
+            );
         }
 
         [Theory]
@@ -122,25 +122,25 @@ namespace Tonga.Scalar.Tests
                     str => str.Contains("B"),
                     str => str.Contains("C"));
 
-            Assert.Equal(expected, and.Value());
+            Assert.Equal(expected, and.IsTrue());
         }
 
         [Fact]
         public void InputBoolValuesToTrue()
         {
-            Assert.True(new And(true, true, true).Value());
+            Assert.True(new And(true, true, true).IsTrue());
         }
 
         [Fact]
         public void InputBoolValuesToFalse()
         {
-            Assert.False(new And(new List<bool>() { true, false, true }).Value());
+            Assert.False(new And(new List<bool>() { true, false, true }).IsTrue());
         }
 
         [Fact]
         public void InputBoolFunctionsToFalse()
         {
-            Assert.False(new And(() => true, () => false).Value());
+            Assert.False(new And(() => true, () => false).IsTrue());
         }
     }
 }

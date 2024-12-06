@@ -1,15 +1,13 @@
-
-
 using System;
 using System.Globalization;
 using Tonga.Text;
 
-namespace Tonga.Scalar
+namespace Tonga.Fact
 {
     /// <summary>
     /// Checks whether a given text is a number
     /// </summary>
-    public sealed class IsNumber : ScalarEnvelope<bool>
+    public sealed class IsNumber : FactEnvelope
     {
         /// <summary>
         /// Checks whether the given text is a number
@@ -47,7 +45,8 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
-        public IsNumber(IText text, IFormatProvider provider) : base(() =>
+        public IsNumber(IText text, IFormatProvider provider) : base(
+            new AsFact(() =>
                 double.TryParse(
                     text.AsString(),
                     NumberStyles.Any,
@@ -55,6 +54,7 @@ namespace Tonga.Scalar
                     out var unused
                 )
             )
+        )
         { }
     }
 }

@@ -12,52 +12,27 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
     /// </summary>
-    public sealed class EnumerabeOfArrayList : IEnumerable<object>
+    public sealed class EnumerableOfArrayList(ArrayList src) : IEnumerable<object>
     {
-        private readonly ArrayList src;
-
-        /// <summary>
-        /// A ArrayList converted to IEnumerable&lt;object&gt;
-        /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public EnumerabeOfArrayList(ArrayList src)
-        {
-            this.src = src;
-        }
-
         public IEnumerator<object> GetEnumerator()
         {
-            foreach(var item in this.src)
+            foreach(var item in src)
             {
                 yield return item;
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;T&gt;
     /// </summary>
-    public sealed class ManyOfArrayList<T> : IEnumerable<T>
+    public sealed class ArrayListAsEnumerable<T>(ArrayList src) : IEnumerable<T>
     {
-        private readonly ArrayList src;
-
-        /// <summary>
-        /// A ArrayList converted to IEnumerable&lt;object&gt;
-        /// </summary>
-        /// <param name="src">source ArrayList</param>
-        public ManyOfArrayList(ArrayList src)
-        {
-            this.src = src;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (var item in this.src)
+            foreach (var item in src)
                 yield return (T)item;
         }
 

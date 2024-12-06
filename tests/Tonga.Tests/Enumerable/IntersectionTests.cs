@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Tonga.Enumerable;
+using Tonga.Fact;
 using Tonga.List;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -59,7 +59,7 @@ namespace Tonga.Tests.Enumerable
                                 new Equals<string>(
                                     Path.GetFileNameWithoutExtension(left),
                                     Path.GetFileNameWithoutExtension(right)
-                                ).Value();
+                                ).IsTrue();
 
                             return result;
                         }

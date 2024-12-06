@@ -1,6 +1,7 @@
 
 
 using System;
+using Tonga.Fact;
 using Tonga.Func;
 
 namespace Tonga.Scalar
@@ -40,7 +41,7 @@ namespace Tonga.Scalar
         /// <param name="alternative">alternative</param>
         public Ternary(In input, IFunc<In, Boolean> condition, IFunc<In, Out> consequent, IFunc<In, Out> alternative)
             : this(
-                AsScalar._(() => condition.Invoke(input)),
+                new AsFact(() => condition.Invoke(input)),
                 AsScalar._(() => consequent.Invoke(input)),
                 AsScalar._(() => alternative.Invoke(input))
             )
@@ -53,7 +54,7 @@ namespace Tonga.Scalar
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
         public Ternary(Boolean condition, Out consequent, Out alternative) : this(
-            AsScalar._(condition), consequent, alternative)
+            new AsFact(condition), consequent, alternative)
         { }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(IScalar<bool> condition, Out consequent, Out alternative) : this(
+        public Ternary(IFact condition, Out consequent, Out alternative) : this(
             condition, AsScalar._(consequent), AsScalar._(alternative)
         )
         { }
@@ -73,11 +74,11 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public Ternary(IScalar<bool> condition, IScalar<Out> consequent, IScalar<Out> alternative)
+        public Ternary(IFact condition, IScalar<Out> consequent, IScalar<Out> alternative)
             : base(() =>
             {
                 IScalar<Out> result;
-                if (condition.Value())
+                if (condition.IsTrue())
                 {
                     result = consequent;
                 }
@@ -132,7 +133,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> _<In, Out>(IScalar<bool> condition, Out consequent, Out alternative)
+        public static IScalar<Out> _<In, Out>(IFact condition, Out consequent, Out alternative)
             => new Ternary<In, Out>(condition, consequent, alternative);
 
         /// <summary>
@@ -141,7 +142,7 @@ namespace Tonga.Scalar
         /// <param name="condition">condition</param>
         /// <param name="consequent">consequent</param>
         /// <param name="alternative">alternative</param>
-        public static IScalar<Out> _<In, Out>(IScalar<bool> condition,
+        public static IScalar<Out> _<In, Out>(IFact condition,
             IScalar<Out> consequent, IScalar<Out> alternative
         )
             => new Ternary<In, Out>(condition, consequent, alternative);

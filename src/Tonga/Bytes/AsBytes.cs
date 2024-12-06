@@ -14,13 +14,8 @@ namespace Tonga.Bytes
     /// <summary>
     /// Bytes out of other objects.
     /// </summary>
-    public sealed class AsBytes : IBytes
+    public sealed class AsBytes(Func<Byte[]> bytes) : IBytes
     {
-        /// <summary>
-        /// original
-        /// </summary>
-        private readonly Func<byte[]> origin;
-
         /// <summary>
         /// Bytes out of a input.
         /// </summary>
@@ -205,59 +200,45 @@ namespace Tonga.Bytes
         /// Bytes out of other objects.
         /// </summary>
         /// <param name="bytes">scalar of bytes</param>
-        public AsBytes(IScalar<Byte[]> bytes) : this(() =>
-            bytes.Value()
-        )
+        public AsBytes(IScalar<Byte[]> bytes) : this(bytes.Value)
         { }
-
-        /// <summary>
-        /// Bytes out of other objects.
-        /// </summary>
-        /// <param name="bytes">scalar of bytes</param>
-        private AsBytes(Func<Byte[]> bytes)
-        {
-            this.origin = bytes;
-        }
 
         /// <summary>
         /// Get the content as byte array.
         /// </summary>
         /// <returns>content as byte array</returns>
-        public byte[] Bytes()
-        {
-            return this.origin();
-        }
+        public byte[] Bytes() => bytes();
 
         /// <summary>
         /// Bytes out of a input.
         /// </summary>
-        public static AsBytes _(IInput input) => new AsBytes(input);
+        public static AsBytes _(IInput input) => new(input);
 
         /// <summary>
         /// Bytes out of a input.
         /// </summary>
-        public static AsBytes _(IInput input, int max) => new AsBytes(input, max);
+        public static AsBytes _(IInput input, int max) => new(input, max);
 
         /// <summary>
         /// Bytes out of a StringBuilder.
         /// </summary>
-        public static AsBytes _(StringBuilder builder) => new AsBytes(builder);
+        public static AsBytes _(StringBuilder builder) => new(builder);
 
         /// <summary>
         /// Bytes out of a StringBuilder.
         /// </summary>
-        public static AsBytes _(StringBuilder builder, Encoding enc) => new AsBytes(builder, enc);
+        public static AsBytes _(StringBuilder builder, Encoding enc) => new(builder, enc);
 
         /// <summary>
         /// Bytes out of a StringReader.
         /// </summary>
-        public static AsBytes _(StringReader rdr) => new AsBytes(rdr);
+        public static AsBytes _(StringReader rdr) => new(rdr);
 
         /// <summary>
         /// Bytes out of a StreamReader.
         /// </summary>
         /// <param name="rdr">streamreader</param>
-        public static AsBytes _(StreamReader rdr) => new AsBytes(rdr);
+        public static AsBytes _(StreamReader rdr) => new(rdr);
 
         /// <summary>
         /// Bytes out of a StreamReader.
@@ -272,95 +253,123 @@ namespace Tonga.Bytes
         /// Bytes out of a list of chars.
         /// </summary>
         /// <param name="chars">enumerable of bytes</param>
-        public static AsBytes _(IEnumerable<char> chars) => new AsBytes(chars);
+        public static AsBytes _(IEnumerable<char> chars) => new(chars);
 
         /// <summary>
         /// Bytes out of a list of chars.
         /// </summary>
         /// <param name="chars">enumerable of chars</param>
         /// <param name="enc">encoding of chars</param>
-        public static AsBytes _(IEnumerable<char> chars, Encoding enc) => new AsBytes(chars, enc);
+        public static AsBytes _(IEnumerable<char> chars, Encoding enc) => new(chars, enc);
 
         /// <summary>
         /// Bytes out of a char array.
         /// </summary>
         /// <param name="chars">array of chars</param>
-        public static AsBytes _(params char[] chars) => new AsBytes(chars);
+        public static AsBytes _(params char[] chars) => new(chars);
 
         /// <summary>
         /// Bytes out of a char array.
         /// </summary>
         /// <param name="chars">an array of chars</param>
         /// <param name="encoding">encoding of chars</param>
-        public static AsBytes _(char[] chars, Encoding encoding) => new AsBytes(chars, encoding);
+        public static AsBytes _(char[] chars, Encoding encoding) => new(chars, encoding);
 
         /// <summary>
         /// Bytes out of a string.
         /// </summary>
         /// <param name="source">a string</param>
-        public static AsBytes _(String source) => new AsBytes(source);
+        public static AsBytes _(String source) => new(source);
 
         /// <summary>
         /// Bytes out of a string.
         /// </summary>
-        public static AsBytes _(String source, Encoding encoding) => new AsBytes(source, encoding);
+        public static AsBytes _(String source, Encoding encoding) => new(source, encoding);
 
         /// <summary>
         /// Bytes out of Text.
         /// </summary>
         /// <param name="text">a text</param>
-        public static AsBytes _(IText text) => new AsBytes(text);
+        public static AsBytes _(IText text) => new(text);
 
         /// <summary>
         /// Bytes out of Text.
         /// </summary>
         /// <param name="text">a text</param>
         /// <param name="encoding">encoding of the string</param>
-        public static AsBytes _(IText text, Encoding encoding) =>
-            new AsBytes(text, encoding);
+        public static AsBytes _(IText text, Encoding encoding) => new(text, encoding);
 
         /// <summary>
         /// Bytes out of Exception object.
         /// </summary>
         /// <param name="error">exception to serialize</param>
-        public static AsBytes _(Exception error) =>
-            new AsBytes(error);
+        public static AsBytes _(Exception error) => new(error);
 
         /// <summary>
         /// Bytes out of byte array.
         /// </summary>
         /// <param name="bytes">byte aray</param>
-        public static AsBytes _(params Byte[] bytes) => new AsBytes(bytes);
+        public static AsBytes _(params Byte[] bytes) => new(bytes);
 
         /// <summary>
         /// Bytes out of an int.
         /// </summary>
         /// <param name="number">an int</param>
-        public static AsBytes _(int number) => new AsBytes(number);
+        public static AsBytes _(int number) => new(number);
 
         /// <summary>
         /// Bytes out of a long.
         /// </summary>
         /// <param name="number">a long</param>
-        public static AsBytes _(long number) => new AsBytes(number);
+        public static AsBytes _(long number) => new(number);
 
         /// <summary>
         /// Bytes out of a float.
         /// </summary>
         /// <param name="number">a float</param>
-        public static AsBytes _(float number) => new AsBytes(number);
+        public static AsBytes _(float number) => new(number);
 
         /// <summary>
         /// Bytes out of a double.
         /// </summary>
         /// <param name="number">a double</param>
-        public static AsBytes _(double number) => new AsBytes(number);
+        public static AsBytes _(double number) => new(number);
 
         /// <summary>
         /// Bytes out of other objects.
         /// </summary>
         /// <param name="bytes">scalar of bytes</param>
         public static AsBytes _(IScalar<Byte[]> bytes) =>
-            new AsBytes(bytes.Value);
+            new(bytes.Value);
+    }
+
+    public static class AsBytesSmarts
+    {
+        public static IBytes AsBytes(this IInput input) => new AsBytes(input);
+        public static IBytes AsBytes(this IInput input, int max) => new AsBytes(input, max);
+        public static IBytes AsBytes(this StringBuilder builder) => new AsBytes(builder);
+        public static IBytes AsBytes(this StringBuilder builder, Encoding enc) =>
+            new AsBytes(builder, enc);
+        public static IBytes AsBytes(this StringReader rdr) => new AsBytes(rdr);
+        public static IBytes AsBytes(this StreamReader rdr) => new AsBytes(rdr);
+        public static IBytes AsBytes(this StreamReader rdr, Encoding enc, int max = 16 << 10) =>
+            new AsBytes(rdr, enc, max);
+        public static IBytes AsBytes(this IEnumerable<char> chars, Encoding enc) =>
+            new AsBytes(chars, enc);
+
+        public static IBytes AsBytes(this char[] chars) => new AsBytes(chars);
+        public static IBytes AsBytes(this char[] chars, Encoding enc) => new AsBytes(chars, enc);
+        public static IBytes AsBytes(this string source) => new AsBytes(source);
+        public static IBytes AsBytes(this string source, Encoding enc) => new AsBytes(source, enc);
+        public static IBytes AsBytes(this IText txt) => new AsBytes(txt);
+        public static IBytes AsBytes(this IText txt, Encoding enc) => new AsBytes(txt, enc);
+        public static IBytes AsBytes(this Exception ex) => new AsBytes(ex);
+        public static IBytes AsBytes(this Byte[] bytes) => new AsBytes(bytes);
+        public static IBytes AsBytes(this int number) => new AsBytes(number);
+        public static IBytes AsBytes(this long number) => new AsBytes(number);
+        public static IBytes AsBytes(this float number) => new AsBytes(number);
+        public static IBytes AsBytes(this double number) => new AsBytes(number);
+        public static IBytes AsBytes(this IScalar<byte[]> bytes) => new AsBytes(bytes);
+        public static IBytes AsBytes(this Func<Byte[]> bytes) => new AsBytes(bytes);
     }
 }

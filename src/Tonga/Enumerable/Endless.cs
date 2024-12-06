@@ -9,31 +9,18 @@ namespace Tonga.Enumerable
     /// A <see cref="IEnumerable{T}"/> that repeats one element infinitely.
     /// </summary>
     /// <typeparam name="T">type of the elements</typeparam>
-    public sealed class Endless<T> : IEnumerable<T>
+    public sealed class Endless<T>(T elm) : IEnumerable<T>
     {
-        private readonly T elm;
-
-        /// <summary>
-        /// A <see cref="EnumerableEnvelope"/> that repeats one element infinitely.
-        /// </summary>
-        /// <param name="elm">element to repeat</param>
-        public Endless(T elm)
-        {
-            this.elm = elm;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             while (true)
             {
-                yield return this.elm;
+                yield return elm;
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() =>
+            this.GetEnumerator();
     }
 
     public static class Endless
@@ -43,5 +30,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="elm">element to repeat</param>
         public static IEnumerable<T> _<T>(T elm) => new Endless<T>(elm);
+    }
+
+    public static class EndlessSmarts
+    {
+        /// <summary>
+        /// A <see cref="EnumerableEnvelope"/> that repeats one element infinitely.
+        /// </summary>
+        public static IEnumerable<T> AsEndless<T>(this T elm) =>
+            new Endless<T>(elm);
     }
 }

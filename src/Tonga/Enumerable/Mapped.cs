@@ -15,9 +15,10 @@ namespace Tonga.Enumerable
     /// </summary>
     /// <typeparam name="In">type of input elements</typeparam>
     /// <typeparam name="Out">type of mapped elements</typeparam>
-    public sealed class Mapped<In, Out> : IEnumerable<Out>
+    public sealed class Mapped<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src) : IEnumerable<Out>
     {
-        private readonly IEnumerable<Out> result;
+        private readonly IEnumerable<Out> result =
+            new AsEnumerable<Out>(() => Produced(src, fnc));
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
@@ -47,7 +48,7 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(Func<In, Out> fnc, IEnumerable<In> src) : this(
-            (source, index) => fnc.Invoke(source),
+            (source, _) => fnc.Invoke(source),
             src
         )
         { }
@@ -69,7 +70,7 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : this(
-            (source, index) => fnc.Invoke(source, index),
+            fnc.Invoke,
             src
         )
         { }
@@ -79,33 +80,15 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        /// <param name="live">live or sticky</param>
         public Mapped(IFunc<In, Out> fnc, IEnumerable<In> src) : this(
-            (In1, In2) => fnc.Invoke(In1),
+            (In1, _) => fnc.Invoke(In1),
             src
         )
         { }
 
-        /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
-        /// </summary>
-        /// <param name="src">enumerable to map</param>
-        /// <param name="fnc">function used to map</param>
-        /// <param name="live">live or sticky</param>
-        public Mapped(Func<In, int, Out> fnc, IEnumerable<In> src)
-        {
-            this.result = AsEnumerable._(() => Produced(src, fnc));
-        }
+        public IEnumerator<Out> GetEnumerator() => result.GetEnumerator();
 
-        public IEnumerator<Out> GetEnumerator()
-        {
-            return this.result.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         private static IEnumerator<Out> Produced(IEnumerable<In> source, Func<In, int, Out> mapping)
         {
@@ -168,6 +151,52 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public static IEnumerable<Out> _<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) =>
+            new Mapped<In, Out>(fnc, src);
+    }
+
+        /// <summary>
+    /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given function.
+    /// </summary>
+    public static class MappedSmarts
+    {
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
+        /// </summary>
+        public static IEnumerable<Out> Mapped<In, Out>(this In[] src, IFunc<In, Out> fnc) =>
+            new Mapped<In, Out>(fnc, src);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        public static IEnumerable<Out> Mapped<In, Out>(this In[] src, IBiFunc<In, int, Out> fnc) =>
+            new Mapped<In, Out>(fnc, src);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
+        /// </summary>
+        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, Func<In, Out> fnc) =>
+            new Mapped<In, Out>(fnc, src);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
+        /// </summary>
+        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, Func<In, int, Out> fnc) =>
+            new Mapped<In, Out> (fnc, src);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, IFunc<In, Out> fnc) =>
+            new Mapped<In, Out>(fnc, src);
+
+        /// <summary>
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// </summary>
+        /// <param name="src">enumerable to map</param>
+        /// <param name="fnc">function used to map</param>
+        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, IBiFunc<In, int, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
     }
 }

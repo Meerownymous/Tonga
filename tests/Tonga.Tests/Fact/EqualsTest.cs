@@ -1,5 +1,6 @@
 
 
+using Tonga.Fact;
 using Xunit;
 
 namespace Tonga.Scalar.Tests
@@ -13,7 +14,7 @@ namespace Tonga.Scalar.Tests
                 new Equals<int>(
                     () => 1,
                     () => 1
-                ).Value() == true,
+                ).IsTrue(),
                 "Can't compare if two integers are equals");
         }
 
@@ -24,7 +25,7 @@ namespace Tonga.Scalar.Tests
                 new Equals<int>(
                     () => 1,
                     () => 2
-                ).Value() == false);
+                ).IsFalse());
         }
 
         [Fact]
@@ -35,7 +36,7 @@ namespace Tonga.Scalar.Tests
             new Equals<string>(
                 () => str,
                 () => str
-            ).Value() == true,
+            ).IsTrue(),
             "Can't compare if two strings are equals");
         }
 
@@ -46,7 +47,7 @@ namespace Tonga.Scalar.Tests
             new Equals<string>(
                 () => "world",
                 () => "worle"
-            ).Value() == false);
+            ).IsFalse());
         }
     }
 }

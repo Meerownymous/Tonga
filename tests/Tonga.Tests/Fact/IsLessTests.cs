@@ -1,9 +1,8 @@
-
-
-using Xunit;
 using Tonga.Enumerable;
+using Tonga.Fact;
+using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Fact
 {
     public sealed class IsLessTests
     {
@@ -14,7 +13,7 @@ namespace Tonga.Scalar.Tests
                 IsLess._(
                     3,
                     AsEnumerable._("a", "b")
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -25,7 +24,7 @@ namespace Tonga.Scalar.Tests
                 IsLess._(
                     3,
                     AsEnumerable._("a", "b", "c", "d")
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -36,7 +35,7 @@ namespace Tonga.Scalar.Tests
                 IsLess._(
                     3,
                     AsEnumerable._("a", "b", "c")
-                ).Value()
+                ).IsTrue()
             );
         }
     }

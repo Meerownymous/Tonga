@@ -11,7 +11,13 @@ namespace Tonga.Collection
     /// A filtered <see cref="ICollection{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Filtered<T> : CollectionEnvelope<T>
+    public sealed class Filtered<T>(Func<T, Boolean> func, IEnumerable<T> src) : CollectionEnvelope<T>(
+        AsCollection._(
+            Enumerable.Filtered._(
+                func, src
+            )
+        )
+    )
     {
         /// <summary>
         /// A filtered <see cref="ICollection{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
@@ -20,12 +26,11 @@ namespace Tonga.Collection
         /// <param name="item1">first item to filter</param>
         /// <param name="item2">secound item to filter</param>
         /// <param name="items">other items to filter</param>
-        public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) :
-            this(
+        public Filtered(Func<T, Boolean> func, T item1, T item2, params T[] items) : this(
                 func,
-                new Enumerable.AsEnumerable<T>(() =>
+                new AsEnumerable<T>(() =>
                     new Enumerable.Joined<T>(
-                        new Enumerable.AsEnumerable<T>(item1, item2),
+                        new AsEnumerable<T>(item1, item2),
                         items
                     ).GetEnumerator()
                 )
@@ -37,19 +42,7 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="func">filter func</param>
         /// <param name="src">items to filter</param>
-        public Filtered(Func<T, Boolean> func, IEnumerator<T> src) : this(func, Enumerable.AsEnumerable._(src))
-        { }
-
-        /// <summary>
-        /// A <see cref="ICollection{T}"/> filtered by the given <see cref="Func{T, TResult}"/>
-        /// </summary>
-        public Filtered(Func<T, Boolean> func, IEnumerable<T> src) : base(
-            AsCollection._(
-                Enumerable.Filtered._(
-                    func, src
-                )
-            )
-        )
+        public Filtered(Func<T, Boolean> func, IEnumerator<T> src) : this(func, new AsEnumerable<T>(src))
         { }
     }
 

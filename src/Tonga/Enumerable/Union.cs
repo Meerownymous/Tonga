@@ -8,12 +8,12 @@ using System.Diagnostics;
 namespace Tonga.Enumerable
 {
     /// <summary>
-    /// Union objects in two enumerables.
+    /// Union of two enumerables.
     /// </summary>
     public class Union<T>(IEnumerable<T> a, IEnumerable<T> b, IEqualityComparer<T> comparison) : IEnumerable<T>
     {
         /// <summary>
-        /// Union objects in two enumerables.
+        /// Union of two enumerables.
         /// </summary>
         public Union(IEnumerable<T> a, IEnumerable<T> b) : this(
             a, b, new Comparison((left,right) => left.Equals(right))
@@ -21,7 +21,7 @@ namespace Tonga.Enumerable
         { }
 
         /// <summary>
-        /// Union objects in two enumerables.
+        /// Union of two enumerables.
         /// </summary>
         public Union(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) : this(
             a,
@@ -66,6 +66,25 @@ namespace Tonga.Enumerable
         /// Union objects in two enumerables.
         /// </summary>
         public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b) =>
+            new Union<T>(a, b);
+    }
+
+    /// <summary>
+    /// Union objects in two enumerables.
+    /// </summary>
+    public static class UnionSmarts
+    {
+        /// <summary>
+        /// Union of two enumerables.
+        /// </summary>
+        /// <param name="compare">Condition to match</param>
+        public static IEnumerable<T> Union<T>(this IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
+            new Union<T>(a, b, compare);
+
+        /// <summary>
+        /// Union of two enumerables.
+        /// </summary>
+        public static IEnumerable<T> Union<T>(this IEnumerable<T> a, IEnumerable<T> b) =>
             new Union<T>(a, b);
     }
 }

@@ -9,28 +9,14 @@ namespace Tonga.Enumerable
     /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Skipped<T> : IEnumerable<T>
+    public sealed class Skipped<T>(IEnumerable<T> enumerable, int skip) : IEnumerable<T>
     {
-        private readonly IEnumerable<T> enumerable;
-        private readonly int skip;
-
-        /// <summary>
-        /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
-        /// </summary>
-        /// <param name="enumerable">enumerable to skip items in</param>
-        /// <param name="skip">how many to skip</param>
-        public Skipped(IEnumerable<T> enumerable, int skip)
-        {
-            this.enumerable = enumerable;
-            this.skip = skip;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             var skipped = 0;
-            foreach(var item in this.enumerable)
+            foreach(var item in enumerable)
             {
-                if (skipped < this.skip)
+                if (skipped < skip)
                 {
                     skipped++;
                 }
@@ -38,10 +24,7 @@ namespace Tonga.Enumerable
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     /// <summary>
@@ -55,5 +38,18 @@ namespace Tonga.Enumerable
         /// <param name="enumerable">enumerable to skip items in</param>
         /// <param name="skip">how many to skip</param>
         public static IEnumerable<T> _<T>(IEnumerable<T> enumerable, int skip) => new Skipped<T>(enumerable, skip);
+    }
+
+    /// <summary>
+    /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
+    /// </summary>
+    public static class SkippedSmarts
+    {
+        /// <summary>
+        /// A <see cref="IEnumerable{Tests}"/> which skips a given count of items.
+        /// </summary>
+        /// <param name="enumerable">enumerable to skip items in</param>
+        /// <param name="skip">how many to skip</param>
+        public static IEnumerable<T> Skipped<T>(this IEnumerable<T> enumerable, int skip) => new Skipped<T>(enumerable, skip);
     }
 }

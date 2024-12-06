@@ -7,39 +7,24 @@ namespace Tonga.Enumerable
     /// <summary>
     /// Enumerable which executes a given lambda function when advancing.
     /// </summary>
-    public sealed class Lambda<T> : IEnumerable<T>
+    public sealed class Lambda<T>(Action<T> lambda, IEnumerable<T> origin) : IEnumerable<T>
     {
-        private readonly Action<T> lambda;
-        private readonly IEnumerable<T> origin;
-
         /// <summary>
         /// Enumerable which executes a given lambda function when advancing.
         /// </summary>
-        public Lambda(Action lambda, IEnumerable<T> origin) : this(item => lambda(), origin)
+        public Lambda(Action lambda, IEnumerable<T> origin) : this(_ => lambda(), origin)
         { }
-
-        /// <summary>
-        /// Enumerable which executes a given lambda function when advancing.
-        /// </summary>
-        public Lambda(Action<T> lambda, IEnumerable<T> origin)
-        {
-            this.lambda = lambda;
-            this.origin = origin;
-        }
 
         public IEnumerator<T> GetEnumerator()
         {
             foreach(var item in origin)
             {
-                this.lambda.Invoke(item);
+                lambda(item);
                 yield return item;
             }
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     /// <summary>
@@ -51,12 +36,27 @@ namespace Tonga.Enumerable
         /// Enumerable which executes a given lambda function when advancing.
         /// </summary>
         public static Lambda<T> _<T>(Action lambda, IEnumerable<T> origin) =>
-            new Lambda<T>(lambda, origin);
+            new(lambda, origin);
 
         /// <summary>
         /// Enumerable which executes a given lambda function when advancing.
         /// </summary>
         public static Lambda<T> _<T>(Action<T> lambda, IEnumerable<T> origin) =>
+            new(lambda, origin);
+    }
+
+    public static class LambdaSmarts
+    {
+        /// <summary>
+        /// Enumerable which executes a given lambda function when advancing.
+        /// </summary>
+        public static IEnumerable<T> Lambda<T>(this IEnumerable<T> origin, Action lambda) =>
+            new Lambda<T>(lambda, origin);
+
+        /// <summary>
+        /// Enumerable which executes a given lambda function when advancing.
+        /// </summary>
+        public static IEnumerable<T> Lambda<T>(this IEnumerable<T> origin, Action<T> lambda) =>
             new Lambda<T>(lambda, origin);
     }
 }

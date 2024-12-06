@@ -1,18 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Tonga.Enumerable
 {
     /// <summary>
     /// Enumerable which memoizes already visited items.
     /// </summary>
-    public class Sticky<T> : IEnumerable<T>
+    public class Sticky<T>(Func<IEnumerator<T>> source) : IEnumerable<T>
     {
-        private readonly object exclusive;
-        private readonly Lazy<IEnumerator<T>> source;
-        private readonly bool[] ended;
-        private readonly List<T> buffer;
+        private readonly Lock exclusive = new();
+        private readonly Lazy<IEnumerator<T>> source = new(source);
+        private bool ended;
+        private readonly List<T> copy = [];
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
@@ -32,20 +33,9 @@ namespace Tonga.Enumerable
         public Sticky(IEnumerator<T> source) : this(() => source)
         { }
 
-        /// <summary>
-        /// Enumerable which memoizes already visited items.
-        /// </summary>
-        public Sticky(Func<IEnumerator<T>> source)
-        {
-            this.exclusive = new object();
-            this.buffer = new List<T>();
-            this.source = new Lazy<IEnumerator<T>>(() => source());
-            this.ended = new bool[1] { false };
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            if (!ended[0])
+            if (!ended)
             {
                 foreach (var item in Partial())
                 {
@@ -61,10 +51,7 @@ namespace Tonga.Enumerable
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         private IEnumerable<T> Partial()
         {
@@ -72,15 +59,14 @@ namespace Tonga.Enumerable
             var enumerator = this.source.Value;
             while (true)
             {
-                var hasValue = default(bool);
-
+                bool hasValue;
                 lock (exclusive)
                 {
-                    if (i >= buffer.Count)
+                    if (i >= copy.Count)
                     {
                         hasValue = enumerator.MoveNext();
                         if (hasValue)
-                            buffer.Add(enumerator.Current);
+                            copy.Add(enumerator.Current);
                     }
                     else
                     {
@@ -89,20 +75,19 @@ namespace Tonga.Enumerable
                 }
 
                 if (hasValue)
-                    yield return buffer[i];
+                    yield return copy[i];
                 else
                 {
-                    this.ended[0] = true;
+                    this.ended = true;
                     break;
                 }
-
                 i++;
             }
         }
 
         private IEnumerable<T> Full()
         {
-            foreach(var item in this.buffer)
+            foreach(var item in this.copy)
             {
                 yield return item;
             }
@@ -114,23 +99,46 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(IEnumerable<T> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(IEnumerable<T> source) => new(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(Func<IEnumerable<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(Func<IEnumerable<T>> source) => new(source);
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(IEnumerator<T> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(IEnumerator<T> source) => new(source);
 
 
         /// <summary>
         /// Enumerable which memoizes already visited items.
         /// </summary>
-        public static Sticky<T> _<T>(Func<IEnumerator<T>> source) => new Sticky<T>(source);
+        public static Sticky<T> _<T>(Func<IEnumerator<T>> source) => new(source);
+    }
+
+    public static class StickySmarts
+    {
+        /// <summary>
+        /// Enumerable which memoizes already visited items.
+        /// </summary>
+        public static IEnumerable<T> Sticky<T>(this IEnumerable<T> source) => new Sticky<T>(source);
+
+        /// <summary>
+        /// Enumerable which memoizes already visited items.
+        /// </summary>
+        public static IEnumerable<T> Sticky<T>(this Func<IEnumerable<T>> source) => new Sticky<T>(source);
+
+        /// <summary>
+        /// Enumerable which memoizes already visited items.
+        /// </summary>
+        public static IEnumerable<T> Sticky<T>(this IEnumerator<T> source) => new Sticky<T>(source);
+
+        /// <summary>
+        /// Enumerable which memoizes already visited items.
+        /// </summary>
+        public static IEnumerable<T> Sticky<T>(this Func<IEnumerator<T>> source) => new Sticky<T>(source);
     }
 }
 

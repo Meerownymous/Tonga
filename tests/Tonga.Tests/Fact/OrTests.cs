@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Xunit;
 using Tonga.Enumerable;
+using Tonga.Fact;
 using Tonga.Func;
 
 namespace Tonga.Scalar.Tests
@@ -14,11 +15,11 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new Or(
-                    AsEnumerable._(
-                        AsScalar._(true),
-                        AsScalar._(false)
+                    AsEnumerable._<IFact>(
+                        new True(),
+                        new False()
                     )
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -28,9 +29,9 @@ namespace Tonga.Scalar.Tests
             Assert.True(
                 new Or<bool>(
                     func => func,
-                    new True().Value(),
-                    new False().Value()
-                    ).Value() == true
+                    new True().IsTrue(),
+                    new False().IsTrue()
+                    ).IsTrue()
             );
         }
 
@@ -42,7 +43,7 @@ namespace Tonga.Scalar.Tests
                     new True(),
                     new False(),
                     new True()
-                    ).Value() == true
+                ).IsTrue()
             );
         }
 
@@ -50,30 +51,33 @@ namespace Tonga.Scalar.Tests
         public void WorksWithFuncAndParamItems()
         {
             Assert.True(
-                    new Or<int>(
-                        input => input > 0,
-                        1, -1, 0
-                    ).Value());
+                new Or<int>(
+                    input => input > 0,
+                    1, -1, 0
+                ).IsTrue()
+            );
         }
 
         [Fact]
         public void WorksWithFuncAndListItems()
         {
             Assert.True(
-                    new Or<int>(
-                        input => input > 0,
-                        new List<int>() { 1, -1, 0 }
-                    ).Value());
+                new Or<int>(
+                    input => input > 0,
+                    new List<int>() { 1, -1, 0 }
+                ).IsTrue()
+            );
         }
 
         [Fact]
         public void WorksWithIFunc()
         {
             Assert.False(
-                    new Or<int>(
-                        new FuncOf<int, bool>(input => input > 0),
-                        -1, -2, -3
-                    ).Value());
+                new Or<int>(
+                    new FuncOf<int, bool>(input => input > 0),
+                    -1, -2, -3
+                ).IsTrue()
+            );
         }
 
         [Theory]
@@ -89,25 +93,25 @@ namespace Tonga.Scalar.Tests
                     str => str.Contains("B"),
                     str => str.Contains("C"));
 
-            Assert.Equal(expected, or.Value());
+            Assert.Equal(expected, or.IsTrue());
         }
 
         [Fact]
         public void InputBoolValuesToTrue()
         {
-            Assert.True(new Or(false, true, false).Value());
+            Assert.True(new Or(false, true, false).IsTrue());
         }
 
         [Fact]
         public void InputBoolValuesToFalse()
         {
-            Assert.False(new Or(new List<bool>() { false, false, false }).Value());
+            Assert.False(new Or(new List<bool> { false, false, false }).IsTrue());
         }
 
         [Fact]
         public void InputBoolFunctionsToTrue()
         {
-            Assert.True(new Or(() => true, () => false).Value());
+            Assert.True(new Or(() => true, () => false).IsTrue());
         }
     }
 }

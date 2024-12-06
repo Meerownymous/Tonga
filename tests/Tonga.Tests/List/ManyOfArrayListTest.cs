@@ -3,6 +3,7 @@
 using System.Collections;
 using Xunit;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 
 namespace Tonga.List.Tests
 {
@@ -15,7 +16,7 @@ namespace Tonga.List.Tests
 
             Assert.Equal("A",
                 new ItemAt<object>(
-                    new EnumerabeOfArrayList(arr)
+                    new EnumerableOfArrayList(arr)
                 ).Value().ToString()
             );
         }

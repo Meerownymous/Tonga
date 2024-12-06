@@ -1,6 +1,7 @@
 using System;
 using Tonga.Enumerable;
 using Tonga.List;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Map.Tests

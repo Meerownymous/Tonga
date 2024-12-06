@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 
 
 namespace Tonga.Collection.Tests

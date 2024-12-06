@@ -8,39 +8,25 @@ namespace Tonga.Enumerable
     /// A given enumerator as enumerable.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class EnumeratorAsEnumerable<T> : IEnumerable<T>
+    public sealed class EnumeratorAsEnumerable<T>(Func<IEnumerator<T>> enumerator) : IEnumerable<T>
     {
-        private readonly Func<IEnumerator<T>> enumerator;
-
         /// <summary>
         /// A given enumerator as enumerable.
         /// </summary>
         public EnumeratorAsEnumerable(IEnumerator<T> enumerator) : this(() => enumerator)
         { }
 
-        /// <summary>
-        /// A given enumerator as enumerable.
-        /// </summary>
-        public EnumeratorAsEnumerable(Func<IEnumerator<T>> enumerator)
-        {
-            this.enumerator = enumerator;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            var enumerator = this.enumerator();
+            var enm = enumerator();
 
-            while (enumerator.MoveNext())
+            while (enm.MoveNext())
             {
-                yield return enumerator.Current;
+                yield return enm.Current;
             }
-            yield break;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 }
 

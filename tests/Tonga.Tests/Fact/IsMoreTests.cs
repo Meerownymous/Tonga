@@ -1,12 +1,10 @@
-
-
-using Xunit;
 using Tonga.Enumerable;
-using Tonga.Scalar;
+using Tonga.Fact;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Fact
 {
-    public sealed class MoreThanTests
+    public sealed class IsMoreTests
     {
         [Fact]
         public void DetectsMore()
@@ -15,7 +13,7 @@ namespace Tonga.Enumerable.Test
                 MoreThan._(
                     3,
                     AsEnumerable._("a", "b", "c", "d")
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -25,7 +23,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 MoreThan._(3,
                     AsEnumerable._("a", "b")
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -35,7 +33,7 @@ namespace Tonga.Enumerable.Test
             Assert.False(
                 MoreThan._(3,
                     AsEnumerable._("a", "b", "c")
-                ).Value()
+                ).IsTrue()
             );
         }
     }

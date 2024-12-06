@@ -9,36 +9,22 @@ namespace Tonga.Enumerable
     /// <summary>
     /// Lines in a given text.
     /// </summary>
-    public sealed class Lines : IEnumerable<string>
+    public sealed class Lines(IText source, bool skipEmpty = false) : IEnumerable<string>
     {
-        private readonly IText source;
-        private readonly bool skipEmpty;
-
         /// <summary>
         /// Lines in a given text.
         /// </summary>
         public Lines(string source, bool skipEmpty = false) : this(AsText._(source), skipEmpty)
         { }
 
-        /// <summary>
-        /// Lines in a given text.
-        /// </summary>
-        public Lines(IText source, bool skipEmpty = false)
-        {
-            this.source = source;
-            this.skipEmpty = skipEmpty;
-        }
-
         public IEnumerator<string> GetEnumerator()
         {
-            using (StringReader reader = new StringReader(this.source.AsString()))
+            using StringReader reader = new StringReader(source.AsString());
+            string line;
+            while ((line = reader.ReadLine()) != null)
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if(!(skipEmpty && String.IsNullOrEmpty(line)))
-                        yield return line;
-                }
+                if(!(skipEmpty && String.IsNullOrEmpty(line)))
+                    yield return line;
             }
         }
 
@@ -49,5 +35,11 @@ namespace Tonga.Enumerable
         /// </summary>
         public static IEnumerable<string> _(IText source) =>
             new Lines(source);
+    }
+
+    public static class LinesSmarts
+    {
+        public static IEnumerable<string> Lines(this IText source, bool skipEmpty = false) =>
+            new Lines(source, skipEmpty);
     }
 }

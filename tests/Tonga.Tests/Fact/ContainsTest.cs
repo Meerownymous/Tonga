@@ -1,12 +1,8 @@
-
-
-using System;
-using System.Diagnostics;
-using Tonga.Scalar;
-using Tonga.Tests;
+using Tonga.Enumerable;
+using Tonga.Fact;
 using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Fact
 {
     public class ContainsTest
     {
@@ -16,8 +12,8 @@ namespace Tonga.Enumerable.Test
             Assert.True(
                 Contains._(
                     AsEnumerable._("Hello", "my", "cat", "is", "missing"),
-                    (str) => str == "cat"
-                ).Value()
+                    str => str == "cat"
+                ).IsTrue()
             );
         }
 
@@ -28,7 +24,7 @@ namespace Tonga.Enumerable.Test
                 Contains._(
                     AsEnumerable._("Hello", "my", "cat", "is", "missing"),
                     (str) => str == "elephant"
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -39,7 +35,7 @@ namespace Tonga.Enumerable.Test
                 Contains._(
                     None._<string>(),
                     (str) => str == "elephant"
-                ).Value()
+                ).IsTrue()
             );
         }
     }

@@ -46,10 +46,7 @@ namespace Tonga.Enumerable
                     yield return item;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
     public static class Ternary
@@ -59,14 +56,14 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public static Ternary<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition) =>
-            new Ternary<T>(whenMatching, whenNotMatching, condition);
+            new(whenMatching, whenNotMatching, condition);
 
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public static Ternary<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition) =>
-            new Ternary<T>(whenMatching, whenNotMatching, condition);
+            new(whenMatching, whenNotMatching, condition);
     }
 }
 

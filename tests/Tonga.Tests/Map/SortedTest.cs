@@ -16,9 +16,9 @@ namespace Tonga.Map.Tests
         {
             var unsorted =
                 AsMap._(
-                    1, 4,
-                    6, 3,
-                   -5, 2
+                    (1, 4),
+                    (6, 3),
+                    (-5, 2)
                 );
 
             var sorted = Sorted._(unsorted);
@@ -56,9 +56,9 @@ namespace Tonga.Map.Tests
                 ItemAt._(
                     Sorted._(
                         AsMap._(
-                            1, 4,
-                            6, 3,
-                           -5, 2
+                            (1, 4),
+                            (6, 3),
+                            (-5, 2)
                         ),
                         (a, b) => a.CompareTo(b)
                     )
@@ -81,9 +81,9 @@ namespace Tonga.Map.Tests
                 AsList._(
                     Sorted._(
                         AsMap._(
-                            1, 4,
-                            6, 3,
-                            -5, 2
+                            (1, 4),
+                            (6, 3),
+                            (-5, 2)
                         )
                     ).Pairs()
                 )[index]

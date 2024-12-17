@@ -1,13 +1,12 @@
-
-
-using Xunit;
 using Tonga.Func;
 using Tonga.IO;
 using Tonga.List;
+using Tonga.Map;
 using Tonga.Number;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Map.Tests
+namespace Tonga.Tests.Map
 {
     public sealed class GroupedTest
     {

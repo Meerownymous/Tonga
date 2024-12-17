@@ -1,10 +1,8 @@
-
-
 using System;
-using Xunit;
 using Tonga.Map;
+using Xunit;
 
-namespace Tonga.Map.Tests
+namespace Tonga.Tests.Map
 {
     public sealed class VersionMapTests
     {

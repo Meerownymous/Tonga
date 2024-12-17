@@ -1,16 +1,14 @@
-
-
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Xunit;
-using Tonga.Enumerable;
-using Tonga.Scalar;
-using Tonga.Tests;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
+using Tonga.Enumerable;
+using Tonga.Map;
+using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Map.Tests
+namespace Tonga.Tests.Map
 {
     public sealed class AsMapTests
     {
@@ -39,6 +37,18 @@ namespace Tonga.Map.Tests
             Assert.Equal(
                 20,
                 map[33]
+            );
+        }
+
+        [Fact]
+        public void BuildsFromTuples()
+        {
+            Assert.Equal(
+                20,
+                AsMap._(
+                    (45, 10),
+                    (33, 20)
+                )[33]
             );
         }
 

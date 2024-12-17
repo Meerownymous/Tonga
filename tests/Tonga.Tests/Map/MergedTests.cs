@@ -1,8 +1,9 @@
 
 
+using Tonga.Map;
 using Xunit;
 
-namespace Tonga.Map.Tests
+namespace Tonga.Tests.Map
 {
     public sealed class JoinedTests
     {

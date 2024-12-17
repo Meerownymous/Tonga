@@ -1,8 +1,7 @@
-using System;
-using System.Diagnostics;
+using Tonga.Map;
 using Xunit;
 
-namespace Tonga.Map.Tests
+namespace Tonga.Tests.Map
 {
     public sealed class DeepMap
     {
@@ -14,10 +13,10 @@ namespace Tonga.Map.Tests
                 new DeepMap<string[], string, int>(
                     digDown: key => key[0],
                     AsMap._(
-                        AsPair._(new string[] { "one", "rubbish" }, 1),
-                        AsPair._(new string[] { "two", "irrelevant stuff" }, 2)
+                        (["one", "rubbish"], 1),
+                        (new[] { "two", "irrelevant stuff" }, 2)
                     )
-                )[new string[] { "one", "otherthings" }]
+                )[["one", "otherthings"]]
             );
         }
 
@@ -29,12 +28,12 @@ namespace Tonga.Map.Tests
                 new DeepMap<string[], string, int>(
                     digDown: key => key[0],
                     AsMap._(
-                        AsPair._(new string[] { "one", "rubbish" }, 1),
-                        AsPair._(new string[] { "two", "irrelevant stuff" }, 2)
+                        (new[] { "one", "rubbish" }, 1),
+                        (new[] { "two", "irrelevant stuff" }, 2)
                     )
                 )
-                .With(AsPair._(new string[] { "three", "trash" }, 3))
-                [new string[] { "three", "otherthings" }]
+                .With(AsPair._(new[] { "three", "trash" }, 3))
+                [["three", "otherthings"]]
             );
         }
     }

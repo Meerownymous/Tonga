@@ -1,10 +1,8 @@
-
-
-using Xunit;
-using Tonga.Enumerable;
 using System;
+using Tonga.Enumerable;
+using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class MaxTest
     {

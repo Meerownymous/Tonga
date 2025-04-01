@@ -1,11 +1,9 @@
-
-
 using System;
 using System.Globalization;
-using Xunit;
 using Tonga.Text;
+using Xunit;
 
-namespace Tonga.Primitives.Tests
+namespace Tonga.Tests.Primitives
 {
     public sealed class DoubleOfTests
     {

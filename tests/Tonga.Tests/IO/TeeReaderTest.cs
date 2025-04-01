@@ -1,10 +1,10 @@
-
-
+using System;
 using System.IO;
-using Xunit;
+using Tonga.IO;
 using Tonga.Text;
+using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class TeeReaderTest
     {
@@ -26,11 +26,16 @@ namespace Tonga.IO.Tests
             }
             reader.Dispose();
             Assert.True(
-                AsText._(
-                    new AsInput(
-                        new AsReader(baos.ToArray()))
-                ).AsString().CompareTo(content) == 0,
-                "Can't read content");
+                String.Compare(
+                    AsText._(
+                        new AsInput(
+                            new AsReader(baos.ToArray()))
+                    ).AsString(),
+                    content,
+                    StringComparison.Ordinal
+                ) == 0,
+                "Can't read content"
+            );
         }
 
     }

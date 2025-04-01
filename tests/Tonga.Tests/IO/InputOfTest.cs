@@ -1,22 +1,21 @@
-
-
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
-using Xunit;
 using Tonga.Bytes;
 using Tonga.Enumerable;
-using Tonga.Text;
-using Tonga.Tests;
-using System.Linq;
-using System.Diagnostics;
-using Tonga.Scalar;
 using Tonga.Func;
+using Tonga.IO;
+using Tonga.Scalar;
+using Tonga.Text;
+using Xunit;
 
 #pragma warning disable MaxPublicMethodCount
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class InputOfTest
     {
@@ -92,7 +91,7 @@ namespace Tonga.IO.Tests
                     new TeeInputStream(
                         new MemoryStream(
                             new AsBytes(
-                                new Text.Joined("\r\n",
+                                new global::Tonga.Text.Joined("\r\n",
                                 new Head<string>(
                                     new Endless<string>(content),
                                     10)
@@ -141,7 +140,7 @@ namespace Tonga.IO.Tests
                     new TeeInputStream(
                         new MemoryStream(
                             new AsBytes(
-                                new Text.Joined("\r\n",
+                                new global::Tonga.Text.Joined("\r\n",
                                     new Head<string>(
                                         new Endless<string>("Hello World"),
                                         10
@@ -202,8 +201,8 @@ namespace Tonga.IO.Tests
                         new TeeInputStream(
                             new MemoryStream(
                                 new AsBytes(
-                                    new Text.Joined("\r\n",
-                                        Enumerable.Head._(
+                                    new global::Tonga.Text.Joined("\r\n",
+                                        Tonga.Enumerable.Head._(
                                             Endless._("Hello World"),
                                             1000
                                         )

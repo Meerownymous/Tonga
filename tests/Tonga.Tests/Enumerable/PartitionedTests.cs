@@ -1,11 +1,9 @@
-
-
-using System.Collections.Generic;
+using Tonga.Enumerable;
 using Tonga.List;
 using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public class PartitionedTests
     {

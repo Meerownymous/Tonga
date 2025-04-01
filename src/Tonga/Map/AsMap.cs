@@ -17,8 +17,7 @@ namespace Tonga.Map
         /// <summary>
         /// A map from the given KeyValuePairs
         /// </summary>
-        public AsMap(params (Key key, Value value)[] pairs
-        ) : this(
+        public AsMap(params (Key key, Value value)[] pairs) : this(
             Mapped._(
                 pair => AsPair._(pair.key, pair.value),
                 pairs

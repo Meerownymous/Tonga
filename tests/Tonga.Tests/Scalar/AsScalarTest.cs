@@ -1,9 +1,8 @@
-
-
 using System;
+using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class AsScalarTest
     {

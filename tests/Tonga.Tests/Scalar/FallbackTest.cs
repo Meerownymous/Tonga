@@ -1,9 +1,8 @@
-
-
 using System;
+using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public class FallbackTest
     {
@@ -18,7 +17,8 @@ namespace Tonga.Scalar.Tests
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")
                     ),
                     fbk
-                ).Value() == fbk);
+                ).Value() == fbk
+            );
         }
 
         [Fact]

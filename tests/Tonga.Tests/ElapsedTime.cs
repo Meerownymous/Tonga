@@ -2,22 +2,21 @@
 
 using System;
 
-namespace Tonga.Tests
+namespace Tonga.Tests;
+
+public sealed class ElapsedTime
 {
-    public sealed class ElapsedTime
+    private readonly Action _work;
+
+    public ElapsedTime(Action work)
     {
-        private readonly Action _work;
+        _work = work;
+    }
 
-        public ElapsedTime(Action work)
-        {
-            _work = work;
-        }
-
-        public TimeSpan AsTimeSpan()
-        {
-            var start = DateTime.Now;
-            _work.Invoke();
-            return DateTime.Now - start;
-        }
+    public TimeSpan AsTimeSpan()
+    {
+        var start = DateTime.Now;
+        _work.Invoke();
+        return DateTime.Now - start;
     }
 }

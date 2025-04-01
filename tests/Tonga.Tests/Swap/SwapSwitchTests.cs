@@ -1,9 +1,7 @@
-using Xunit;
-using Tonga.Func;
-using Tonga.Scalar;
 using Tonga.Swap;
+using Xunit;
 
-namespace Tonga.Swap.Tests
+namespace Tonga.Tests.Swap
 {
     public sealed class SwapSwitchTests
     {
@@ -12,8 +10,8 @@ namespace Tonga.Swap.Tests
         {
             Assert.True(
                 SwapSwitch._(
-                    "true", AsSwap._<string,bool>((irrelevant) => true),
-                    "false", AsSwap._<string,bool>((irrelevant) => false)
+                    "true", AsSwap._<string,bool>(_ => true),
+                    "false", AsSwap._<string,bool>(_ => false)
                 ).Flip("true","irrelevant")
             );
         }

@@ -1,11 +1,10 @@
-
-
 using System;
-using Xunit;
 using Tonga.Enumerable;
+using Tonga.Func;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Func.Tests
+namespace Tonga.Tests.Func
 {
     public class ChainedFuncTest
     {
@@ -36,7 +35,7 @@ namespace Tonga.Func.Tests
                 Length._(
                     Filtered._(
                         input => !input.StartsWith("st") && input.EndsWith("12"),
-                         Enumerable.Mapped._(
+                         Tonga.Enumerable.Mapped._(
                             new ChainedFunc<string, string, string>(
                                 input => input += "1",
                                 AsEnumerable._(

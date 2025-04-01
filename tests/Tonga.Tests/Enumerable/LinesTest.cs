@@ -1,6 +1,7 @@
+using Tonga.Enumerable;
 using Xunit;
 
-namespace Tonga.Enumerable.Tests
+namespace Tonga.Tests.Enumerable
 {
     public sealed class LinesTest
     {

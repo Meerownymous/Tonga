@@ -1,10 +1,8 @@
-
-
 using System;
-using Xunit;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Primitives.Tests
+namespace Tonga.Tests.Primitives
 {
     public sealed class CharOfTest
     {

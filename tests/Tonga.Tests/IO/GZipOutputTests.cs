@@ -1,15 +1,13 @@
-
-
 using System;
 using System.IO;
 using System.IO.Compression;
-using Xunit;
-using Tonga.Bytes;
-using Tonga.Text;
-using Tonga.Scalar;
 using Tonga.Func;
+using Tonga.IO;
+using Tonga.Scalar;
+using Tonga.Text;
+using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class GzipOutputTest
     {
@@ -41,7 +39,7 @@ namespace Tonga.IO.Tests
         [Fact]
         public void RejectsWhenClosed()
         {
-            
+
             var path = Path.GetFullPath("assets/GZipOutput.txt");
 
             Assert.Throws<ArgumentException>(() =>

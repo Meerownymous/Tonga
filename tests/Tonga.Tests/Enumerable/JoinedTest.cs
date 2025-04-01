@@ -1,10 +1,8 @@
-
-
-using System.Collections.Generic;
+using Tonga.Enumerable;
 using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public sealed class JoinedTest
     {

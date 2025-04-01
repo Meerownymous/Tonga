@@ -1,9 +1,7 @@
-
-
 using Tonga.Fact;
 using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Fact
 {
     public sealed class EqualsTest
     {

@@ -1,6 +1,7 @@
+using Tonga.Enumerable;
 using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public class StickyTests
     {
@@ -21,8 +22,8 @@ namespace Tonga.Enumerable.Test
                 );
 
             Assert.Equal(
-                new Text.Joined(" ", items).AsString(),
-                new Text.Joined(" ", items).AsString()
+                new global::Tonga.Text.Joined(" ", items).AsString(),
+                new global::Tonga.Text.Joined(" ", items).AsString()
             );
 
         }

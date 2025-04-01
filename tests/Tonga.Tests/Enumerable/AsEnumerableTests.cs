@@ -1,12 +1,11 @@
-
-
 using System.Collections.Generic;
-using Xunit;
-using Tonga.Text;
-using Tonga.Scalar;
+using Tonga.Enumerable;
 using Tonga.List;
+using Tonga.Scalar;
+using Tonga.Text;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public sealed class AsEnumerableTest
     {

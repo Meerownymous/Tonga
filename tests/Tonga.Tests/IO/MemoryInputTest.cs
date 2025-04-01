@@ -1,9 +1,8 @@
-
-
 using System.IO;
+using Tonga.IO;
 using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class MemoryInputTest
     {

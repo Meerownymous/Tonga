@@ -1,7 +1,7 @@
-using System;
+using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Text.Tests
+namespace Tonga.Tests.Text
 {
     public sealed class BlankTest
     {

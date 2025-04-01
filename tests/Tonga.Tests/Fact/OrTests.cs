@@ -1,12 +1,10 @@
-
-
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
 using Tonga.Fact;
 using Tonga.Func;
+using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Fact
 {
     public sealed class OrTests
     {

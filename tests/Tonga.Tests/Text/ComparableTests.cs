@@ -1,9 +1,10 @@
 
 
 
+using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Text.Test
+namespace Tonga.Tests.Text
 {
     public sealed class ComparableTests
     {

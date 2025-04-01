@@ -1,10 +1,9 @@
-
-
 using System;
 using System.Collections.Generic;
+using Tonga.Func;
 using Xunit;
 
-namespace Tonga.Func.Tests
+namespace Tonga.Tests.Func
 {
     public sealed class StickyFuncTest
     {

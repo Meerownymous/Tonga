@@ -1,12 +1,11 @@
-
-
 using System;
-using Xunit;
 using Tonga.Bytes;
 using Tonga.Func;
+using Tonga.Scalar;
+using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class BitAtTests
     {

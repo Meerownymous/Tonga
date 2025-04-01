@@ -1,12 +1,11 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xunit;
 using Tonga.List;
+using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class SolidTest
     {

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Tonga.Enumerable;
 using Tonga.Fact;
-using Tonga.Func;
 using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
@@ -69,7 +68,7 @@ namespace Tonga.Tests.Fact
             );
 
             Assert.True(
-                new Text.Joined(" ", list).AsString() == "hello world",
+                new global::Tonga.Text.Joined(" ", list).AsString() == "hello world",
             "Can't iterate a list with a procedure");
         }
 

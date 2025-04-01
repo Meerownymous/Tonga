@@ -46,17 +46,12 @@ jobs:
       - name: Run Tests
         run: |
           for project in $PROJECTS_TO_BUILD; do
-            if [[ $project == *"TEST"* ]]; then
+            if [[ $project == *"Tests"* ]]; then
               echo "Running tests for $project"
               dotnet test "$project" --no-build --verbosity normal --configuration Release
             fi
           done
         shell: bash
-
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Get Current Tag
         shell: bash
@@ -64,23 +59,11 @@ jobs:
           CURRENT_TAG=$(git describe --tags --abbrev=0)
           echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
 
-      - name: Debug Current Tag
-        shell: bash
-        run: |
-          echo "Current Tag: $CURRENT_TAG"
-
-      - name: Restore Dependencies
-        run: |
-          for project in $PROJECTS_TO_BUILD; do
-            echo "Restoring dependencies for $project"
-            dotnet restore "$project"
-          done
-        shell: bash
-
       - name: Pack NuGet Package
         run: |
+          mkdir -p artifacts
           for project in $PROJECTS_TO_BUILD; do
-            if [[ $project != *"TEST"* ]]; then
+            if [[ $project != *"Tests"* ]]; then
               echo "Packing $(basename "$project" .csproj) from $project with version $CURRENT_TAG"
               dotnet pack "$project" --configuration Release --output "./artifacts" -p:PackageVersion=$CURRENT_TAG
             fi
@@ -96,10 +79,10 @@ jobs:
           Get-ChildItem -Path .\artifacts\ -File
 
       - name: Upload NuGet Package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.3
         with:
           name: nuget-package
-          path: ./artifacts/*.nupkg
+          path: artifacts
 
   publish:
     name: Publish to NuGet

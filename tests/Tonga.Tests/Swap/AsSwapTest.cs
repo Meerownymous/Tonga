@@ -1,8 +1,9 @@
 
 
+using Tonga.Swap;
 using Xunit;
 
-namespace Tonga.Swap.Tests
+namespace Tonga.Tests.Swap
 {
     public sealed class AsSwapTest
     {

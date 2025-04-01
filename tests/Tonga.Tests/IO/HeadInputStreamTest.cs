@@ -1,10 +1,9 @@
-
-
 using System.IO;
-using Xunit;
+using Tonga.IO;
 using Tonga.Text;
+using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class HeadInputStreamTest
     {

@@ -1,11 +1,10 @@
-
-
 using System;
 using System.Globalization;
+using Tonga.Text;
 using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.Text.Test
+namespace Tonga.Tests.Text
 {
     public sealed class FormattedTest
     {

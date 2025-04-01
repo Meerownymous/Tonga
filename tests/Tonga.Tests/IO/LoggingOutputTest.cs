@@ -1,13 +1,12 @@
-
-
 using System;
 using System.IO;
-using Xunit;
 using Tonga.Bytes;
-using Tonga.Scalar;
 using Tonga.Func;
+using Tonga.IO;
+using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class LoggingOutputTest
     {

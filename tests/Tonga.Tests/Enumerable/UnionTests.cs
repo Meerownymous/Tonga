@@ -54,7 +54,7 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 "a:/a.jpg b:/b.jpg c:/c.jpg",
-                new Text.Joined(" ",
+                new global::Tonga.Text.Joined(" ",
                     new Union<string>(
                         new AsList<string>("a:/a.jpg", "b:/b.jpg", "c:/c.jpg"),
                         new AsList<string>("a", "c"),

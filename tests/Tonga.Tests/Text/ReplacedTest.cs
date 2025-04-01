@@ -1,45 +1,46 @@
-
-
 using System;
+using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Text.Test
+namespace Tonga.Tests.Text
 {
     public sealed class ReplacedTest
     {
         [Fact]
         public void ReplaceText()
         {
-            Assert.True(
+            Assert.Equal(
+                "Hi!",
                 new Replaced(
                     AsText._("Hello!"),
                     "ello", "i"
-                ).AsString() == "Hi!",
-                "Can't replace a text");
+                ).AsString()            );
         }
 
         [Fact]
         public void NotReplaceTextWhenSubstringNotFound()
         {
             String text = "HelloAgain!";
-            Assert.True(
+            Assert.Equal(
+                text,
                 new Replaced(
                     AsText._(text),
                     "xyz", "i"
-                ).AsString() == text,
-                "Replace a text abnormally");
+                ).AsString()
+            );
         }
 
         [Fact]
         public void ReplacesAllOccurrences()
         {
-            Assert.True(
+            Assert.Equal(
+                "one dog, two dogs, three dogs",
                 new Replaced(
                     AsText._("one cat, two cats, three cats"),
                     "cat",
                     "dog"
-                ).AsString() == "one dog, two dogs, three dogs",
-                "Can't replace a text with multiple needle occurrences");
+                ).AsString()
+            );
         }
     }
 }

@@ -1,85 +1,84 @@
-using System;
 using Tonga.Enumerable;
 using Xunit;
+using Sticky = Tonga.List.Sticky;
 
-namespace Tonga.List.Tests
+namespace Tonga.Tests.List;
+
+public sealed class StickyTest
 {
-    public sealed class StickyTest
+    [Fact]
+    public void AdvancesOnlyWhenAsked()
     {
-        [Fact]
-        public void AdvancesOnlyWhenAsked()
-        {
-            var advances = 0;
-            var sticky =
-                Sticky._(
-                    Lambda._(() => advances++,
-                        AsEnumerable._("one", "two", "three")
-                    )
-                );
-            sticky.GetEnumerator().MoveNext();
+        var advances = 0;
+        var sticky =
+            Sticky._(
+                Lambda._(() => advances++,
+                    AsEnumerable._("one", "two", "three")
+                )
+            );
+        sticky.GetEnumerator().MoveNext();
 
-            Assert.Equal(1, advances);
-        }
+        Assert.Equal(1, advances);
+    }
 
-        [Fact]
-        public void AdvancesOnlyToIndex()
-        {
-            var advances = 0;
-            var sticky =
-                Sticky._(
-                    Lambda._(() => advances++,
-                        AsEnumerable._("one", "two", "three")
-                    )
-                );
-            _ = sticky[1];
+    [Fact]
+    public void AdvancesOnlyToIndex()
+    {
+        var advances = 0;
+        var sticky =
+            Sticky._(
+                Lambda._(() => advances++,
+                    AsEnumerable._("one", "two", "three")
+                )
+            );
+        _ = sticky[1];
 
-            Assert.Equal(2, advances);
-        }
+        Assert.Equal(2, advances);
+    }
 
-        [Fact]
-        public void AdvancesOnlyToItemForContains()
-        {
-            var advances = 0;
-            var sticky =
-                Sticky._(
-                    Lambda._(() => advances++,
-                        AsEnumerable._("one", "two", "three")
-                    )
-                );
-            _ = sticky.Contains("two");
+    [Fact]
+    public void AdvancesOnlyToItemForContains()
+    {
+        var advances = 0;
+        var sticky =
+            Sticky._(
+                Lambda._(() => advances++,
+                    AsEnumerable._("one", "two", "three")
+                )
+            );
+        _ = sticky.Contains("two");
 
-            Assert.Equal(2, advances);
-        }
+        Assert.Equal(2, advances);
+    }
 
-        [Fact]
-        public void AdvancesAllForCount()
-        {
-            var advances = 0;
-            var sticky =
-                Sticky._(
-                    Lambda._(() => advances++,
-                        AsEnumerable._("one", "two", "three")
-                    )
-                );
-            _ = sticky.Count;
+    [Fact]
+    public void AdvancesAllForCount()
+    {
+        var advances = 0;
+        var sticky =
+            Sticky._(
+                Lambda._(() => advances++,
+                    AsEnumerable._("one", "two", "three")
+                )
+            );
+        _ = sticky.Count;
 
-            Assert.Equal(3, advances);
-        }
+        Assert.Equal(3, advances);
+    }
 
-        [Fact]
-        public void MemoizesSeenItems()
-        {
-            var advances = 0;
-            var sticky =
-                Sticky._(
-                    Lambda._(() => advances++,
-                        AsEnumerable._("one", "two", "three")
-                    )
-                );
-            _ = sticky.Count;
-            _ = sticky[2];
+    [Fact]
+    public void MemoizesSeenItems()
+    {
+        var advances = 0;
+        var sticky =
+            Sticky._(
+                Lambda._(() => advances++,
+                    AsEnumerable._("one", "two", "three")
+                )
+            );
+        _ = sticky.Count;
+        _ = sticky[2];
 
-            Assert.Equal(3, advances);
-        }
+        Assert.Equal(3, advances);
     }
 }

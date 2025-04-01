@@ -5,6 +5,7 @@ using System.Text;
 using Xunit;
 using Tonga.Text;
 using Tonga.Scalar;
+using Tonga.Tests.IO;
 
 namespace Tonga.IO.Tests
 {

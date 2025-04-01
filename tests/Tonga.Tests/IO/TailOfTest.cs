@@ -1,12 +1,10 @@
-
-
 using System;
 using System.Linq;
-using Xunit;
 using Tonga.Bytes;
-using Tonga.Tests;
+using Tonga.IO;
+using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class TailOfTest
     {

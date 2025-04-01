@@ -1,10 +1,9 @@
-
-
 using System.IO;
-using Xunit;
 using Tonga.Bytes;
+using Tonga.IO;
+using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class LoggingInputStreamTest
     {

@@ -2,31 +2,30 @@ using System;
 using Tonga.Map;
 using Xunit;
 
-namespace Tonga.Tests.Map
+namespace Tonga.Tests.Map;
+
+public class MapEnvelopeTest
 {
-    public class MapEnvelopeTest
+    [Fact]
+    public void GetsValueByExistingKey()
     {
-        [Fact]
-        public void GetsValueByExistingKey()
-        {
-            var map = new NonAbstractIntEnvelope(AsMap._(AsPair._(7, 42)));
-            var outValue = map[7];
-            Assert.Equal(42, outValue);
-        }
+        var map = new NonAbstractIntEnvelope(AsMap._(AsPair._(7, 42)));
+        var outValue = map[7];
+        Assert.Equal(42, outValue);
+    }
 
-        [Fact]
-        public void RejectsGettingMissingKey()
-        {
-            var map = new NonAbstractIntEnvelope(AsMap._(AsPair._(7, 42)));
+    [Fact]
+    public void RejectsGettingMissingKey()
+    {
+        var map = new NonAbstractIntEnvelope(AsMap._(AsPair._(7, 42)));
 
-            var ex = Assert.Throws<ArgumentException>(() => map[0]);
-            Assert.StartsWith("The given key '0' was not present in the", ex.Message);
-        }
+        var ex = Assert.Throws<ArgumentException>(() => map[0]);
+        Assert.StartsWith("The given key '0' was not present in the", ex.Message);
+    }
 
-        private class NonAbstractIntEnvelope : MapEnvelope<int, int>
-        {
-            public NonAbstractIntEnvelope(IMap<int, int> map) : base(map)
-            { }
-        }
+    private class NonAbstractIntEnvelope : MapEnvelope<int, int>
+    {
+        public NonAbstractIntEnvelope(IMap<int, int> map) : base(map)
+        { }
     }
 }

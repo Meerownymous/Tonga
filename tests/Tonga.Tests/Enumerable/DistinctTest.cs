@@ -1,11 +1,9 @@
-
-
-using System.Collections.Generic;
-using Xunit;
+using Tonga.Enumerable;
 using Tonga.Number;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public sealed class DistinctTest
     {

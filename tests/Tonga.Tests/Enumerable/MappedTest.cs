@@ -1,12 +1,11 @@
-
-
-using System;
-using Xunit;
+using Tonga.Enumerable;
 using Tonga.List;
-using Tonga.Text;
 using Tonga.Scalar;
+using Tonga.Text;
+using Xunit;
+using Mapped = Tonga.Enumerable.Mapped;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public sealed class MappedTest
     {
@@ -17,7 +16,7 @@ namespace Tonga.Enumerable.Test
                 "HELLO",
                 ItemAt._(
                     Mapped._(
-                        input => new Upper(AsText._(input)),
+                        input => new Upper(AsText._((string)input)),
                         AsEnumerable._("hello", "world", "damn")),
                     0
                 ).Value().AsString()
@@ -51,7 +50,7 @@ namespace Tonga.Enumerable.Test
         {
             var mappings = 0;
             var mapping =
-                new Mapped<string, string>(
+                new Tonga.Enumerable.Mapped<string, string>(
                     input =>
                     {
                         mappings++;

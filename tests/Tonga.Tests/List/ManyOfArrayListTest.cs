@@ -1,24 +1,21 @@
-
-
 using System.Collections;
-using Xunit;
 using Tonga.Enumerable;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.List.Tests
+namespace Tonga.Tests.List;
+
+public class ManyOfArrayListTest
 {
-    public class ManyOfArrayListTest
+    [Fact]
+    public void BuildsFromStrings()
     {
-        [Fact]
-        public void BuildsFromStrings()
-        {
-            var arr = new ArrayList() { "A", "B", "C" };
+        var arr = new ArrayList() { "A", "B", "C" };
 
-            Assert.Equal("A",
-                new ItemAt<object>(
-                    new EnumerableOfArrayList(arr)
-                ).Value().ToString()
-            );
-        }
+        Assert.Equal("A",
+            new ItemAt<object>(
+                new EnumerableOfArrayList(arr)
+            ).Value().ToString()
+        );
     }
 }

@@ -5,41 +5,40 @@ using System.Collections.Generic;
 using System.IO;
 using Tonga.Func;
 
-namespace Tonga.Tests
+namespace Tonga.Tests;
+
+internal class Tidy : IAction
 {
-    internal class Tidy : IAction
+    private readonly Action act;
+    private readonly IEnumerable<Uri> files;
+
+    public Tidy(Action act, params Uri[] files)
     {
-        private readonly Action act;
-        private readonly IEnumerable<Uri> files;
+        this.files = files;
+        this.act = act;
+    }
 
-        public Tidy(Action act, params Uri[] files)
+    public void Invoke()
+    {
+        Delete();
+        try
         {
-            this.files = files;
-            this.act = act;
+            act.Invoke();
         }
-
-        public void Invoke()
+        finally
         {
             Delete();
-            try
-            {
-                act.Invoke();
-            }
-            finally
-            {
-                Delete();
-            }
         }
+    }
 
-        private void Delete()
-        {
-            new Each<Uri>((uri) =>
-                {
-                    if (File.Exists(uri.AbsolutePath)) File.Delete(uri.AbsolutePath);
-                },
-                this.files
-            ).Invoke();
+    private void Delete()
+    {
+        new Each<Uri>((uri) =>
+            {
+                if (File.Exists(uri.AbsolutePath)) File.Delete(uri.AbsolutePath);
+            },
+            this.files
+        ).Invoke();
 
-        }
     }
 }

@@ -1,9 +1,8 @@
-
-
 using System.IO;
+using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public class NoNullTest
     {

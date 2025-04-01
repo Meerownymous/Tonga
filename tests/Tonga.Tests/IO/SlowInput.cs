@@ -1,8 +1,10 @@
 
 
 using System.IO;
+using Tonga.IO;
+using Tonga.IO.Tests;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     internal sealed class SlowInput : IInput
     {

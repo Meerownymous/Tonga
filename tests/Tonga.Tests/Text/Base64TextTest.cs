@@ -1,13 +1,12 @@
-
-
 using System;
-using Xunit;
 using Tonga.Bytes;
-using Tonga.IO;
-using Tonga.Scalar;
 using Tonga.Func;
+using Tonga.IO;
+using Tonga.Text;
+using Xunit;
+using Base64Decoded = Tonga.Text.Base64Decoded;
 
-namespace Tonga.Text.Test
+namespace Tonga.Tests.Text
 {
     public sealed class Base64DecodedTextTest
     {

@@ -1,10 +1,9 @@
-
-
 using System;
-using Xunit;
 using Tonga.Enumerable;
+using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class FirstTests
     {

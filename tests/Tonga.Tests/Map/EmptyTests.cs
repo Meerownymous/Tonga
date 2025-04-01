@@ -1,17 +1,13 @@
-
-
-
 using Tonga.Map;
 using Xunit;
 
-namespace Tonga.Tests.Map
+namespace Tonga.Tests.Map;
+
+public sealed class EmptyMapTests
 {
-    public sealed class EmptyMapTests
+    [Fact]
+    public void GenericIsEmpty()
     {
-        [Fact]
-        public void GenericIsEmpty()
-        {
-            Assert.Empty(Empty._<double, string>().Pairs());
-        }
+        Assert.Empty(Empty._<double, string>().Pairs());
     }
 }

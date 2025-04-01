@@ -1,13 +1,12 @@
-
-
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
-using Tonga.Func;
 using Tonga.Fact;
+using Tonga.Func;
+using Tonga.Scalar;
+using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class ParallelAndTest
     {

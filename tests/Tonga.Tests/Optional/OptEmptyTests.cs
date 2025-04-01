@@ -2,7 +2,7 @@ using System;
 using Tonga.Optional;
 using Xunit;
 
-namespace Tonga.Optional.Tests;
+namespace Tonga.Tests.Optional;
 
 public sealed class OptEmptyTests
 {

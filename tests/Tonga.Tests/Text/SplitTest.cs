@@ -1,8 +1,9 @@
-using Xunit;
-using Tonga.Scalar;
 using Tonga.Enumerable;
+using Tonga.Scalar;
+using Tonga.Text;
+using Xunit;
 
-namespace Tonga.Text.Test
+namespace Tonga.Tests.Text
 {
     public sealed class SplitTest
     {

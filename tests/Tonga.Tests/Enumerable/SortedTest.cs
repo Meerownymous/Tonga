@@ -1,10 +1,8 @@
-
-
-using Xunit;
+using Tonga.Enumerable;
 using Tonga.Misc;
-using Tonga.Text;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public sealed class SortedTest
     {
@@ -12,7 +10,7 @@ namespace Tonga.Enumerable.Test
         public void SortsAnArray()
         {
             Assert.True(
-                new Text.Joined(", ",
+                new global::Tonga.Text.Joined(", ",
                     new Mapped<int, string>(
                         i => i.ToString(),
                         new Sorted<int>(
@@ -27,7 +25,7 @@ namespace Tonga.Enumerable.Test
         public void SortsAnArrayWithComparator()
         {
             Assert.True(
-                new Text.Joined(", ",
+                new global::Tonga.Text.Joined(", ",
                     new Sorted<string>(
                         IReverseCompare<string>.Default,
                         AsEnumerable._(

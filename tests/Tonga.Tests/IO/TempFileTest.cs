@@ -1,47 +1,45 @@
-
-
 using System.IO;
+using Tonga.IO;
 using Xunit;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO;
+
+public sealed class TempFileTest
 {
-    public sealed class TempFileTest
+
+    [Fact]
+    public void CreateAndDeleteTemporyFile()
     {
-
-        [Fact]
-        public void CreateAndDeleteTemporyFile()
+        var file = new TempFile();
+        using (file)
         {
-            var file = new TempFile();
-            using (file)
-            {
-                Assert.True(File.Exists(file.Value()));
-            }
-            Assert.False(File.Exists(file.Value()));
+            Assert.True(File.Exists(file.Value()));
         }
+        Assert.False(File.Exists(file.Value()));
+    }
 
 
-        [Theory]
-        [InlineData("txt")]
-        [InlineData(".txt")]
-        public void CreateAndDeleteTemporyFileWithGivenExtension(string extension)
+    [Theory]
+    [InlineData("txt")]
+    [InlineData(".txt")]
+    public void CreateAndDeleteTemporyFileWithGivenExtension(string extension)
+    {
+        var file = new TempFile(extension);
+        using (file)
         {
-            var file = new TempFile(extension);
-            using (file)
-            {
-                Assert.True(File.Exists(file.Value()));
-            }
-            Assert.False(File.Exists(file.Value()));
+            Assert.True(File.Exists(file.Value()));
         }
+        Assert.False(File.Exists(file.Value()));
+    }
 
-        [Fact]
-        public void CreateAndDeleteTemporyFileByFileInfo()
+    [Fact]
+    public void CreateAndDeleteTemporyFileByFileInfo()
+    {
+        var file = Path.GetTempFileName();
+        using (var tmpFile = new TempFile(new FileInfo(file)))
         {
-            var file = Path.GetTempFileName();
-            using (var tmpFile = new TempFile(new FileInfo(file)))
-            {
-                Assert.True(File.Exists(tmpFile.Value()));
-            }
-            Assert.False(File.Exists(file));
+            Assert.True(File.Exists(tmpFile.Value()));
         }
+        Assert.False(File.Exists(file));
     }
 }

@@ -1,10 +1,8 @@
-
-
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Func;
+using Xunit;
 
-namespace Tonga.Func.Tests
+namespace Tonga.Tests.Func
 {
     public sealed class EachTests
     {

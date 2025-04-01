@@ -1,18 +1,16 @@
-
-
 using System;
-using Xunit;
-using Tonga.Enumerable;
+using Tonga.Func;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Func.Tests
+namespace Tonga.Tests.Func
 {
     public sealed class RepeatedFuncTest
     {
         [Fact]
         public void RunsFuncMultipleTimes()
         {
-            var iter = Enumerable.AsEnumerable._(1, 2, 5, 6).GetEnumerator();
+            var iter = Tonga.Enumerable.AsEnumerable._(1, 2, 5, 6).GetEnumerator();
             var func = new RepeatedFunc<bool, IScalar<int>>(
                 input =>
                 {

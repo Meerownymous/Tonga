@@ -1,7 +1,8 @@
-using Xunit;
+using Tonga.Enumerable;
 using Tonga.Fact;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Fact
 {
     public sealed class IsAmountTests
     {

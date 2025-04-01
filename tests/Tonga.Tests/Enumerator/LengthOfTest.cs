@@ -1,9 +1,8 @@
-
-
-using Xunit;
 using Tonga.Enumerable;
+using Tonga.Enumerator;
+using Xunit;
 
-namespace Tonga.Enumerator.Test
+namespace Tonga.Tests.Enumerator
 {
     public sealed class LengthOfTest
     {

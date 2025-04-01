@@ -9,6 +9,7 @@ using Tonga.Func;
 using Tonga.Text;
 using Tonga.Scalar;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
+using Tonga.Tests.IO;
 
 namespace Tonga.IO.Tests
 {

@@ -1,11 +1,10 @@
-
-
-using Xunit;
+using Tonga.Enumerable;
 using Tonga.Misc;
 using Tonga.Number;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public sealed class HeadOfTest
     {

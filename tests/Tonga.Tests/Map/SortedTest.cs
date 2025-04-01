@@ -1,10 +1,12 @@
 using System;
 using Tonga.Enumerable;
 using Tonga.List;
+using Tonga.Map;
 using Tonga.Scalar;
 using Xunit;
+using Sorted = Tonga.Map.Sorted;
 
-namespace Tonga.Map.Tests
+namespace Tonga.Tests.Map
 {
     public sealed class SortedTest
     {

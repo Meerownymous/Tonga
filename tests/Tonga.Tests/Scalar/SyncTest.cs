@@ -1,10 +1,9 @@
-
-
 using System;
 using System.Threading.Tasks;
+using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class SyncTest
     {

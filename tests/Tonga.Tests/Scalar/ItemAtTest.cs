@@ -1,12 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
+using Tonga.Scalar;
+using Xunit;
 
-
-namespace Tonga.Scalar.Tests
+namespace Tonga.Tests.Scalar
 {
     public sealed class ItemAtTests
     {
@@ -16,7 +14,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    Enumerable.AsEnumerable._(1, 2, 3)
+                    Tonga.Enumerable.AsEnumerable._(1, 2, 3)
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
             );
@@ -28,7 +26,7 @@ namespace Tonga.Scalar.Tests
 
             Assert.True(
                 new ItemAt<int>(
-                    Enumerable.AsEnumerable._(1, 2, 3),
+                    Tonga.Enumerable.AsEnumerable._(1, 2, 3),
                     new NotFiniteNumberException("Cannot do this!")
                 ).Value() == 1,
                 "Can't take the first item from the enumerable"
@@ -41,7 +39,7 @@ namespace Tonga.Scalar.Tests
             Assert.Equal(
                 2,
                 new ItemAt<int>(
-                    Enumerable.AsEnumerable._(1, 2, 3),
+                    Tonga.Enumerable.AsEnumerable._(1, 2, 3),
                     1
                 ).Value()
             );
@@ -52,7 +50,7 @@ namespace Tonga.Scalar.Tests
         {
             Assert.True(
                 new ItemAt<int>(
-                    Enumerable.AsEnumerable._(1, 2, 3),
+                    Tonga.Enumerable.AsEnumerable._(1, 2, 3),
                     1,
                     4
                 ).Value() == 2,

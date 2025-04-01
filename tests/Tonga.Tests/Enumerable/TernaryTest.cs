@@ -1,8 +1,7 @@
-using System;
-using Xunit;
 using Tonga.Enumerable;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Enumerable
 {
     public sealed class TernaryTest
     {

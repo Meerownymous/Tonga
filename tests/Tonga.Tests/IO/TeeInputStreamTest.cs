@@ -1,12 +1,11 @@
-
-
 using System;
 using System.IO;
 using System.Text;
+using Tonga.IO;
 using Xunit;
 
 #pragma warning disable NoStatics // No Statics"Can't copy InputStream to OutputStream byte by byte"
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class TeeInputStreamTest
     {

@@ -1,11 +1,10 @@
-
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Tonga.Func;
 using Xunit;
 
-namespace Tonga.Func.Tests
+namespace Tonga.Tests.Func
 {
     public sealed class AsyncFuncTest
     {

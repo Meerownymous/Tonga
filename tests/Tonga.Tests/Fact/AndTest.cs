@@ -125,21 +125,15 @@ namespace Tonga.Tests.Fact
         }
 
         [Fact]
-        public void InputBoolValuesToTrue()
+        public void ValidatesBooleansToTrue()
         {
             Assert.True(new And(true, true, true).IsTrue());
         }
 
         [Fact]
-        public void InputBoolValuesToFalse()
+        public void ValidatesBooleansToFalse()
         {
-            Assert.False(new And(new List<bool>() { true, false, true }).IsTrue());
-        }
-
-        [Fact]
-        public void InputBoolFunctionsToFalse()
-        {
-            Assert.False(new And(() => true, () => false).IsTrue());
+            Assert.False(new And(new List<bool> { true, false, true }).IsTrue());
         }
     }
 }

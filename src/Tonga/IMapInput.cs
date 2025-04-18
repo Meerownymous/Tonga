@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using Tonga;
-using Tonga.Map;
+namespace Tonga;
 
 /// <summary>
 /// Input to be attached to a dictionary.

@@ -80,7 +80,7 @@ jobs:
           Get-ChildItem -Path .\artifacts\ -File
 
       - name: Upload NuGet Package
-        uses: actions/upload-artifact@v2   # <--- downgrade to v2 temporarily
+        uses: actions/upload-artifact@v4
         with:
           name: nuget-package
           path: artifacts
@@ -96,7 +96,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download NuGet Package
-        uses: actions/download-artifact@v2   # <--- also downgrade this one
+        uses: actions/download-artifact@v4
         with:
           name: nuget-package
           path: ./

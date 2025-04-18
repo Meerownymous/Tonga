@@ -42,7 +42,7 @@ namespace Tonga.IO.Tests
                     )
                 ).Invoke();
 
-                
+
                 var ipt =
                     new Sticky(
                         new AsInput(

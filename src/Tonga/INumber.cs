@@ -30,5 +30,4 @@ public interface INumber
     /// </summary>
     /// <returns>the float</returns>
     float AsFloat();
-
 }

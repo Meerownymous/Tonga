@@ -13,9 +13,8 @@ namespace Tonga.Text
     /// <summary>
     /// A <see cref="IText"/> out of other objects.
     /// </summary>
-    public sealed class AsText : IText
+    public sealed class AsText(Func<string> txt) : IText
     {
-        private readonly Func<string> origin;
 
         /// <summary>
         /// A <see cref="IText"/> out of a int.
@@ -284,122 +283,110 @@ namespace Tonga.Text
         public AsText(IFunc<string> fnc) : this(() => fnc.Invoke())
         { }
 
-        /// <summary>
-        /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
-        /// </summary>
-        /// <param name="txt">scalar of a string</param>
-        public AsText(Func<string> txt)
-        {
-            this.origin = txt;
-        }
+        public string AsString() => txt();
 
-        public string AsString()
-        {
-            return this.origin();
-        }
-    
         /// <summary>
         /// A <see cref="IText"/> out of a int.
         /// </summary>
         /// <param name="input">number</param>
-        public static AsText _(int input) => new AsText(input);
+        public static AsText _(int input) => new(input);
 
         /// <summary>
         /// A <see cref="IText"/> out of a long.
         /// </summary>
         /// <param name="input">number</param>
-        public static AsText _(long input) => new AsText(input);
+        public static AsText _(long input) => new(input);
 
         /// <summary>
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
-        public static AsText _(double input) => new AsText(input);
+        public static AsText _(double input) => new(input);
 
         /// <summary>
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="double"/></param>
         /// <param name="cultureInfo">info about which culture the text should be formatted for</param>
-        public static AsText _(double input, CultureInfo cultureInfo) => new AsText(input, cultureInfo);
+        public static AsText _(double input, CultureInfo cultureInfo) => new(input, cultureInfo);
 
         /// <summary>
         /// A <see cref="IText"/> out of a float
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
-        public static AsText _(float input) => new AsText(input);
+        public static AsText _(float input) => new(input);
 
         /// <summary>
         /// A <see cref="IText"/> out of a double
         /// </summary>
         /// <param name="input">a <see cref="float"/></param>
         /// <param name="cultureInfo">info about which culture the text should be formatted for</param>
-        public static AsText _(float input, CultureInfo cultureInfo) => new AsText(input, cultureInfo);
+        public static AsText _(float input, CultureInfo cultureInfo) => new(input, cultureInfo);
 
         /// <summary>
         /// A <see cref="IText"/> out of a bool
         /// </summary>
         /// <param name="input">a <see cref="bool"/></param>
-        public static AsText _(bool input) => new AsText(input);
+        public static AsText _(bool input) => new(input);
 
         /// <summary>
         /// A <see cref="IText"/> out of a bool
         /// </summary>
         /// <param name="input">a <see cref="bool"/></param>
         /// <param name="cultureInfo">info about which culture the text should be formatted for</param>
-        public static AsText _(bool input, CultureInfo cultureInfo) => new AsText(input, cultureInfo);
+        public static AsText _(bool input, CultureInfo cultureInfo) => new(input, cultureInfo);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
-        public static AsText _(Uri uri) => new AsText(uri);
+        public static AsText _(Uri uri) => new(uri);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
         /// <param name="encoding">encoding of the data at the uri</param>
-        public static AsText _(Uri uri, Encoding encoding) => new AsText(uri, encoding);
+        public static AsText _(Uri uri, Encoding encoding) => new(uri, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="FileInfo"/>
         /// </summary>
         /// <param name="file"></param>
-        public static AsText _(FileInfo file) => new AsText(file);
+        public static AsText _(FileInfo file) => new(file);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="FileInfo"/>
         /// </summary>
         /// <param name="file"></param>
         /// <param name="encoding"></param>
-        public static AsText _(FileInfo file, Encoding encoding) => new AsText(file, encoding);
+        public static AsText _(FileInfo file, Encoding encoding) => new(file, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/></param>
-        public static AsText _(Stream stream) => new AsText(stream);
+        public static AsText _(Stream stream) => new(stream);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">a <see cref="IInput"/></param>
-        public static AsText _(IInput input) => new AsText(input);
+        public static AsText _(IInput input) => new(input);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">a input</param>
         /// <param name="max">maximum buffer size</param>
-        public static AsText _(IInput input, int max) => new AsText(input, max);
+        public static AsText _(IInput input, int max) => new(input, max);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
         /// </summary>
         /// <param name="input">a input</param>
         /// <param name="encoding"><see cref="Encoding"/> of the input</param>
-        public static AsText _(IInput input, Encoding encoding) => new AsText(input, encoding);
+        public static AsText _(IInput input, Encoding encoding) => new(input, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="IInput"/>.
@@ -407,33 +394,33 @@ namespace Tonga.Text
         /// <param name="input">a <see cref="IInput"/></param>
         /// <param name="encoding">encoding of the <see cref="IInput"/></param>
         /// <param name="max">maximum buffer size</param>
-        public static AsText _(IInput input, int max, Encoding encoding) => new AsText(input, max, encoding);
+        public static AsText _(IInput input, int max, Encoding encoding) => new(input, max, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
-        public static AsText _(StringReader rdr) => new AsText(rdr);
+        public static AsText _(StringReader rdr) => new(rdr);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
-        public static AsText _(StringReader rdr, Encoding enc) => new AsText(rdr, enc);
+        public static AsText _(StringReader rdr, Encoding enc) => new(rdr, enc);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
-        public static AsText _(StreamReader rdr) => new AsText(rdr);
+        public static AsText _(StreamReader rdr) => new(rdr);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
         /// <param name="cset"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
-        public static AsText _(StreamReader rdr, Encoding cset) => new AsText(rdr, cset);
+        public static AsText _(StreamReader rdr, Encoding cset) => new(rdr, cset);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
@@ -441,82 +428,82 @@ namespace Tonga.Text
         /// <param name="rdr">a <see cref="StreamReader"/></param>
         /// <param name="cset"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
         /// <param name="max">maximum buffer size</param>
-        public static AsText _(StreamReader rdr, Encoding cset, int max) => new AsText(rdr, cset, max);
+        public static AsText _(StreamReader rdr, Encoding cset, int max) => new(rdr, cset, max);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="builder">a <see cref="StringBuilder"/></param>
-        public static AsText _(StringBuilder builder) => new AsText(builder);
+        public static AsText _(StringBuilder builder) => new(builder);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="builder">a <see cref="StringBuilder"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
-        public static AsText _(StringBuilder builder, Encoding enc) => new AsText(builder, enc);
+        public static AsText _(StringBuilder builder, Encoding enc) => new(builder, enc);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="char"/> array.
         /// </summary>
         /// <param name="chars">a char array</param>
-        public static AsText _(params char[] chars) => new AsText(chars);
+        public static AsText _(params char[] chars) => new(chars);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="char"/> array.
         /// </summary>
         /// <param name="chars">a char array</param>
         /// <param name="encoding"><see cref="Encoding"/> of the chars</param>
-        public static AsText _(char[] chars, Encoding encoding) => new AsText(chars, encoding);
+        public static AsText _(char[] chars, Encoding encoding) => new(chars, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="Exception"/>.
         /// </summary>
         /// <param name="error"><see cref="Exception"/> to serialize</param>
-        public static AsText _(Exception error) => new AsText(error);
+        public static AsText _(Exception error) => new(error);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="byte"/> array.
         /// </summary>
         /// <param name="bytes">a byte array</param>
-        public static AsText _(params byte[] bytes) => new AsText(bytes);
+        public static AsText _(params byte[] bytes) => new(bytes);
 
         /// <summary>
         /// A <see cref="IText"/> out of <see cref="IBytes"/> object.
         /// </summary>
         /// <param name="bytes">A <see cref="IBytes"/> object</param>
-        public static AsText _(IBytes bytes) => new AsText(bytes);
+        public static AsText _(IBytes bytes) => new(bytes);
 
         /// <summary>
         /// A <see cref="IText"/> out of <see cref="IBytes"/> object.
         /// </summary>
         /// <param name="bytes">A <see cref="IBytes"/> object</param>
         /// <param name="encoding"><see cref="Encoding"/> of the <see cref="IBytes"/> object</param>
-        public static AsText _(IBytes bytes, Encoding encoding) => new AsText(bytes, encoding);
+        public static AsText _(IBytes bytes, Encoding encoding) => new(bytes, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of <see cref="string"/>.
         /// </summary>
         /// <param name="input">a string</param>
-        public static AsText _(String input) => new AsText(input);
+        public static AsText _(String input) => new(input);
 
         /// <summary>
         /// A <see cref="IText"/> out of <see cref="string"/>.
         /// </summary>
         /// <param name="input">a string</param>
         /// <param name="encoding"><see cref="Encoding"/> of the string</param>
-        public static AsText _(String input, Encoding encoding) => new AsText(input, encoding);
+        public static AsText _(String input, Encoding encoding) => new(input, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of the return value of a <see cref="IFunc{T}"/>.
         /// </summary>
         /// <param name="fnc">func returning a string</param>
-        public static AsText _(IFunc<string> fnc) => new AsText(fnc);
+        public static AsText _(IFunc<string> fnc) => new(fnc);
 
         /// <summary>
         /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.
         /// </summary>
         /// <param name="txt">scalar of a string</param>
-        public static AsText _(Func<string> txt) => new AsText(txt);
+        public static AsText _(Func<string> txt) => new(txt);
     }
 }

@@ -153,7 +153,7 @@ namespace Tonga.IO
         public IEnumerator<string> GetEnumerator()
         {
             return
-                new Ternary<bool, IEnumerator<string>>(
+                new Scalar.Conditional<IEnumerator<string>>(
                     this.recursive,
                     new Sorted<string>(
                         Directory.EnumerateFiles(dir.Value(), "*", SearchOption.AllDirectories)
@@ -168,9 +168,6 @@ namespace Tonga.IO
                 ).Value();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

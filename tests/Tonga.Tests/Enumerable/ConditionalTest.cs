@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Tonga.Tests.Enumerable
 {
-    public sealed class TernaryTest
+    public sealed class ConditionalTest
     {
         [Fact]
         public void EnumeratesLeftWhenMatching()
@@ -11,7 +11,7 @@ namespace Tonga.Tests.Enumerable
             Assert.Equal(
                 "1 a",
                 string.Join(" ",
-                    new Ternary<string>(
+                    new Conditional<string>(
                         AsEnumerable._("1", "a"),
                         AsEnumerable._("2", "b"),
                         ()=> true
@@ -26,7 +26,7 @@ namespace Tonga.Tests.Enumerable
             Assert.Equal(
                 "2 b",
                 string.Join(" ",
-                    new Ternary<string>(
+                    new Conditional<string>(
                         AsEnumerable._("1", "a"),
                         AsEnumerable._("2", "b"),
                         () => false

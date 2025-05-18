@@ -8,7 +8,7 @@ namespace Tonga.Enumerable
     /// Enumerable sourced depending on a given condition.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Ternary<T> : IEnumerable<T>
+    public sealed class Conditional<T> : IEnumerable<T>
     {
         private readonly IEnumerable<T> whenMatching;
         private readonly IEnumerable<T> whenNotMatching;
@@ -17,7 +17,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
-        public Ternary(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition) : this(
+        public Conditional(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition) : this(
             whenMatching,
             whenNotMatching,
             () => condition
@@ -27,7 +27,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
-        public Ternary(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition)
+        public Conditional(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition)
         {
             this.whenMatching = whenMatching;
             this.whenNotMatching = whenNotMatching;
@@ -47,20 +47,20 @@ namespace Tonga.Enumerable
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
-    public static class Ternary
+    public static class Conditional
     {
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static Ternary<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition) =>
+        public static Conditional<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition) =>
             new(whenMatching, whenNotMatching, condition);
 
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static Ternary<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition) =>
+        public static Conditional<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition) =>
             new(whenMatching, whenNotMatching, condition);
     }
 }

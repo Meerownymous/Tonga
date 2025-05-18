@@ -6,7 +6,7 @@ namespace Tonga.Tests.Pipe
     public sealed class AsPipeTest
     {
         [Fact]
-        public void Swaps()
+        public void Vields()
         {
             Assert.Equal(
                 1,

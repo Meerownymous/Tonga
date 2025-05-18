@@ -1,8 +1,8 @@
 using System;
 using System.Globalization;
-using Tonga.Text;
+using Tonga.Fact;
 
-namespace Tonga.Fact
+namespace Tonga.Text
 {
     /// <summary>
     /// Checks whether a given text is a number

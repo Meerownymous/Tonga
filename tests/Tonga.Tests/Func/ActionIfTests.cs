@@ -10,7 +10,7 @@ namespace Tonga.Tests.Func
         {
             Assert.Equal(
                 "my-action",
-                new ActionIf<int>("my-action", (input) => { }).Key()
+                new ActionIf<int>("my-action", _ => { }).Key()
             );
         }
 

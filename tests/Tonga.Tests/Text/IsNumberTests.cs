@@ -2,7 +2,7 @@ using Tonga.Fact;
 using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Tests.Fact
+namespace Tonga.Tests.Text
 {
     public sealed class IsNumberTests
     {

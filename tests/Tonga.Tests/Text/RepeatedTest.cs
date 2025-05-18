@@ -10,17 +10,19 @@ namespace Tonga.Tests.Text
         [Fact]
         public void RepeatsWordsText()
         {
-            Assert.True(
-                new Repeated("hello", 2).AsString() == "hellohello",
-                "Can't repeat a text");
+            Assert.Equal(
+                "hellohello",
+                new Repeated("hello", 2).AsString()
+            );
         }
 
         [Fact]
         public void RepeatsCharText()
         {
-            Assert.True(
-                new Repeated("A", 5).AsString() == "AAAAA",
-                "Can't repeat a char");
+            Assert.Equal(
+                "AAAAA",
+                new Repeated("A", 5).AsString()
+            );
         }
     }
 }

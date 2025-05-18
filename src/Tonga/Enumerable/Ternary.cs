@@ -17,7 +17,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public Ternary(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition) : this(
             whenMatching,
             whenNotMatching,
@@ -28,7 +27,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public Ternary(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition)
         {
             this.whenMatching = whenMatching;

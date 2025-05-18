@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Tonga.Fact;
 
-namespace Tonga.Fact;
+namespace Tonga.Enumerable;
 
 /// <summary>
 /// Tells if an enumerable source has any elements.

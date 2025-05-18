@@ -10,20 +10,20 @@ namespace Tonga.Tests.IO
         public void Decompresses()
         {
             byte[] bytes = {
-                (byte) 0x1F, //GZIP Header ID1
-                (byte) 0x8b, //GZIP Header ID2
-                (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, //Header End
-                (byte) 0x0B, (byte) 0xF2, (byte) 0x48, (byte) 0xCD, (byte) 0xC9, (byte) 0xC9, (byte) 0x57,
-                (byte) 0x04, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xFF, (byte) 0xFF, (byte) 0x03,
-                (byte) 0x00, (byte) 0x56, (byte) 0xCC, (byte) 0x2A, (byte) 0x9D, (byte) 0x06, (byte) 0x00,
-                (byte) 0x00, (byte) 0x00
+                0x1F, //GZIP Header ID1
+                0x8b, //GZIP Header ID2
+                0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //Header End
+                0x0B, 0xF2, 0x48, 0xCD, 0xC9, 0xC9, 0x57,
+                0x04, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x03,
+                0x00, 0x56, 0xCC, 0x2A, 0x9D, 0x06, 0x00,
+                0x00, 0x00
             };
 
             Assert.Equal(
                 "Hello!",
                 AsText._(
                     new GZipInput(
-                        new AsInput(bytes)
+                        new Tonga.IO.AsInput(bytes)
                     )
                 ).AsString()
             );

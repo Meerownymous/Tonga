@@ -1,5 +1,6 @@
 using Tonga.Enumerable;
 using Tonga.Misc;
+using Tonga.Primitives;
 using Tonga.Text;
 using Xunit;
 

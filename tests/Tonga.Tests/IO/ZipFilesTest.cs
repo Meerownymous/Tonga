@@ -13,7 +13,7 @@ public class ZipFilesTest
     [InlineData("File3")]
     public void HasData(string expected)
     {
-        Assert.Contains<string>(
+        Assert.Contains(
             expected,
             new ZipFiles(
                 new Resource(
@@ -25,13 +25,12 @@ public class ZipFilesTest
     }
 
     [Fact]
-    public void InputStreamPositionZero()
+    public void InputStreamRemainsPositionZero()
     {
         var res = new Resource(
             "Assets/Zip/ZipWithThreeFiles.zip",
             this.GetType());
         new ZipFiles(res);
-
 
         Assert.InRange(res.Stream().Position, 0, 0);
     }

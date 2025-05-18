@@ -28,7 +28,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 String.Compare(
                     AsText._(
-                        new AsInput(
+                        new Tonga.IO.AsInput(
                             new AsReader(baos.ToArray()))
                     ).AsString(),
                     content,

@@ -1,11 +1,10 @@
-
-
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
 using Tonga.Scalar;
+using Xunit;
+using Filtered = Tonga.Collection.Filtered;
 
-namespace Tonga.Collection.Tests
+namespace Tonga.Tests.Collection
 {
     public sealed class FilteredTest
     {

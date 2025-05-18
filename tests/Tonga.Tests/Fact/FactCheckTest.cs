@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Tonga.Enumerable;
 using Tonga.Fact;
 using Xunit;

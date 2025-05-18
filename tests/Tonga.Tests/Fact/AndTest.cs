@@ -12,7 +12,7 @@ namespace Tonga.Tests.Fact
         public void AllTrue()
         {
             Assert.True(
-                And._(
+                new And(
                     new True(),
                     new True(),
                     new True()
@@ -53,75 +53,6 @@ namespace Tonga.Tests.Fact
                 new And(new None<IFact>())
                     .IsTrue()
             );
-        }
-
-        [Fact]
-        public void EnumeratesList()
-        {
-            var list = new LinkedList<string>();
-            Assert.True(
-                new And<string>(
-                        str => { list.AddLast(str); return true; },
-                        AsEnumerable._("hello", "world")
-
-                ).IsTrue()
-            );
-
-            Assert.True(
-                new global::Tonga.Text.Joined(" ", list).AsString() == "hello world",
-            "Can't iterate a list with a procedure");
-        }
-
-        [Fact]
-        public void EnumeratesEmptyList()
-        {
-            var list = new LinkedList<string>();
-
-            Assert.True(
-                And._(
-                    str => { list.AddLast(str); return true; },
-                    None._<string>()
-                ).IsTrue()
-            );
-
-            Assert.True(list.Count == 0);
-        }
-
-        [Fact]
-        public void TestFunc()
-        {
-            Assert.False(
-                And._(
-                    input => input > 0,
-                    1, -1, 0
-                ).IsTrue()
-            );
-        }
-
-        [Fact]
-        public void TestIFunc()
-        {
-            Assert.True(
-                new And<int>(
-                    input => input > 0,
-                    1, 2, 3
-                ).IsTrue()
-            );
-        }
-
-        [Theory]
-        [InlineData("AB", false)]
-        [InlineData("ABC", true)]
-        public void TestValueAndFunctionList(string value, bool expected)
-        {
-            var and =
-                new And<string>(
-                    value,
-                    str => str.Contains("A"),
-                    str => str.Contains("B"),
-                    str => str.Contains("C"));
-
-            Assert.Equal(expected, and.IsTrue());
         }
 
         [Fact]

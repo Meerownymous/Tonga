@@ -1,18 +1,15 @@
-
-
 using System;
 using System.Globalization;
 using Tonga.Scalar;
+using Tonga.Text;
 
-namespace Tonga.Text
+namespace Tonga.Primitives
 {
     /// <summary>
     /// A <see cref="int"/> of a text.
     /// </summary>
-    public sealed class IntOf : ScalarEnvelope<int>
+    public sealed class IntOf(Func<int> value) : ScalarEnvelope<int>(value)
     {
-        private readonly AsScalar<int> val;
-
         /// <summary>
         /// A int out of a <see cref="string"/> using invariant culture.
         /// </summary>
@@ -43,13 +40,6 @@ namespace Tonga.Text
         public IntOf(IText text, CultureInfo culture) : this(
             () => Convert.ToInt32(text.AsString(), culture.NumberFormat)
         )
-        { }
-
-        /// <summary>
-        /// A int out of a scalar.
-        /// </summary>
-        /// <param name="value">the scalar returning the float</param>
-        private IntOf(Func<int> value) : base(value)
         { }
     }
 }

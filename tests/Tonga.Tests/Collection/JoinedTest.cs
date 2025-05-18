@@ -1,19 +1,17 @@
-
-
 using System;
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
+using Xunit;
+using Joined = Tonga.Collection.Joined;
 
-
-namespace Tonga.Collection.Tests
+namespace Tonga.Tests.Collection
 {
     public sealed class JoinedTest
     {
         [Fact]
         public void BehavesAsCollection()
         {
-            new Joined<int>(
+            new Tonga.Collection.Joined<int>(
                 AsEnumerable._(1, -1, 2, 0),
                 AsEnumerable._(1, -1, 2, 0),
                 AsEnumerable._(1, -1, 2, 0)
@@ -36,7 +34,7 @@ namespace Tonga.Collection.Tests
         public void SizeEmptyReturnZero()
         {
             Assert.Empty(
-                new Joined<String>(
+                new Tonga.Collection.Joined<String>(
                     new List<string>()
                 ));
         }
@@ -45,7 +43,7 @@ namespace Tonga.Collection.Tests
         public void WithItemsNotEmpty()
         {
             Assert.NotEmpty(
-                new Joined<String>(
+                new Tonga.Collection.Joined<String>(
                     AsEnumerable._("1", "2"),
                     AsEnumerable._("3", "4")
                 ));
@@ -55,7 +53,7 @@ namespace Tonga.Collection.Tests
         public void WithoutItemsIsEmpty()
         {
             Assert.Empty(
-                new Joined<String>(
+                new Tonga.Collection.Joined<String>(
                     new List<string>()));
         }
 
@@ -63,7 +61,7 @@ namespace Tonga.Collection.Tests
         public void RejectsAdd()
         {
             Assert.Throws<InvalidOperationException>(() =>
-             new Joined<int>(
+             new Tonga.Collection.Joined<int>(
                  AsEnumerable._(1, 2),
                  AsEnumerable._(3, 4),
                  AsEnumerable._(5, 6)
@@ -74,7 +72,7 @@ namespace Tonga.Collection.Tests
         public void RejectsRemove()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new Joined<String>(
+                new Tonga.Collection.Joined<String>(
                     AsEnumerable._("w", "a"),
                     AsEnumerable._("b", "c")
                 ).Remove("t"));
@@ -84,7 +82,7 @@ namespace Tonga.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new Joined<int>(
+                new Tonga.Collection.Joined<int>(
                     AsEnumerable._(10),
                     AsEnumerable._(20)
                 ).Clear());

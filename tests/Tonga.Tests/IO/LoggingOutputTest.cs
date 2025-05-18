@@ -16,7 +16,7 @@ namespace Tonga.Tests.IO
             var res =
                 Length._(
                     new TeeInput(
-                        new AsInput(""),
+                        new Tonga.IO.AsInput(""),
                         new LoggingOutput(
                             new ConsoleOutput(),
                             "memory"
@@ -46,7 +46,7 @@ namespace Tonga.Tests.IO
                     output.Write(new AsBytes("a").Bytes(), 0, 1);
 
                 }
-                var inputStream = new AsInput(new Uri(tempfile.Value())).Stream();
+                var inputStream = new Tonga.IO.AsInput(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
                 {
@@ -78,7 +78,7 @@ namespace Tonga.Tests.IO
                     output.Write(bytes, 0, bytes.Length);
                 }
 
-                var inputStream = new AsInput(new Uri(tempfile.Value())).Stream();
+                var inputStream = new Tonga.IO.AsInput(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
                 {
@@ -113,7 +113,7 @@ namespace Tonga.Tests.IO
                     ).Invoke();
                 }
 
-                var inputStream = new AsInput(new Uri(tempfile.Value())).Stream();
+                var inputStream = new Tonga.IO.AsInput(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 var input = "";
                 using (var reader = new StreamReader(inputStream))

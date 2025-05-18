@@ -1,9 +1,8 @@
-
-
 using System;
 using System.Collections.Generic;
+using Tonga.Fact;
 
-namespace Tonga.Fact
+namespace Tonga.Enumerable
 {
     /// <summary>
     /// Lookup if an item is in a enumerable.

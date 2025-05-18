@@ -1,10 +1,8 @@
-
-
 using System;
 using System.IO;
 
 #pragma warning disable MaxPublicMethodCount
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     internal sealed class SlowInputStream : Stream
     {

@@ -1,18 +1,15 @@
-
-
 using System;
 using System.Globalization;
 using Tonga.Scalar;
+using Tonga.Text;
 
-namespace Tonga.Text
+namespace Tonga.Primitives
 {
     /// <summary>
     /// Text as long
     /// </summary>
-    public sealed class LongOf : ScalarEnvelope<long>
+    public sealed class LongOf(Func<long> value) : ScalarEnvelope<long>(value)
     {
-        private readonly AsScalar<long> val;
-
         /// <summary>
         /// A long out of a <see cref="string"/> using invariant culture.
         /// </summary>
@@ -43,13 +40,6 @@ namespace Tonga.Text
         public LongOf(IText text, CultureInfo culture) : this(
             () => Convert.ToInt64(text.AsString(), culture.NumberFormat)
         )
-        { }
-
-        /// <summary>
-        /// A long out of encapsulating <see cref="IScalar{T}"/>
-        /// </summary>
-        /// <param name="value">a scalar of the number</param>
-        public LongOf(Func<long> value) : base(value)
         { }
     }
 }

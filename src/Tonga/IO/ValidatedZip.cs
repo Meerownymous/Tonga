@@ -64,7 +64,7 @@ namespace Tonga.IO
         private bool IsZip(Stream content)
         {
             byte[] bytes = new byte[4];
-            content.Read(bytes, 0, 4);
+            content.ReadExactly(bytes, 0, 4);
             content.Position = 0;
             return IsPkZip(bytes) || IsGZip(bytes);
         }

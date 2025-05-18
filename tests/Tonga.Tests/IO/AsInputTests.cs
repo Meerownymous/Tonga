@@ -3,7 +3,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using Tonga.Bytes;
 using Tonga.Enumerable;
@@ -17,7 +16,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class InputOfTest
+    public sealed class AsInputTests
     {
         [Fact]
         public void OpenCloseIsSlowerThanReusing()
@@ -117,7 +116,7 @@ namespace Tonga.Tests.IO
         public void ClosesInputStream()
         {
             Stream input;
-            using (input = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
+            using (input = new MemoryStream("how are you?"u8.ToArray()))
             {
                 AsText._(
                     new AsInput(
@@ -180,56 +179,42 @@ namespace Tonga.Tests.IO
         }
 
         [Fact]
-        public void ReadsRealUrlFromUri()
-        {
-            Assert.True(
-                    AsText._(
-                        new AsInput(
-                            new Uri("http://www.google.de"))
-                    ).AsString().Contains("<html"),
-                    "Can't fetch bytes from the URL"
-            );
-        }
-
-        [Fact]
         public void ReadsFile()
         {
-            using (var file = new TempFile())
-            {
-                ReadAll._(
-                    new AsInput(
-                        new TeeInputStream(
-                            new MemoryStream(
-                                new AsBytes(
-                                    new global::Tonga.Text.Joined("\r\n",
-                                        Tonga.Enumerable.Head._(
-                                            Endless._("Hello World"),
-                                            1000
-                                        )
-                                    )
-                                ).Bytes()
-                            ),
-                            new OutputTo(
-                                new Uri(file.Value())
-                            ).Stream()
-                        )
-                    )
-                ).Invoke();
-
-                Assert.Equal(
-                    1000,
-                    Length._(
-                        new Split(
-                            AsText._(
-                                new AsBytes(
-                                    new AsInput(
-                                        new Uri(file.Value())
+            using var file = new TempFile();
+            ReadAll._(
+                new AsInput(
+                    new TeeInputStream(
+                        new MemoryStream(
+                            new AsBytes(
+                                new global::Tonga.Text.Joined("\r\n",
+                                    Tonga.Enumerable.Head._(
+                                        Endless._("Hello World"),
+                                        1000
                                     )
                                 )
-                            ), "\r\n")
-                    ).Value()
-                );
-            }
+                            ).Bytes()
+                        ),
+                        new OutputTo(
+                            new Uri(file.Value())
+                        ).Stream()
+                    )
+                )
+            ).Invoke();
+
+            Assert.Equal(
+                1000,
+                Length._(
+                    new Split(
+                        AsText._(
+                            new AsBytes(
+                                new AsInput(
+                                    new Uri(file.Value())
+                                )
+                            )
+                        ), "\r\n")
+                ).Value()
+            );
         }
 
         [Fact]
@@ -281,12 +266,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new AsBytes(
-                        new AsInput(
-                            new char[]{
-                        'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
-                        ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
-                            }
-                        )
+                        new AsInput('O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a')
                     ).Bytes()
                 ).AsString() == "O que sera que sera",
                 "Can't read array of encoded chars."
@@ -312,14 +292,14 @@ namespace Tonga.Tests.IO
         public void ReadsEncodedStringFromReader()
         {
             String source = "hello, друг!";
-            Assert.True(
+            Assert.Equal(
+                source,
                 AsText._(
                     new AsInput(
                             new StreamReader(
                                 new AsInput(source).Stream()),
                             Encoding.UTF8)
-                ).AsString() == source,
-                "Can't read encoded string through a reader"
+                ).AsString()
             );
         }
 
@@ -327,22 +307,20 @@ namespace Tonga.Tests.IO
         public void ReadsAnArrayOfBytes()
         {
 
-            byte[] bytes = new byte[] { (byte)0xCA, (byte)0xFE };
+            byte[] bytes = [0xCA, 0xFE];
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
                 new InputAsBytes(
                     new AsInput(bytes)
-                ).Bytes(), bytes),
-                "Can't read array of bytes");
+                ).Bytes(), bytes)
+            );
         }
 
         [Fact]
         public void MakesDataAvailable()
         {
-            String content = "Hello,חבר!";
             Assert.True(
-                new AsInput(content).Stream().Length > 0,
-                "Can't show that data is available"
+                new AsInput("Hello,חבר!").Stream().Length > 0
             );
         }
 

@@ -32,7 +32,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new InputAsBytes(
-                        new AsInput(new Uri(file))))
+                        new Tonga.IO.AsInput(new Uri(file))))
                 .AsString() == (txt + txt),
                 "Can't append path content");
         }
@@ -58,7 +58,7 @@ namespace Tonga.Tests.IO
                     txt + txt,
                     AsText._(
                         new InputAsBytes(
-                            new AsInput(new FileInfo(file.Value()))
+                            new Tonga.IO.AsInput(new FileInfo(file.Value()))
                         )
                     ).AsString()
                 );

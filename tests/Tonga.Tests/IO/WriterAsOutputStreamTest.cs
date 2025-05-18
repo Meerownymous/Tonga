@@ -25,7 +25,7 @@ public sealed class WriterAsOutputStreamTest
 
                 //Create large file
                 ReadAll._(
-                    new AsInput(
+                    new Tonga.IO.AsInput(
                         new TeeInputStream(
                             new MemoryStream(
                                 new AsBytes(
@@ -45,9 +45,9 @@ public sealed class WriterAsOutputStreamTest
                 ).Invoke();
 
                 using (var tee =
-                       new AsInput(
+                       new Tonga.IO.AsInput(
                            new TeeInputStream(
-                               new AsInput(
+                               new Tonga.IO.AsInput(
                                    inputPath
                                ).Stream(),
                                new WriterAsOutputStream(
@@ -65,7 +65,7 @@ public sealed class WriterAsOutputStreamTest
                             tee
                         ).Value(),
                         Length._(
-                            new AsInput(
+                            new Tonga.IO.AsInput(
                                 new Uri(Path.GetFullPath(outputPath))
                             )
                         ).Value()

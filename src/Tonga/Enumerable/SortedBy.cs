@@ -9,9 +9,9 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
-    /// <typeparam name="T">type of elements</typeparam>
-    public sealed class SortedBy<T, TKey>(Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, IEnumerable<T> src) : IEnumerable<T>
-        where TKey : IComparable<TKey>
+    public sealed class SortedBy<T, TKey>(
+        Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, IEnumerable<T> src
+    ) : IEnumerable<T> where TKey : IComparable<TKey>
     {
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
@@ -40,8 +40,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
         /// </summary>
-        /// <param name="swap">func to swap the type to a sortable type</param>
-        /// <param name="src">enumerable to sort</param>
         public SortedBy(Func<T, TKey> swap, Comparison<TKey> compare, IEnumerable<T> src) : this(
             swap,
             Comparer<TKey>.Create(compare),
@@ -73,14 +71,11 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
-    /// <typeparam name="T">type of elements</typeparam>
     public static class SortedBy
     {
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
-        /// <param name="swap">func to swap the type to a sortable type</param>
-        /// <param name="src">enumerable to sort</param>
         public static IEnumerable<T> _<T, TKey>(Func<T, TKey> swap, params T[] src) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 
@@ -106,14 +101,11 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
     /// </summary>
-    /// <typeparam name="T">type of elements</typeparam>
     public static class SortedBySmarts
     {
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> with the given items sorted by default.
         /// </summary>
-        /// <param name="swap">func to swap the type to a sortable type</param>
-        /// <param name="src">enumerable to sort</param>
         public static IEnumerable<T> SortedBy<T, TKey>(this T[] src, Func<T, TKey> swap) where TKey : IComparable<TKey> =>
             new SortedBy<T, TKey>(swap, src);
 

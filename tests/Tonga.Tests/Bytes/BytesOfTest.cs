@@ -1,16 +1,15 @@
-
-
 using System;
 using System.Collections;
 using System.IO;
 using System.Text;
-using Xunit;
 using Tonga.Bytes;
 using Tonga.Enumerable;
+using Tonga.IO;
 using Tonga.Text;
+using Xunit;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.Bytes
 {
     public sealed class BytesOfTest
     {
@@ -82,9 +81,9 @@ namespace Tonga.IO.Tests
             Assert.True(
                 new AsBytes(
                     new AsInput(
-                        new Text.Joined(
+                        new Tonga.Text.Joined(
                             "",
-                            Enumerable.Head._(
+                            Tonga.Enumerable.Head._(
                                 Endless._(body),
                                 multiplier
                             )
@@ -198,7 +197,7 @@ namespace Tonga.IO.Tests
                 text,
                 AsText._(
                     new AsBytes(
-                        new List.AsList<char>(text),
+                        new Tonga.List.AsList<char>(text),
                         Encoding.Unicode
                     ),
                     Encoding.Unicode

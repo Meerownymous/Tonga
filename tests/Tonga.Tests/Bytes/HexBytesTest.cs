@@ -1,9 +1,8 @@
-
-
-using Xunit;
+using Tonga.Bytes;
 using Tonga.Text;
+using Xunit;
 
-namespace Tonga.Bytes.Tests
+namespace Tonga.Tests.Bytes
 {
     public sealed class HexBytesTests
     {

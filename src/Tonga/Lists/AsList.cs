@@ -19,7 +19,6 @@ namespace Tonga.List
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="array">source array</param>
         public AsList(params T[] items) : this(() => new AsEnumerable<T>(items))
         { }
 

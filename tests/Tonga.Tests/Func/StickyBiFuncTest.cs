@@ -10,7 +10,7 @@ namespace Tonga.Tests.Func
         public void CachesFuncResults()
         {
             var func = new StickyBiFunc<bool, bool, Int32>(
-                (first, second) => new Random().Next()
+                (_, _) => new Random().Next()
             );
 
             Assert.Equal(

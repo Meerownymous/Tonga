@@ -18,8 +18,8 @@ public class MuxTests
         );
 
     [Fact]
-    public void MuxOutputsMatchingConsequence() =>
-        Assert.Equal(
+    public void MuxOutputsMatchingConsequence()
+        => Assert.Equal(
             "yes",
             new Mux<int, string>(
             [
@@ -49,8 +49,8 @@ public class MuxTests
         );
 
     [Fact]
-    public void MuxWithIFactEvaluatesCondition() =>
-        Assert.Equal(
+    public void MuxWithIFactEvaluatesCondition()
+        => Assert.Equal(
             "ok",
             new Mux<int, string>(
                 (new True(), _ => "ok")
@@ -74,8 +74,8 @@ public class MuxTests
         );
 
     [Fact]
-    public void MuxWithFactAndConsequenceYieldsFirstMatchingValue() =>
-        Assert.Equal(
+    public void MuxWithFactAndConsequenceYieldsFirstMatchingValue()
+        => Assert.Equal(
             "yes",
             new Mux<int, string>(
                 (new False(), () => "no"),
@@ -84,12 +84,10 @@ public class MuxTests
         );
 
     [Fact]
-    public void MuxWithFactAndConsequenceThrowsWhenNoneMatch() =>
-        Assert.Throws<ArgumentException>(() =>
-            new Mux<int, string>(
-                (new False(), () => "no")
-            ).Yield(1)
-        );
+    public void MuxWithFactAndConsequenceThrowsWhenNoneMatch()
+        => Assert.Throws<ArgumentException>(() => new Mux<int, string>(
+            (new False(), () => "no")
+        ).Yield(1));
 
     [Fact]
     public void MuxWithFactAndConsequenceUsesFallbackWhenProvided() =>

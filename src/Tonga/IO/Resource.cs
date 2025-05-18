@@ -12,7 +12,7 @@ namespace Tonga.IO
     /// <summary>
     /// <para>An embedded resource.</para>
     /// </summary>
-    public class Resource : IInput
+    public class Resource : IConduit
     {
         private readonly string name;
         private readonly IScalar<Assembly> container;

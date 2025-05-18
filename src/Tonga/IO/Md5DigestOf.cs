@@ -15,7 +15,7 @@ namespace Tonga.IO
         /// MD5 checksum calculation of IInput.
         /// </summary>
         /// <param name="source">Input</param>
-        public Md5DigestOf(IInput source) : base(
+        public Md5DigestOf(IConduit source) : base(
             source,
             AsScalar._<HashAlgorithm>(MD5.Create)
         )

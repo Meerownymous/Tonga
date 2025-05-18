@@ -22,11 +22,9 @@ public sealed class WriterToTest
         {
             s =
                 AsText._(
-                    new TeeInput(
-                        new Tonga.IO.AsInput(content),
-                        new WriterAsOutput(
-                            output
-                        )
+                    new TeeOnReadConduit(
+                        new AsConduit(content),
+                        new WriterAsConduit(output)
                     )
                 ).AsString();
         }
@@ -35,7 +33,7 @@ public sealed class WriterToTest
             0,
             String.Compare(AsText._(
                 new InputAsBytes(
-                    new Tonga.IO.AsInput(uri)
+                    new AsConduit(uri)
                 )
             ).AsString(), s, StringComparison.Ordinal)
             //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.

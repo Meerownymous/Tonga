@@ -17,8 +17,8 @@ namespace Tonga.IO.Tests
             String text = "What's up, друг?";
             Assert.Equal(
                 Length._(
-                    new SlowInput(
-                        new AsInput(
+                    new SlowIConduit(
+                        new AsConduit(
                             AsText._(text)
                         )
                     )
@@ -34,7 +34,7 @@ namespace Tonga.IO.Tests
             Assert.Equal(
                 size,
                 Length._(
-                    new SlowInput(size)
+                    new SlowIConduit(size)
                 ).Value()
             );
         }

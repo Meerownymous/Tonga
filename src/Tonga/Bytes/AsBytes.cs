@@ -19,16 +19,16 @@ namespace Tonga.Bytes
         /// <summary>
         /// Bytes out of a input.
         /// </summary>
-        /// <param name="input">the input</param>
-        public AsBytes(IInput input) : this(new InputAsBytes(input))
+        /// <param name="source">the input</param>
+        public AsBytes(IConduit source) : this(new InputAsBytes(source))
         { }
 
         /// <summary>
         /// Bytes out of a input.
         /// </summary>
-        /// <param name="input">the input</param>
+        /// <param name="source">the input</param>
         /// <param name="max">max buffer size</param>
-        public AsBytes(IInput input, int max) : this(new InputAsBytes(input, max))
+        public AsBytes(IConduit source, int max) : this(new InputAsBytes(source, max))
         { }
 
         /// <summary>
@@ -212,12 +212,12 @@ namespace Tonga.Bytes
         /// <summary>
         /// Bytes out of a input.
         /// </summary>
-        public static AsBytes _(IInput input) => new(input);
+        public static AsBytes _(IConduit source) => new(source);
 
         /// <summary>
         /// Bytes out of a input.
         /// </summary>
-        public static AsBytes _(IInput input, int max) => new(input, max);
+        public static AsBytes _(IConduit source, int max) => new(source, max);
 
         /// <summary>
         /// Bytes out of a StringBuilder.
@@ -345,8 +345,8 @@ namespace Tonga.Bytes
 
     public static class AsBytesSmarts
     {
-        public static IBytes AsBytes(this IInput input) => new AsBytes(input);
-        public static IBytes AsBytes(this IInput input, int max) => new AsBytes(input, max);
+        public static IBytes AsBytes(this IConduit origin) => new AsBytes(origin);
+        public static IBytes AsBytes(this IConduit origin, int max) => new AsBytes(origin, max);
         public static IBytes AsBytes(this StringBuilder builder) => new AsBytes(builder);
         public static IBytes AsBytes(this StringBuilder builder, Encoding enc) =>
             new AsBytes(builder, enc);

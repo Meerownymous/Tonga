@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class TeeOutputTest
+    public sealed class TeeOnWriteConduitTest
     {
         [Fact]
         public void CopiesContent()
@@ -18,11 +18,11 @@ namespace Tonga.Tests.IO
 
             Assert.True(
                 AsText._(
-                    new TeeInput(
-                        new Tonga.IO.AsInput(content),
-                        new TeeOutput(
-                            new OutputTo(baos),
-                            new OutputTo(copy)
+                    new TeeOnReadConduit(
+                        new AsConduit(content),
+                        new TeeOnWriteConduit(
+                            new AsConduit(baos),
+                            new AsConduit(copy)
                         )
                     )
                 ).AsString() == Encoding.UTF8.GetString(copy.ToArray()),

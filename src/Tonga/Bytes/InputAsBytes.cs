@@ -16,24 +16,19 @@ namespace Tonga.Bytes
         /// <summary>
         /// Input as bytes.
         /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="max">maximum buffer size</param>
-        public InputAsBytes(IInput input, int max = 16 << 10)
+        public InputAsBytes(IConduit src, int max = 16 << 10)
         {
             this.bytes = new AsScalar<byte[]>(() =>
             {
                 var baos = new MemoryStream();
-                byte[] output;
 
-                using (var source = input.Stream())
-                using (var stream = new TeeInput(new AsInput(source), new OutputTo(baos)).Stream())
-                {
-                    byte[] readBuffer = new byte[max];
-                    while ((stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
-                    { }
-                    output = baos.ToArray();
-                    return output;
-                }
+                using var source = src.Stream();
+                using var stream = new TeeOnReadConduit(new AsConduit(source), new AsConduit(baos)).Stream();
+                byte[] readBuffer = new byte[max];
+                while (stream.Read(readBuffer, 0, readBuffer.Length) > 0)
+                { }
+                var output = baos.ToArray();
+                return output;
             });
         }
 
@@ -41,9 +36,6 @@ namespace Tonga.Bytes
         /// Get the content as byte array. (Self-Disposing)
         /// </summary>
         /// <returns>content as byte array</returns>
-        public byte[] Bytes()
-        {
-            return this.bytes.Value();
-        }
+        public byte[] Bytes()=> this.bytes.Value();
     }
 }

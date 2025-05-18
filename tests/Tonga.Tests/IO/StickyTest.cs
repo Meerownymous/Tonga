@@ -16,42 +16,40 @@ namespace Tonga.Tests.IO
         [Fact]
         public void ReadsFileContent()
         {
-            using (var file = new TempFile())
-            {
-                var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
+            using var file = new TempFile();
+            var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
 
-                ReadAll._(
-                    new Tonga.IO.AsInput(
-                        new TeeInputStream(
-                            new MemoryStream(
-                                new AsBytes(
-                                    new Tonga.Text.Joined(lmt,
-                                        Tonga.Enumerable.Head._(
-                                            Endless._(str),
-                                            times
-                                        )
+            ReadAll._(
+                new AsConduit(
+                    new TeeInputStream(
+                        new MemoryStream(
+                            new AsBytes(
+                                new Tonga.Text.Joined(lmt,
+                                    Tonga.Enumerable.Head._(
+                                        Endless._(str),
+                                        times
                                     )
-                                ).Bytes()
-                            ),
-                            new OutputTo(
-                                new Uri(file.Value())
-                            ).Stream()
-                        )
-                    )
-                ).Invoke();
-
-
-                var ipt =
-                    new Sticky(
-                        new Tonga.IO.AsInput(
+                                )
+                            ).Bytes()
+                        ),
+                        new AsConduit(
                             new Uri(file.Value())
-                        )
-                    );
-                Assert.Equal(
-                    new AsBytes(ipt).Bytes().Length,
-                    new AsBytes(ipt).Bytes().Length
+                        ).Stream()
+                    )
+                )
+            ).Invoke();
+
+
+            var ipt =
+                new Sticky(
+                    new AsConduit(
+                        new Uri(file.Value())
+                    )
                 );
-            }
+            Assert.Equal(
+                new AsBytes(ipt).Bytes().Length,
+                new AsBytes(ipt).Bytes().Length
+            );
         }
 
         [Fact]
@@ -61,7 +59,7 @@ namespace Tonga.Tests.IO
                 "<html",
                 AsText._(
                     new Sticky(
-                        new Tonga.IO.AsInput(
+                        new AsConduit(
                             new Url("http://www.google.de")
                         )
                     )
@@ -76,7 +74,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 Length._(
                     new Sticky(
-                        new SlowInput(size)
+                        new SlowIConduit(size)
                     )
                 ).Value() == size,
                 "Can't read bytes from a large source slowly and count length"
@@ -91,7 +89,7 @@ namespace Tonga.Tests.IO
                 size,
                 new AsBytes(
                     new Sticky(
-                        new SlowInput(size)
+                        new SlowIConduit(size)
                     )
                 ).Bytes().Length
             );

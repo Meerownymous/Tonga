@@ -10,19 +10,19 @@ namespace Tonga.IO
     /// <summary>
     /// A validated Zip archive which is either a Pkzip or a Gzip (checked via lead bytes)
     /// </summary>
-    public sealed class ValidatedZip : IInput
+    public sealed class ValidatedZip : IConduit
     {
         private readonly AsScalar<Stream> stream;
 
-        public ValidatedZip(IInput input)
+        public ValidatedZip(IConduit iConduit)
         {
             this.stream = new AsScalar<Stream>(() =>
             {
-                if (!IsZip(input.Stream()))
+                if (!IsZip(iConduit.Stream()))
                 {
                     throw new InvalidOperationException($"Content is not compressed with either GZIP or PKZIP");
                 }
-                return input.Stream();
+                return iConduit.Stream();
             });
 
         }

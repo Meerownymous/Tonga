@@ -9,7 +9,7 @@ namespace Tonga.IO
     /// </summary>
     public abstract class DigestEnvelope : IBytes
     {
-        private readonly IInput source;
+        private readonly IConduit source;
         private readonly IScalar<HashAlgorithm> algorithmFactory;
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="source">Input</param>
         /// <param name="algorithmFactory">Factory to create Hash Algorithm</param>
-        public DigestEnvelope(IInput source, IScalar<HashAlgorithm> algorithmFactory)
+        public DigestEnvelope(IConduit source, IScalar<HashAlgorithm> algorithmFactory)
         {
             this.source = source;
             this.algorithmFactory = algorithmFactory;

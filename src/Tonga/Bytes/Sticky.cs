@@ -16,7 +16,7 @@ namespace Tonga.Bytes
         /// Reloads the bytes input on every call
         /// </summary>
         /// <param name="input">The input</param>
-        public Sticky(Func<IInput> input) : this(() => new AsBytes(input()))
+        public Sticky(Func<IConduit> input) : this(() => new AsBytes(input()))
         { }
 
         /// <summary>

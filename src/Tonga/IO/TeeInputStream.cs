@@ -8,79 +8,40 @@ using System.IO;
 namespace Tonga.IO
 {
     /// <summary>
-    /// Readable <see cref="Stream"/> that copies input to <see cref="IOutput"/> while reading.
+    /// Readable <see cref="Stream"/> that copies input to <see cref="IConduit"/> while reading.
     /// </summary>
-    public sealed class TeeInputStream : Stream
+    public sealed class TeeInputStream(Stream src, Stream tgt) : Stream
     {
-        /// <summary>
-        /// input
-        /// </summary>
-        private readonly Stream input;
-
-        /// <summary>
-        /// destination
-        /// </summary>
-        private readonly Stream output;
-
-        /// <summary>
-        /// Readable <see cref="Stream"/> that copies input to <see cref="IOutput"/> while reading.
-        /// </summary>
-        /// <param name="src">the source</param>
-        /// <param name="tgt">the destination</param>
-        public TeeInputStream(Stream src, Stream tgt) : base()
-        {
-            this.input = src;
-            this.output = tgt;
-        }
-
         public int Read()
         {
-            var data = (Byte)this.input.ReadByte();
-            if (data >= 0)
-            {
-                this.output.WriteByte(data);
-            }
+            var data = (Byte)src.ReadByte();
+            tgt.WriteByte(data);
             return data;
         }
 
-        public int Read(byte[] buf)
-        {
-            return this.Read(buf, 0, buf.Length);
-        }
+        public int Read(byte[] buf) => this.Read(buf, 0, buf.Length);
 
         public override int Read(byte[] buf, int offset, int len)
         {
-            int max = this.input.Read(buf, offset, len);
+            int max = src.Read(buf, offset, len);
             if (max > 0)
             {
-                this.output.Write(buf, offset, max);
+                tgt.Write(buf, offset, max);
             }
             return max;
         }
 
-        public long Skip(long num)
-        {
-            return this.input.Seek(num, SeekOrigin.Current);
-        }
+        public long Skip(long num) =>
+            src.Seek(num, SeekOrigin.Current);
 
-        public override bool CanRead => input.CanRead;
-
-        public override bool CanSeek => input.CanSeek;
-
-        public override bool CanWrite => input.CanWrite;
-
-        public override long Length => input.Length;
-
+        public override bool CanRead => src.CanRead;
+        public override bool CanSeek => src.CanSeek;
+        public override bool CanWrite => src.CanWrite;
+        public override long Length => src.Length;
         public override long Position
         {
-            get
-            {
-                return input.Position;
-            }
-            set
-            {
-                input.Position = value;
-            }
+            get => src.Position;
+            set => src.Position = value;
         }
 
         /// <summary>
@@ -90,14 +51,14 @@ namespace Tonga.IO
         {
             try
             {
-                this.input.Flush();
-                this.input.Dispose();
+                src.Flush();
+                src.Dispose();
             }
             catch (Exception) { }
             try
             {
-                this.output.Flush();
-                this.output.Dispose();
+                tgt.Flush();
+                tgt.Dispose();
             }
             catch (Exception) { }
 
@@ -106,24 +67,18 @@ namespace Tonga.IO
 
         public override void Flush()
         {
-            this.input.Flush();
-            this.output.Flush();
+            src.Flush();
+            tgt.Flush();
         }
 
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-            return input.Seek(offset, origin);
-        }
+        public override long Seek(long offset, SeekOrigin origin) =>
+            src.Seek(offset, origin);
 
-        public override void SetLength(long value)
-        {
-            input.SetLength(value);
-        }
+        public override void SetLength(long value) =>
+            src.SetLength(value);
 
-        public override void Write(byte[] buffer, int offset, int count)
-        {
+        public override void Write(byte[] buffer, int offset, int count) =>
             throw new InvalidOperationException("Writing is not supported.");
-        }
     }
 }
 #pragma warning restore CS1591

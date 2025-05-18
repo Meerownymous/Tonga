@@ -20,9 +20,9 @@ namespace Tonga.Tests.IO
             var txt = "Hello, товарищ!";
 
             var pipe =
-                new TeeInput(txt,
+                new TeeOnReadConduit(txt,
                     new AppendTo(
-                        new OutputTo(file)
+                        new AsConduit(new Uri(file))
                     )
                 );
 
@@ -32,7 +32,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new InputAsBytes(
-                        new Tonga.IO.AsInput(new Uri(file))))
+                        new AsConduit(new Uri(file))))
                 .AsString() == (txt + txt),
                 "Can't append path content");
         }
@@ -40,29 +40,31 @@ namespace Tonga.Tests.IO
         [Fact]
         public void WritesSimpleFileContent()
         {
-            using (var file = new TempFile())
-            {
-                var txt = "Hello, Objects!";
-                var pipe =
-                    new TeeInput(txt,
-                        new AppendTo(
-                            new OutputTo(file.Value())
-                        )
-                    );
+            using var file = new TempFile();
 
-                ReadAll._(pipe).Invoke();
-                ReadAll._(pipe).Invoke();
-                pipe.Stream().Close();
-
-                Assert.Equal(
-                    txt + txt,
-                    AsText._(
-                        new InputAsBytes(
-                            new Tonga.IO.AsInput(new FileInfo(file.Value()))
-                        )
-                    ).AsString()
+            var path = file.Value();
+            var txt = "Hello, Objects!";
+            var tee =
+                new TeeOnReadConduit(txt,
+                    new AppendTo(
+                        new AsConduit(new Uri(file.Value()))
+                    )
                 );
-            }
+
+            ReadAll._(tee).Invoke();
+            ReadAll._(tee).Invoke();
+            tee.Stream().Close();
+
+            Assert.Equal(
+                txt + txt,
+                AsText._(
+                    new InputAsBytes(
+                        new AsConduit(
+                            new FileInfo(file.Value())
+                        )
+                    )
+                ).AsString()
+            );
         }
 
         [Fact]

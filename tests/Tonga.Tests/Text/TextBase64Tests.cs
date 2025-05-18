@@ -15,33 +15,31 @@ public sealed class TextBase64Tests
     [InlineData("A fancy text with € special character")]
     public void EncodesText(string text)
     {
-        using (var tempFile = new TempFile("test.txt"))
-        {
-            ReadAll._(
-                new TeeInput(
-                    AsText._(
-                        new Base64Encoded(
-                            new AsBytes(
-                                AsText._(text)
-                            )
+        using var tempFile = new TempFile("test.txt");
+        ReadAll._(
+            new TeeOnReadConduit(
+                AsText._(
+                    new Base64Encoded(
+                        new AsBytes(
+                            AsText._(text)
                         )
-                    ).AsString(),
-                    new OutputTo(new Uri(tempFile.Value()))
-                )
-            ).Invoke();
+                    )
+                ).AsString(),
+                new AsConduit(new Uri(tempFile.Value()))
+            )
+        ).Invoke();
 
-            Assert.True(
-                new Comparable(
-                    AsText._(
-                        new Uri(tempFile.Value())
-                    )
-                ).CompareTo(
-                    new TextAsBase64(
-                        AsText._(text)
-                    )
-                ) == 0
-            );
-        }
+        Assert.True(
+            new Comparable(
+                AsText._(
+                    new Uri(tempFile.Value())
+                )
+            ).CompareTo(
+                new TextAsBase64(
+                    AsText._(text)
+                )
+            ) == 0
+        );
     }
 
     [Theory]

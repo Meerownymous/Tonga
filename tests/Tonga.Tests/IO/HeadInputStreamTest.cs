@@ -12,7 +12,7 @@ namespace Tonga.Tests.IO
         {
             var stream =
                 new HeadInputStream(
-                    new Tonga.IO.AsInput("testSkippingLessThanTotal").Stream(),
+                    new Tonga.IO.AsConduit("testSkippingLessThanTotal").Stream(),
                     5
                 );
 
@@ -25,7 +25,7 @@ namespace Tonga.Tests.IO
 
             Assert.Contains(
                 "tS",
-                AsText._(new Tonga.IO.AsInput(stream)).AsString()
+                AsText._(new Tonga.IO.AsConduit(stream)).AsString()
             );
         }
 
@@ -34,7 +34,7 @@ namespace Tonga.Tests.IO
         {
             var stream =
                 new HeadInputStream(
-                    new Tonga.IO.AsInput("testSkippingMoreThanTotal").Stream(),
+                    new Tonga.IO.AsConduit("testSkippingMoreThanTotal").Stream(),
                     5
                 );
             var skipped = stream.Seek(7L, SeekOrigin.Begin);

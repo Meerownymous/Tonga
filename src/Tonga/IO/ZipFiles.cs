@@ -22,8 +22,8 @@ namespace Tonga.IO
         /// Note: Extraction is sticky.
         /// leaves zip stream open
         /// </summary>
-        /// <param name="input"></param>
-        public ZipFiles(IInput input) : this(input, true)
+        /// <param name="iConduit"></param>
+        public ZipFiles(IConduit iConduit) : this(iConduit, true)
         {
 
         }
@@ -32,9 +32,9 @@ namespace Tonga.IO
         /// The files in a ZIP archive.
         /// Note: Extraction is sticky.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="iConduit"></param>
         /// <param name="leaveOpen"></param>
-        public ZipFiles(IInput input, bool leaveOpen)
+        public ZipFiles(IConduit iConduit, bool leaveOpen)
         {
             this.files =
                 new AsScalar<IEnumerable<string>>(() =>
@@ -43,7 +43,7 @@ namespace Tonga.IO
                     {
                         IEnumerable<string> files;
                         var copy = new MemoryStream();
-                        var inputStream = input.Stream();
+                        var inputStream = iConduit.Stream();
                         inputStream.Position = 0;
                         inputStream.CopyTo(copy);
                         inputStream.Position = 0;
@@ -63,7 +63,7 @@ namespace Tonga.IO
                     {
                         if (!leaveOpen)
                         {
-                            input.Stream().Close();
+                            iConduit.Stream().Close();
                         }
                     }
                 });

@@ -91,7 +91,7 @@ namespace Tonga.Text
         /// A <see cref="IText"/> out of a <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
-        public AsText(Uri uri) : this(new AsInput(uri))
+        public AsText(Uri uri) : this(new AsConduit(uri))
         { }
 
         /// <summary>
@@ -99,14 +99,14 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="uri">a file <see cref="Uri"/></param>
         /// <param name="encoding">encoding of the data at the uri</param>
-        public AsText(Uri uri, Encoding encoding) : this(new AsInput(uri), encoding)
+        public AsText(Uri uri, Encoding encoding) : this(new AsConduit(uri), encoding)
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="FileInfo"/>
         /// </summary>
         /// <param name="file"></param>
-        public AsText(FileInfo file) : this(new AsInput(file))
+        public AsText(FileInfo file) : this(new AsConduit(file))
         { }
 
         /// <summary>
@@ -114,53 +114,53 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="file"></param>
         /// <param name="encoding"></param>
-        public AsText(FileInfo file, Encoding encoding) : this(new AsInput(file), encoding)
+        public AsText(FileInfo file, Encoding encoding) : this(new AsConduit(file), encoding)
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/></param>
-        public AsText(Stream stream) : this(new AsInput(stream))
+        public AsText(Stream stream) : this(new AsConduit(stream))
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a <see cref="IInput"/></param>
-        public AsText(IInput input) : this(new AsBytes(input))
+        /// <param name="origin">a <see cref="IConduit"/></param>
+        public AsText(IConduit origin) : this(new AsBytes(origin))
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a input</param>
+        /// <param name="origin">a input</param>
         /// <param name="max">maximum buffer size</param>
-        public AsText(IInput input, int max) : this(input, max, Encoding.GetEncoding(0))
+        public AsText(IConduit origin, int max) : this(origin, max, Encoding.GetEncoding(0))
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a input</param>
+        /// <param name="origin">a input</param>
         /// <param name="encoding"><see cref="Encoding"/> of the input</param>
-        public AsText(IInput input, Encoding encoding) : this(new AsBytes(input), encoding)
+        public AsText(IConduit origin, Encoding encoding) : this(new AsBytes(origin), encoding)
         { }
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a <see cref="IInput"/></param>
-        /// <param name="encoding">encoding of the <see cref="IInput"/></param>
+        /// <param name="origin">a <see cref="IConduit"/></param>
+        /// <param name="encoding">encoding of the <see cref="IConduit"/></param>
         /// <param name="max">maximum buffer size</param>
-        public AsText(IInput input, int max, Encoding encoding) : this(new AsBytes(input, max), encoding)
+        public AsText(IConduit origin, int max, Encoding encoding) : this(new AsBytes(origin, max), encoding)
         { }
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a <see cref="StreamReader"/></param>
-        public AsText(StringReader rdr) : this(new AsBytes(new AsInput(rdr)))
+        public AsText(StringReader rdr) : this(new AsBytes(new AsConduit(rdr)))
         { }
 
         /// <summary>
@@ -363,38 +363,38 @@ namespace Tonga.Text
         public static AsText _(FileInfo file, Encoding encoding) => new(file, encoding);
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/></param>
         public static AsText _(Stream stream) => new(stream);
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a <see cref="IInput"/></param>
-        public static AsText _(IInput input) => new(input);
+        /// <param name="iConduit">a <see cref="IConduit"/></param>
+        public static AsText _(IConduit iConduit) => new(iConduit);
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a input</param>
+        /// <param name="iConduit">a input</param>
         /// <param name="max">maximum buffer size</param>
-        public static AsText _(IInput input, int max) => new(input, max);
+        public static AsText _(IConduit iConduit, int max) => new(iConduit, max);
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a input</param>
+        /// <param name="iConduit">a input</param>
         /// <param name="encoding"><see cref="Encoding"/> of the input</param>
-        public static AsText _(IInput input, Encoding encoding) => new(input, encoding);
+        public static AsText _(IConduit iConduit, Encoding encoding) => new(iConduit, encoding);
 
         /// <summary>
-        /// A <see cref="IText"/> out of a <see cref="IInput"/>.
+        /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">a <see cref="IInput"/></param>
-        /// <param name="encoding">encoding of the <see cref="IInput"/></param>
+        /// <param name="iConduit">a <see cref="IConduit"/></param>
+        /// <param name="encoding">encoding of the <see cref="IConduit"/></param>
         /// <param name="max">maximum buffer size</param>
-        public static AsText _(IInput input, int max, Encoding encoding) => new(input, max, encoding);
+        public static AsText _(IConduit iConduit, int max, Encoding encoding) => new(iConduit, max, encoding);
 
         /// <summary>
         /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.

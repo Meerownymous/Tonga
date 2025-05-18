@@ -10,7 +10,7 @@ namespace Tonga.IO
     /// <summary>
     /// An output that compresses.
     /// </summary>
-    public sealed class GZipOutput : IOutput
+    public sealed class GZipCompression : IConduit
     {
         // The input.
         private readonly StickyIf<GZipStream> output;
@@ -19,18 +19,11 @@ namespace Tonga.IO
         private readonly CompressionLevel level;
 
         /// <summary>
-        /// The output as a gzip output. It compresses with level 'optimal'.
-        /// </summary>
-        /// <param name="output">the input</param>
-        public GZipOutput(IOutput output) : this(output, CompressionLevel.Optimal)
-        { }
-
-        /// <summary>
         /// The output as a gzip compressed stream.
         /// </summary>
         /// <param name="output">the output to compress</param>
         /// <param name="level">the compression level</param>
-        public GZipOutput(IOutput output, CompressionLevel level)
+        public GZipCompression(IConduit output, CompressionLevel level = CompressionLevel.Optimal)
         {
             this.output =
                 StickyIf._(

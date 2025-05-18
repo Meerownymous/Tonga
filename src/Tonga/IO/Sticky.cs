@@ -8,42 +8,29 @@ using Tonga.Scalar;
 namespace Tonga.IO
 {
     /// <summary>
-    /// <see cref="IInput"/> that reads once and then returns from cache.
+    /// <see cref="IConduit"/> that reads once and then returns from cache.
     /// </summary>
-    public sealed class Sticky : IInput
+    public sealed class Sticky(IConduit origin) : IConduit
     {
         /// <summary>
         /// the cache
         /// </summary>
-        private readonly Lazy<byte[]> cache;
-
-        /// <summary>
-        /// <see cref="IInput"/> that reads once and then returns from cache.
-        /// Closes the input stream after copzing.
-        /// </summary>
-        /// <param name="input"></param>
-        public Sticky(IInput input)
-        {
-            this.cache =
-                new Lazy<byte[]>(() =>
-                    {
-                        MemoryStream copy = new MemoryStream();
-                        ReadAll._(
-                            new TeeInput(input, new OutputTo(copy))
-                        ).Invoke();
-                        input.Stream().Dispose();
-                        return copy.ToArray();
-                    }
-                );
-        }
+        private readonly Lazy<byte[]> cache =
+            new(() =>
+            {
+                MemoryStream copy = new MemoryStream();
+                ReadAll._(
+                    new TeeOnReadConduit(origin, new AsConduit(copy))
+                ).Invoke();
+                origin.Stream().Dispose();
+                return copy.ToArray();
+            }
+        );
 
         /// <summary>
         /// Get the stream.
         /// </summary>
         /// <returns>the stream</returns>
-        public Stream Stream()
-        {
-            return new MemoryStream(this.cache.Value);
-        }
+        public Stream Stream() => new MemoryStream(this.cache.Value);
     }
 }

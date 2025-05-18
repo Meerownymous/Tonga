@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class DeadInputTest
+    public sealed class DeadConduitTest
     {
         [Fact]
         public void ReadsEmptyContent()
@@ -12,7 +12,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 string.Empty,
                 AsText._(
-                    new DeadInput())
+                    new DeadConduit())
                 .AsString()
             );
         }

@@ -19,16 +19,16 @@ namespace Tonga.Tests.IO
 
             //Create file through reading source
             ReadAll._(
-                new TeeInput(
-                    new Tonga.IO.AsInput(content),
-                    new OutputTo(path)
+                new TeeOnReadConduit(
+                    new AsConduit(content),
+                    new AsConduit(new Uri(path))
                 )
             ).Invoke();
 
             Assert.Equal(
                 content,
                 AsText._(
-                    new Tonga.IO.AsInput(
+                    new AsConduit(
                         new AsReader(
                             new Uri(path)))
                 ).AsString()

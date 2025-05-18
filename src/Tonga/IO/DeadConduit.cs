@@ -1,18 +1,19 @@
 
 
 using System.IO;
+using Tonga.Bytes;
 
 namespace Tonga.IO
 {
     /// <summary>
-    /// Output to dev/null.
+    /// Input with no data.
     /// </summary>
-    public sealed class DeadOutput : IOutput
+    public sealed class DeadConduit : IConduit
     {
         /// <summary>
-        /// Output to dev/null.
+        /// Input with no data.
         /// </summary>
-        public DeadOutput()
+        public DeadConduit()
         { }
 
         /// <summary>
@@ -21,7 +22,7 @@ namespace Tonga.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            return new DeadStream();
+            return new BytesAsConduit(new EmptyBytes()).Stream();
         }
     }
 }

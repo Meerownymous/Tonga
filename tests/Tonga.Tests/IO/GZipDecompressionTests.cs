@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class GZipInputTests
+    public sealed class GZipDecompressionTests
     {
         [Fact]
         public void Decompresses()
@@ -22,8 +22,8 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 "Hello!",
                 AsText._(
-                    new GZipInput(
-                        new Tonga.IO.AsInput(bytes)
+                    new GZipDecompression(
+                        new Tonga.IO.AsConduit(bytes)
                     )
                 ).AsString()
             );

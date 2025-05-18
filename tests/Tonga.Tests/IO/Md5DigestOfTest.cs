@@ -12,7 +12,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                  "d41d8cd98f00b204e9800998ecf8427e",
                  new HexOf(
-                     new Md5DigestOf(new Tonga.IO.AsInput(string.Empty))
+                     new Md5DigestOf(new Tonga.IO.AsConduit(string.Empty))
                  ).AsString()
             );
         }
@@ -23,7 +23,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 "ed076287532e86365e841e92bfc50d8c",
                 new HexOf(
-                    new Md5DigestOf(new Tonga.IO.AsInput("Hello World!"))
+                    new Md5DigestOf(new Tonga.IO.AsConduit("Hello World!"))
                 ).AsString()
             );
         }

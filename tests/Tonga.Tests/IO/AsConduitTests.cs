@@ -16,7 +16,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class AsInputTests
+    public sealed class AsConduitTests
     {
         [Fact]
         public void OpenCloseIsSlowerThanReusing()
@@ -66,16 +66,18 @@ namespace Tonga.Tests.IO
         [Fact]
         public void ReadsAlternativeInputForFileCase()
         {
-            Assert.True(
+            Assert.EndsWith(
+                "text!",
                 AsText._(
-                    new InputWithFallback(
-                        new AsInput(
-                            new Uri(Path.GetFullPath("/this-file-does-not-exist.txt"))
+                    new ConduitWithFallback(
+                        new AsConduit(() =>
+                            throw new Exception()
                         ),
-                        new AsInput(AsText._("Alternative text!"))
+                        new AsConduit(AsText._("Alternative text!"))
                     )
-                ).AsString().EndsWith("text!"),
-                "Can't read alternative source from file not found");
+                )
+                .AsString()
+);
         }
 
         [Fact]
@@ -86,7 +88,7 @@ namespace Tonga.Tests.IO
             String content = "Hello, товарищ!";
 
             ReadAll._(
-                new AsInput(
+                new AsConduit(
                     new TeeInputStream(
                         new MemoryStream(
                             new AsBytes(
@@ -97,7 +99,7 @@ namespace Tonga.Tests.IO
                                 )
                             ).Bytes()
                         ),
-                        new OutputTo(
+                        new AsConduit(
                             new Uri(path)
                         ).Stream()
                     )
@@ -106,7 +108,7 @@ namespace Tonga.Tests.IO
 
             Assert.True(
                     AsText._(
-                        new AsInput(
+                        new AsConduit(
                             new Uri(path))
                     ).AsString().EndsWith(content),
                     "Can't read file content");
@@ -119,7 +121,7 @@ namespace Tonga.Tests.IO
             using (input = new MemoryStream("how are you?"u8.ToArray()))
             {
                 AsText._(
-                    new AsInput(
+                    new AsConduit(
                         input)).AsString();
             }
 
@@ -135,7 +137,7 @@ namespace Tonga.Tests.IO
             if (File.Exists(path)) File.Delete(path);
 
             ReadAll._(
-                new AsInput(
+                new AsConduit(
                     new TeeInputStream(
                         new MemoryStream(
                             new AsBytes(
@@ -147,7 +149,7 @@ namespace Tonga.Tests.IO
                                 )
                             ).Bytes()
                         ),
-                        new OutputTo(
+                        new AsConduit(
                             new Uri(path)
                         ).Stream()
                     )
@@ -158,7 +160,7 @@ namespace Tonga.Tests.IO
                 "Hello World",
                 AsText._(
                     new AsBytes(
-                        new AsInput(
+                        new AsConduit(
                             new Uri(Path.GetFullPath(path))
                         )
                     ).Bytes()
@@ -171,7 +173,7 @@ namespace Tonga.Tests.IO
         {
             Assert.True(
                 AsText._(
-                    new AsInput(
+                    new AsConduit(
                         new Url("http://www.google.de"))
                 ).AsString().Contains("<html"),
                 "Can't fetch bytes from the URL"
@@ -183,7 +185,7 @@ namespace Tonga.Tests.IO
         {
             using var file = new TempFile();
             ReadAll._(
-                new AsInput(
+                new AsConduit(
                     new TeeInputStream(
                         new MemoryStream(
                             new AsBytes(
@@ -195,7 +197,7 @@ namespace Tonga.Tests.IO
                                 )
                             ).Bytes()
                         ),
-                        new OutputTo(
+                        new AsConduit(
                             new Uri(file.Value())
                         ).Stream()
                     )
@@ -208,7 +210,7 @@ namespace Tonga.Tests.IO
                     new Split(
                         AsText._(
                             new AsBytes(
-                                new AsInput(
+                                new AsConduit(
                                     new Uri(file.Value())
                                 )
                             )
@@ -225,7 +227,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                     Encoding.UTF8.GetString(
                         new AsBytes(
-                            new AsInput(content)
+                            new AsConduit(content)
                         ).Bytes()) == content,
                     "Can't read bytes from Input");
         }
@@ -238,7 +240,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                     AsText._(
                         new AsBytes(
-                            new AsInput(
+                            new AsConduit(
                                 new StringBuilder(starts).Append(ends)
                             )
                         ).Bytes()).AsString() == starts + ends,
@@ -252,7 +254,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                     AsText._(
                         new AsBytes(
-                            new AsInput(
+                            new AsConduit(
                                 'H', 'o', 'l', 'd', ' ',
                                 'i', 'n', 'f', 'i', 'n', 'i', 't', 'y'
                             )
@@ -266,7 +268,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new AsBytes(
-                        new AsInput('O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a')
+                        new AsConduit('O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a')
                     ).Bytes()
                 ).AsString() == "O que sera que sera",
                 "Can't read array of encoded chars."
@@ -279,9 +281,9 @@ namespace Tonga.Tests.IO
             String source = "hello, source!";
             Assert.True(
                 AsText._(
-                    new AsInput(
+                    new AsConduit(
                         new StreamReader(
-                            new AsInput(source).Stream())
+                            new AsConduit(source).Stream())
                     )
                 ).AsString() == source,
                 "Can't read string through a reader"
@@ -295,9 +297,9 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 source,
                 AsText._(
-                    new AsInput(
+                    new AsConduit(
                             new StreamReader(
-                                new AsInput(source).Stream()),
+                                new AsConduit(source).Stream()),
                             Encoding.UTF8)
                 ).AsString()
             );
@@ -311,7 +313,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
                 new InputAsBytes(
-                    new AsInput(bytes)
+                    new AsConduit(bytes)
                 ).Bytes(), bytes)
             );
         }
@@ -320,7 +322,59 @@ namespace Tonga.Tests.IO
         public void MakesDataAvailable()
         {
             Assert.True(
-                new AsInput("Hello,חבר!").Stream().Length > 0
+                new AsConduit("Hello,חבר!").Stream().Length > 0
+            );
+        }
+
+        [Fact]
+        public void WritesSimplePathContent()
+        {
+            var temp = Directory.CreateDirectory("artifacts/OutputToTest/");
+            var file = Path.GetFullPath(Path.Combine(temp.FullName, "file.txt"));
+            if (File.Exists(file)) File.Delete(file);
+
+            String content = "Hello, товарищ!";
+            ReadAll._(
+                new TeeOnReadConduit(
+                    content,
+                    new AsConduit(new Uri(file))
+                )
+            ).Invoke();
+
+            Assert.Equal(
+                content,
+                AsText._(
+                        new InputAsBytes(
+                            new AsConduit(new Uri(file))))
+                    .AsString()
+            );
+        }
+
+        [Fact]
+        public void WritesSimpleFileContent()
+        {
+            var temp = Directory.CreateDirectory("artifacts/OutputToTest");
+            var file = new Uri(Path.GetFullPath(Path.Combine(temp.FullName, "file.txt")));
+            if (File.Exists(file.AbsolutePath))
+            {
+                File.Delete(file.AbsolutePath);
+            }
+
+            String txt = "Hello, друг!";
+            ReadAll._(
+                new TeeOnReadConduit(
+                    txt,
+                    new AsConduit(file))
+            ).Invoke();
+
+            Assert.Equal(
+                txt,
+                AsText._(
+                        new InputAsBytes(
+                            new AsConduit(file)
+                        )
+                    )
+                    .AsString()
             );
         }
 

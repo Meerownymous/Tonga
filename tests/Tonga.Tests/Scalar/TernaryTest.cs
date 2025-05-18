@@ -4,14 +4,14 @@ using Xunit;
 
 namespace Tonga.Tests.Scalar
 {
-    public sealed class ConditionalTest
+    public sealed class TernaryTest
     {
 
         [Fact]
         public void ConditionTrue()
         {
             Assert.True(
-                new Conditional<int>(
+                new Ternary<bool, int>(
                     new True(),
                     6,
                     16
@@ -22,7 +22,7 @@ namespace Tonga.Tests.Scalar
         public void ConditionFalse()
         {
             Assert.True(
-                new Conditional<int>(
+                new Ternary<bool, int>(
                     new False(),
                     6,
                     16
@@ -33,25 +33,23 @@ namespace Tonga.Tests.Scalar
         public void ConditionBoolean()
         {
             Assert.True(
-                new Conditional<int>(
-                    true,
-                    6,
-                    16
-                ).Value() == 6
-            );
+            new Ternary<bool, int>(
+                true,
+                6,
+                16
+            ).Value() == 6);
         }
 
         [Fact]
         public void ConditionFunc()
         {
-            var value = 5;
             Assert.True(
-                new Conditional<int>(
-                    () => value > 3,
-                    () => 8,
-                    () => 2
-                ).Value() == 8
-            );
+                new Ternary<int, int>(
+                    5,
+                    input => input > 3,
+                    input => input = 8,
+                    input => input = 2
+                ).Value() == 8);
         }
     }
 }

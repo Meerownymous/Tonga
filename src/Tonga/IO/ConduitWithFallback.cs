@@ -9,7 +9,7 @@ namespace Tonga.IO
     /// <summary>
     /// Conduit which returns an alternate value if it fails.
     /// </summary>
-    public sealed class ConduitWithFallback(IConduit origin, IFunc<IOException, IConduit> fbk) : IConduit, IDisposable
+    public sealed class ConduitWithFallback(IConduit origin, IFunc<Exception, IConduit> fbk) : IConduit, IDisposable
     {
         /// <summary>
         /// Conduit which returns an alternate value if it fails.
@@ -26,9 +26,9 @@ namespace Tonga.IO
         /// <summary>
         /// Conduit which returns an alternate value from the given <see cref="Func{IOException, IInput}"/>if it fails.
         /// </summary>
-        public ConduitWithFallback(IConduit origin, Func<IOException, IConduit> alt) : this(
+        public ConduitWithFallback(IConduit origin, Func<Exception, IConduit> alt) : this(
             origin,
-            new FuncOf<IOException, IConduit>(alt)
+            new FuncOf<Exception, IConduit>(alt)
         )
         { }
 
@@ -43,7 +43,7 @@ namespace Tonga.IO
             {
                 stream = origin.Stream();
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 stream = fbk.Invoke(ex).Stream();
             }

@@ -66,7 +66,8 @@ namespace Tonga.Tests.IO
         [Fact]
         public void ReadsAlternativeInputForFileCase()
         {
-            Assert.True(
+            Assert.EndsWith(
+                "text!",
                 AsText._(
                     new ConduitWithFallback(
                         new AsConduit(
@@ -74,8 +75,9 @@ namespace Tonga.Tests.IO
                         ),
                         new AsConduit(AsText._("Alternative text!"))
                     )
-                ).AsString().EndsWith("text!"),
-                "Can't read alternative source from file not found");
+                )
+                .AsString()
+);
         }
 
         [Fact]

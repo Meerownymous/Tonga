@@ -1,5 +1,3 @@
-
-
 using System;
 using System.IO;
 
@@ -9,7 +7,7 @@ namespace Tonga.IO
     /// <summary>
     /// <see cref="Stream"/> which copies to another <see cref="Stream"/> while writing.
     /// </summary>
-    public sealed class TeeOutputStream : Stream, IDisposable
+    public sealed class TeeOutputStream : Stream
     {
         /// <summary>
         /// the target

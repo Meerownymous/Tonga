@@ -12,7 +12,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                  new HexOf(
-                     new Sha256DigestOf(new Tonga.IO.AsInput(string.Empty))
+                     new Sha256DigestOf(new Tonga.IO.AsConduit(string.Empty))
                  ).AsString()
             );
         }
@@ -23,7 +23,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
                 new HexOf(
-                    new Sha256DigestOf(new Tonga.IO.AsInput("Hello World!"))
+                    new Sha256DigestOf(new Tonga.IO.AsConduit("Hello World!"))
                 ).AsString()
             );
         }

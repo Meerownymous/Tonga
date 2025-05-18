@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ namespace Tonga.IO
     /// <summary>
     /// Input out of other things.
     /// </summary>
-    public sealed class AsInput : IInput, IDisposable
+    public sealed class AsConduit : IConduit, IDisposable
     {
         /// <summary>
         /// the input
@@ -25,17 +24,17 @@ namespace Tonga.IO
         /// Input out of a file Uri.
         /// </summary>
         /// <param name="uri">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public AsInput(Uri uri) : this(
+        public AsConduit(Uri uri) : this(
             () =>
             {
                 Stream result;
                 if (uri.HostNameType == UriHostNameType.Dns)
                 {
-                    result = new AsInput(new Url(uri.AbsoluteUri)).Stream();
+                    result = new AsConduit(new Url(uri.AbsoluteUri)).Stream();
                 }
                 else
                 {
-                    result = new FileStream(Uri.UnescapeDataString(uri.LocalPath), FileMode.Open, FileAccess.Read);
+                    result = new FileStream(Uri.UnescapeDataString(uri.LocalPath), FileMode.OpenOrCreate, FileAccess.ReadWrite);
                 }
                 return result;
             })
@@ -45,29 +44,29 @@ namespace Tonga.IO
         /// Input out of a file Uri.
         /// </summary>
         /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public AsInput(FileInfo file) : this(AsScalar._(file))
+        public AsConduit(FileInfo file) : this(AsScalar._(file))
         { }
 
         /// <summary>
         /// Input out of a scalar of a file Uri.
         /// </summary>
         /// <param name="file">scalar of a uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public AsInput(IScalar<FileInfo> file) : this(
-            () => new FileStream(Uri.UnescapeDataString(file.Value().FullName), FileMode.Open, FileAccess.Read))
+        public AsConduit(IScalar<FileInfo> file) : this(
+            () => new FileStream(Uri.UnescapeDataString(file.Value().FullName), FileMode.Open, FileAccess.ReadWrite))
         { }
 
         /// <summary>
         /// Input out of a Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public AsInput(Url url) : this(AsScalar._(url))
+        public AsConduit(Url url) : this(AsScalar._(url))
         { }
 
         /// <summary>
         /// Input out of a Url scalar.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public AsInput(IScalar<Url> url) : this(() =>
+        public AsConduit(IScalar<Url> url) : this(() =>
             {
                 var stream = Task.Run(async () =>
                 {
@@ -87,14 +86,14 @@ namespace Tonga.IO
         /// ctor
         /// </summary>
         /// <param name="rdr">a stringreader</param>
-        public AsInput(StringReader rdr) : this(new AsBytes(rdr))
+        public AsConduit(StringReader rdr) : this(new AsBytes(rdr))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="rdr">a streamreader</param>
-        public AsInput(StreamReader rdr) : this(new AsBytes(rdr))
+        public AsConduit(StreamReader rdr) : this(new AsBytes(rdr))
         { }
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="rdr">a streamreader</param>
         /// <param name="enc">encoding of the reader</param>
-        public AsInput(StreamReader rdr, Encoding enc) : this(new AsBytes(rdr, enc))
+        public AsConduit(StreamReader rdr, Encoding enc) : this(new AsBytes(rdr, enc))
         { }
 
         /// <summary>
@@ -110,7 +109,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="str">a stream</param>
         /// <param name="enc">encoding of the stream</param>
-        public AsInput(Stream str, Encoding enc) : this(new AsBytes(new StreamReader(str), enc))
+        public AsConduit(Stream str, Encoding enc) : this(new AsBytes(new StreamReader(str), enc))
         { }
 
         /// <summary>
@@ -119,14 +118,14 @@ namespace Tonga.IO
         /// <param name="rdr">a streamreader</param>
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
-        public AsInput(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new AsBytes(rdr, enc, max))
+        public AsConduit(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(new AsBytes(rdr, enc, max))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="builder">a stringbuilder</param>
-        public AsInput(StringBuilder builder) : this(builder, Encoding.UTF8)
+        public AsConduit(StringBuilder builder) : this(builder, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -134,7 +133,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="builder">a stringbuilder</param>
         /// <param name="enc">encoding of the stringbuilder</param>
-        public AsInput(StringBuilder builder, Encoding enc) : this(
+        public AsConduit(StringBuilder builder, Encoding enc) : this(
             AsScalar._<Stream>(() => new MemoryStream(
                 new AsBytes(builder, enc).Bytes())
             )
@@ -145,7 +144,7 @@ namespace Tonga.IO
         /// ctor
         /// </summary>
         /// <param name="chars">some chars</param>
-        public AsInput(params char[] chars) : this(new AsBytes(chars))
+        public AsConduit(params char[] chars) : this(new AsBytes(chars))
         { }
 
         /// <summary>
@@ -153,14 +152,14 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="chars">some chars</param>
         /// <param name="enc">encoding of the chars</param>
-        public AsInput(char[] chars, Encoding enc) : this(new AsBytes(chars, enc))
+        public AsConduit(char[] chars, Encoding enc) : this(new AsBytes(chars, enc))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="text">some text</param>
-        public AsInput(String text) : this(new AsBytes(text))
+        public AsConduit(String text) : this(new AsBytes(text))
         { }
 
         /// <summary>
@@ -168,14 +167,14 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some <see cref="string"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the string</param>
-        public AsInput(String text, Encoding enc) : this(new AsBytes(text, enc))
+        public AsConduit(String text, Encoding enc) : this(new AsBytes(text, enc))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
-        public AsInput(IText text) : this(new AsBytes(text))
+        public AsConduit(IText text) : this(new AsBytes(text))
         { }
 
         /// <summary>
@@ -183,28 +182,28 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some <see cref="IText"/></param>
         /// <param name="encoding"><see cref="Encoding"/> of the text</param>
-        public AsInput(IText text, Encoding encoding) : this(new AsBytes(text, encoding))
+        public AsConduit(IText text, Encoding encoding) : this(new AsBytes(text, encoding))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="error"><see cref="Exception"/> to serialize</param>
-        public AsInput(Exception error) : this(new AsBytes(error))
+        public AsConduit(Exception error) : this(new AsBytes(error))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="bytes">a <see cref="byte"/> array</param>
-        public AsInput(byte[] bytes) : this(new AsBytes(bytes))
+        public AsConduit(byte[] bytes) : this(new AsBytes(bytes))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="src">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public AsInput(IBytes src) : this(
+        public AsConduit(IBytes src) : this(
             AsScalar._<Stream>(
                 () =>
                 {
@@ -222,21 +221,21 @@ namespace Tonga.IO
         /// ctor
         /// </summary>
         /// <param name="stream">a <see cref="Stream"/> as input</param>
-        public AsInput(Stream stream) : this(AsScalar._(stream))
+        public AsConduit(Stream stream) : this(AsScalar._(stream))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fnc">a function retrieving a <see cref="Stream"/> as input</param>
-        public AsInput(Func<Stream> fnc) : this(AsScalar._(fnc))
+        public AsConduit(Func<Stream> fnc) : this(AsScalar._(fnc))
         { }
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="stream">the input <see cref="Stream"/></param>
-        private AsInput(IScalar<Stream> stream)
+        private AsConduit(IScalar<Stream> stream)
         {
             this.origin =
                 StickyIf._(
@@ -249,17 +248,11 @@ namespace Tonga.IO
         /// Get the stream.
         /// </summary>
         /// <returns>the stream</returns>
-        public Stream Stream()
-        {
-            return this.origin.Value();
-        }
+        public Stream Stream() => this.origin.Value();
 
         /// <summary>
         /// Clean up.
         /// </summary>
-        public void Dispose()
-        {
-            Stream().Dispose();
-        }
+        public void Dispose() => Stream().Dispose();
     }
 }

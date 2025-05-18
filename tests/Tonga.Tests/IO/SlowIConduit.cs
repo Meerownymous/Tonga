@@ -6,35 +6,35 @@ using Tonga.IO.Tests;
 
 namespace Tonga.Tests.IO
 {
-    internal sealed class SlowInput : IInput
+    internal sealed class SlowIConduit : IConduit
     {
 
         /**
          * Original input.
          */
-        private readonly IInput _origin;
+        private readonly IConduit _origin;
 
         /**
          * Ctor.
          * @param size The size of the array to encapsulate
          */
-        internal SlowInput(long size) : this((int)size)
+        internal SlowIConduit(long size) : this((int)size)
         { }
 
         /**
          * Ctor.
          * @param size The size of the array to encapsulate
          */
-        internal SlowInput(int size) : this(new Tonga.IO.AsInput(new MemoryStream(new byte[size])))
+        internal SlowIConduit(int size) : this(new Tonga.IO.AsConduit(new MemoryStream(new byte[size])))
         { }
 
         /**
          * Ctor.
          * @param input Original input to encapsulate and make slower
          */
-        internal SlowInput(IInput input)
+        internal SlowIConduit(IConduit iConduit)
         {
-            this._origin = input;
+            this._origin = iConduit;
         }
 
         public Stream Stream()

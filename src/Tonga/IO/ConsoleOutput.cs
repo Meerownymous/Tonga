@@ -8,7 +8,7 @@ namespace Tonga.IO
     /// <summary>
     /// Console output stream.
     /// </summary>
-    public sealed class ConsoleOutput : IOutput
+    public sealed class ConsoleOutput : IConduit
     {
         /// <summary>
         /// Console output stream.

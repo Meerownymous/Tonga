@@ -12,9 +12,9 @@ namespace Tonga.IO
     /// Content of a file in a zip archive
     /// is tolerant to slash style
     /// </summary>
-    public sealed class UnzippedFile : IInput
+    public sealed class UnzippedFile : IConduit
     {
-        private readonly IInput zip;
+        private readonly IConduit zip;
         private readonly string filePath;
         private readonly AsScalar<Stream> stream;
         /// <summary>
@@ -22,14 +22,14 @@ namespace Tonga.IO
         /// is tolerant to slash style
         /// leaves zip stream open
         /// </summary>
-        public UnzippedFile(IInput zip, string virtualPath) : this(zip, virtualPath, true)
+        public UnzippedFile(IConduit zip, string virtualPath) : this(zip, virtualPath, true)
         { }
 
         /// <summary>
         /// Content of a file in a zip archive
         /// is tolerant to slash style
         /// </summary>
-        public UnzippedFile(IInput zip, string virtualPath, bool leaveOpen)
+        public UnzippedFile(IConduit zip, string virtualPath, bool leaveOpen)
         {
             this.zip = zip;
             this.filePath = virtualPath;

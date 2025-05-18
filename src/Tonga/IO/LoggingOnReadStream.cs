@@ -9,7 +9,7 @@ namespace Tonga.IO
     /// <summary>
     /// Logged input stream.
     /// </summary>
-    public sealed class LoggingInputStream : Stream
+    public sealed class LoggingOnReadStream : Stream
     {
 
         private readonly Stream origin;
@@ -23,7 +23,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="input"></param>
         /// <param name="source"></param>
-        public LoggingInputStream(Stream input, string source) : this(input, source, (msg) => Debug.WriteLine(msg))
+        public LoggingOnReadStream(Stream input, string source) : this(input, source, (msg) => Debug.WriteLine(msg))
         { }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Tonga.IO
         /// <param name="input"></param>
         /// <param name="source"></param>
         /// <param name="log"></param>
-        public LoggingInputStream(Stream input, string source, Action<String> log)
+        public LoggingOnReadStream(Stream input, string source, Action<String> log)
         {
             this.origin = input;
             this.source = source;

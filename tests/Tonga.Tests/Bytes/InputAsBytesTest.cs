@@ -7,7 +7,6 @@ using Tonga.IO.Tests;
 using Tonga.Tests.IO;
 using Tonga.Text;
 using Xunit;
-using AsInput = Tonga.IO.AsInput;
 
 namespace Tonga.Tests.Bytes
 {
@@ -21,7 +20,7 @@ namespace Tonga.Tests.Bytes
             String body = "1234567890";
             Assert.True(
                 new InputAsBytes(
-                        new AsInput(
+                        new AsConduit(
                         String.Join(
                             "",
                                 new Head<string>(
@@ -42,7 +41,7 @@ namespace Tonga.Tests.Bytes
             {
                 Assert.True(
                     new InputAsBytes(
-                        new AsInput(slow)
+                        new AsConduit(slow)
                     ).Bytes().Length == size,
                     "Can't read large content from Input");
             }
@@ -56,7 +55,7 @@ namespace Tonga.Tests.Bytes
             Assert.True(
                     Encoding.UTF8.GetString(
                         new InputAsBytes(
-                            new AsInput(
+                            new AsConduit(
                                 new AsBytes(
                                     AsText._(content)
                                 )
@@ -73,7 +72,7 @@ namespace Tonga.Tests.Bytes
             Assert.True(
                     Encoding.UTF8.GetString(
                         new InputAsBytes(
-                            new AsInput(
+                            new AsConduit(
                                 new AsBytes(
                                     AsText._(content)
                                 )

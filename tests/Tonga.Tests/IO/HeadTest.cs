@@ -14,7 +14,7 @@ namespace Tonga.Tests.IO
                 "reads",
                 AsText._(
                     new Head(
-                        new Tonga.IO.AsInput("readsHeadOfLongInput"),
+                        new Tonga.IO.AsConduit("readsHeadOfLongInput"),
                         5
                     )
                 ).AsString()
@@ -27,7 +27,7 @@ namespace Tonga.Tests.IO
             var res =
                 AsText._(
                     new Head(
-                        new Tonga.IO.AsInput("readsHeadOfLongInput"),
+                        new Tonga.IO.AsConduit("readsHeadOfLongInput"),
                         5
                     )
                 ).AsString();
@@ -35,7 +35,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 5,
                 Length._(
-                    new Tonga.IO.AsInput(
+                    new Tonga.IO.AsConduit(
                         res
                     )
                 ).Value()
@@ -49,7 +49,7 @@ namespace Tonga.Tests.IO
                 "",
                 AsText._(
                     new Head(
-                        new Tonga.IO.AsInput("readsEmptyHeadOfInput"),
+                        new Tonga.IO.AsConduit("readsEmptyHeadOfInput"),
                         0
                     )
                 ).AsString()
@@ -64,7 +64,7 @@ namespace Tonga.Tests.IO
                 input,
                 AsText._(
                     new Head(
-                        new Tonga.IO.AsInput(input),
+                        new Tonga.IO.AsConduit(input),
                         35
                     )
                 ).AsString()

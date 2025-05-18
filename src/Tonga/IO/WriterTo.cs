@@ -12,7 +12,7 @@ namespace Tonga.IO
     /// <summary>
     /// A <see cref="StreamWriter"/> to a target.
     /// </summary>
-    public sealed class WriterTo : StreamWriter, IDisposable
+    public sealed class WriterTo : StreamWriter
     {
         /// <summary>
         /// the target
@@ -23,50 +23,50 @@ namespace Tonga.IO
         /// A <see cref="StreamWriter"/> to a file <see cref="Uri"/>.
         /// </summary>
         /// <param name="path">a file Uri. Get with Path.GetFullPath(relOrAbsPath) or prefix with file:/// </param>
-        public WriterTo(Uri path) : this(new OutputTo(path))
+        public WriterTo(Uri path) : this(new AsConduit(path))
         { }
 
         /// <summary>
         /// A <see cref="StreamWriter"/> to a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">the output stream</param>
-        public WriterTo(Stream stream) : this(new OutputTo(stream))
+        public WriterTo(Stream stream) : this(new AsConduit(stream))
         { }
 
         /// <summary>
-        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/>.
+        /// A <see cref="StreamWriter"/> to a <see cref="IConduit"/>.
         /// </summary>
         /// <param name="output">the output</param>
-        public WriterTo(IOutput output) : this(output, Encoding.UTF8)
+        public WriterTo(IConduit output) : this(output, Encoding.UTF8)
         { }
 
         /// <summary>
-        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/>.
+        /// A <see cref="StreamWriter"/> to a <see cref="IConduit"/>.
         /// </summary>
         /// <param name="output">the output</param>
         /// <param name="enc">encoding of the output</param>
-        public WriterTo(IOutput output, Encoding enc) : this(
+        public WriterTo(IConduit output, Encoding enc) : this(
             () => new StreamWriter(output.Stream(), enc))
         { }
 
         /// <summary>
-        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/>.
+        /// A <see cref="StreamWriter"/> to a <see cref="IConduit"/>.
         /// </summary>
         /// <param name="output">the output</param>
         /// <param name="encoding">encoding of the output</param>
-        public WriterTo(IOutput output, string encoding) : this(
+        public WriterTo(IConduit output, string encoding) : this(
              () => new StreamWriter(output.Stream(), Encoding.GetEncoding(encoding)))
         { }
 
         /// <summary>
-        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> returned by a <see cref="Func{StreamWriter}"/>.
+        /// A <see cref="StreamWriter"/> to a <see cref="IConduit"/> returned by a <see cref="Func{StreamWriter}"/>.
         /// </summary>
         /// <param name="fnc">Function returning a streamwriter</param>
         private WriterTo(Func<StreamWriter> fnc) : this(AsScalar._(fnc))
         { }
 
         /// <summary>
-        /// A <see cref="StreamWriter"/> to a <see cref="IOutput"/> encapsulated in a <see cref="IScalar{StreamWriter}"/>.
+        /// A <see cref="StreamWriter"/> to a <see cref="IConduit"/> encapsulated in a <see cref="IScalar{StreamWriter}"/>.
         /// </summary>
         /// <param name="tgt">the target streamwriter</param>
         private WriterTo(IScalar<StreamWriter> tgt) : base(new DeadStream())

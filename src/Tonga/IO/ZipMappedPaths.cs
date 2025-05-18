@@ -11,7 +11,7 @@ namespace Tonga.IO
     /// A zip input mapped from a given zip input
     /// Maps the zip entry paths according to the given mapping function
     /// </summary>
-    public sealed class ZipMappedPaths : IInput
+    public sealed class ZipMappedPaths : IConduit
     {
         private readonly IScalar<Stream> input;
 
@@ -19,7 +19,7 @@ namespace Tonga.IO
         /// A zip input mapped from a given zip input
         /// Maps the zip entry paths according to the given mapping function
         /// </summary>
-        public ZipMappedPaths(Func<string, string> mapping, IInput zip)
+        public ZipMappedPaths(Func<string, string> mapping, IConduit zip)
         {
             this.input =
                 new AsScalar<Stream>(() =>
@@ -48,16 +48,14 @@ namespace Tonga.IO
         private void Move(ZipArchiveEntry source, ZipArchive archive, Func<string, string> mapping)
         {
             var mapped = mapping(source.FullName);
-            using (var sourceStream = source.Open())
-            using (var stream = archive.CreateEntry(mapped).Open())
-            {
-                Length._(
-                    new TeeInput(
-                        new AsInput(sourceStream),
-                        new OutputTo(stream)
-                    )
-                ).Value();
-            }
+            using var sourceStream = source.Open();
+            using var stream = archive.CreateEntry(mapped).Open();
+            Length._(
+                new TeeOnReadConduit(
+                    new AsConduit(sourceStream),
+                    new AsConduit(stream)
+                )
+            ).Value();
         }
     }
 }

@@ -17,16 +17,16 @@ namespace Tonga.Tests.IO
         {
             MemoryStream zipped = new MemoryStream();
             ReadAll._(
-                new TeeInput(
+                new TeeOnReadConduit(
                     "Hello!",
-                    new GZipOutput(new OutputTo(zipped))
+                    new GZipCompression(new AsConduit(zipped))
                 )
             ).Invoke();
 
             Assert.Equal(
                 "Hello!",
                 AsText._(
-                    new Tonga.IO.AsInput(
+                    new AsConduit(
                         new GZipStream(
                             new MemoryStream(zipped.ToArray()),
                             CompressionMode.Decompress
@@ -48,10 +48,10 @@ namespace Tonga.Tests.IO
                     stream.Close();
 
                     Length._(
-                        new TeeInput(
+                        new TeeOnReadConduit(
                             "Hello!",
-                            new GZipOutput(
-                                new OutputTo(stream)
+                            new GZipCompression(
+                                new AsConduit(stream)
                             )
                         )
                     ).Value();

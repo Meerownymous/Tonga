@@ -5,14 +5,14 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class LoggingInputTest
+    public sealed class LoggingOnReadConduitTest
     {
         [Fact]
         void ReadEmptyStream()
         {
             var input =
-                new LoggingInput(
-                    new Tonga.IO.AsInput(""),
+                new LoggingOnReadConduit(
+                    new Tonga.IO.AsConduit(""),
                     ""
                 );
             Assert.Equal(
@@ -25,8 +25,8 @@ namespace Tonga.Tests.IO
         void ReadByteByByte()
         {
             var input =
-                new LoggingInput(
-                    new Tonga.IO.AsInput(
+                new LoggingOnReadConduit(
+                    new Tonga.IO.AsConduit(
                         new byte[] {
                             // @checkstyle MagicNumberCheck (2 lines)
                             (byte) 20,

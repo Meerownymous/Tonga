@@ -4,15 +4,15 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class MemoryInputTest
+    public sealed class MemoryCopyTest
     {
 
         [Fact]
         public void MemorizesInput()
         {
             var memoryInput =
-                new MemoryInput(
-                    new Tonga.IO.AsInput(
+                new MemoryCopy(
+                    new Tonga.IO.AsConduit(
                         "This is my input!"
                     )
                 );
@@ -34,8 +34,8 @@ namespace Tonga.Tests.IO
         {
 
             var memoryInput =
-                new MemoryInput(
-                    new Tonga.IO.AsInput(
+                new MemoryCopy(
+                    new Tonga.IO.AsConduit(
                         ""
                     )
                 );

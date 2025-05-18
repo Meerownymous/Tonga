@@ -17,7 +17,7 @@ public sealed class GroupedTest
         var keyFunc =
             new FuncOf<string, double>((str) =>
                 new NumberOf(
-                    Length._(new AsInput(str)).Value()
+                    Length._(new AsConduit(str)).Value()
                 ).AsDouble()
             );
 

@@ -9,10 +9,10 @@ namespace Tonga.IO
     /// <summary>
     /// Input showing only last N bytes of the stream.
     /// </summary>
-    public sealed class Tail : IInput, IDisposable
+    public sealed class Tail : IConduit, IDisposable
     {
 
-        private readonly IInput input;
+        private readonly IConduit iConduit;
 
         private readonly int count;
 
@@ -21,20 +21,20 @@ namespace Tonga.IO
         /// <summary>
         /// Input showing only last N bytes of the stream.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="iConduit"></param>
         /// <param name="bytes"></param>
-        public Tail(IInput input, int bytes) : this(input, bytes, 16384)
+        public Tail(IConduit iConduit, int bytes) : this(iConduit, bytes, 16384)
         { }
 
         /// <summary>
         /// Input showing only last N bytes of the stream.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="iConduit"></param>
         /// <param name="bytes"></param>
         /// <param name="max"></param>
-        public Tail(IInput input, int bytes, int max)
+        public Tail(IConduit iConduit, int bytes, int max)
         {
-            this.input = input;
+            this.iConduit = iConduit;
             this.count = bytes;
             this.max = max;
         }
@@ -48,7 +48,7 @@ namespace Tonga.IO
             var buffer = new byte[this.max];
             var response = new byte[this.count];
             int num = 0;
-            var stream = this.input.Stream();
+            var stream = this.iConduit.Stream();
 
             for (int read = stream.Read(buffer, 0, buffer.Length); read > 0; read = stream.Read(buffer, 0, buffer.Length))
             {
@@ -95,7 +95,7 @@ namespace Tonga.IO
         {
             try
             {
-                (this.input as IDisposable)?.Dispose();
+                (this.iConduit as IDisposable)?.Dispose();
             }
             catch (Exception) { }
         }

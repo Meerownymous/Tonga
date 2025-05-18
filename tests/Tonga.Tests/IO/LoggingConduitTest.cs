@@ -8,16 +8,16 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class LoggingOutputTest
+    public sealed class LoggingConduitTest
     {
         [Fact]
         public void LogsZeroBytesOnEmptyInput()
         {
             var res =
                 Length._(
-                    new TeeInput(
-                        new Tonga.IO.AsInput(""),
-                        new LoggingOutput(
+                    new TeeOnReadConduit(
+                        new AsConduit(""),
+                        new LoggingOnReadConduit(
                             new ConsoleOutput(),
                             "memory"
                         )
@@ -38,7 +38,7 @@ namespace Tonga.Tests.IO
                 using (var append = new AppendTo(new Uri(tempfile.Value())))
                 {
                     var output =
-                        new LoggingOutput(
+                        new LoggingOnReadConduit(
                             append,
                             "memory"
                         ).Stream();
@@ -46,7 +46,7 @@ namespace Tonga.Tests.IO
                     output.Write(new AsBytes("a").Bytes(), 0, 1);
 
                 }
-                var inputStream = new Tonga.IO.AsInput(new Uri(tempfile.Value())).Stream();
+                var inputStream = new Tonga.IO.AsConduit(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
                 {
@@ -69,7 +69,7 @@ namespace Tonga.Tests.IO
                 using (var append = new AppendTo(new Uri(tempfile.Value())))
                 {
                     var output =
-                    new LoggingOutput(
+                    new LoggingOnReadConduit(
                         append,
                         "memory"
                     ).Stream();
@@ -78,7 +78,7 @@ namespace Tonga.Tests.IO
                     output.Write(bytes, 0, bytes.Length);
                 }
 
-                var inputStream = new Tonga.IO.AsInput(new Uri(tempfile.Value())).Stream();
+                var inputStream = new Tonga.IO.AsConduit(new Uri(tempfile.Value())).Stream();
                 var content = "";
                 using (var reader = new StreamReader(inputStream))
                 {
@@ -100,22 +100,22 @@ namespace Tonga.Tests.IO
                 using (var append = new AppendTo(new Uri(tempfile.Value())))
                 {
                     var output =
-                    new LoggingOutput(
+                    new LoggingOnReadConduit(
                         append,
                         "text file"
                     ).Stream();
 
                     ReadAll._(
-                        new TeeInput(
+                        new TeeOnReadConduit(
                             new Resource("Assets/Txt/large-text.txt", this.GetType()),
-                            new OutputTo(output)
+                            new AsConduit(output)
                         )
                     ).Invoke();
                 }
 
-                var inputStream = new Tonga.IO.AsInput(new Uri(tempfile.Value())).Stream();
-                var content = "";
-                var input = "";
+                var inputStream = new AsConduit(new Uri(tempfile.Value())).Stream();
+                string content;
+                string input;
                 using (var reader = new StreamReader(inputStream))
                 {
                     content = reader.ReadToEnd();

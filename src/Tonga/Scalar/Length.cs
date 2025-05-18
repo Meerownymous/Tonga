@@ -23,14 +23,14 @@ namespace Tonga.Scalar
         /// <summary>
         /// Length of a stream
         /// </summary>
-        public static Length _(IInput input) => new Length(() =>
+        public static Length _(IConduit origin) => new(() =>
         {
             var result = 0L;
-            var stream = input.Stream();
+            var stream = origin.Stream();
             if(stream.CanSeek)
             {
-                result = input.Stream().Length;
-                input.Stream().Close();
+                result = origin.Stream().Length;
+                origin.Stream().Close();
             }
             else
             {

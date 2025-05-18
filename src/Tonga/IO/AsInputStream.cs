@@ -25,27 +25,27 @@ namespace Tonga.IO
         /// A readable stream out of a file Uri.
         /// </summary>
         /// <param name="path">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public AsInputStream(Uri path) : this(new AsInput(path))
+        public AsInputStream(Uri path) : this(new AsConduit(path))
         { }
 
         /// <summary>
         /// A readable stream out of a www Url.
         /// </summary>
         /// <param name="url">a url starting with http:// or https://</param>
-        public AsInputStream(Url url) : this(new AsInput(url))
+        public AsInputStream(Url url) : this(new AsConduit(url))
         { }
 
         /// <summary>
         /// A readable stream out of Bytes.
         /// </summary>
         /// <param name="bytes">a <see cref="IBytes"/> object which will be copied to memory</param>
-        public AsInputStream(IBytes bytes) : this(new AsInput(bytes))
+        public AsInputStream(IBytes bytes) : this(new AsConduit(bytes))
         { }
         /// <summary>
         /// A readable stream out of a Byte array.
         /// </summary>
         /// <param name="bytes">a <see cref="byte"/> array</param>
-        public AsInputStream(byte[] bytes) : this(new AsInput(bytes))
+        public AsInputStream(byte[] bytes) : this(new AsConduit(bytes))
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="text">some string</param>
         public AsInputStream(String text) : this(
-            new AsInput(text))
+            new AsConduit(text))
         { }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Tonga.IO
         /// <param name="text">some <see cref="string"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the string</param>
         public AsInputStream(String text, Encoding enc) : this(
-            new AsInput(text, enc))
+            new AsConduit(text, enc))
         { }
 
         /// <summary>
@@ -78,14 +78,14 @@ namespace Tonga.IO
         /// <param name="text">some <see cref="IText"/></param>
         /// <param name="enc"><see cref="Encoding"/> of the text</param>
         public AsInputStream(IText text, Encoding enc) : this(
-            new AsInput(text, enc))
+            new AsConduit(text, enc))
         { }
 
         /// <summary>
         /// A readable stream out of a <see cref="StreamReader"/>.
         /// </summary>
         /// <param name="rdr">a streamreader</param>
-        public AsInputStream(StreamReader rdr) : this(new AsInput(rdr))
+        public AsInputStream(StreamReader rdr) : this(new AsConduit(rdr))
         { }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Tonga.IO
         /// <param name="rdr">a streamreader</param>
         /// <param name="max">maximum buffer size</param>
         public AsInputStream(StreamReader rdr, int max = 16 << 10) : this(
-            new AsInput(rdr, Encoding.UTF8, max))
+            new AsConduit(rdr, Encoding.UTF8, max))
         { }
 
         /// <summary>
@@ -104,15 +104,15 @@ namespace Tonga.IO
         /// <param name="enc">encoding of the reader</param>
         /// <param name="max">maximum buffer size</param>
         public AsInputStream(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(
-            new AsInput(rdr, enc, max)
+            new AsConduit(rdr, enc, max)
         )
         { }
 
         /// <summary>
-        /// A readable stream out of a <see cref="IInput"/>.
+        /// A readable stream out of a <see cref="IConduit"/>.
         /// </summary>
-        /// <param name="input">the input</param>
-        public AsInputStream(IInput input) : this(AsScalar._(input.Stream))
+        /// <param name="source">the input</param>
+        public AsInputStream(IConduit source) : this(AsScalar._(source.Stream))
         { }
 
         /// <summary>

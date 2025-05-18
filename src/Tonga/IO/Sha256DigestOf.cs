@@ -14,7 +14,7 @@ namespace Tonga.IO
         /// SHA-256 checksum calculation of IInput.
         /// </summary>
         /// <param name="source">Input</param>
-        public Sha256DigestOf(IInput source) :
+        public Sha256DigestOf(IConduit source) :
             base(source, AsScalar._<HashAlgorithm>(SHA256.Create))
         { }
     }

@@ -17,7 +17,7 @@ namespace Tonga.Tests.IO
             var reader = new TeeReader(
                 new AsReader(content),
                 new WriterTo(
-                    new OutputTo(baos))
+                    new AsConduit(baos))
             );
             int done = 0;
             while (done >= 0)
@@ -28,7 +28,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 String.Compare(
                     AsText._(
-                        new Tonga.IO.AsInput(
+                        new Tonga.IO.AsConduit(
                             new AsReader(baos.ToArray()))
                     ).AsString(),
                     content,

@@ -5,13 +5,13 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class LoggingInputStreamTest
+    public sealed class LoggingOnReadStreamTest
     {
         [Fact]
         void ReadEmptyStream()
         {
             var stream =
-                new LoggingInputStream(
+                new LoggingOnReadStream(
                     new MemoryStream(
                         new AsBytes("").Bytes()
                     ),
@@ -26,7 +26,7 @@ namespace Tonga.Tests.IO
         [Fact]
         void ReadByteByByte()
         {
-            var stream = new LoggingInputStream(
+            var stream = new LoggingOnReadStream(
                 new MemoryStream(
                     new byte[] {
                             // @checkstyle MagicNumberCheck (2 lines)
@@ -55,7 +55,7 @@ namespace Tonga.Tests.IO
         [Fact]
         void SkipFirstByte()
         {
-            var stream = new LoggingInputStream(
+            var stream = new LoggingOnReadStream(
                 new MemoryStream(
                     new byte[] {
                             // @checkstyle MagicNumberCheck (2 lines)

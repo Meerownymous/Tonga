@@ -119,7 +119,7 @@ public sealed class TextOfTest
 
         Assert.True(
             AsText._(
-                new AsInput(content),
+                new AsConduit(content),
                 Encoding.UTF8
             ).AsString() == content,
             "Can't read text from Input");
@@ -131,7 +131,7 @@ public sealed class TextOfTest
         var content = "Hello, друг! with default charset";
         Assert.True(
             AsText._(
-                new AsInput(content)
+                new AsConduit(content)
             ).AsString() == content,
             "Can't read text from Input with default charset");
     }
@@ -220,7 +220,7 @@ public sealed class TextOfTest
 
         Assert.True(
             AsText._(
-                new AsInput(content),
+                new AsConduit(content),
                 2,
                 Encoding.UTF8
             ).AsString() == content,
@@ -234,7 +234,7 @@ public sealed class TextOfTest
 
         Assert.True(
             AsText._(
-                new AsInput(content),
+                new AsConduit(content),
                 2
             ).AsString() == content,
             "Can't read text with a small reading buffer and default charset");

@@ -80,7 +80,7 @@ namespace Tonga.Tests.Bytes
             String body = "1234567890";
             Assert.True(
                 new AsBytes(
-                    new AsInput(
+                    new AsConduit(
                         new Tonga.Text.Joined(
                             "",
                             Tonga.Enumerable.Head._(
@@ -99,7 +99,7 @@ namespace Tonga.Tests.Bytes
             Assert.True(
                 Encoding.UTF8.GetString(
                     new AsBytes(
-                        new AsInput("Hello, друг!")
+                        new AsConduit("Hello, друг!")
                     ).Bytes()) == "Hello, друг!");
         }
 
@@ -127,7 +127,7 @@ namespace Tonga.Tests.Bytes
             Assert.True(
                 Encoding.UTF8.GetString(
                     new AsBytes(
-                        new AsInput(
+                        new AsConduit(
                             AsText._(source)
                         ),
                         2
@@ -143,7 +143,7 @@ namespace Tonga.Tests.Bytes
             {
                 t =
                     AsText._(
-                        new AsInput(stream),
+                        new AsConduit(stream),
                         Encoding.UTF8
                     );
             }
@@ -159,7 +159,7 @@ namespace Tonga.Tests.Bytes
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
                     new AsBytes(
-                        new AsInput(text)
+                        new AsConduit(text)
                         ).Bytes(),
                     new AsBytes(text.AsString()).Bytes()
                 )

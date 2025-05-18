@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class TeeInputTest
+    public sealed class TeeOnReadConduitTest
     {
         [Fact]
         public void CopiesFromUrlToFile()
@@ -18,7 +18,7 @@ namespace Tonga.Tests.IO
             {
                 var directoryPath = directory.Value().FullName;
                 ReadAll._(
-                    new TeeInput(
+                    new TeeOnReadConduit(
                         new Uri("http://www.google.de"),
                         new Uri($@"file://{directoryPath}\output.txt")
                     )
@@ -47,7 +47,7 @@ namespace Tonga.Tests.IO
                 );
 
                 ReadAll._(
-                    new TeeInput(
+                    new TeeOnReadConduit(
                         new Uri($@"{directoryPath}\input.txt"),
                         new Uri($@"{directoryPath}\output.txt")
                     )
@@ -71,9 +71,9 @@ namespace Tonga.Tests.IO
             String content = "Hello, товарищ!";
             Assert.True(
                 AsText._(
-                    new TeeInput(
-                        new Tonga.IO.AsInput(content),
-                        new OutputTo(baos)
+                    new TeeOnReadConduit(
+                        new AsConduit(content),
+                        new AsConduit(baos)
                     )
                 ).AsString() == Encoding.UTF8.GetString(baos.ToArray())
             );
@@ -93,16 +93,16 @@ namespace Tonga.Tests.IO
             var str =
                 AsText._(
                     new AsBytes(
-                        new TeeInput(
+                        new TeeOnReadConduit(
                             "Hello, друг!",
-                            new OutputTo(new Uri(path))
+                            new AsConduit(new Uri(path))
                         )
                     )
                 ).AsString();
 
             Assert.Equal(
                 str,
-                AsText._(new Tonga.IO.AsInput(new Uri(path))).AsString()
+                AsText._(new AsConduit(new Uri(path))).AsString()
             );
         }
     }

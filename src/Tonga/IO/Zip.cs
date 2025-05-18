@@ -8,43 +8,29 @@ namespace Tonga.IO;
 ///<summary>
 ///Zips all Files in a Directory
 ///</summary>
-public sealed class Zip : IInput
+public sealed class Zip(string path) : IConduit
 {
-    private readonly string path;
-
-    /// <summary>
-    /// Zips all Files in a Directory
-    /// </summary>
-    /// <param name="path"> the directory with the files to zip</param>
-    public Zip(string path)
-    {
-        this.path = path;
-    }
-
     /// <summary>
     /// The Zipped Files as a Stream
     /// </summary>
     /// <returns></returns>
     public Stream Stream()
     {
-        AssumeIsDirectory(this.path);
+        AssumeIsDirectory(path);
         var memory = new MemoryStream();
-        using (var zip = new ZipArchive(memory, ZipArchiveMode.Create, true))
+        using var zip = new ZipArchive(memory, ZipArchiveMode.Create, true);
+        foreach (var file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
-            foreach (var file in Directory.GetFiles(this.path, "*", SearchOption.AllDirectories))
-            {
-                var entry = zip.CreateEntry(file);
-                using (var entryStream = entry.Open())
-                {
-                    ReadAll._(
-                        new TeeInput(
-                            new AsInput(file),
-                            new OutputTo(entryStream)
-                        )
-                    ).Invoke();
-                }
-            }
+            var entry = zip.CreateEntry(file);
+            using var entryStream = entry.Open();
+            ReadAll._(
+                new TeeOnReadConduit(
+                    new AsConduit(file),
+                    new AsConduit(entryStream)
+                )
+            ).Invoke();
         }
+
         return memory;
     }
 

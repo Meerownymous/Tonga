@@ -70,8 +70,8 @@ namespace Tonga.Tests.IO
                 "text!",
                 AsText._(
                     new ConduitWithFallback(
-                        new AsConduit(
-                            new Uri(Path.GetFullPath("/this-file-does-not-exist.txt"))
+                        new AsConduit(() =>
+                            throw new Exception()
                         ),
                         new AsConduit(AsText._("Alternative text!"))
                     )

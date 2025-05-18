@@ -57,7 +57,7 @@ jobs:
       - name: Get Current Tag
         shell: bash
         run: |
-          CURRENT_TAG=$(git describe --tags --abbrev=0)
+          CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
           echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
 
       - name: Pack NuGet Package

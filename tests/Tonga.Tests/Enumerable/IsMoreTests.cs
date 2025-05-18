@@ -2,7 +2,7 @@ using Tonga.Enumerable;
 using Tonga.Fact;
 using Xunit;
 
-namespace Tonga.Tests.Fact
+namespace Tonga.Tests.Enumerable
 {
     public sealed class IsMoreTests
     {

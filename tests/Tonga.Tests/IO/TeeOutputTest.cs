@@ -19,7 +19,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new TeeInput(
-                        new AsInput(content),
+                        new Tonga.IO.AsInput(content),
                         new TeeOutput(
                             new OutputTo(baos),
                             new OutputTo(copy)

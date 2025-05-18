@@ -20,8 +20,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
-        /// <param name="lst">enumerable of items to join</param>
-        /// <param name="items">array of items to join</param>
         public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : this(
             AsEnumerable._(first, second),
             lst,
@@ -32,8 +30,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
-        /// <param name="lst">enumerable of items to join</param>
-        /// <param name="items">array of items to join</param>
         public Joined(T first, IEnumerable<T> lst, params T[] items) : this(
             AsEnumerable._(
                 Single._(first),
@@ -46,8 +42,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
-        /// <param name="lst">enumerable of items to join</param>
-        /// <param name="items">array of items to join</param>
         public Joined(IEnumerable<T> lst, params T[] items) : this(
             AsEnumerable._(lst,
                 AsEnumerable._(items)
@@ -58,7 +52,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
-        /// <param name="items">enumerables to join</param>
         public Joined(params IEnumerable<T>[] items) : this(
             AsEnumerable._(items)
         )

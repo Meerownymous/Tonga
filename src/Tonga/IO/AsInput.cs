@@ -24,18 +24,20 @@ namespace Tonga.IO
         /// <summary>
         /// Input out of a file Uri.
         /// </summary>
-        /// <param name="file">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
-        public AsInput(Uri file) : this(
+        /// <param name="uri">uri of a file, get with Path.GetFullPath(relativePath) or prefix with file://...</param>
+        public AsInput(Uri uri) : this(
             () =>
             {
-                if (file.HostNameType == UriHostNameType.Dns)
+                Stream result;
+                if (uri.HostNameType == UriHostNameType.Dns)
                 {
-                    return WebRequest.Create(file).GetResponse().GetResponseStream();
+                    result = new AsInput(new Url(uri.AbsoluteUri)).Stream();
                 }
                 else
                 {
-                    return new FileStream(Uri.UnescapeDataString(file.LocalPath), FileMode.Open, FileAccess.Read);
+                    result = new FileStream(Uri.UnescapeDataString(uri.LocalPath), FileMode.Open, FileAccess.Read);
                 }
+                return result;
             })
         { }
 
@@ -69,13 +71,11 @@ namespace Tonga.IO
             {
                 var stream = Task.Run(async () =>
                 {
-                    using (HttpClient client = new HttpClient())
+                    using HttpClient client = new HttpClient();
+                    HttpResponseMessage response = await client.GetAsync(url.Value().Value());
+                    HttpContent content = response.Content;
                     {
-                        HttpResponseMessage response = await client.GetAsync(url.Value().Value());
-                        HttpContent content = response.Content;
-                        {
-                            return await content.ReadAsStreamAsync();
-                        }
+                        return await content.ReadAsStreamAsync();
                     }
                 });
 

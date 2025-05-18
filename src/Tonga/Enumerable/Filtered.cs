@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -87,15 +85,12 @@ namespace Tonga.Enumerable
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
-        /// <param name="fnc">filter function</param>
         public static IEnumerable<T> Filtered<T>(this T[] items, Func<T, Boolean> fnc) =>
             new Filtered<T>(fnc, items);
 
         /// <summary>
         /// A filtered <see cref="IEnumerable{T}"/> which filters by the given condition <see cref="Func{In, Out}"/>.
         /// </summary>
-        /// <param name="src">enumerable to filter</param>
-        /// <param name="fnc">filter function</param>
         public static IEnumerable<T> Filtered<T>(this IEnumerable<T> src, Func<T, Boolean> fnc) => new Filtered<T>(fnc, src);
     }
 }

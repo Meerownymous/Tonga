@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using Tonga.IO;
+using Tonga.Scalar;
 
 namespace Tonga;
 

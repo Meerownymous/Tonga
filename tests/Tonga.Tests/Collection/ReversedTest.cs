@@ -1,13 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
 using Tonga.Scalar;
+using Xunit;
 
-
-namespace Tonga.Collection.Tests
+namespace Tonga.Tests.Collection
 {
     public sealed class ReversedTest
     {
@@ -18,7 +15,7 @@ namespace Tonga.Collection.Tests
             Assert.Equal(
                 2,
                 new ItemAt<int>(
-                    new Reversed<int>(
+                    new Tonga.Collection.Reversed<int>(
                         AsEnumerable._(0, -1, 2))
                 ).Value()
             );
@@ -31,7 +28,7 @@ namespace Tonga.Collection.Tests
             Assert.Equal(
                 last,
                 new ItemAt<string>(
-                    new Reversed<string>(
+                    new Tonga.Collection.Reversed<string>(
                         AsEnumerable._("item", last)
                     )
                 ).Value()
@@ -42,7 +39,7 @@ namespace Tonga.Collection.Tests
         public void ReversesEmptyList()
         {
             Assert.Empty(
-                new Reversed<string>(
+                new Tonga.Collection.Reversed<string>(
                     new List<string>()));
         }
 
@@ -51,7 +48,7 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 3,
-                new Reversed<string>(
+                new Tonga.Collection.Reversed<string>(
                     AsEnumerable._("0", "1", "2")
                 ).Count
             );
@@ -61,7 +58,7 @@ namespace Tonga.Collection.Tests
         public void NotEmpty()
         {
             Assert.NotEmpty(
-                new Reversed<int>(
+                new Tonga.Collection.Reversed<int>(
                     AsEnumerable._(
                         6, 16
                     )
@@ -76,7 +73,7 @@ namespace Tonga.Collection.Tests
 
             Assert.Contains(
                 word,
-                new Reversed<string>(
+                new Tonga.Collection.Reversed<string>(
                     AsEnumerable._(
                         "hello", "elegant", word)
                     )
@@ -87,7 +84,7 @@ namespace Tonga.Collection.Tests
         public void RejectsAdd()
         {
             Assert.Throws<InvalidOperationException>(() =>
-              new Reversed<int>(
+              new Tonga.Collection.Reversed<int>(
                   AsEnumerable._(
                       1, 2, 3, 4)
               ).Add(6));
@@ -97,7 +94,7 @@ namespace Tonga.Collection.Tests
         public void RejectsRemove()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new Reversed<int>(
+                new Tonga.Collection.Reversed<int>(
                     AsEnumerable._(
                         1, 2, 3, 4
                     )
@@ -111,7 +108,7 @@ namespace Tonga.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new Reversed<int>(
+                new Tonga.Collection.Reversed<int>(
                     AsEnumerable._(
                         1, 2, 3, 4)
                 ).Clear()

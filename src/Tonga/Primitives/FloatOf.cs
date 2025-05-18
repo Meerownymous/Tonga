@@ -10,10 +10,8 @@ namespace Tonga.Primitives
     /// <summary>
     /// A float out of text.
     /// </summary>
-    public sealed class FloatOf : ScalarEnvelope<float>
+    public sealed class FloatOf(Func<float> value) : ScalarEnvelope<float>(value)
     {
-        private readonly AsScalar<float> val;
-
         /// <summary>
         /// A float out of a <see cref="string"/> using invariant culture.
         /// </summary>
@@ -44,9 +42,6 @@ namespace Tonga.Primitives
         public FloatOf(IText text, CultureInfo culture) : this(
             () => float.Parse(text.AsString(), culture.NumberFormat)
         )
-        { }
-
-        public FloatOf(Func<float> value) : base(value)
         { }
     }
 }

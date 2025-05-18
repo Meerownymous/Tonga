@@ -17,7 +17,7 @@ namespace Tonga.Tests.IO
             var b =
                 new AsBytes(
                     new Tail(
-                        new AsInput(
+                        new Tonga.IO.AsInput(
                             new AsBytes(bytes)
                         ),
                         size - 1
@@ -42,7 +42,7 @@ namespace Tonga.Tests.IO
             var b =
                 new AsBytes(
                     new Tail(
-                        new AsInput(new AsBytes(bytes)),
+                        new Tonga.IO.AsInput(new AsBytes(bytes)),
                         size
                     )
                 ).Bytes();
@@ -62,7 +62,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 new AsBytes(
                     new Tail(
-                        new AsInput(new AsBytes(bytes)),
+                        new Tonga.IO.AsInput(new AsBytes(bytes)),
                         size,
                         size
                     )
@@ -80,7 +80,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 new AsBytes(
                     new Tail(
-                        new AsInput(new AsBytes(bytes)),
+                        new Tonga.IO.AsInput(new AsBytes(bytes)),
                         size + 1
                     )
                 ).Bytes(),
@@ -99,7 +99,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 new AsBytes(
                     new Tail(
-                        new AsInput(new AsBytes(bytes)),
+                        new Tonga.IO.AsInput(new AsBytes(bytes)),
                         size - 1,
                         size - 1
                     )
@@ -118,7 +118,7 @@ namespace Tonga.Tests.IO
                 {
                     new AsBytes(
                         new Tail(
-                            new AsInput(
+                            new Tonga.IO.AsInput(
                                 new AsBytes(bytes)
                             ),
                             size,

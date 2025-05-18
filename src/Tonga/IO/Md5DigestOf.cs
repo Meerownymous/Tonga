@@ -17,7 +17,7 @@ namespace Tonga.IO
         /// <param name="source">Input</param>
         public Md5DigestOf(IInput source) : base(
             source,
-            AsScalar._<HashAlgorithm>(() => new MD5CryptoServiceProvider())
+            AsScalar._<HashAlgorithm>(MD5.Create)
         )
         { }
     }

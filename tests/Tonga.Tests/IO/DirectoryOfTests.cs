@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using Tonga.Fact;
+using Tonga.Enumerable;
 using Tonga.IO;
 using Xunit;
 

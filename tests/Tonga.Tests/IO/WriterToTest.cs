@@ -23,7 +23,7 @@ public sealed class WriterToTest
             s =
                 AsText._(
                     new TeeInput(
-                        new AsInput(content),
+                        new Tonga.IO.AsInput(content),
                         new WriterAsOutput(
                             output
                         )
@@ -31,12 +31,14 @@ public sealed class WriterToTest
                 ).AsString();
         }
 
-        Assert.True(
-            AsText._(
+        Assert.Equal(
+            0,
+            String.Compare(AsText._(
                 new InputAsBytes(
-                    new AsInput(uri)
+                    new Tonga.IO.AsInput(uri)
                 )
-            ).AsString().CompareTo(s) == 0 //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
+            ).AsString(), s, StringComparison.Ordinal)
+            //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
         );
     }
 }

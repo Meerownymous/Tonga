@@ -14,7 +14,8 @@ namespace Tonga.Tests.Text
                 new Replaced(
                     AsText._("Hello!"),
                     "ello", "i"
-                ).AsString()            );
+                ).AsString()
+            );
         }
 
         [Fact]

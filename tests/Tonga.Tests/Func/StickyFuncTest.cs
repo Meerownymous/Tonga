@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Tonga.Func;
 using Xunit;
+// ReSharper disable EqualExpressionComparison
 
 namespace Tonga.Tests.Func
 {
@@ -12,7 +13,7 @@ namespace Tonga.Tests.Func
         {
             IFunc<Boolean, int> func =
                 new StickyFunc<bool, int>(
-                    input => new Random().Next()
+                    _ => new Random().Next()
             );
 
             Assert.True(

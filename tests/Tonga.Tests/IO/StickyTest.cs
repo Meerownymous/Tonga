@@ -1,17 +1,15 @@
-
-
 using System;
 using System.IO;
-using Xunit;
 using Tonga.Bytes;
 using Tonga.Enumerable;
 using Tonga.Func;
-using Tonga.Text;
+using Tonga.IO;
 using Tonga.Scalar;
-using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
-using Tonga.Tests.IO;
+using Tonga.Text;
+using Xunit;
+using Sticky = Tonga.IO.Sticky;
 
-namespace Tonga.IO.Tests
+namespace Tonga.Tests.IO
 {
     public sealed class StickyTest
     {
@@ -23,12 +21,12 @@ namespace Tonga.IO.Tests
                 var str = "Hello World"; var lmt = "\r\n"; var times = 1000;
 
                 ReadAll._(
-                    new AsInput(
+                    new Tonga.IO.AsInput(
                         new TeeInputStream(
                             new MemoryStream(
                                 new AsBytes(
-                                    new Text.Joined(lmt,
-                                        Enumerable.Head._(
+                                    new Tonga.Text.Joined(lmt,
+                                        Tonga.Enumerable.Head._(
                                             Endless._(str),
                                             times
                                         )
@@ -45,7 +43,7 @@ namespace Tonga.IO.Tests
 
                 var ipt =
                     new Sticky(
-                        new AsInput(
+                        new Tonga.IO.AsInput(
                             new Uri(file.Value())
                         )
                     );
@@ -63,7 +61,7 @@ namespace Tonga.IO.Tests
                 "<html",
                 AsText._(
                     new Sticky(
-                        new AsInput(
+                        new Tonga.IO.AsInput(
                             new Url("http://www.google.de")
                         )
                     )

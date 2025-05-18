@@ -82,8 +82,6 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
-
         public Formatted(string ptn, CultureInfo locale, params IText[] arguments) : this(
             AsText._(ptn),
             locale,
@@ -105,7 +103,6 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
         public Formatted(
             IText ptn,
             CultureInfo locale,
@@ -123,7 +120,6 @@ namespace Tonga.Text
         /// <param name="ptn">pattern to put arguments in</param>
         /// <param name="locale">a specific culture</param>
         /// <param name="arguments">arguments to apply</param>
-        /// <param name="live">should the object build its value live, every time it is used?</param>
         public Formatted(
             IText ptn,
             CultureInfo locale,

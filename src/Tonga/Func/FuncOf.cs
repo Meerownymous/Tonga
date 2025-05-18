@@ -87,9 +87,6 @@ namespace Tonga.Func
         /// <summary>
         /// Invoke the function with arguments and retrieve th output.
         /// </summary>
-        /// <param name="arg1">first argument</param>
-        /// <param name="arg2">second argument</param>
-        /// <returns>the output</returns>
         public Out Invoke(In1 arg1, In2 arg2, In3 arg3) => func(arg1, arg2, arg3);
 
         /// <summary>

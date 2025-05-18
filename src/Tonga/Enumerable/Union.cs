@@ -58,7 +58,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Union objects in two enumerables.
         /// </summary>
-        /// <param name="compare">Condition to match</param>
         public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
             new Union<T>(a, b, compare);
 
@@ -77,7 +76,6 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Union of two enumerables.
         /// </summary>
-        /// <param name="compare">Condition to match</param>
         public static IEnumerable<T> Union<T>(this IEnumerable<T> a, IEnumerable<T> b, Func<T, T, bool> compare) =>
             new Union<T>(a, b, compare);
 

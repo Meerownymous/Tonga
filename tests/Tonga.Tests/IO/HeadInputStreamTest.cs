@@ -8,11 +8,11 @@ namespace Tonga.Tests.IO
     public sealed class HeadInputStreamTest
     {
         [Fact]
-        void TestSkippingLessThanTotal()
+        void IsSkippingLessThanTotal()
         {
             var stream =
                 new HeadInputStream(
-                    new AsInput("testSkippingLessThanTotal").Stream(),
+                    new Tonga.IO.AsInput("testSkippingLessThanTotal").Stream(),
                     5
                 );
 
@@ -25,16 +25,16 @@ namespace Tonga.Tests.IO
 
             Assert.Contains(
                 "tS",
-                AsText._(new AsInput(stream)).AsString()
+                AsText._(new Tonga.IO.AsInput(stream)).AsString()
             );
         }
 
         [Fact]
-        void TestSkippingMoreThanTotal()
+        void IsSkippingMoreThanTotal()
         {
             var stream =
                 new HeadInputStream(
-                    new AsInput("testSkippingMoreThanTotal").Stream(),
+                    new Tonga.IO.AsInput("testSkippingMoreThanTotal").Stream(),
                     5
                 );
             var skipped = stream.Seek(7L, SeekOrigin.Begin);

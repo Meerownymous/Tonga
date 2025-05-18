@@ -14,10 +14,10 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new InputWithFallback(
-                        new AsInput(
+                        new Tonga.IO.AsInput(
                             new Uri(Path.GetFullPath("/this-file-is-absent-for-sure.txt"))
                         ),
-                        new AsInput("hello, world!")
+                        new Tonga.IO.AsInput("hello, world!")
                     )
                 ).AsString().EndsWith("world!"),
                 "Can't read alternative source"

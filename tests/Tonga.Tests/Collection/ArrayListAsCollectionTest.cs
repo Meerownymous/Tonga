@@ -1,11 +1,9 @@
-
-
 using System.Collections;
-using Xunit;
 using Tonga.Collection;
 using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Enumerable.Test
+namespace Tonga.Tests.Collection
 {
     public class ArrayListAsCollectionTest
     {

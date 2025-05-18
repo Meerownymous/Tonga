@@ -1,8 +1,9 @@
 
 
+using Tonga.Bytes;
 using Xunit;
 
-namespace Tonga.Bytes.Tests
+namespace Tonga.Tests.Bytes
 {
     public sealed class BytesBase64Test
     {

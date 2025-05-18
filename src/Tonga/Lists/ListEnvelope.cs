@@ -21,7 +21,6 @@ namespace Tonga.List
         /// <summary>
         /// List envelope. Not sticky, will enumerate on each access.
         /// </summary>
-        /// <param name="live">value is handled live or sticky</param>
         public ListEnvelope(IList<T> list)
         {
             this.origin = list;

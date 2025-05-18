@@ -1,9 +1,8 @@
-
-
-using Xunit;
 using Tonga.IO;
+using Xunit;
+using Sticky = Tonga.Bytes.Sticky;
 
-namespace Tonga.Bytes.Tests
+namespace Tonga.Tests.Bytes
 {
     public sealed class StickyTest
     {

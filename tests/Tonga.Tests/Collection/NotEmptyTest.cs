@@ -1,11 +1,11 @@
-
-
 using System;
-using Xunit;
+using Tonga.Collection;
 using Tonga.Enumerable;
 using Tonga.Scalar;
+using Xunit;
+using NotEmpty = Tonga.Collection.NotEmpty;
 
-namespace Tonga.Collection.Tests
+namespace Tonga.Tests.Collection
 {
     public sealed class NotEmptyTest
     {

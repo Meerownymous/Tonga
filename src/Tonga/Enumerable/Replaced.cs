@@ -105,7 +105,7 @@ namespace Tonga.Enumerable
     public static class ReplacedSmarts
     {
         /// <summary>
-        /// A <see cref="IEnumerable<T>"/> whose items are replaced if they match a condition.
+        /// A <see cref="IEnumerable"/> whose items are replaced if they match a condition.
         /// </summary>
         public static IEnumerable<T> Replaced<T>(this IEnumerable<T> origin, Func<T, bool> condition, T replacement) =>
             new Replaced<T>(origin, condition, replacement);

@@ -25,7 +25,7 @@ namespace Tonga.Tests.IO
          * Ctor.
          * @param size The size of the array to encapsulate
          */
-        internal SlowInput(int size) : this(new AsInput(new MemoryStream(new byte[size])))
+        internal SlowInput(int size) : this(new Tonga.IO.AsInput(new MemoryStream(new byte[size])))
         { }
 
         /**

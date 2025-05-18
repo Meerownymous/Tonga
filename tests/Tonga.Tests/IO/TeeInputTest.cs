@@ -72,7 +72,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new TeeInput(
-                        new AsInput(content),
+                        new Tonga.IO.AsInput(content),
                         new OutputTo(baos)
                     )
                 ).AsString() == Encoding.UTF8.GetString(baos.ToArray())
@@ -102,7 +102,7 @@ namespace Tonga.Tests.IO
 
             Assert.Equal(
                 str,
-                AsText._(new AsInput(new Uri(path))).AsString()
+                AsText._(new Tonga.IO.AsInput(new Uri(path))).AsString()
             );
         }
     }

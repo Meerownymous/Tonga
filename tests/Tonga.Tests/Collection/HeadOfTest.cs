@@ -1,12 +1,9 @@
-
-
 using System;
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
+using Xunit;
 
-
-namespace Tonga.Collection.Tests
+namespace Tonga.Tests.Collection
 {
     public sealed class HeadOfTest
     {
@@ -15,7 +12,7 @@ namespace Tonga.Collection.Tests
         public void BehavesAsCollection()
         {
             Assert.Contains(
-                new Head<int>(
+                new Tonga.Collection.Head<int>(
                     2,
                     AsEnumerable._(1, -1, 2, 0)
                 ),
@@ -27,7 +24,7 @@ namespace Tonga.Collection.Tests
         {
             Assert.Equal(
                 2,
-                new Head<string>(
+                new Tonga.Collection.Head<string>(
                     2,
                     AsEnumerable._(
                         "hello", "world", "друг")
@@ -38,7 +35,7 @@ namespace Tonga.Collection.Tests
         public void SizeEmptyReturnZero()
         {
             Assert.Empty(
-                new Head<int>(
+                new Tonga.Collection.Head<int>(
                     2,
                     new List<int>()
                 )
@@ -49,7 +46,7 @@ namespace Tonga.Collection.Tests
         public void SizeLimitZeroReturnZero()
         {
             Assert.Empty(
-                new Head<string>(
+                new Tonga.Collection.Head<string>(
                     0,
                     AsEnumerable._("1", "2", "3")
                 )
@@ -60,7 +57,7 @@ namespace Tonga.Collection.Tests
         public void WithItemsNotEmpty()
         {
             Assert.NotEmpty(
-                new Head<String>(
+                new Tonga.Collection.Head<String>(
                     2,
                     AsEnumerable._("first", "second")
                 )
@@ -71,7 +68,7 @@ namespace Tonga.Collection.Tests
         public void WithoutItemsIsEmpty()
         {
             Assert.Empty(
-                new Head<String>(
+                new Tonga.Collection.Head<String>(
                     0,
                     AsEnumerable._("third", "fourth")
                 )
@@ -82,7 +79,7 @@ namespace Tonga.Collection.Tests
         public void RejectsAdd()
         {
             Assert.Throws<InvalidOperationException>(() =>
-            new Head<int>(
+            new Tonga.Collection.Head<int>(
                 2,
                 AsEnumerable._(1, 2, 3, 4)
             ).Add(6));
@@ -92,7 +89,7 @@ namespace Tonga.Collection.Tests
         public void RejectsRemove()
         {
             Assert.Throws<InvalidOperationException>(() =>
-               new Head<int>(
+               new Tonga.Collection.Head<int>(
                    2,
                    AsEnumerable._(1, 2, 3, 4)
                ).Remove(1)
@@ -103,7 +100,7 @@ namespace Tonga.Collection.Tests
         public void RejectsClear()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new Head<int>(
+                new Tonga.Collection.Head<int>(
                     2, AsEnumerable._(1, 2, 3, 4)
                 ).Clear()
             );

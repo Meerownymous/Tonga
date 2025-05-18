@@ -15,7 +15,7 @@ namespace Tonga.Tests.Text
                     AsText._("Im a text with a really good end!"),
                     AsText._("od end!")
                 );
-            Assert.True(x.Value());
+            Assert.True(x.IsTrue());
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace Tonga.Tests.Text
                     AsText._("Im a text with a really good end!"),
                     "od end!"
                 );
-            Assert.True(x.Value());
+            Assert.True(x.IsTrue());
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace Tonga.Tests.Text
                     AsText._("Im a text with a really good end!"),
                     AsText._("od end")
                 );
-            Assert.False(x.Value());
+            Assert.False(x.IsTrue());
         }
     }
 }

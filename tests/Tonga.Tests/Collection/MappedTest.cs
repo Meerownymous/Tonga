@@ -1,12 +1,11 @@
-
-
 using System;
 using System.Collections.Generic;
-using Xunit;
 using Tonga.Enumerable;
 using Tonga.Text;
+using Xunit;
+using Mapped = Tonga.Collection.Mapped;
 
-namespace Tonga.Collection.Tests
+namespace Tonga.Tests.Collection
 {
     public sealed class MappedTest
     {
@@ -29,7 +28,7 @@ namespace Tonga.Collection.Tests
         {
             Assert.Contains(
                 "HELLO",
-                new Mapped<string, string>(
+                new Tonga.Collection.Mapped<string, string>(
                     input =>
                     input.ToUpper(),
                     AsEnumerable._("hello", "world", "друг")
@@ -41,7 +40,7 @@ namespace Tonga.Collection.Tests
         public void TransformsEmptyList()
         {
             Assert.Empty(
-                new Mapped<String, IText>(
+                new Tonga.Collection.Mapped<String, IText>(
                     input => new Upper(AsText._(input)),
                     new List<string>()
                 )

@@ -3,8 +3,6 @@ using System.IO;
 using System.Text;
 using Tonga.IO;
 using Xunit;
-
-#pragma warning disable NoStatics // No Statics
 namespace Tonga.Tests.IO;
 
 public sealed class TeeOutputStreamTest
@@ -16,7 +14,7 @@ public sealed class TeeOutputStreamTest
         var copy = new MemoryStream();
         String content = "Hello, товарищ!";
         Assert.True(
-            TeeOutputStreamTest.AsString(
+            AsString(
                 new TeeInputStream(
                     new MemoryStream(
                         Encoding.UTF8.GetBytes(content)
@@ -28,20 +26,14 @@ public sealed class TeeOutputStreamTest
             Encoding.UTF8.GetString(baos.ToArray()) ==
             Encoding.UTF8.GetString(copy.ToArray()),
             "Can't copy OutputStream to OutputStream byte by byte");
-    }
 
-    private static String AsString(Stream input)
-    {
-        var baos = new MemoryStream();
-
-        for (var i = 0; i < input.Length; i++)
+        static string AsString(Stream input)
         {
-            baos.Write(new byte[1] { (Byte)input.ReadByte() }, 0, 1);
+            var baos = new MemoryStream();
+            for (var i = 0L; i < input.Length; i++)
+                baos.WriteByte((byte)input.ReadByte());
+            input.Dispose();
+            return Encoding.UTF8.GetString(baos.ToArray());
         }
-        input.Dispose();
-
-        return Encoding.UTF8.GetString(baos.ToArray());
     }
-
 }
-#pragma warning restore NoStatics // No Statics

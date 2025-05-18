@@ -1,14 +1,11 @@
-
-
-using System.Threading;
-using Xunit;
-using Tonga.Enumerable;
-
-using Tonga.Scalar;
 using System;
-using System.Diagnostics;
+using System.Threading;
+using Tonga.Collection;
+using Tonga.Enumerable;
+using Tonga.Scalar;
+using Xunit;
 
-namespace Tonga.Collection.Tests
+namespace Tonga.Tests.Collection
 {
     public sealed class AsCollectionTest
     {

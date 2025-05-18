@@ -1,14 +1,15 @@
-
-
 using System;
 using System.Text;
-using Xunit;
+using Tonga.Bytes;
 using Tonga.Enumerable;
 using Tonga.IO;
 using Tonga.IO.Tests;
+using Tonga.Tests.IO;
 using Tonga.Text;
+using Xunit;
+using AsInput = Tonga.IO.AsInput;
 
-namespace Tonga.Bytes.Tests
+namespace Tonga.Tests.Bytes
 {
     public sealed class InputAsBytesTest
     {

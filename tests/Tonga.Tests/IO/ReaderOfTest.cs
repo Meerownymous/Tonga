@@ -20,7 +20,7 @@ namespace Tonga.Tests.IO
             //Create file through reading source
             ReadAll._(
                 new TeeInput(
-                    new AsInput(content),
+                    new Tonga.IO.AsInput(content),
                     new OutputTo(path)
                 )
             ).Invoke();
@@ -28,7 +28,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 content,
                 AsText._(
-                    new AsInput(
+                    new Tonga.IO.AsInput(
                         new AsReader(
                             new Uri(path)))
                 ).AsString()

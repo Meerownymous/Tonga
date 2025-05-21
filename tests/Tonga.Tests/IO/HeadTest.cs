@@ -14,7 +14,7 @@ namespace Tonga.Tests.IO
                 "reads",
                 AsText._(
                     new Head(
-                        new Tonga.IO.AsConduit("readsHeadOfLongInput"),
+                        new AsConduit("readsHeadOfLongInput"),
                         5
                     )
                 ).AsString()
@@ -49,7 +49,7 @@ namespace Tonga.Tests.IO
                 "",
                 AsText._(
                     new Head(
-                        new Tonga.IO.AsConduit("readsEmptyHeadOfInput"),
+                        new AsConduit("readsEmptyHeadOfInput"),
                         0
                     )
                 ).AsString()

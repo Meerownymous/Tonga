@@ -10,13 +10,12 @@ namespace Tonga.Tests.Primitives
         [Fact]
         public void ConvertsDouble()
         {
+            var piStr = Math.PI.ToString("G17");
             Assert.Equal(
-                Math.PI.ToString("G17"),
-                new DoubleOf(
-                    Math.PI.ToString("G17"),
-                    CultureInfo.CurrentCulture
-                ).Value()
-                .ToString(CultureInfo.InvariantCulture)
+                piStr,
+                new DoubleOf(piStr, CultureInfo.CurrentCulture)
+                    .Value()
+                    .ToString("G17")
             );
         }
     }

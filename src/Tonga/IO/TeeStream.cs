@@ -8,9 +8,9 @@ using System.IO;
 namespace Tonga.IO
 {
     /// <summary>
-    /// Readable <see cref="Stream"/> that copies input to <see cref="IConduit"/> while reading.
+    /// <see cref="Stream"/> that copies input to <see cref="IConduit"/> while reading.
     /// </summary>
-    public sealed class TeeInputStream(Stream src, Stream tgt) : Stream
+    public sealed class TeeStream(Stream src, Stream tgt) : Stream
     {
         public int Read()
         {

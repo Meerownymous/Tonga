@@ -14,8 +14,7 @@ namespace Tonga.Func
     /// </summary>
     /// <typeparam name="In">type of input</typeparam>
     /// <typeparam name="Out">type of output</typeparam>
-    public sealed class AsyncFunc<In, Out> : IFunc<In, Task<Out>>
-        where Out : class
+    public sealed class AsyncFunc<In, Out> : IFunc<In, Task<Out>> where Out : class
     {
         /// <summary>
         /// func to call

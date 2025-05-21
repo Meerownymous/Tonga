@@ -9,12 +9,12 @@ namespace Tonga.IO;
 /// <summary>
 /// <see cref="IConduit"/> which will be copied to another conduit while reading.
 /// </summary>
-public sealed class TeeOnReadConduit(IConduit source, IConduit output) : IConduit
+public sealed class TeeOnRead(IConduit source, IConduit output) : IConduit
 {
     /// <summary>
     /// <see cref="IConduit"/> out of a file <see cref="Uri"/> which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
-    public TeeOnReadConduit(Uri input, Uri output) : this(
+    public TeeOnRead(Uri input, Uri output) : this(
         new AsConduit(input), new AsConduit(output)
     )
     { }
@@ -22,7 +22,7 @@ public sealed class TeeOnReadConduit(IConduit source, IConduit output) : ICondui
     /// <summary>
     /// <see cref="IConduit"/> out of a <see cref="string"/> which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
-    public TeeOnReadConduit(String input, Uri file) : this(
+    public TeeOnRead(String input, Uri file) : this(
         new BytesAsConduit(input), new AsConduit(file)
     )
     { }
@@ -30,7 +30,7 @@ public sealed class TeeOnReadConduit(IConduit source, IConduit output) : ICondui
     /// <summary>
     /// <see cref="IConduit"/> out of a <see cref="byte"/> array which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
-    public TeeOnReadConduit(byte[] input, Uri file) : this(
+    public TeeOnRead(byte[] input, Uri file) : this(
         new BytesAsConduit(input), new AsConduit(file)
     )
     { }
@@ -38,7 +38,7 @@ public sealed class TeeOnReadConduit(IConduit source, IConduit output) : ICondui
     /// <summary>
     /// <see cref="IConduit"/> out of a <see cref="string"/>  which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
-    public TeeOnReadConduit(String input, IConduit output) : this(
+    public TeeOnRead(String input, IConduit output) : this(
         new BytesAsConduit(input),
         output
     )
@@ -49,5 +49,5 @@ public sealed class TeeOnReadConduit(IConduit source, IConduit output) : ICondui
     /// </summary>
     /// <returns></returns>
     public Stream Stream() =>
-        new TeeInputStream(source.Stream(), output.Stream());
+        new TeeStream(source.Stream(), output.Stream());
 }

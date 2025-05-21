@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class TeeReaderTest
+    public sealed class TeeStreamReaderTest
     {
         [Fact]
         public void TestTeeReader()
@@ -14,7 +14,7 @@ namespace Tonga.Tests.IO
             var baos = new MemoryStream();
             var content = "Hello, товарищ!";
 
-            var reader = new TeeReader(
+            var reader = new TeeStreamReader(
                 new AsReader(content),
                 new WriterTo(
                     new AsConduit(baos))

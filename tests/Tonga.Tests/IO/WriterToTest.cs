@@ -22,7 +22,7 @@ public sealed class WriterToTest
         {
             s =
                 AsText._(
-                    new TeeOnReadConduit(
+                    new TeeOnRead(
                         new AsConduit(content),
                         new WriterAsConduit(output)
                     )

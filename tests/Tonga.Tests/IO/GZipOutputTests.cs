@@ -17,7 +17,7 @@ namespace Tonga.Tests.IO
         {
             MemoryStream zipped = new MemoryStream();
             ReadAll._(
-                new TeeOnReadConduit(
+                new TeeOnRead(
                     "Hello!",
                     new GZipCompression(new AsConduit(zipped))
                 )
@@ -48,7 +48,7 @@ namespace Tonga.Tests.IO
                     stream.Close();
 
                     Length._(
-                        new TeeOnReadConduit(
+                        new TeeOnRead(
                             "Hello!",
                             new GZipCompression(
                                 new AsConduit(stream)

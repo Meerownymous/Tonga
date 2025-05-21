@@ -21,7 +21,7 @@ namespace Tonga.Tests.IO
 
             ReadAll._(
                 new AsConduit(
-                    new TeeInputStream(
+                    new TeeStream(
                         new MemoryStream(
                             new AsBytes(
                                 new Tonga.Text.Joined(lmt,

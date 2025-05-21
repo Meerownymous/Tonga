@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class AsInputStreamTest
+    public sealed class AsStreamTest
     {
         [Fact]
         public void ReadsSimpleFileContent()
@@ -28,7 +28,7 @@ namespace Tonga.Tests.IO
                     AsText._(
                         new ConduitAsBytes(
                             new Tonga.IO.AsConduit(
-                                new AsInputStream(
+                                new AsStream(
                                     new Uri(file.Value())
                                 )
                             )
@@ -46,7 +46,7 @@ namespace Tonga.Tests.IO
             Assert.True(
                 AsText._(
                     new Tonga.IO.AsConduit(
-                        new AsInputStream(
+                        new AsStream(
                             new StreamReader(
                                 new Tonga.IO.AsConduit(content).Stream())))
                 ).AsString() == content);
@@ -60,7 +60,7 @@ namespace Tonga.Tests.IO
                 content,
                 AsText._(
                     new Tonga.IO.AsConduit(
-                        new AsInputStream(
+                        new AsStream(
                             new StreamReader(
                                 new Tonga.IO.AsConduit(content).Stream()),
                             1
@@ -75,7 +75,7 @@ namespace Tonga.Tests.IO
         {
             String content = "Hello,חבר!";
             Assert.True(
-                new AsInputStream(content).Length > 0,
+                new AsStream(content).Length > 0,
                 "Can't show that data is available"
             );
         }
@@ -97,7 +97,7 @@ namespace Tonga.Tests.IO
                 AsText._(
                     new ConduitAsBytes(
                         new Tonga.IO.AsConduit(
-                            new AsInputStream(
+                            new AsStream(
                                 new Uri(path))))
                 ).AsString() == content,
                 "Can't read file content"

@@ -10,6 +10,7 @@ namespace Tonga.IO
     /// </summary>
     public sealed class ConsoleInput : IConduit
     {
+        private readonly Lazy<Stream> consoleStream = new(Console.OpenStandardInput);
         /// <summary>
         /// Console input stream.
         /// </summary>
@@ -20,9 +21,6 @@ namespace Tonga.IO
         /// Get the stream.
         /// </summary>
         /// <returns>the stream</returns>
-        public Stream Stream()
-        {
-            return Console.OpenStandardInput();
-        }
+        public Stream Stream() => consoleStream.Value;
     }
 }

@@ -19,7 +19,7 @@ namespace Tonga.Tests.IO
 
             //Create file through reading source
             ReadAll._(
-                new TeeOnReadConduit(
+                new TeeOnRead(
                     new AsConduit(content),
                     new AsConduit(new Uri(path))
                 )

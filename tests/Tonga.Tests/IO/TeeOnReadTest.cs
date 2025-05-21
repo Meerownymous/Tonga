@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class TeeOnReadConduitTest
+    public sealed class TeeOnReadTest
     {
         [Fact]
         public void CopiesFromUrlToFile()
@@ -18,7 +18,7 @@ namespace Tonga.Tests.IO
             {
                 var directoryPath = directory.Value().FullName;
                 ReadAll._(
-                    new TeeOnReadConduit(
+                    new TeeOnRead(
                         new Uri("http://www.google.de"),
                         new Uri($@"file://{directoryPath}\output.txt")
                     )
@@ -47,7 +47,7 @@ namespace Tonga.Tests.IO
                 );
 
                 ReadAll._(
-                    new TeeOnReadConduit(
+                    new TeeOnRead(
                         new Uri($@"{directoryPath}\input.txt"),
                         new Uri($@"{directoryPath}\output.txt")
                     )
@@ -71,7 +71,7 @@ namespace Tonga.Tests.IO
             String content = "Hello, товарищ!";
             Assert.True(
                 AsText._(
-                    new TeeOnReadConduit(
+                    new TeeOnRead(
                         new AsConduit(content),
                         new AsConduit(baos)
                     )
@@ -93,7 +93,7 @@ namespace Tonga.Tests.IO
             var str =
                 AsText._(
                     new AsBytes(
-                        new TeeOnReadConduit(
+                        new TeeOnRead(
                             "Hello, друг!",
                             new AsConduit(new Uri(path))
                         )

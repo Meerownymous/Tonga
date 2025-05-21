@@ -17,7 +17,7 @@ public sealed class TextBase64Tests
     {
         using var tempFile = new TempFile("test.txt");
         ReadAll._(
-            new TeeOnReadConduit(
+            new TeeOnRead(
                 AsText._(
                     new Base64Encoded(
                         new AsBytes(

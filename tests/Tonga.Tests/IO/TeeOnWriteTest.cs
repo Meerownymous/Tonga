@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class TeeOnWriteConduitTest
+    public sealed class TeeOnWriteTest
     {
         [Fact]
         public void CopiesContent()
@@ -18,9 +18,9 @@ namespace Tonga.Tests.IO
 
             Assert.True(
                 AsText._(
-                    new TeeOnReadConduit(
+                    new TeeOnRead(
                         new AsConduit(content),
-                        new TeeOnWriteConduit(
+                        new TeeOnWrite(
                             new AsConduit(baos),
                             new AsConduit(copy)
                         )

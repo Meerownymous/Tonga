@@ -5,13 +5,13 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class HeadInputStreamTest
+    public sealed class StreamHeadTest
     {
         [Fact]
         void IsSkippingLessThanTotal()
         {
             var stream =
-                new HeadInputStream(
+                new StreamHead(
                     new Tonga.IO.AsConduit("testSkippingLessThanTotal").Stream(),
                     5
                 );
@@ -33,7 +33,7 @@ namespace Tonga.Tests.IO
         void IsSkippingMoreThanTotal()
         {
             var stream =
-                new HeadInputStream(
+                new StreamHead(
                     new Tonga.IO.AsConduit("testSkippingMoreThanTotal").Stream(),
                     5
                 );

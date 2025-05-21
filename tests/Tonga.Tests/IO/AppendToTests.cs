@@ -20,7 +20,7 @@ namespace Tonga.Tests.IO
             var txt = "Hello, товарищ!";
 
             var pipe =
-                new TeeOnReadConduit(txt,
+                new TeeOnRead(txt,
                     new AppendTo(
                         new AsConduit(new Uri(file))
                     )
@@ -45,7 +45,7 @@ namespace Tonga.Tests.IO
             var path = file.Value();
             var txt = "Hello, Objects!";
             var tee =
-                new TeeOnReadConduit(txt,
+                new TeeOnRead(txt,
                     new AppendTo(
                         new AsConduit(new Uri(file.Value()))
                     )

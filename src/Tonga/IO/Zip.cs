@@ -24,7 +24,7 @@ public sealed class Zip(string path) : IConduit
             var entry = zip.CreateEntry(file);
             using var entryStream = entry.Open();
             ReadAll._(
-                new TeeOnReadConduit(
+                new TeeOnRead(
                     new AsConduit(file),
                     new AsConduit(entryStream)
                 )

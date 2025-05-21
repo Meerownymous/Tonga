@@ -5,7 +5,7 @@ using Tonga.IO;
 using Xunit;
 namespace Tonga.Tests.IO;
 
-public sealed class TeeOutputStreamTest
+public sealed class TeeOnWriteStreamTest
 {
     [Fact]
     public void CopiesContentByteByByte()
@@ -15,11 +15,11 @@ public sealed class TeeOutputStreamTest
         String content = "Hello, товарищ!";
         Assert.True(
             AsString(
-                new TeeInputStream(
+                new TeeStream(
                     new MemoryStream(
                         Encoding.UTF8.GetBytes(content)
                     ),
-                    new TeeOutputStream(baos, copy)
+                    new TeeOnWriteStream(baos, copy)
                 )
             ) ==
             Encoding.UTF8.GetString(baos.ToArray()) &&

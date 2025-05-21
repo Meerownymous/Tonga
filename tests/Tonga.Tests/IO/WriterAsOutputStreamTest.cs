@@ -26,7 +26,7 @@ public sealed class WriterAsOutputStreamTest
                 //Create large file
                 ReadAll._(
                     new Tonga.IO.AsConduit(
-                        new TeeInputStream(
+                        new TeeStream(
                             new MemoryStream(
                                 new AsBytes(
                                     new global::Tonga.Text.Joined(",",
@@ -46,7 +46,7 @@ public sealed class WriterAsOutputStreamTest
 
                 using (var tee =
                        new Tonga.IO.AsConduit(
-                           new TeeInputStream(
+                           new TeeStream(
                                new Tonga.IO.AsConduit(
                                    inputPath
                                ).Stream(),

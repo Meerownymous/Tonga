@@ -25,7 +25,7 @@ namespace Tonga.IO
 
         public Stream Stream()
         {
-            return new HeadInputStream(this.origin.Stream(), this.length);
+            return new StreamHead(this.origin.Stream(), this.length);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Tonga.IO
             {
                 MemoryStream copy = new MemoryStream();
                 ReadAll._(
-                    new TeeOnReadConduit(origin, new AsConduit(copy))
+                    new TeeOnRead(origin, new AsConduit(copy))
                 ).Invoke();
                 origin.Stream().Dispose();
                 return copy.ToArray();

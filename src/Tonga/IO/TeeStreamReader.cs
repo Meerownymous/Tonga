@@ -11,7 +11,7 @@ namespace Tonga.IO
     /// <summary>
     /// A  <see cref="StreamReader"/> which copies to a <see cref="StreamWriter"/> while reading.
     /// </summary>
-    public sealed class TeeReader : StreamReader, IDisposable
+    public sealed class TeeStreamReader : StreamReader
     {
         /// <summary>
         /// the source
@@ -28,7 +28,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="reader">the reader</param>
         /// <param name="writer">the copy target</param>
-        public TeeReader(StreamReader reader, StreamWriter writer) : base(new DeadStream())
+        public TeeStreamReader(StreamReader reader, StreamWriter writer) : base(new DeadStream())
         {
             this._source = reader;
             this._destination = writer;

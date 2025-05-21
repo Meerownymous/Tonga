@@ -7,7 +7,7 @@ using Xunit;
 #pragma warning disable NoStatics // No Statics"Can't copy InputStream to OutputStream byte by byte"
 namespace Tonga.Tests.IO
 {
-    public sealed class TeeInputStreamTest
+    public sealed class TeeStreamTest
     {
         [Fact]
         public void CopiesContentByteByByte()
@@ -16,8 +16,8 @@ namespace Tonga.Tests.IO
             String content = "Hello, товарищ!";
 
             Assert.True(
-                TeeInputStreamTest.AsString(
-                    new TeeInputStream(
+                AsString(
+                    new TeeStream(
                         new MemoryStream(
                             Encoding.UTF8.GetBytes(content)
                         ),

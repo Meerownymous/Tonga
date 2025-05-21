@@ -7,7 +7,7 @@ namespace Tonga.IO
     /// <summary>
     /// <see cref="Stream"/> which copies to another <see cref="Stream"/> while writing.
     /// </summary>
-    public sealed class TeeOutputStream : Stream
+    public sealed class TeeOnWriteStream : Stream
     {
         /// <summary>
         /// the target
@@ -24,7 +24,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="tgt">the target</param>
         /// <param name="cpy">the copy target</param>
-        public TeeOutputStream(Stream tgt, Stream cpy) : base()
+        public TeeOnWriteStream(Stream tgt, Stream cpy) : base()
         {
             this._target = tgt;
             this._copy = cpy;

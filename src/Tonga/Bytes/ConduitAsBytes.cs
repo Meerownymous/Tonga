@@ -23,7 +23,7 @@ namespace Tonga.Bytes
                 var baos = new MemoryStream();
 
                 using var source = src.Stream();
-                using var stream = new TeeOnReadConduit(new AsConduit(source), new AsConduit(baos)).Stream();
+                using var stream = new TeeOnRead(new AsConduit(source), new AsConduit(baos)).Stream();
                 byte[] readBuffer = new byte[max];
                 while (stream.Read(readBuffer, 0, readBuffer.Length) > 0)
                 { }

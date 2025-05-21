@@ -25,7 +25,7 @@ public sealed class WriterAsConduitTest
         //Create large file
         Length._(
             new AsConduit(
-                new TeeInputStream(
+                new TeeStream(
                     new MemoryStream(
                         new AsBytes(
                             new global::Tonga.Text.Joined(",",
@@ -49,7 +49,7 @@ public sealed class WriterAsConduitTest
         long left;
         left =
             Length._(
-                new TeeOnReadConduit(
+                new TeeOnRead(
                     new AsConduit(
                         new Uri(Path.GetFullPath(inputPath))
                     ),

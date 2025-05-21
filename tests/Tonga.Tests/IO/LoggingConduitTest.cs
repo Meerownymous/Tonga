@@ -15,7 +15,7 @@ namespace Tonga.Tests.IO
         {
             var res =
                 Length._(
-                    new TeeOnReadConduit(
+                    new TeeOnRead(
                         new AsConduit(""),
                         new LoggingOnReadConduit(
                             new ConsoleOutput(),
@@ -106,7 +106,7 @@ namespace Tonga.Tests.IO
                     ).Stream();
 
                     ReadAll._(
-                        new TeeOnReadConduit(
+                        new TeeOnRead(
                             new Resource("Assets/Txt/large-text.txt", this.GetType()),
                             new AsConduit(output)
                         )

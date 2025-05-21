@@ -89,7 +89,7 @@ namespace Tonga.Tests.IO
 
             ReadAll._(
                 new AsConduit(
-                    new TeeInputStream(
+                    new TeeStream(
                         new MemoryStream(
                             new AsBytes(
                                 new global::Tonga.Text.Joined("\r\n",
@@ -138,7 +138,7 @@ namespace Tonga.Tests.IO
 
             ReadAll._(
                 new AsConduit(
-                    new TeeInputStream(
+                    new TeeStream(
                         new MemoryStream(
                             new AsBytes(
                                 new global::Tonga.Text.Joined("\r\n",
@@ -186,7 +186,7 @@ namespace Tonga.Tests.IO
             using var file = new TempFile();
             ReadAll._(
                 new AsConduit(
-                    new TeeInputStream(
+                    new TeeStream(
                         new MemoryStream(
                             new AsBytes(
                                 new global::Tonga.Text.Joined("\r\n",
@@ -335,7 +335,7 @@ namespace Tonga.Tests.IO
 
             String content = "Hello, товарищ!";
             ReadAll._(
-                new TeeOnReadConduit(
+                new TeeOnRead(
                     content,
                     new AsConduit(new Uri(file))
                 )
@@ -362,7 +362,7 @@ namespace Tonga.Tests.IO
 
             String txt = "Hello, друг!";
             ReadAll._(
-                new TeeOnReadConduit(
+                new TeeOnRead(
                     txt,
                     new AsConduit(file))
             ).Invoke();

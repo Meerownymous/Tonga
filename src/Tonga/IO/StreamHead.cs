@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Tonga.Scalar;
 
 namespace Tonga.IO
 {
@@ -12,7 +11,7 @@ namespace Tonga.IO
     /// </summary>
     public sealed class StreamHead(Stream stream, int length) : Stream
     {
-        private readonly IList<long> processed;
+        private readonly List<long> processed = [0L];
 
         public override bool CanRead => stream.CanRead;
 

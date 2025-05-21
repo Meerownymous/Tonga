@@ -38,7 +38,7 @@ namespace Tonga.Func
         /// ).Apply("Hello, world!").Length;
         /// </summary>
         /// <param name="func">func to call</param>
-        public AsyncFunc(System.Func<In, Out> func) : this(new AsFunc<In, Out>((X) => func(X)))
+        public AsyncFunc(System.Func<In, Out> func) : this(new AsFunc<In, Out>(func))
         { }
 
         /// <summary>

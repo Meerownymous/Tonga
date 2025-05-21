@@ -28,7 +28,7 @@ namespace Tonga.IO
         /// </summary>
         public ConduitWithFallback(IConduit origin, Func<Exception, IConduit> alt) : this(
             origin,
-            new FuncOf<Exception, IConduit>(alt)
+            new AsFunc<Exception, IConduit>(alt)
         )
         { }
 

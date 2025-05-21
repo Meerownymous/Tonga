@@ -2,7 +2,7 @@ using System;
 
 namespace Tonga;
 
-public interface IOptional<TValue>
+public interface IOptional<out TValue>
 {
     bool Has();
     IOptional<TValue> IfHas(Action<TValue> then);

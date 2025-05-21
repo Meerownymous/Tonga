@@ -39,8 +39,8 @@ namespace Tonga.Tests.Func
                             new ChainedFunc<string, string, string>(
                                 input => input += "1",
                                 AsEnumerable._(
-                                    new FuncOf<string, string>(input => input += ("2")),
-                                    new FuncOf<string, string>(input => input.Replace("a", "b"))
+                                    new AsFunc<string, string>(input => input += ("2")),
+                                    new AsFunc<string, string>(input => input.Replace("a", "b"))
                                 ),
                                 input => input.Trim()
                             ),

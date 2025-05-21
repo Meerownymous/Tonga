@@ -33,9 +33,9 @@ namespace Tonga.Func
         /// <param name="before">first function</param>
         /// <param name="after">last function</param>
         public ChainedFunc(System.Func<In, Between> before, System.Func<Between, Out> after) : this(
-            new FuncOf<In, Between>(input => before(input)),
+            new AsFunc<In, Between>(input => before(input)),
             new List<IFunc<Between, Between>>(),
-            new FuncOf<Between, Out>((bet) => after(bet)))
+            new AsFunc<Between, Out>((bet) => after(bet)))
         { }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Tonga.Func
         /// <param name="funcs">functions to chain</param>
         /// <param name="after">last function</param>
         public ChainedFunc(System.Func<In, Between> before, IEnumerable<IFunc<Between, Between>> funcs, System.Func<Between, Out> after) : this(
-            new FuncOf<In, Between>(before),
+            new AsFunc<In, Between>(before),
             funcs,
-            new FuncOf<Between, Out>(after))
+            new AsFunc<Between, Out>(after))
         { }
 
         /// <summary>
@@ -69,11 +69,11 @@ namespace Tonga.Func
         /// <param name="after">last function</param>
         public ChainedFunc(System.Func<In, Between> before, IEnumerable<System.Func<Between, Between>> funcs, System.Func<Between, Out> after
         ) : this(
-                new FuncOf<In, Between>(before),
+                new AsFunc<In, Between>(before),
                     new Enumerable.Mapped<System.Func<Between, Between>, IFunc<Between, Between>>(
-                        f => new FuncOf<Between, Between>(f),
+                        f => new AsFunc<Between, Between>(f),
                         funcs),
-                    new FuncOf<Between, Out>(after))
+                    new AsFunc<Between, Out>(after))
         { }
 
 

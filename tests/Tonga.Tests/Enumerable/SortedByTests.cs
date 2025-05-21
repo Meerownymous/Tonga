@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.Misc;
 using Tonga.Primitives;
 using Tonga.Text;
 using Xunit;
@@ -29,7 +28,7 @@ namespace Tonga.Tests.Enumerable
                 new global::Tonga.Text.Joined(", ",
                     new SortedBy<string, int>(
                         s => new IntOf(s.Substring(s.Length-1)).Value(),
-                        IReverseCompare<int>.Default,
+                        AsReverseCompare<int>.Default,
                         AsEnumerable._(
                             "a2", "c3", "hello9", "dude6", "Friend7"
                         )

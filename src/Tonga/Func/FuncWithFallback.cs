@@ -32,8 +32,8 @@ namespace Tonga.Func
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
         public FuncWithFallback(Func<In, Out> func, Func<Exception, Out> fallback) : this(
-            new FuncOf<In, Out>((X) => func(X)),
-            new FuncOf<Exception, Out>((e) => fallback(e)))
+            new AsFunc<In, Out>((X) => func(X)),
+            new AsFunc<Exception, Out>((e) => fallback(e)))
         { }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Tonga.Func
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
         public FuncWithFallback(Func<In, Out> func, IFunc<Exception, Out> fallback) : this(
-            new FuncOf<In, Out>((X) => func(X)),
+            new AsFunc<In, Out>((X) => func(X)),
             fallback)
         { }
 
@@ -54,7 +54,7 @@ namespace Tonga.Func
         public FuncWithFallback(IFunc<In, Out> fnc, IFunc<Exception, Out> fbk) : this(
             fnc,
             fbk,
-            new FuncOf<Out, Out>((input) => input))
+            new AsFunc<Out, Out>((input) => input))
         { }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace Tonga.Func
         /// <param name="fallback">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
         public FuncWithFallback(Func<In, Out> func, Func<Exception, Out> fallback, Func<Out, Out> flw) : this(
-            new FuncOf<In, Out>((X) => func(X)),
-            new FuncOf<Exception, Out>((e) => fallback(e)),
-            new FuncOf<Out, Out>(flw))
+            new AsFunc<In, Out>((X) => func(X)),
+            new AsFunc<Exception, Out>((e) => fallback(e)),
+            new AsFunc<Out, Out>(flw))
         { }
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace Tonga.Func
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
         public FuncWithFallback(Func<Out> func, Func<Exception, Out> fallback) : this(
-            new FuncOf<Out>(() => func()),
-            new FuncOf<Exception, Out>((e) => fallback(e)))
+            new AsFunc<Out>(() => func()),
+            new AsFunc<Exception, Out>((e) => fallback(e)))
         { }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Tonga.Func
         /// <param name="func">func to call</param>
         /// <param name="fallback">fallback func</param>
         public FuncWithFallback(Func<Out> func, IFunc<Exception, Out> fallback) : this(
-            new FuncOf<Out>(() => func()),
+            new AsFunc<Out>(() => func()),
             fallback)
         { }
 
@@ -151,7 +151,7 @@ namespace Tonga.Func
         public FuncWithFallback(IFunc<Out> fnc, IFunc<Exception, Out> fbk) : this(
             fnc,
             fbk,
-            new FuncOf<Out, Out>((input) => input))
+            new AsFunc<Out, Out>((input) => input))
         { }
 
         /// <summary>
@@ -161,9 +161,9 @@ namespace Tonga.Func
         /// <param name="fallback">fallback func</param>
         /// <param name="flw">func to call afterwards</param>
         public FuncWithFallback(Func<Out> func, Func<Exception, Out> fallback, Func<Out, Out> flw) : this(
-            new FuncOf<Out>(() => func()),
-            new FuncOf<Exception, Out>((e) => fallback(e)),
-            new FuncOf<Out, Out>(flw))
+            new AsFunc<Out>(() => func()),
+            new AsFunc<Exception, Out>((e) => fallback(e)),
+            new AsFunc<Out, Out>(flw))
         { }
 
         /// <summary>

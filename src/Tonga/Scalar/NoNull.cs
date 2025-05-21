@@ -28,7 +28,7 @@ namespace Tonga.Scalar
         /// <param name="ex">error to raise if null</param>
         public NoNull(T origin, Exception ex) : this(
             AsScalar._(origin),
-            new FuncOf<T>(() => throw ex))
+            new AsFunc<T>(() => throw ex))
         { }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Tonga.Scalar
         /// <param name="fallback">the fallback value</param>
         public NoNull(IScalar<T> origin, T fallback) : this(
             origin,
-            new FuncOf<T>(() => fallback))
+            new AsFunc<T>(() => fallback))
         { }
 
         /// <summary>

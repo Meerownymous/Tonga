@@ -17,7 +17,7 @@ public interface IAction
 /// A function with input, but no output.
 /// </summary>
 /// <typeparam name="In"></typeparam>
-public interface IAction<In>
+public interface IAction<in In>
 {
     /// <summary>
     /// Execute the action.

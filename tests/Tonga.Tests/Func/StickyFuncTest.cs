@@ -27,7 +27,7 @@ namespace Tonga.Tests.Func
         {
             IFunc<Boolean, List<int>> func =
                 new StickyFunc<bool, List<int>>(
-                    input => new List<int>() { new Random().Next() },
+                    _ => [new Random().Next()],
                     lst => lst.Count > 1);
 
             var lst1 = func.Invoke(true);
@@ -37,6 +37,19 @@ namespace Tonga.Tests.Func
             lst1.Add(42);
 
             Assert.False(lst1.GetHashCode() == func.Invoke(true).GetHashCode(), "reload doesn't work");
+        }
+
+        [Fact]
+        public void CachesFuncResultsFromTwoInputs()
+        {
+            var func = new StickyFunc<bool, bool, Int32>(
+                (_, _) => new Random().Next()
+            );
+
+            Assert.Equal(
+                func.Invoke(true, true) + func.Invoke(true, true),
+                func.Invoke(true, true) + func.Invoke(true, true)
+            );
         }
     }
 }

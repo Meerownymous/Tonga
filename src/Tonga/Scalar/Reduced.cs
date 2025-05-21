@@ -17,7 +17,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public Reduced(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) : this(
+        public Reduced(IEnumerable<T> elements, IFunc<T, T, T> fnc) : this(
             elements,
             fnc.Invoke
         )
@@ -54,13 +54,13 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static Reduced<T> _<T>(IEnumerable<T> elements, IBiFunc<T, T, T> fnc) => new Reduced<T>(elements, fnc);
+        public static Reduced<T> _<T>(IEnumerable<T> elements, IFunc<T, T, T> fnc) => new(elements, fnc);
 
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static Reduced<T> _<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new Reduced<T>(elements, fnc);
+        public static Reduced<T> _<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new(elements, fnc);
     }
 }

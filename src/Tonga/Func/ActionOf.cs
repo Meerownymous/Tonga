@@ -14,7 +14,7 @@ namespace Tonga.Func
         /// </summary>
         public void Invoke()
         {
-            new FuncOf<bool, bool>((input) =>
+            new AsFunc<bool, bool>((input) =>
                 {
                     fnc.Invoke();
                     return true;

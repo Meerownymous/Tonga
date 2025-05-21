@@ -32,9 +32,7 @@ namespace Tonga.Scalar
         public ItemAt(IEnumerable<T> source, int position, Exception ex) : this(
             source,
             position,
-            new FuncOf<IEnumerable<T>, T>(itr =>
-                throw ex
-            )
+            new AsFunc<IEnumerable<T>, T>(_ => throw ex)
         )
         { }
 
@@ -44,7 +42,7 @@ namespace Tonga.Scalar
         /// <param name="source">source enum</param>
         public ItemAt(IEnumerable<T> source) : this(
             source,
-            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
+            new AsFunc<Exception, IEnumerable<T>, T>((ex, itr) =>
                 throw new ArgumentException(
                     new Formatted("Cannot get first element: {0}", ex.Message).AsString()
                 )
@@ -59,7 +57,7 @@ namespace Tonga.Scalar
         /// <param name="fallback">fallback func</param>
         public ItemAt(IEnumerable<T> source, T fallback) : this(
             source,
-            new FuncOf<IEnumerable<T>, T>(b => fallback)
+            new AsFunc<IEnumerable<T>, T>(b => fallback)
         )
         { }
 
@@ -72,7 +70,7 @@ namespace Tonga.Scalar
         public ItemAt(IEnumerable<T> source, int position, T fallback) : this(
             source,
             position,
-            new FuncOf<IEnumerable<T>, T>(b => fallback)
+            new AsFunc<IEnumerable<T>, T>(b => fallback)
         )
         { }
 
@@ -81,7 +79,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public ItemAt(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback) : this(
+        public ItemAt(IEnumerable<T> source, IFunc<Exception, IEnumerable<T>, T> fallback) : this(
             source,
             0,
             fallback
@@ -96,7 +94,7 @@ namespace Tonga.Scalar
         public ItemAt(IEnumerable<T> source, Func<IEnumerable<T>, T> fallback) : this(
             source,
             0,
-            new FuncOf<IEnumerable<T>, T>(fallback)
+            new AsFunc<IEnumerable<T>, T>(fallback)
         )
         { }
 
@@ -120,7 +118,7 @@ namespace Tonga.Scalar
         public ItemAt(IEnumerable<T> source, int position) : this(
                 source,
                 position,
-                new BiFuncOf<Exception, IEnumerable<T>, T>((ex, itr) =>
+                new AsFunc<Exception, IEnumerable<T>, T>((ex, itr) =>
                 {
                     throw
                         new ArgumentException(
@@ -158,7 +156,7 @@ namespace Tonga.Scalar
         public ItemAt(IEnumerable<T> source, int position, Func<IEnumerable<T>, T> fallback) : this(
             source,
             position,
-            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) =>
+            new AsFunc<Exception, IEnumerable<T>, T>((ex, enumerable) =>
                 fallback.Invoke(enumerable)
             )
         )
@@ -173,7 +171,7 @@ namespace Tonga.Scalar
         public ItemAt(IEnumerable<T> source, int position, Func<Exception, IEnumerable<T>, T> fallback) : this(
             source,
             position,
-            new BiFuncOf<Exception, IEnumerable<T>, T>((ex, enumerable) =>
+            new AsFunc<Exception, IEnumerable<T>, T>((ex, enumerable) =>
                 fallback.Invoke(ex, enumerable)
             )
         )
@@ -185,7 +183,7 @@ namespace Tonga.Scalar
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public ItemAt(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback) : base(() =>
+        public ItemAt(IEnumerable<T> source, int position, IFunc<Exception, IEnumerable<T>, T> fallback) : base(() =>
             {
                 T result;
                 try
@@ -271,7 +269,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="source">soruce enum</param>
         /// <param name="fallback">fallback value</param>
-        public static IScalar<T> _<T>(IEnumerable<T> source, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> _<T>(IEnumerable<T> source, IFunc<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, fallback);
 
         /// <summary>
@@ -331,7 +329,7 @@ namespace Tonga.Scalar
         /// <param name="source">source enum</param>
         /// <param name="position">position of item</param>
         /// <param name="fallback">fallback func</param>
-        public static IScalar<T> _<T>(IEnumerable<T> source, int position, IBiFunc<Exception, IEnumerable<T>, T> fallback)
+        public static IScalar<T> _<T>(IEnumerable<T> source, int position, IFunc<Exception, IEnumerable<T>, T> fallback)
             => new ItemAt<T>(source, position, fallback);
     }
 }

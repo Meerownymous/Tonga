@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.Misc;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -27,7 +26,7 @@ namespace Tonga.Tests.Enumerable
             Assert.True(
                 new global::Tonga.Text.Joined(", ",
                     new Sorted<string>(
-                        IReverseCompare<string>.Default,
+                        AsReverseCompare<string>.Default,
                         AsEnumerable._(
                             "a", "c", "hello", "dude", "Friend"
                         )

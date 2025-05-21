@@ -91,7 +91,7 @@ namespace Tonga.Enumerable
         public Sibling(T item, IEnumerable<T> source) : this(
             item,
             source,
-            new FuncOf<IEnumerable<T>, T>(_ => throw new ArgumentException("Can't get neighbour from iterable"))
+            new AsFunc<IEnumerable<T>, T>(_ => throw new ArgumentException("Can't get neighbour from iterable"))
         )
         {
         }
@@ -103,7 +103,7 @@ namespace Tonga.Enumerable
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
         public Sibling(T item, IEnumerable<T> source, T fallback) : this(item, source, 1,
-            new FuncOf<IEnumerable<T>, T>(b => fallback))
+            new AsFunc<IEnumerable<T>, T>(b => fallback))
         {
         }
 
@@ -114,7 +114,7 @@ namespace Tonga.Enumerable
         /// <param name="relativeposition">requested position relative to the given item</param>
         /// <param name="item">item to start</param>
         public Sibling(T item, IEnumerable<T> source, int relativeposition) : this(item, source, relativeposition,
-            new FuncOf<IEnumerable<T>, T>(itr =>
+            new AsFunc<IEnumerable<T>, T>(itr =>
             {
                 throw new IOException($"Can't get neighbour at position {relativeposition} from iterable");
             }))
@@ -129,7 +129,7 @@ namespace Tonga.Enumerable
         /// <param name="fallback">fallback func</param>
         /// <param name="item">item to start</param>
         public Sibling(T item, IEnumerable<T> source, int relativeposition, T fallback) : this(item, source,
-            relativeposition, new FuncOf<IEnumerable<T>, T>(b => fallback))
+            relativeposition, new AsFunc<IEnumerable<T>, T>(b => fallback))
         {
         }
 

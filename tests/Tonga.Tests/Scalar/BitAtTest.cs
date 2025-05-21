@@ -86,7 +86,7 @@ namespace Tonga.Tests.Scalar
                 new BitAt(
                     new AsBytes(""),
                     2,
-                    new FuncOf<IBytes, bool>(bytes => true)
+                    new AsFunc<IBytes, bool>(bytes => true)
                 ).Value()
             );
         }

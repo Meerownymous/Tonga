@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Tonga.Tests.Bytes
 {
-    public sealed class InputAsBytesTest
+    public sealed class ConduitAsBytesTest
     {
 
         [Fact]
@@ -19,7 +19,7 @@ namespace Tonga.Tests.Bytes
             int multiplier = 5_000;
             String body = "1234567890";
             Assert.True(
-                new InputAsBytes(
+                new ConduitAsBytes(
                         new AsConduit(
                         String.Join(
                             "",
@@ -40,7 +40,7 @@ namespace Tonga.Tests.Bytes
             using (var slow = new SlowInputStream(size))
             {
                 Assert.True(
-                    new InputAsBytes(
+                    new ConduitAsBytes(
                         new AsConduit(slow)
                     ).Bytes().Length == size,
                     "Can't read large content from Input");
@@ -54,7 +54,7 @@ namespace Tonga.Tests.Bytes
 
             Assert.True(
                     Encoding.UTF8.GetString(
-                        new InputAsBytes(
+                        new ConduitAsBytes(
                             new AsConduit(
                                 new AsBytes(
                                     AsText._(content)
@@ -71,7 +71,7 @@ namespace Tonga.Tests.Bytes
 
             Assert.True(
                     Encoding.UTF8.GetString(
-                        new InputAsBytes(
+                        new ConduitAsBytes(
                             new AsConduit(
                                 new AsBytes(
                                     AsText._(content)

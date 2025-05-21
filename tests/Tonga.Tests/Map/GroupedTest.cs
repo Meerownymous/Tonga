@@ -15,14 +15,14 @@ public sealed class GroupedTest
     {
         var srcList = AsList._("ABC", "ABCD", "ABCDE");
         var keyFunc =
-            new FuncOf<string, double>((str) =>
+            new AsFunc<string, double>((str) =>
                 new NumberOf(
                     Length._(new AsConduit(str)).Value()
                 ).AsDouble()
             );
 
         var valueFunc =
-            new FuncOf<string, string>((str) =>
+            new AsFunc<string, string>((str) =>
                 "ica" + str
             );
         Assert.Equal(

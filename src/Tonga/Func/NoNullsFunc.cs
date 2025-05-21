@@ -65,7 +65,7 @@ namespace Tonga.Func
         /// Raises an <see cref="IOException"/> when the return value is null.
         /// </summary>
         /// <param name="fnc">func to check</param>
-        public NoNullsFunc(Func<Out> fnc) : this(new FuncOf<Out>(fnc), new IOException("Return value is null"))
+        public NoNullsFunc(Func<Out> fnc) : this(new AsFunc<Out>(fnc), new IOException("Return value is null"))
         { }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="ex">Exception to throw</param>
-        public NoNullsFunc(Func<Out> fnc, Exception ex) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(() => throw ex))
+        public NoNullsFunc(Func<Out> fnc, Exception ex) : this(new AsFunc<Out>(fnc), new AsFunc<Out>(() => throw ex))
         { }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="ex">Exception to throw</param>
-        public NoNullsFunc(IFunc<Out> fnc, Exception ex) : this(fnc, new FuncOf<Out>(() => throw ex))
+        public NoNullsFunc(IFunc<Out> fnc, Exception ex) : this(fnc, new AsFunc<Out>(() => throw ex))
         { }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="fallback">fallback value</param>
-        public NoNullsFunc(Func<Out> fnc, Out fallback) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(() => fallback))
+        public NoNullsFunc(Func<Out> fnc, Out fallback) : this(new AsFunc<Out>(fnc), new AsFunc<Out>(() => fallback))
         { }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="fallback">fallback value</param>
-        public NoNullsFunc(IFunc<Out> fnc, Out fallback) : this(fnc, new FuncOf<Out>(() => fallback))
+        public NoNullsFunc(IFunc<Out> fnc, Out fallback) : this(fnc, new AsFunc<Out>(() => fallback))
         { }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">func to check</param>
         /// <param name="fallback">fallback value</param>
-        public NoNullsFunc(Func<Out> fnc, Func<Out> fallback) : this(new FuncOf<Out>(fnc), new FuncOf<Out>(fallback))
+        public NoNullsFunc(Func<Out> fnc, Func<Out> fallback) : this(new AsFunc<Out>(fnc), new AsFunc<Out>(fallback))
         { }
 
         /// <summary>

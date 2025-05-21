@@ -25,7 +25,7 @@ namespace Tonga.Func
         /// Function that will retry if it fails.
         /// </summary>
         /// <param name="fnc">func to retry</param>
-        public RetryFunc(Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)), 3)
+        public RetryFunc(Func<In, Out> fnc) : this(new AsFunc<In, Out>((X) => fnc(X)), 3)
         { }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Tonga.Func
         /// <param name="fnc">func to retry</param>
         /// <param name="attempts">how often to retry</param>
         public RetryFunc(Func<In, Out> fnc, int attempts = 3) :
-            this(new FuncOf<In, Out>(fnc), attempts)
+            this(new AsFunc<In, Out>(fnc), attempts)
         { }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Tonga.Func
         /// <param name="fnc">func to retry</param>
         /// <param name="attempts">how often to retry</param>
         public RetryFunc(IFunc<In, Out> fnc, int attempts = 3) :
-            this(fnc, new FuncOf<Int32, Boolean>(attempt => attempt >= attempts))
+            this(fnc, new AsFunc<Int32, Boolean>(attempt => attempt >= attempts))
         { }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Tonga.Func
         /// <param name="fnc">func to retry</param>
         /// <param name="ext">exit condition</param>
         public RetryFunc(IFunc<In, Out> fnc, Func<Int32, Boolean> ext) :
-            this(fnc, new FuncOf<Int32, Boolean>((i) => ext(i)))
+            this(fnc, new AsFunc<Int32, Boolean>((i) => ext(i)))
         { }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Tonga.Func
         /// <param name="fnc">func to retry</param>
         /// <param name="ext">exit condition</param>
         public RetryFunc(Func<In, Out> fnc, Func<Int32, Boolean> ext) :
-            this(new FuncOf<In, Out>((X) => fnc(X)), new FuncOf<Int32, Boolean>((i) => ext(i)))
+            this(new AsFunc<In, Out>((X) => fnc(X)), new AsFunc<Int32, Boolean>((i) => ext(i)))
         { }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Tonga.Func
         /// </summary>
         /// <param name="fnc">function to call</param>
         /// <param name="max">how often it repeats</param>
-        public RepeatedFunc(Func<In, Out> fnc, int max) : this(new FuncOf<In, Out>((X) => fnc(X)), max)
+        public RepeatedFunc(Func<In, Out> fnc, int max) : this(new AsFunc<In, Out>((X) => fnc(X)), max)
         { }
 
         /// <summary>

@@ -6,7 +6,7 @@ namespace Tonga;
 /// Represents a function that you call without an argument and which returns something.
 /// </summary>
 /// <typeparam name="Out"></typeparam>
-public interface IFunc<Out>
+public interface IFunc<out Out>
 {
     /// <summary>
     /// Call the function and retrieve the output.
@@ -20,7 +20,7 @@ public interface IFunc<Out>
 /// </summary>
 /// <typeparam name="In"></typeparam>
 /// <typeparam name="Out"></typeparam>
-public interface IFunc<In, Out>
+public interface IFunc<in In, out Out>
 {
     /// <summary>
     /// Apply it
@@ -33,7 +33,7 @@ public interface IFunc<In, Out>
 /// <summary>
 /// A function that has one input and an output.
 /// </summary>
-public interface IFunc<In1, In2, Out>
+public interface IFunc<in In1, in In2, out Out>
 {
     /// <summary>
     /// Apply it
@@ -47,7 +47,7 @@ public interface IFunc<In1, In2, Out>
 /// <summary>
 /// A function that has one input and an output.
 /// </summary>
-public interface IFunc<In1, In2, In3, Out>
+public interface IFunc<in In1, in In2, in In3, out Out>
 {
     /// <summary>
     /// Apply it

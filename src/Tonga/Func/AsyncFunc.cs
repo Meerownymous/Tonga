@@ -26,7 +26,7 @@ namespace Tonga.Func
         /// Func that runs in the background.
         /// </summary>
         /// <param name="act">procedure to call</param>
-        public AsyncFunc(IAction<In> act) : this(new FuncOf<In, Out>(act, null)) //@TODO eliminate null passing
+        public AsyncFunc(IAction<In> act) : this(new AsFunc<In, Out>(act, null)) //@TODO eliminate null passing
         { }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Tonga.Func
         /// ).Apply("Hello, world!").Length;
         /// </summary>
         /// <param name="func">func to call</param>
-        public AsyncFunc(System.Func<In, Out> func) : this(new FuncOf<In, Out>((X) => func(X)))
+        public AsyncFunc(System.Func<In, Out> func) : this(new AsFunc<In, Out>(func))
         { }
 
         /// <summary>

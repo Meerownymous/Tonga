@@ -32,7 +32,7 @@ public sealed class WriterToTest
         Assert.Equal(
             0,
             String.Compare(AsText._(
-                new InputAsBytes(
+                new ConduitAsBytes(
                     new AsConduit(uri)
                 )
             ).AsString(), s, StringComparison.Ordinal)

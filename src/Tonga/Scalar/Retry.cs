@@ -28,7 +28,7 @@ namespace Tonga.Scalar
         /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="attempts">how often to retry</param>
         public Retry(IScalar<T> scalar, int attempts = 3) :
-            this(scalar, new FuncOf<int, bool>(attempt => attempt >= attempts))
+            this(scalar, new AsFunc<int, bool>(attempt => attempt >= attempts))
         { }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Tonga.Scalar
         /// <param name="exit"></param>
         public Retry(IScalar<T> scalar, IFunc<Int32, Boolean> exit) : base(() =>
             new RetryFunc<Boolean, T>(
-                new FuncOf<Boolean, T>(input => scalar.Value()),
+                new AsFunc<Boolean, T>(input => scalar.Value()),
                 exit
             ).Invoke(true)
         )

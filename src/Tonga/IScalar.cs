@@ -5,12 +5,10 @@ namespace Tonga;
 /// <summary>
 /// A capsule for anything.
 /// </summary>
-/// <typeparam name="OutValue"></typeparam>
-public interface IScalar<OutValue>
+public interface IScalar<out Val>
 {
     /// <summary>
-    /// Get the value.
+    /// Access the value.
     /// </summary>
-    /// <returns>the value</returns>
-    OutValue Value();
+    Val Value();
 }

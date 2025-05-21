@@ -25,7 +25,7 @@ namespace Tonga.Func
         /// Function that is threadsafe.
         /// </summary>
         /// <param name="fnc">func to cache output from</param>
-        public SyncFunc(Func<In, Out> fnc) : this(new FuncOf<In, Out>((X) => fnc(X)))
+        public SyncFunc(Func<In, Out> fnc) : this(new AsFunc<In, Out>((X) => fnc(X)))
         { }
 
         /// <summary>

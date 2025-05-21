@@ -37,7 +37,7 @@ namespace Tonga.Enumerable
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
         public Mapped(Func<In, Out> fnc, params In[] src) : this(
-            (source, index) => fnc.Invoke(source),
+            (source, _) => fnc.Invoke(source),
             AsEnumerable._(src)
         )
         { }
@@ -54,22 +54,28 @@ namespace Tonga.Enumerable
         { }
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see>
+        ///     <cref>IBiFunc{In, Index, Out}</cref>
+        /// </see>
+        /// function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, params In[] src) : this(
+        public Mapped(IFunc<In, int, Out> fnc, params In[] src) : this(
             fnc,
             AsEnumerable._(src)
         )
         { }
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see>
+        ///     <cref>IBiFunc{In, Index, Out}</cref>
+        /// </see>
+        /// function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public Mapped(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) : this(
+        public Mapped(IFunc<In, int, Out> fnc, IEnumerable<In> src) : this(
             fnc.Invoke,
             src
         )
@@ -114,11 +120,14 @@ namespace Tonga.Enumerable
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see>
+        ///     <cref>IBiFunc{In, Index, Out}</cref>
+        /// </see>
+        /// function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> _<In, Out>(IBiFunc<In, int, Out> fnc, params In[] src) =>
+        public static IEnumerable<Out> _<In, Out>(IFunc<In, int, Out> fnc, params In[] src) =>
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
@@ -146,11 +155,14 @@ namespace Tonga.Enumerable
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see>
+        ///     <cref>IBiFunc{In, Index, Out}</cref>
+        /// </see>
+        /// function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> _<In, Out>(IBiFunc<In, int, Out> fnc, IEnumerable<In> src) =>
+        public static IEnumerable<Out> _<In, Out>(IFunc<In, int, Out> fnc, IEnumerable<In> src) =>
             new Mapped<In, Out>(fnc, src);
     }
 
@@ -166,9 +178,12 @@ namespace Tonga.Enumerable
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see>
+        ///     <cref>IBiFunc{In, Index, Out}</cref>
+        /// </see>
+        /// function with index.
         /// </summary>
-        public static IEnumerable<Out> Mapped<In, Out>(this In[] src, IBiFunc<In, int, Out> fnc) =>
+        public static IEnumerable<Out> Mapped<In, Out>(this In[] src, IFunc<In, int, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
@@ -192,11 +207,14 @@ namespace Tonga.Enumerable
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
-        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IBiFunc{In, Index, Out}"/> function with index.
+        /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see>
+        ///     <cref>IBiFunc{In, Index, Out}</cref>
+        /// </see>
+        /// function with index.
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, IBiFunc<In, int, Out> fnc) =>
+        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, IFunc<In, int, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
     }
 }

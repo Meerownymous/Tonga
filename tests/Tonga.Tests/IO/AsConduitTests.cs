@@ -312,7 +312,7 @@ namespace Tonga.Tests.IO
             byte[] bytes = [0xCA, 0xFE];
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
-                new InputAsBytes(
+                new ConduitAsBytes(
                     new AsConduit(bytes)
                 ).Bytes(), bytes)
             );
@@ -344,7 +344,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 content,
                 AsText._(
-                        new InputAsBytes(
+                        new ConduitAsBytes(
                             new AsConduit(new Uri(file))))
                     .AsString()
             );
@@ -370,7 +370,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 txt,
                 AsText._(
-                        new InputAsBytes(
+                        new ConduitAsBytes(
                             new AsConduit(file)
                         )
                     )

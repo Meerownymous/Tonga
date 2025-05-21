@@ -9,14 +9,14 @@ namespace Tonga.Bytes
     /// <summary>
     /// Input as bytes. Disposes input.
     /// </summary>
-    public sealed class InputAsBytes : IBytes
+    public sealed class ConduitAsBytes : IBytes
     {
         private readonly IScalar<byte[]> bytes;
 
         /// <summary>
         /// Input as bytes.
         /// </summary>
-        public InputAsBytes(IConduit src, int max = 16 << 10)
+        public ConduitAsBytes(IConduit src, int max = 16 << 10)
         {
             this.bytes = new AsScalar<byte[]>(() =>
             {

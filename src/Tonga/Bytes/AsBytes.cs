@@ -20,7 +20,7 @@ namespace Tonga.Bytes
         /// Bytes out of a input.
         /// </summary>
         /// <param name="source">the input</param>
-        public AsBytes(IConduit source) : this(new InputAsBytes(source))
+        public AsBytes(IConduit source) : this(new ConduitAsBytes(source))
         { }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Tonga.Bytes
         /// </summary>
         /// <param name="source">the input</param>
         /// <param name="max">max buffer size</param>
-        public AsBytes(IConduit source, int max) : this(new InputAsBytes(source, max))
+        public AsBytes(IConduit source, int max) : this(new ConduitAsBytes(source, max))
         { }
 
         /// <summary>

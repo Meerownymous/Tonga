@@ -31,7 +31,7 @@ namespace Tonga.Tests.IO
 
             Assert.True(
                 AsText._(
-                    new InputAsBytes(
+                    new ConduitAsBytes(
                         new AsConduit(new Uri(file))))
                 .AsString() == (txt + txt),
                 "Can't append path content");
@@ -58,7 +58,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 txt + txt,
                 AsText._(
-                    new InputAsBytes(
+                    new ConduitAsBytes(
                         new AsConduit(
                             new FileInfo(file.Value())
                         )

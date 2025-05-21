@@ -26,7 +26,7 @@ namespace Tonga.Tests.IO
                 Assert.Equal(
                     content,
                     AsText._(
-                        new InputAsBytes(
+                        new ConduitAsBytes(
                             new Tonga.IO.AsConduit(
                                 new AsInputStream(
                                     new Uri(file.Value())
@@ -95,7 +95,7 @@ namespace Tonga.Tests.IO
 
             Assert.True(
                 AsText._(
-                    new InputAsBytes(
+                    new ConduitAsBytes(
                         new Tonga.IO.AsConduit(
                             new AsInputStream(
                                 new Uri(path))))

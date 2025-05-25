@@ -36,7 +36,7 @@ namespace Tonga.Scalar
                             new Formatted(
                                 "Cannot get last element: {0}",
                                 ex.Message
-                            ).AsString()
+                            ).Str()
                     );
                 }))
         { }

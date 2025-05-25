@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Tonga.Tests.Scalar
 {
-    public class FallbackTest
+    public class BackFallingTest
     {
         [Fact]
         public void GivesFallback()
@@ -12,7 +12,7 @@ namespace Tonga.Tests.Scalar
             var fbk = "strong string";
 
             Assert.True(
-                Fallback._(
+                BackFalling<>._(
                     AsScalar._<string>(
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")
                     ),
@@ -27,7 +27,7 @@ namespace Tonga.Tests.Scalar
             var fbk = "strong string";
 
             Assert.True(
-                Fallback._(
+                BackFalling<>._(
                     AsScalar._<string>(
                         () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
                     () => fbk
@@ -41,7 +41,7 @@ namespace Tonga.Tests.Scalar
 
             Assert.Equal(
                 notAmused.Message,
-                Fallback._(
+                BackFalling<>._(
                     AsScalar._<string>(() => throw notAmused),
                     (ex) => ex.Message
                 ).Value()

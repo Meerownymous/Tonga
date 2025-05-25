@@ -174,7 +174,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
         /// </summary>
-        public static IEnumerable<Out> Mapped<In, Out>(this In[] src, IFunc<In, Out> fnc) =>
+        public static IEnumerable<Out> AsMapped<In, Out>(this In[] src, IFunc<In, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
@@ -183,19 +183,19 @@ namespace Tonga.Enumerable
         /// </see>
         /// function with index.
         /// </summary>
-        public static IEnumerable<Out> Mapped<In, Out>(this In[] src, IFunc<In, int, Out> fnc) =>
+        public static IEnumerable<Out> AsMapped<In, Out>(this In[] src, IFunc<In, int, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
         /// </summary>
-        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, Func<In, Out> fnc) =>
+        public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, Func<In, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
         /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Index, Out}"/> function with index.
         /// </summary>
-        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, Func<In, int, Out> fnc) =>
+        public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, Func<In, int, Out> fnc) =>
             new Mapped<In, Out> (fnc, src);
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, IFunc<In, Out> fnc) =>
+        public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, IFunc<In, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="src">enumerable to map</param>
         /// <param name="fnc">function used to map</param>
-        public static IEnumerable<Out> Mapped<In, Out>(this IEnumerable<In> src, IFunc<In, int, Out> fnc) =>
+        public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, IFunc<In, int, Out> fnc) =>
             new Mapped<In, Out>(fnc, src);
     }
 }

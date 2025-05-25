@@ -10,7 +10,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 " ",
-                new Blank().AsString()
+                new Blank().Str()
             );
         }
     }

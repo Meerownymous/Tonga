@@ -16,7 +16,7 @@ namespace Tonga.Tests.Enumerable
                             AsEnumerable._(3, 2, 10, 44, -6, 0)
                         )
                     )
-                ).AsString() == "-6, 0, 2, 3, 10, 44",
+                ).Str() == "-6, 0, 2, 3, 10, 44",
             "Can't sort an enumerable");
         }
 
@@ -31,7 +31,7 @@ namespace Tonga.Tests.Enumerable
                             "a", "c", "hello", "dude", "Friend"
                         )
                     )
-                ).AsString() == "hello, Friend, dude, c, a",
+                ).Str() == "hello, Friend, dude, c, a",
                 "Can't sort an enumerable with a custom comparator");
         }
 

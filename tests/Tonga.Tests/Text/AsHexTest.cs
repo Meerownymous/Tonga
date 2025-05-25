@@ -4,14 +4,14 @@ using Xunit;
 
 namespace Tonga.Tests.Text
 {
-    public sealed class HexOfTest
+    public sealed class AsHexTest
     {
         [Fact]
         public void EmptyString()
         {
             Assert.Equal(
                 string.Empty,
-                new HexOf(new AsBytes(string.Empty.ToCharArray())).AsString()
+                new AsHex(new AsBytes(string.Empty.ToCharArray())).Str()
             );
         }
 
@@ -20,9 +20,9 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 "5768617427732075702c20d0b4d180d183d0b33f",
-                new HexOf(
+                new AsHex(
                     new AsBytes("What's up, друг?")
-                ).AsString()
+                ).Str()
             );
         }
     }

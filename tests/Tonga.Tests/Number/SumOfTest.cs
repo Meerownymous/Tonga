@@ -12,7 +12,7 @@ public sealed class SumOfTest
         Assert.True(
             new SumOf(
                 1.5F, 2.5F, 3.5F
-            ).AsFloat() == 7.5F);
+            ).ToFloat() == 7.5F);
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public sealed class SumOfTest
         Assert.True(
             new SumOf(
                 AsEnumerable._(1.5F, 2.5F, 3.5F)
-            ).AsFloat() == 7.5F
+            ).ToFloat() == 7.5F
         );
     }
 }

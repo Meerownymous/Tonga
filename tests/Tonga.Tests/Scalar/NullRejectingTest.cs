@@ -4,14 +4,14 @@ using Xunit;
 
 namespace Tonga.Tests.Scalar
 {
-    public class NoNullTest
+    public class NullRejectingTest
     {
         [Fact]
         public void RaisesError()
         {
             Assert.Throws<IOException>(
                 () =>
-                NoNull._<object>(null).Value());
+                NullRejecting._<object>(null).Value());
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace Tonga.Tests.Scalar
             string val = null;
             Assert.Equal(
                 fbk,
-                NoNull._(val, fbk).Value()
+                NullRejecting._(val, fbk).Value()
             );
         }
     }

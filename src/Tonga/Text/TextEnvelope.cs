@@ -9,27 +9,20 @@ namespace Tonga.Text
     /// A <see cref="IText"/> envelope.
     /// The envelope can work in live or in sticky mode.
     /// </summary>
-    public abstract class TextEnvelope : IText
+    public abstract class TextEnvelope(Func<string> origin) : IText
     {
-        private readonly IText origin;
-
         /// <summary>
         /// A <see cref="IText"/> envelope.
         /// The envelope can work in live or in sticky mode.
         /// </summary>
         /// <param name="origin">How to create the value</param>
-        public TextEnvelope(IText origin)
-        {
-            this.origin = origin;
-        }
+        public TextEnvelope(IText origin) : this(origin.Str)
+        { }
 
         /// <summary>
         /// Gives the text as a string.
         /// </summary>
         /// <returns></returns>
-        public String AsString()
-        {
-            return this.origin.AsString();
-        }
+        public String Str() => origin();
     }
 }

@@ -11,23 +11,23 @@ public interface INumber
     /// The number represented as LONG
     /// </summary>
     /// <returns>the long</returns>
-    long AsLong();
+    long ToLong();
 
     /// <summary>
     /// The number represented as INTEGER
     /// </summary>
     /// <returns>the integer</returns>
-    int AsInt();
+    int ToInt();
 
     /// <summary>
     /// The number represented as DOUBLE
     /// </summary>
     /// <returns>the double</returns>
-    double AsDouble();
+    double ToDouble();
 
     /// <summary>
     /// The number represented as FLOAT
     /// </summary>
     /// <returns>the float</returns>
-    float AsFloat();
+    float ToFloat();
 }

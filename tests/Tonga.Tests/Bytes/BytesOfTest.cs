@@ -148,7 +148,7 @@ namespace Tonga.Tests.Bytes
                     );
             }
 
-            Assert.Throws<ObjectDisposedException>(() => t.AsString());
+            Assert.Throws<ObjectDisposedException>(() => t.Str());
         }
 
 
@@ -161,7 +161,7 @@ namespace Tonga.Tests.Bytes
                     new AsBytes(
                         new AsConduit(text)
                         ).Bytes(),
-                    new AsBytes(text.AsString()).Bytes()
+                    new AsBytes(text.Str()).Bytes()
                 )
             );
         }

@@ -28,17 +28,17 @@ namespace Tonga.Tests.Enumerable
                     Distinct._(
                         AsEnumerable._(
                             AsEnumerable._(
-                                new NumberOf(1),
-                                new NumberOf(2),
-                                new NumberOf(3)
+                                new AsNumber(1),
+                                new AsNumber(2),
+                                new AsNumber(3)
                             ),
                              AsEnumerable._(
-                                new NumberOf(10),
-                                new NumberOf(2),
-                                new NumberOf(30)
+                                new AsNumber(10),
+                                new AsNumber(2),
+                                new AsNumber(30)
                             )
                         ),
-                        (v1, v2) => v1.AsInt().Equals(v2.AsInt())
+                        (v1, v2) => v1.ToInt().Equals(v2.ToInt())
                     )
                 ).Value()
             );

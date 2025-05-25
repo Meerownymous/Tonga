@@ -28,7 +28,7 @@ namespace Tonga.Text
         /// <param name="text">text to check</param>
         public IsBlank(IText text)
         {
-            this.result = () => !text.AsString().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + ""));
+            this.result = () => !text.Str().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + ""));
         }
 
         /// <summary>

@@ -16,9 +16,9 @@ public sealed class GroupedTest
         var srcList = AsList._("ABC", "ABCD", "ABCDE");
         var keyFunc =
             new AsFunc<string, double>((str) =>
-                new NumberOf(
+                new AsNumber(
                     Length._(new AsConduit(str)).Value()
-                ).AsDouble()
+                ).ToDouble()
             );
 
         var valueFunc =

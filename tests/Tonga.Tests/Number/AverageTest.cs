@@ -4,126 +4,126 @@ using Xunit;
 
 namespace Tonga.Tests.Number;
 
-public sealed class AvgOfTest
+public sealed class AverageTest
 {
     [Fact]
     public void IsZeroForEmptyCollection()
     {
         Assert.True(
-            new AvgOf(
+            new Average(
                 None._<long>()
-            ).AsLong() == 0L);
+            ).ToLong() == 0L);
     }
 
     [Fact]
     public void CalculatesAvgIntOfInts()
     {
         Assert.True(
-            new AvgOf(1, 2, 3, 4).AsInt() == 2);
+            new Average(1, 2, 3, 4).ToInt() == 2);
     }
 
     [Fact]
     public void CalculatesAvgLongOfInts()
     {
         Assert.True(
-            new AvgOf(1, 2, 3, 4).AsLong() == 2L);
+            new Average(1, 2, 3, 4).ToLong() == 2L);
     }
 
     [Fact]
     public void CalculatesAvgDoubleOfInts()
     {
         Assert.True(
-            new AvgOf(1, 2, 3, 4).AsDouble() == 2.5D);
+            new Average(1, 2, 3, 4).ToDouble() == 2.5D);
     }
 
     [Fact]
     public void CalculatesAvgFloatOfInts()
     {
         Assert.True(
-            new AvgOf(1, 2, 3, 4).AsFloat() == 2.5F);
+            new Average(1, 2, 3, 4).ToFloat() == 2.5F);
     }
 
     [Fact]
     public void CalculatesAvgIntOfDoubles()
     {
         Assert.True(
-            new AvgOf(1D, 2D, 3D, 4D).AsInt() == 2);
+            new Average(1D, 2D, 3D, 4D).ToInt() == 2);
     }
 
     [Fact]
     public void CalculatesAvgLongOfDoubles()
     {
         Assert.True(
-            new AvgOf(1D, 2D, 3D, 4D).AsLong() == 2L);
+            new Average(1D, 2D, 3D, 4D).ToLong() == 2L);
     }
 
     [Fact]
     public void CalculatesAvgDoubleOfDoubles()
     {
         Assert.True(
-            new AvgOf(1D, 2D, 3D, 4D).AsDouble() == 2.5D);
+            new Average(1D, 2D, 3D, 4D).ToDouble() == 2.5D);
     }
 
     [Fact]
     public void CalculatesAvgFloatOfDoubles()
     {
         Assert.True(
-            new AvgOf(1D, 2D, 3D, 4D).AsFloat() == 2.5F);
+            new Average(1D, 2D, 3D, 4D).ToFloat() == 2.5F);
     }
 
     [Fact]
     public void CalculatesAvgIntOfLongs()
     {
         Assert.True(
-            new AvgOf(1L, 2L, 3L, 4L).AsInt() == 2);
+            new Average(1L, 2L, 3L, 4L).ToInt() == 2);
     }
 
     [Fact]
     public void CalculatesAvgLongOfLongs()
     {
         Assert.True(
-            new AvgOf(1L, 2L, 3L, 4L).AsLong() == 2L);
+            new Average(1L, 2L, 3L, 4L).ToLong() == 2L);
     }
 
     [Fact]
     public void CalculatesAvgDoubleOfLongs()
     {
         Assert.True(
-            new AvgOf(1L, 2L, 3L, 4L).AsDouble() == 2.5D);
+            new Average(1L, 2L, 3L, 4L).ToDouble() == 2.5D);
     }
 
     [Fact]
     public void CalculatesAvgFloatOfLongs()
     {
         Assert.True(
-            new AvgOf(1L, 2L, 3L, 4L).AsFloat() == 2.5F);
+            new Average(1L, 2L, 3L, 4L).ToFloat() == 2.5F);
     }
 
     [Fact]
     public void CalculatesAvgIntOfFloats()
     {
         Assert.True(
-            new AvgOf(1F, 2F, 3F, 4F).AsInt() == 2);
+            new Average(1F, 2F, 3F, 4F).ToInt() == 2);
     }
 
     [Fact]
     public void CalculatesAvgLongOfFloats()
     {
         Assert.True(
-            new AvgOf(1F, 2F, 3F, 4F).AsLong() == 2L);
+            new Average(1F, 2F, 3F, 4F).ToLong() == 2L);
     }
 
     [Fact]
     public void CalculatesAvgDoubleOfFloats()
     {
         Assert.True(
-            new AvgOf(1F, 2F, 3F, 4F).AsDouble() == 2.5D);
+            new Average(1F, 2F, 3F, 4F).ToDouble() == 2.5D);
     }
 
     [Fact]
     public void CalculatesAvgFloatOfFloats()
     {
         Assert.True(
-            new AvgOf(1F, 2F, 3F, 4F).AsFloat() == 2.5F);
+            new Average(1F, 2F, 3F, 4F).ToFloat() == 2.5F);
     }
 }

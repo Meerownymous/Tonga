@@ -1,7 +1,4 @@
-
-
 using System.Collections.Generic;
-using Tonga.Enumerable;
 using Tonga.Scalar;
 
 namespace Tonga.Number
@@ -15,227 +12,150 @@ namespace Tonga.Number
         /// The minimum of the source integers
         /// </summary>
         /// <param name="src">integers to find max in</param>
-        public MinOf(params int[] src) : this(
-            AsEnumerable._(src))
+        public MinOf(params int[] src) : this(ToDoubles(src))
         { }
 
         /// <summary>
         /// The minimum of the source integers
         /// </summary>
         /// <param name="src">integers to find max in</param>
-        public MinOf(IEnumerable<int> src) : base(
-            new AsScalar<double>(() =>
-            {
-                var min = double.MaxValue;
-                using var e = src.GetEnumerator();
+        public MinOf(IEnumerable<int> src) : this(ToDoubles(src))
+        { }
+
+        /// <summary>
+        /// The minimum of the source integers
+        /// </summary>
+        /// <param name="src">integers to find max in</param>
+        public MinOf(params double[] src) : this((IEnumerable<double>)src)
+        { }
+
+        /// <summary>
+        /// The minimum of the source integers
+        /// </summary>
+        /// <param name="src">integers to find max in</param>
+        public MinOf(IEnumerable<double> src) : base(ScalarsFrom(src).Item1, ScalarsFrom(src).Item2, ScalarsFrom(src).Item3, ScalarsFrom(src).Item4)
+        { }
+
+        /// <summary>
+        /// The minimum of the source integers
+        /// </summary>
+        /// <param name="src">integers to find max in</param>
+        public MinOf(params long[] src) : this(ToDoubles(src))
+        { }
+
+        /// <summary>
+        /// The minimum of the source integers
+        /// </summary>
+        /// <param name="src">integers to find max in</param>
+        public MinOf(IEnumerable<long> src) : this(ToDoubles(src))
+        { }
+
+        /// <summary>
+        /// The minimum of the source integers
+        /// </summary>
+        /// <param name="src">integers to find max in</param>
+        public MinOf(params float[] src) : this(ToDoubles(src))
+        { }
+
+        /// <summary>
+        /// The minimum of the source integers
+        /// </summary>
+        /// <param name="src">integers to find max in</param>
+        public MinOf(IEnumerable<float> src) : this(ToDoubles(src))
+        { }
+
+        private static (IScalar<double>, IScalar<int>, IScalar<long>, IScalar<float>) ScalarsFrom(IEnumerable<double> src)
+        {
+            return (
+                new AsScalar<double>(() =>
                 {
+                    var min = double.MaxValue;
+                    using var e = src.GetEnumerator();
                     while (e.MoveNext())
                     {
                         if (e.Current < min) min = e.Current;
                     }
+                    return min;
+                }),
+                new AsScalar<int>(() =>
+                {
+                    var min = int.MaxValue;
+                    using var e = src.GetEnumerator();
+                    while (e.MoveNext())
+                    {
+                        if (e.Current < min) min = (int)e.Current;
+                    }
+                    return min;
+                }),
+                new AsScalar<long>(() =>
+                {
+                    var min = long.MaxValue;
+                    using var e = src.GetEnumerator();
+                    while (e.MoveNext())
+                    {
+                        if (e.Current < min) min = (long)e.Current;
+                    }
+                    return min;
+                }),
+                new AsScalar<float>(() =>
+                {
+                    var min = float.MaxValue;
+                    using var e = src.GetEnumerator();
+                    while (e.MoveNext())
+                    {
+                        if (e.Current < min) min = (float)e.Current;
+                    }
+                    return min;
+                })
+            );
+        }
 
-                }
-                return min;
-            }),
-            new AsScalar<int>(() =>
+        private static IEnumerable<double> ToDoubles(int[] src)
+        {
+            foreach (var item in src)
             {
-                var min = int.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<long>(() =>
-            {
-                var min = long.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<float>(() =>
-            {
-                var min = float.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = e.Current;
-                }
-                return min;
-            })
-            )
-        { }
+                yield return item;
+            }
+        }
 
-        /// <summary>
-        /// The minimum of the source integers
-        /// </summary>
-        /// <param name="src">integers to find max in</param>
-        public MinOf(params double[] src) : this(
-            AsEnumerable._(src))
-        { }
+        private static IEnumerable<double> ToDoubles(IEnumerable<int> src)
+        {
+            foreach (var item in src)
+            {
+                yield return item;
+            }
+        }
 
-        /// <summary>
-        /// The minimum of the source integers
-        /// </summary>
-        /// <param name="src">integers to find max in</param>
-        public MinOf(IEnumerable<double> src) : base(
-            new AsScalar<double>(() =>
+        private static IEnumerable<double> ToDoubles(long[] src)
+        {
+            foreach (var item in src)
             {
-                var min = double.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<int>(() =>
-            {
-                var min = int.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (int)e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<long>(() =>
-            {
-                var min = long.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (long)e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<float>(() =>
-            {
-                var min = float.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (float)e.Current;
-                }
-                return min;
-            })
-        )
-        { }
+                yield return item;
+            }
+        }
 
-        /// <summary>
-        /// The minimum of the source integers
-        /// </summary>
-        /// <param name="src">integers to find max in</param>
-        public MinOf(params long[] src) : this(
-            Enumerable.AsEnumerable._(src))
-        { }
+        private static IEnumerable<double> ToDoubles(IEnumerable<long> src)
+        {
+            foreach (var item in src)
+            {
+                yield return item;
+            }
+        }
 
-        /// <summary>
-        /// The minimum of the source integers
-        /// </summary>
-        /// <param name="src">integers to find max in</param>
-        public MinOf(IEnumerable<long> src) : base(
-            new AsScalar<double>(() =>
+        private static IEnumerable<double> ToDoubles(float[] src)
+        {
+            foreach (var item in src)
             {
-                var min = double.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<int>(() =>
-            {
-                var min = int.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (int)e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<long>(() =>
-            {
-                var min = long.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (long)e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<float>(() =>
-            {
-                var min = float.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (float)e.Current;
-                }
-                return min;
-            })
-        )
-        { }
+                yield return item;
+            }
+        }
 
-        /// <summary>
-        /// The minimum of the source integers
-        /// </summary>
-        /// <param name="src">integers to find max in</param>
-        public MinOf(params float[] src) : this(
-            Enumerable.AsEnumerable._(src))
-        { }
-
-        /// <summary>
-        /// The minimum of the source integers
-        /// </summary>
-        /// <param name="src">integers to find max in</param>
-        public MinOf(IEnumerable<float> src) : base(
-            new AsScalar<double>(() =>
+        private static IEnumerable<double> ToDoubles(IEnumerable<float> src)
+        {
+            foreach (var item in src)
             {
-                var min = double.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<int>(() =>
-            {
-                var min = int.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (int)e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<long>(() =>
-            {
-                var min = long.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (long)e.Current;
-                }
-                return min;
-            }),
-            new AsScalar<float>(() =>
-            {
-                var min = float.MaxValue;
-                var e = src.GetEnumerator();
-                while (e.MoveNext())
-                {
-                    if (e.Current < min) min = (float)e.Current;
-                }
-                return min;
-            })
-        )
-        { }
+                yield return item;
+            }
+        }
     }
 }

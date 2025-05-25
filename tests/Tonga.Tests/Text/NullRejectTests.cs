@@ -4,14 +4,14 @@ using Xunit;
 
 namespace Tonga.Tests.Text
 {
-    public sealed class NotNullTests
+    public sealed class NullRejectTests
     {
         [Fact]
         public void NotNull()
         {
             IText s = null;
             Assert.Throws<IOException>(
-                () => new NotNull(s).AsString()
+                () => new NullReject(s).Str()
             );
         }
     }

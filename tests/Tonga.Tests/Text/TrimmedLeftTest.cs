@@ -10,7 +10,7 @@ public sealed class TrimmedLeftTest
     public void TrimsWhitespaceEscapeSequences()
     {
         Assert.True(
-            new TrimmedLeft(AsText._("   \b \f \n \r \t \v   ")).AsString() == string.Empty
+            new TrimmedLeft(AsText._("   \b \f \n \r \t \v   ")).Str() == string.Empty
         );
     }
 
@@ -21,7 +21,7 @@ public sealed class TrimmedLeftTest
             "Hello! \t \b  ",
             new TrimmedLeft(
                 " \b   \t      Hello! \t \b  "
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -32,7 +32,7 @@ public sealed class TrimmedLeftTest
             "Hello! \t \b  ",
             new TrimmedLeft(
                 AsText._(" \b   \t      Hello! \t \b  ")
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -44,7 +44,7 @@ public sealed class TrimmedLeftTest
             new TrimmedLeft(
                 " \b   \t      Hello! \t \b  ",
                 new char[] { '\b', '\t', ' ', 'H', 'o' }
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -56,7 +56,7 @@ public sealed class TrimmedLeftTest
             new TrimmedLeft(
                 AsText._(" \b   \t      Hello! \t \b  "),
                 new char[] { '\b', '\t', ' ', 'H', 'o' }
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -68,7 +68,7 @@ public sealed class TrimmedLeftTest
             new TrimmedLeft(
                 AsText._(" \b   \t      Hello! \t \b  "),
                 AsScalar._(() => new char[] { '\b', '\t', ' ', 'H', 'o' })
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -79,7 +79,7 @@ public sealed class TrimmedLeftTest
             "ello! \t \b   \t      H",
             new TrimmedLeft(
                 " \b   \t      Hello! \t \b   \t      H", " \b   \t      H"
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -88,7 +88,7 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b   \t      H",
-            new TrimmedLeft(AsText._(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString()
+            new TrimmedLeft(AsText._(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").Str()
         );
     }
 
@@ -97,7 +97,7 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b   \t      H",
-            new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", AsText._(" \b   \t      H")).AsString()
+            new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", AsText._(" \b   \t      H")).Str()
         );
     }
 
@@ -109,7 +109,7 @@ public sealed class TrimmedLeftTest
             new TrimmedLeft(
                 AsText._(" \b   \t      Hello! \t \b   \t      H"),
                 AsText._(" \b   \t      H")
-            ).AsString()
+            ).Str()
         );
     }
 }

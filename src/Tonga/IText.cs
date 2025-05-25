@@ -13,5 +13,5 @@ public interface IText
     /// Get content as a string.
     /// </summary>
     /// <returns>the content as a string</returns>
-    String AsString();
+    String Str();
 }

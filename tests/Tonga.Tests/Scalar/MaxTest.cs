@@ -1,5 +1,6 @@
 using System;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Scalar

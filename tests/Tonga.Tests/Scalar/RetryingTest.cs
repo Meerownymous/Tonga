@@ -4,14 +4,14 @@ using Xunit;
 
 namespace Tonga.Tests.Scalar
 {
-    public sealed class RetryTest
+    public sealed class RetryingTest
     {
         [Fact]
         public void RunsScalarMultipleTimes()
         {
             Assert.Equal(
                 0,
-                Retry._(
+                Retrying._(
                     () =>
                     {
                         if (new Random().NextDouble() > 0.3d)

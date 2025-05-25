@@ -70,7 +70,7 @@ namespace Tonga.IO
         private int Copy(byte[] buffer, byte[] response, int read)
         {
             Array.Copy(buffer, read - this.count, response, 0, this.count);
-            return new MinOf(this.count, read).AsInt();
+            return new MinOf(this.count, read).ToInt();
         }
 
 

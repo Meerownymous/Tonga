@@ -19,7 +19,7 @@ public sealed class MappedTest
                     new AsList<string>("hello", "world", "damn")
                 ),
                 0
-            ).Value().AsString()
+            ).Value().Str()
         );
     }
 

@@ -19,7 +19,7 @@ namespace Tonga.Enumerable
 
         public IEnumerator<string> GetEnumerator()
         {
-            using StringReader reader = new StringReader(source.AsString());
+            using StringReader reader = new StringReader(source.Str());
             string line;
             while ((line = reader.ReadLine()) != null)
             {

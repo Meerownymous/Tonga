@@ -4,14 +4,14 @@ using Xunit;
 
 namespace Tonga.Tests.Enumerable;
 
-public sealed class FallbackTests
+public sealed class BackFallingTests
 {
     [Fact]
     public void DeliversFallbackIfSourceEmpty()
     {
         Assert.Equal(
             1137,
-            new Fallback<int>(
+            new FallingBack<int>(
                     new None<int>(), 1137
             )
             .First()

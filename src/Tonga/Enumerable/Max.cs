@@ -1,8 +1,5 @@
-
-
 using System;
 using System.Collections.Generic;
-
 using Tonga.Scalar;
 
 namespace Tonga.Enumerable

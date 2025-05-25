@@ -37,7 +37,7 @@ namespace Tonga.Number
                     {
                         isSimilar =
                             Math.Abs(
-                                first.AsDouble() - second.AsDouble()
+                                first.ToDouble() - second.ToDouble()
                             ) <
                             Math.Pow(
                                 10, -1 * accuracy
@@ -47,7 +47,7 @@ namespace Tonga.Number
                     {
                         isSimilar =
                             Math.Abs(
-                                    first.AsDouble() - second.AsDouble()
+                                    first.ToDouble() - second.ToDouble()
                                 ) == 0;
                     }
 

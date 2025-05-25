@@ -48,7 +48,7 @@ namespace Tonga.IO
         public String Value()
         {
             return WebUtility.UrlDecode(
-                this.source.AsString()
+                this.source.Str()
             );
         }
     }

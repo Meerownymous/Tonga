@@ -13,7 +13,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Reversed(
                     AsText._("Hello!")
-                ).AsString() == "!olleH",
+                ).Str() == "!olleH",
                 "Can't reverse a text");
         }
 
@@ -23,7 +23,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Reversed(
                     AsText._("")
-                ).AsString() == "",
+                ).Str() == "",
                 "Can't reverse empty text");
         }
     }

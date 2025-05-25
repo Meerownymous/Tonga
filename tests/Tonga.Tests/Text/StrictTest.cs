@@ -11,7 +11,7 @@ namespace Tonga.Tests.Text
         public void Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                new Strict("not valid", "valid", "also valid").AsString()
+                new Strict("not valid", "valid", "also valid").Str()
             );
         }
 
@@ -21,7 +21,7 @@ namespace Tonga.Tests.Text
             var expected = "valid";
             Assert.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "valid", "ending").AsString()
+                new Strict(expected, "not valid", "also not", "valid", "ending").Str()
             );
         }
 
@@ -31,7 +31,7 @@ namespace Tonga.Tests.Text
             var expected = "LargeValid";
             Assert.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "LargeValid", "ending").AsString()
+                new Strict(expected, "not valid", "also not", "LargeValid", "ending").Str()
             );
         }
 
@@ -40,7 +40,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Throws<ArgumentException>(
                 () =>
-                new Strict("valid", false, "not valid", "also not", "largeValid", "ending").AsString()
+                new Strict("valid", false, "not valid", "also not", "largeValid", "ending").Str()
             );
         }
 
@@ -52,7 +52,7 @@ namespace Tonga.Tests.Text
                 expected,
                 new Strict(expected,
                     AsEnumerable._("NotValid", expected)
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -68,8 +68,8 @@ namespace Tonga.Tests.Text
                         AsText._(expected)
                     )
                 );
-            text.AsString();
-            text.AsString();
+            text.Str();
+            text.Str();
             Assert.NotEqual(
                 1,
                 counter
@@ -88,7 +88,7 @@ namespace Tonga.Tests.Text
                         AsText._("Not Valid"),
                         AsText._(expected)
                     )
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -105,7 +105,7 @@ namespace Tonga.Tests.Text
                         "As well not valid",
                         "ExpEcteD"
                     )
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -120,7 +120,7 @@ namespace Tonga.Tests.Text
                     "Not Valid",
                     "As well not valid",
                     "ExpEcteD"
-                ).AsString()
+                ).Str()
             );
         }
     }

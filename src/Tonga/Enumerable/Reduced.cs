@@ -47,20 +47,20 @@ namespace Tonga.Scalar
     /// <summary>
     /// <see cref="IEnumerable{T}"/> whose items are reduced to one item using the given function.
     /// </summary>
-    public static class Reduced
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are folded to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static Reduced<T> _<T>(IEnumerable<T> elements, IFunc<T, T, T> fnc) => new(elements, fnc);
+        public static Reduced<T> AsReduced<T>(IEnumerable<T> elements, IFunc<T, T, T> fnc) => new(elements, fnc);
 
         /// <summary>
         /// <see cref="IEnumerable{Element}"/> whose items are reduced to one item using the given function.
         /// </summary>
         /// <param name="elements">enumerable to reduce</param>
         /// <param name="fnc">reducing function</param>
-        public static Reduced<T> _<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new(elements, fnc);
+        public static Reduced<T> AsReduced<T>(IEnumerable<T> elements, Func<T, T, T> fnc) => new(elements, fnc);
     }
 }

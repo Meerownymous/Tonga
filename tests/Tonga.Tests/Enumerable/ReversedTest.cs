@@ -17,7 +17,7 @@ namespace Tonga.Tests.Enumerable
                             "hello", "world", "dude"
                         )
                     )
-                ).AsString()
+                ).Str()
             );
         }
     }

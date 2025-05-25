@@ -11,7 +11,7 @@ public sealed class TrimmedTest
         Assert.True(
             new Trimmed(
                 AsText._("   \b \f \n \r \t \v   ")
-            ).AsString() == string.Empty
+            ).Str() == string.Empty
         );
     }
 
@@ -19,7 +19,7 @@ public sealed class TrimmedTest
     public void TrimsString()
     {
         Assert.True(
-            new Trimmed(" \b   \t      Hello! \t \b  ").AsString() == "Hello!"
+            new Trimmed(" \b   \t      Hello! \t \b  ").Str() == "Hello!"
         );
     }
 
@@ -27,7 +27,7 @@ public sealed class TrimmedTest
     public void TrimsText()
     {
         Assert.True(
-            new Trimmed(AsText._(" \b   \t      Hello! \t \b  ")).AsString() == "Hello!"
+            new Trimmed(AsText._(" \b   \t      Hello! \t \b  ")).Str() == "Hello!"
         );
     }
 
@@ -35,7 +35,7 @@ public sealed class TrimmedTest
     public void TrimsStringWithCharArray()
     {
         Assert.True(
-            new Trimmed(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello!"
+            new Trimmed(" \b   \t      Hello! \t \b  ", new char[] { '\b', '\t', ' ', 'H', 'o' }).Str() == "ello!"
         );
     }
 
@@ -43,7 +43,7 @@ public sealed class TrimmedTest
     public void TrimsTextWithCharArray()
     {
         Assert.True(
-            new Trimmed(AsText._(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', 'o' }).AsString() == "ello!"
+            new Trimmed(AsText._(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', 'o' }).Str() == "ello!"
         );
     }
 
@@ -55,7 +55,7 @@ public sealed class TrimmedTest
             new Trimmed(
                 AsText._(" \b   \t      Hello! \t \b  "),
                 () => new char[] { '\b', '\t', ' ', 'H', 'o' }
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -63,7 +63,7 @@ public sealed class TrimmedTest
     public void RemovesStringFromString()
     {
         Assert.True(
-            new Trimmed(" \b   \t      Hello! \t \b   \t      H", " \b   \t      H").AsString() == "ello! \t"
+            new Trimmed(" \b   \t      Hello! \t \b   \t      H", " \b   \t      H").Str() == "ello! \t"
         );
     }
 
@@ -71,7 +71,7 @@ public sealed class TrimmedTest
     public void RemovesTextFromString()
     {
         Assert.True(
-            new Trimmed(AsText._(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString() == "ello! \t"
+            new Trimmed(AsText._(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").Str() == "ello! \t"
         );
     }
 
@@ -79,7 +79,7 @@ public sealed class TrimmedTest
     public void RemovesStringFromText()
     {
         Assert.True(
-            new Trimmed(" \b   \t      Hello! \t \b   \t      H", AsText._(" \b   \t      H")).AsString() == "ello! \t"
+            new Trimmed(" \b   \t      Hello! \t \b   \t      H", AsText._(" \b   \t      H")).Str() == "ello! \t"
         );
     }
 
@@ -87,7 +87,7 @@ public sealed class TrimmedTest
     public void RemovesTextFromText()
     {
         Assert.True(
-            new Trimmed(AsText._(" \b   \t      Hello! \t \b   \t      H"), AsText._(" \b   \t      H")).AsString() == "ello! \t"
+            new Trimmed(AsText._(" \b   \t      Hello! \t \b   \t      H"), AsText._(" \b   \t      H")).Str() == "ello! \t"
         );
     }
 
@@ -99,7 +99,7 @@ public sealed class TrimmedTest
             new Trimmed(
                 AsText._("Hello Hello World Hello "),
                 AsText._("Hello ")
-            ).AsString()
+            ).Str()
         );
     }
 }

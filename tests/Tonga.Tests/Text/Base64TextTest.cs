@@ -5,6 +5,7 @@ using Tonga.IO;
 using Tonga.Text;
 using Xunit;
 using Base64Decoded = Tonga.Text.Base64Decoded;
+using Base64Encoded = Tonga.Bytes.Base64Encoded;
 
 namespace Tonga.Tests.Text
 {

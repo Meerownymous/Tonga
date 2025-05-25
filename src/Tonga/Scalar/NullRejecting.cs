@@ -10,13 +10,13 @@ namespace Tonga.Scalar
     /// Scalar that will raise error or return fallback if value is null.
     /// </summary>
     /// <typeparam name="T">type of return value</typeparam>
-    public class NoNull<T> : ScalarEnvelope<T>
+    public class NullRejecting<T> : ScalarEnvelope<T>
     {
         /// <summary>
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original</param>
-        public NoNull(T origin) : this(
+        public NullRejecting(T origin) : this(
             origin,
             new IOException("got NULL instead of a valid value"))
         { }
@@ -26,9 +26,10 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="origin">the original</param>
         /// <param name="ex">error to raise if null</param>
-        public NoNull(T origin, Exception ex) : this(
-            AsScalar._(origin),
-            new AsFunc<T>(() => throw ex))
+        public NullRejecting(T origin, Exception ex) : this(
+            origin.AsScalar(),
+            new AsFunc<T>(() => throw ex)
+        )
         { }
 
         /// <summary>
@@ -36,9 +37,10 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="origin">the original</param>
         /// <param name="fallback">the fallback value</param>
-        public NoNull(T origin, T fallback) : this(
-            AsScalar._(origin),
-            fallback)
+        public NullRejecting(T origin, T fallback) : this(
+            origin.AsScalar(),
+            fallback
+        )
         { }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback value</param>
-        public NoNull(IScalar<T> origin, T fallback) : this(
+        public NullRejecting(IScalar<T> origin, T fallback) : this(
             origin,
             new AsFunc<T>(() => fallback))
         { }
@@ -56,60 +58,49 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback</param>
-        public NoNull(IScalar<T> origin, IFunc<T> fallback)
-            : base(() =>
-            {
-                T ret = origin.Value();
-
-                if (ret == null)
-                {
-                    ret = fallback.Invoke();
-                }
-
-                return ret;
-            })
-        { }
+        public NullRejecting(IScalar<T> origin, IFunc<T> fallback) : base(
+            () => origin.Value() ?? fallback.Invoke()){ }
     }
 
-    public static class NoNull
+    public static partial class ScalarSmarts
     {
         /// <summary>
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original</param>
-        public static IScalar<T> _<T>(T origin)
-            => new NoNull<T>(origin);
+        public static IScalar<T> AsNullRejecting<T>(this T origin)
+            => new NullRejecting<T>(origin);
 
         /// <summary>
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original</param>
         /// <param name="ex">error to raise if null</param>
-        public static IScalar<T> _<T>(T origin, Exception ex)
-            => new NoNull<T>(origin, ex);
+        public static IScalar<T> AsNullRejecting<T>(this T origin, Exception ex)
+            => new NullRejecting<T>(origin, ex);
 
         /// <summary>
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original</param>
         /// <param name="fallback">the fallback value</param>
-        public static IScalar<T> _<T>(T origin, T fallback)
-            => new NoNull<T>(origin, fallback);
+        public static IScalar<T> AsNullRejecting<T>(this T origin, T fallback)
+            => new NullRejecting<T>(origin, fallback);
 
         /// <summary>
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback value</param>
-        public static IScalar<T> _<T>(IScalar<T> origin, T fallback)
-            => new NoNull<T>(origin, fallback);
+        public static IScalar<T> AsNullRejecting<T>(this IScalar<T> origin, T fallback)
+            => new NullRejecting<T>(origin, fallback);
 
         /// <summary>
         /// A scalar with a fallback if value is null.
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback</param>
-        public static IScalar<T> _<T>(IScalar<T> origin, IFunc<T> fallback)
-            => new NoNull<T>(origin, fallback);
+        public static IScalar<T> AsNullRejecting<T>(this IScalar<T> origin, IFunc<T> fallback)
+            => new NullRejecting<T>(origin, fallback);
     }
 }

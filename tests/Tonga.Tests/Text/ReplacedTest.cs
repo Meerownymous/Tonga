@@ -14,7 +14,7 @@ namespace Tonga.Tests.Text
                 new Replaced(
                     AsText._("Hello!"),
                     "ello", "i"
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -27,7 +27,7 @@ namespace Tonga.Tests.Text
                 new Replaced(
                     AsText._(text),
                     "xyz", "i"
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -40,7 +40,7 @@ namespace Tonga.Tests.Text
                     AsText._("one cat, two cats, three cats"),
                     "cat",
                     "dog"
-                ).AsString()
+                ).Str()
             );
         }
     }

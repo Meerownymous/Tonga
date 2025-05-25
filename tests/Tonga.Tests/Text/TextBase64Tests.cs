@@ -4,6 +4,7 @@ using Tonga.Func;
 using Tonga.IO;
 using Tonga.Text;
 using Xunit;
+using Base64Encoded = Tonga.Text.Base64Encoded;
 
 namespace Tonga.Tests.Text;
 
@@ -19,7 +20,7 @@ public sealed class TextBase64Tests
         ReadAll._(
             new TeeOnRead(
                 AsText._(
-                    new Base64Encoded(
+                    new Tonga.Bytes.Base64Encoded(
                         new AsBytes(
                             AsText._(text)
                         )
@@ -35,7 +36,7 @@ public sealed class TextBase64Tests
                     new Uri(tempFile.Value())
                 )
             ).CompareTo(
-                new TextAsBase64(
+                new Base64Encoded(
                     AsText._(text)
                 )
             ) == 0
@@ -50,13 +51,13 @@ public sealed class TextBase64Tests
     {
         Assert.Equal(
             AsText._(
-                new Base64Encoded(
+                new Tonga.Bytes.Base64Encoded(
                     new AsBytes(
                         AsText._(text)
                     )
                 )
             ).AsString(),
-            new TextAsBase64(text).AsString()
+            new Base64Encoded(text).Str()
         );
     }
 }

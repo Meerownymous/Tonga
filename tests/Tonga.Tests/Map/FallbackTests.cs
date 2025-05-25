@@ -11,7 +11,7 @@ public class FallbackMapTests
     {
         Assert.Equal(
             42,
-            Fallback._(
+            FallingBack._(
                 AsMap._(
                     AsPair._(3, 42)
                 ),
@@ -25,7 +25,7 @@ public class FallbackMapTests
     {
         Assert.Equal(
             4,
-            Fallback._(
+            FallingBack._(
                 Empty._<int,int>(),
                 key => key * 2
             )[2]
@@ -37,7 +37,7 @@ public class FallbackMapTests
     {
         Assert.Equal(
             37,
-            Fallback._(
+            FallingBack._(
                 AsMap._(
                     AsPair._(7, 42)
                 ),
@@ -52,7 +52,7 @@ public class FallbackMapTests
     public void DoesNotGetValueWhenAlsoMissingInFallbackMap()
     {
         var map =
-            Fallback._(
+            FallingBack._(
                 AsMap._(
                     AsPair._(7, 42)
                 ),

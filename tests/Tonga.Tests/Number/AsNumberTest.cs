@@ -5,14 +5,14 @@ using Xunit;
 
 namespace Tonga.Tests.Number;
 
-public sealed class NumberOfTest
+public sealed class AsNumberTest
 {
     [Fact]
     public void ParsesText()
     {
         Assert.Equal(
             4673.453,
-            new NumberOf(AsText._("4673.453")).AsDouble()
+            new AsNumber(AsText._("4673.453")).ToDouble()
         );
     }
 
@@ -20,7 +20,7 @@ public sealed class NumberOfTest
     public void ParsesFloat()
     {
         Assert.True(
-            new NumberOf(4673.453F).AsFloat() == 4673.453F
+            new AsNumber(4673.453F).ToFloat() == 4673.453F
         );
     }
 
@@ -28,7 +28,7 @@ public sealed class NumberOfTest
     public void RejectsNoFloatText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new NumberOf("ghki").AsFloat()
+            new AsNumber("ghki").ToFloat()
         );
     }
 
@@ -36,7 +36,7 @@ public sealed class NumberOfTest
     public void ParsesInt()
     {
         Assert.True(
-            new NumberOf(1337).AsInt() == 1337
+            new AsNumber(1337).ToInt() == 1337
         );
     }
 
@@ -44,7 +44,7 @@ public sealed class NumberOfTest
     public void RejectsNoIntText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new NumberOf("ghki").AsInt()
+            new AsNumber("ghki").ToInt()
         );
     }
 
@@ -52,7 +52,7 @@ public sealed class NumberOfTest
     public void ParsesDouble()
     {
         Assert.True(
-            new NumberOf(843.23969274001D).AsDouble() == 843.23969274001D
+            new AsNumber(843.23969274001D).ToDouble() == 843.23969274001D
         );
     }
 
@@ -60,7 +60,7 @@ public sealed class NumberOfTest
     public void RejectsNoDoubleText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new NumberOf("ghki").AsDouble()
+            new AsNumber("ghki").ToDouble()
         );
     }
 
@@ -68,7 +68,7 @@ public sealed class NumberOfTest
     public void ParsesLong()
     {
         Assert.True(
-            new NumberOf(139807814253711).AsLong() == 139807814253711L
+            new AsNumber(139807814253711).ToLong() == 139807814253711L
         );
     }
 
@@ -76,7 +76,7 @@ public sealed class NumberOfTest
     public void RejectsNoLongText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new NumberOf("ghki").AsLong()
+            new AsNumber("ghki").ToLong()
         );
     }
 
@@ -84,9 +84,9 @@ public sealed class NumberOfTest
     public void IntToDouble()
     {
         Assert.True(
-            new NumberOf(
+            new AsNumber(
                 5
-            ).AsDouble() == 5d
+            ).ToDouble() == 5d
         );
     }
 
@@ -94,9 +94,9 @@ public sealed class NumberOfTest
     public void DoubleToFloat()
     {
         Assert.True(
-            new NumberOf(
+            new AsNumber(
                 (551515155.451d)
-            ).AsFloat() == 551515155.451f
+            ).ToFloat() == 551515155.451f
         );
     }
 
@@ -104,9 +104,9 @@ public sealed class NumberOfTest
     public void FloatAsDouble()
     {
         Assert.True(
-            new NumberOf(
+            new AsNumber(
                 (5.243)
-            ).AsDouble() == 5.243d
+            ).ToDouble() == 5.243d
         );
     }
 
@@ -114,9 +114,9 @@ public sealed class NumberOfTest
     public void LongAsInt()
     {
         Assert.True(
-            new NumberOf(
+            new AsNumber(
                 (50L)
-            ).AsInt() == 50
+            ).ToInt() == 50
         );
     }
 
@@ -124,9 +124,9 @@ public sealed class NumberOfTest
     public void IntAsLong()
     {
         Assert.True(
-            new NumberOf(
+            new AsNumber(
                 (50)
-            ).AsLong() == 50L
+            ).ToLong() == 50L
         );
     }
 
@@ -134,11 +134,11 @@ public sealed class NumberOfTest
     public void DoubleSeperator()
     {
         Assert.True(
-            new NumberOf(
+            new AsNumber(
                 "10.100,11",
                 ",",
                 "."
-            ).AsDouble() == 10100.11
+            ).ToDouble() == 10100.11
         );
     }
 
@@ -146,9 +146,9 @@ public sealed class NumberOfTest
     public void StringAsInt()
     {
         Assert.True(
-            new NumberOf(
+            new AsNumber(
                 "100"
-            ).AsInt() == 100
+            ).ToInt() == 100
         );
     }
 }

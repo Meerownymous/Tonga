@@ -17,7 +17,7 @@ namespace Tonga.Tests.Enumerable
                         s => new IntOf(s.Substring(2)).Value(),
                         AsEnumerable._("nr3", "nr2", "nr10", "nr44", "nr-6", "nr0")
                     )
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -33,7 +33,7 @@ namespace Tonga.Tests.Enumerable
                             "a2", "c3", "hello9", "dude6", "Friend7"
                         )
                     )
-                ).AsString() == "hello9, Friend7, dude6, c3, a2",
+                ).Str() == "hello9, Friend7, dude6, c3, a2",
                 "Can't sort an enumerable with a custom comparator");
         }
 

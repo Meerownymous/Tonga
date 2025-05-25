@@ -12,7 +12,7 @@ public sealed class TrimmedRightTest
         Assert.True(
             new TrimmedRight(
                 AsText._("   \b \f \n \r \t \v   ")
-            ).AsString() == string.Empty
+            ).Str() == string.Empty
         );
     }
 
@@ -20,7 +20,7 @@ public sealed class TrimmedRightTest
     public void TrimsString()
     {
         Assert.True(
-            new TrimmedRight(" \b   \t      Hello! \t \b  ").AsString() == " \b   \t      Hello!"
+            new TrimmedRight(" \b   \t      Hello! \t \b  ").Str() == " \b   \t      Hello!"
         );
     }
 
@@ -30,7 +30,7 @@ public sealed class TrimmedRightTest
         Assert.True(
             new TrimmedRight(
                 AsText._(" \b   \t      Hello! \t \b  ")
-            ).AsString() == " \b   \t      Hello!"
+            ).Str() == " \b   \t      Hello!"
         );
     }
 
@@ -41,7 +41,7 @@ public sealed class TrimmedRightTest
             new TrimmedRight(
                 " \b   \t      Hello! \t \b  ",
                 new char[] { '\b', '\t', ' ', 'H', '!', 'o' }
-            ).AsString() == " \b   \t      Hell"
+            ).Str() == " \b   \t      Hell"
         );
     }
 
@@ -49,7 +49,7 @@ public sealed class TrimmedRightTest
     public void TrimsTextWithCharArray()
     {
         Assert.True(
-            new TrimmedRight(AsText._(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', '!', 'o' }).AsString() == " \b   \t      Hell"
+            new TrimmedRight(AsText._(" \b   \t      Hello! \t \b  "), new char[] { '\b', '\t', ' ', 'H', '!', 'o' }).Str() == " \b   \t      Hell"
         );
     }
 
@@ -60,7 +60,7 @@ public sealed class TrimmedRightTest
             new TrimmedRight(
                 AsText._(" \b   \t      Hello! \t \b  "),
                 AsScalar._(() => new char[] { '\b', '\t', ' ', 'H', '!', 'o' })
-            ).AsString() == " \b   \t      Hell"
+            ).Str() == " \b   \t      Hell"
         );
     }
 
@@ -71,7 +71,7 @@ public sealed class TrimmedRightTest
             " \b   \t      Hello! \t",
             new TrimmedRight(
                 " \b   \t      Hello! \t \b   \t      H", " \b   \t      H"
-            ).AsString()
+            ).Str()
         );
     }
 
@@ -80,7 +80,7 @@ public sealed class TrimmedRightTest
     {
         Assert.True(
             new TrimmedRight(
-                AsText._(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString() == " \b   \t      Hello! \t"
+                AsText._(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").Str() == " \b   \t      Hello! \t"
         );
     }
 
@@ -90,7 +90,7 @@ public sealed class TrimmedRightTest
         Assert.True(
             new TrimmedRight(" \b   \t      Hello! \t \b   \t      H",
                 AsText._(" \b   \t      H")
-            ).AsString() == " \b   \t      Hello! \t"
+            ).Str() == " \b   \t      Hello! \t"
         );
     }
 
@@ -101,7 +101,7 @@ public sealed class TrimmedRightTest
             new TrimmedRight(
                 AsText._(" \b   \t      Hello! \t \b   \t      H"),
                 AsText._(" \b   \t      H")
-            ).AsString() == " \b   \t      Hello! \t"
+            ).Str() == " \b   \t      Hello! \t"
         );
     }
 }

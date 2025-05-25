@@ -22,7 +22,7 @@ namespace Tonga.IO.Error
                 missing,
                 container.GetManifestResourceNames().Length,
                 Joined._("\r\n", container.GetManifestResourceNames()).AsString()
-            ).AsString()
+            ).Str()
         )
         { }
     }

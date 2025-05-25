@@ -116,9 +116,25 @@ namespace Tonga.Bytes
         /// Bytes out of a string.
         /// </summary>
         /// <param name="source">a string</param>
+        public AsBytes(Func<String> source) : this(source, Encoding.UTF8)
+        { }
+
+        /// <summary>
+        /// Bytes out of a string.
+        /// </summary>
+        /// <param name="source">a string</param>
         /// <param name="encoding">encoding of the string</param>
         public AsBytes(String source, Encoding encoding) : this(
             () => encoding.GetBytes(source))
+        { }
+
+        /// <summary>
+        /// Bytes out of a string.
+        /// </summary>
+        /// <param name="source">a string</param>
+        /// <param name="encoding">encoding of the string</param>
+        public AsBytes(Func<String> source, Encoding encoding) : this(
+            () => encoding.GetBytes(source()))
         { }
 
         /// <summary>
@@ -134,7 +150,7 @@ namespace Tonga.Bytes
         /// <param name="text">a text</param>
         /// <param name="encoding">encoding of the string</param>
         public AsBytes(IText text, Encoding encoding) : this(
-            () => encoding.GetBytes(text.AsString()))
+            () => encoding.GetBytes(text.Str()))
         { }
 
         /// <summary>

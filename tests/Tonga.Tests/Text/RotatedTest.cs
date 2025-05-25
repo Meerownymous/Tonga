@@ -13,7 +13,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Rotated(
                     AsText._("Hello!"), 2
-                ).AsString() == "o!Hell"
+                ).Str() == "o!Hell"
             );
         }
 
@@ -23,7 +23,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Rotated(
                     AsText._("Hi!"), -1
-                ).AsString() == "i!H"
+                ).Str() == "i!H"
             );
         }
 
@@ -34,7 +34,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Rotated(
                     AsText._(nonrotate), 0
-                ).AsString() == nonrotate
+                ).Str() == nonrotate
             );
         }
 
@@ -45,7 +45,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Rotated(
                     AsText._(nonrotate), nonrotate.Length
-                ).AsString() == nonrotate,
+                ).Str() == nonrotate,
                 "Can't rotate text shift mod zero");
         }
 
@@ -55,7 +55,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Rotated(
                     AsText._(""), 2
-                ).AsString() == ""
+                ).Str() == ""
             );
         }
     }

@@ -18,7 +18,7 @@ public sealed class SyncedTest
         );
 
         var max = Environment.ProcessorCount << 8;
-        Parallel.For(0, max, (nr) => text.AsString());
+        Parallel.For(0, max, (nr) => text.Str());
 
         Assert.Equal(
             max, check

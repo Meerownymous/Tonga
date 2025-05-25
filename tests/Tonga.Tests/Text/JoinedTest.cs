@@ -15,7 +15,7 @@ namespace Tonga.Tests.Text
                     " ",
                     "hello",
                     "world"
-                ).AsString() == "hello world"
+                ).Str() == "hello world"
             );
         }
 
@@ -27,7 +27,7 @@ namespace Tonga.Tests.Text
                     AsText._(" "),
                     AsText._("foo"),
                     AsText._("bar")
-                ).AsString() == "foo bar"
+                ).Str() == "foo bar"
             );
         }
     }

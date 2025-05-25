@@ -15,8 +15,7 @@ namespace Tonga.Number
         /// A sum of floats
         /// </summary>
         /// <param name="src">source floats</param>
-        public SumOf(params float[] src) : this(
-            Enumerable.AsEnumerable._(src))
+        public SumOf(params float[] src) : this(src.AsEnumerable())
         { }
 
         /// <summary>
@@ -24,15 +23,15 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source longs</param>
         public SumOf(params long[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            src.AsEnumerable()
+        )
         { }
 
         /// <summary>
         /// A sum of ints
         /// </summary>
         /// <param name="src">source ints</param>
-        public SumOf(params int[] src) : this(
-            Enumerable.AsEnumerable._(src))
+        public SumOf(params int[] src) : this(src.AsEnumerable())
         { }
 
         /// <summary>
@@ -40,7 +39,8 @@ namespace Tonga.Number
         /// </summary>
         /// <param name="src">source doubles</param>
         public SumOf(params double[] src) : this(
-            Enumerable.AsEnumerable._(src))
+            src.AsEnumerable()
+        )
         { }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Tonga.Number
                 double sum = 0D;
                 foreach (int val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -62,7 +62,7 @@ namespace Tonga.Number
                 int sum = 0;
                 foreach (int val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -71,7 +71,7 @@ namespace Tonga.Number
                 long sum = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -80,7 +80,7 @@ namespace Tonga.Number
                 float sum = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                 }
                 return sum;
             }))
@@ -96,7 +96,7 @@ namespace Tonga.Number
                 double sum = 0D;
                 foreach (int val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -105,7 +105,7 @@ namespace Tonga.Number
                 int sum = 0;
                 foreach (int val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -114,7 +114,7 @@ namespace Tonga.Number
                 long sum = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -123,7 +123,7 @@ namespace Tonga.Number
                 float sum = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                 }
                 return sum;
             }))
@@ -139,7 +139,7 @@ namespace Tonga.Number
                 double sum = 0D;
                 foreach (int val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -148,7 +148,7 @@ namespace Tonga.Number
                 int sum = 0;
                 foreach (int val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -157,7 +157,7 @@ namespace Tonga.Number
                 long sum = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -166,7 +166,7 @@ namespace Tonga.Number
                 float sum = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                 }
                 return sum;
             }))
@@ -182,7 +182,7 @@ namespace Tonga.Number
                 double sum = 0D;
                 foreach (int val in src)
                 {
-                    sum += (double)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -191,7 +191,7 @@ namespace Tonga.Number
                 int sum = 0;
                 foreach (int val in src)
                 {
-                    sum += (int)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -200,7 +200,7 @@ namespace Tonga.Number
                 long sum = 0L;
                 foreach (long val in src)
                 {
-                    sum += (long)val;
+                    sum += val;
                 }
                 return sum;
             }),
@@ -209,7 +209,7 @@ namespace Tonga.Number
                 float sum = 0F;
                 foreach (float val in src)
                 {
-                    sum += (float)val;
+                    sum += val;
                 }
                 return sum;
             }))

@@ -17,7 +17,7 @@ namespace Tonga.Tests.Enumerable
                         AsEnumerable._(0, 1, 2, 3, 4),
                         3
                     )
-                ).AsInt()
+                ).ToInt()
             );
         }
 
@@ -31,7 +31,7 @@ namespace Tonga.Tests.Enumerable
                         AsEnumerable._(0, 1, 2, 3, 4, 5),
                         10
                     )
-                ).AsInt()
+                ).ToInt()
             );
         }
 

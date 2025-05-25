@@ -38,7 +38,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Comparable(
                     AsText._("Timm")
-                ).AsString()
+                ).Str()
                 == "Timm"
             );
         }

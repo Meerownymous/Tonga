@@ -5,41 +5,33 @@ namespace Tonga.Scalar
     /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Sticky<T> : IScalar<T>
+    public sealed class Sticky<T>(Func<T> origin) : IScalar<T>
     {
-        private readonly Lazy<T> origin;
+        private readonly Lazy<T> cache = new (origin);
 
         /// <summary>
-        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache.
         /// </summary>
-        /// <param name="src">scalar to cache result from</param>
         public Sticky(IScalar<T> src) : this(src.Value)
         { }
 
         /// <summary>
-        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
+        /// The value.
         /// </summary>
-        /// <param name="src">scalar to cache result from</param>
-        public Sticky(Func<T> src)
-        {
-            this.origin = new Lazy<T>(src);
-        }
-
-        /// <summary>
-        /// Get the value.
-        /// </summary>
-        /// <returns>the value</returns>
-        public T Value()
-        {
-            return this.origin.Value;
-        }
+        public T Value() => this.cache.Value;
     }
 
-    public static class Sticky
+    public static partial class ScalarSmarts
     {
-        public static Sticky<T> _<T>(IScalar<T> src) => new(src);
+        /// <summary>
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache.
+        /// </summary>
+        public static IScalar<T> AsSticky<T>(this IScalar<T> src) => new Sticky<T>(src);
 
-        public static Sticky<T> _<T>(Func<T> src) => new(src);
+        /// <summary>
+        /// A s<see cref="IScalar{T}"/> that will return the same value from a cache.
+        /// </summary>
+        public static IScalar<T> AsSticky<T>(this Func<T> src) => new Sticky<T>(src);
     }
 }
 

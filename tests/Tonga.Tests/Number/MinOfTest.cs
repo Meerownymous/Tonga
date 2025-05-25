@@ -14,7 +14,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1, 2, 3, 4
-            ).AsInt() == 1);
+            ).ToInt() == 1);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1, 2, 3, 4
-            ).AsFloat() == 1F);
+            ).ToFloat() == 1F);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1, 2, 3, 4
-            ).AsLong() == 1L);
+            ).ToLong() == 1L);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1, 2, 3, 4
-            ).AsInt() == 1D);
+            ).ToInt() == 1D);
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.2F, 2.1F, 3.6F, 4.9F
-            ).AsInt() == 1);
+            ).ToInt() == 1);
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.2F, 2.1F, 3.6F, 4.9F
-            ).AsFloat() == 1.2F);
+            ).ToFloat() == 1.2F);
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.2F, 2.1F, 3.6F, 4.9F
-            ).AsLong() == 1L);
+            ).ToLong() == 1L);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.0D, 2.0D, 3.0D, 4.0D
-            ).AsDouble() == 1.0D);
+            ).ToDouble() == 1.0D);
     }
 
     [Fact]
@@ -94,7 +94,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.2D, 2.1D, 3.6D, 4.9D
-            ).AsInt() == 1);
+            ).ToInt() == 1);
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.2D, 2.1D, 3.6D, 4.9D
-            ).AsFloat() == 1.2F);
+            ).ToFloat() == 1.2F);
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.2D, 2.1D, 3.6D, 4.9D
-            ).AsLong() == 1L);
+            ).ToLong() == 1L);
     }
 
     [Fact]
@@ -124,7 +124,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1.0D, 2.0D, 3.0D, 4.0D
-            ).AsDouble() == 1.0D);
+            ).ToDouble() == 1.0D);
     }
 
     [Fact]
@@ -134,7 +134,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1L, 2L, 3L, 4L
-            ).AsInt() == 1);
+            ).ToInt() == 1);
     }
 
     [Fact]
@@ -144,7 +144,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1L, 2L, 3L, 4L
-            ).AsFloat() == 1.0F);
+            ).ToFloat() == 1.0F);
     }
 
     [Fact]
@@ -154,7 +154,7 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1L, 2L, 3L, 4L
-            ).AsLong() == 1L);
+            ).ToLong() == 1L);
     }
 
     [Fact]
@@ -164,6 +164,6 @@ public sealed class MinOfTest
         Assert.True(
             new MinOf(
                 1L, 2L, 3L, 4L
-            ).AsDouble() == 1.0D);
+            ).ToDouble() == 1.0D);
     }
 }

@@ -9,9 +9,9 @@ public sealed class SimilarTest
     public void IsSimilarSame()
     {
         INumber first =
-            new NumberOf(13.37);
+            new AsNumber(13.37);
         INumber second =
-            new NumberOf(13.37);
+            new AsNumber(13.37);
 
         Assert.True(
             new Similar(first, second).Value()
@@ -22,9 +22,9 @@ public sealed class SimilarTest
     public void IsSimilarNoDecimal()
     {
         INumber first =
-            new NumberOf(13);
+            new AsNumber(13);
         INumber second =
-            new NumberOf(13);
+            new AsNumber(13);
 
         Assert.True(
             new Similar(first, second, 10).Value()
@@ -35,9 +35,9 @@ public sealed class SimilarTest
     public void IsSimilarOneDecimal()
     {
         INumber first =
-            new NumberOf(13.37);
+            new AsNumber(13.37);
         INumber second =
-            new NumberOf(13.3);
+            new AsNumber(13.3);
 
         Assert.True(
             new Similar(first, second, 1).Value()
@@ -48,9 +48,9 @@ public sealed class SimilarTest
     public void IsSimilarOnlyOneDecimal()
     {
         INumber first =
-            new NumberOf(13.37777);
+            new AsNumber(13.37777);
         INumber second =
-            new NumberOf(13.33333);
+            new AsNumber(13.33333);
 
         Assert.True(
             new Similar(first, second, 1).Value()
@@ -61,9 +61,9 @@ public sealed class SimilarTest
     public void IsSimilarFiveDecimal()
     {
         INumber first =
-            new NumberOf(13.333337);
+            new AsNumber(13.333337);
         INumber second =
-            new NumberOf(13.333339);
+            new AsNumber(13.333339);
 
         Assert.True(
             new Similar(first, second, 5).Value()
@@ -74,9 +74,9 @@ public sealed class SimilarTest
     public void IsSimilar10Decimal()
     {
         INumber first =
-            new NumberOf(13.33333333337);
+            new AsNumber(13.33333333337);
         INumber second =
-            new NumberOf(13.33333333339);
+            new AsNumber(13.33333333339);
 
         Assert.True(
             new Similar(first, second, 10).Value()
@@ -87,9 +87,9 @@ public sealed class SimilarTest
     public void IsNotSimilar()
     {
         INumber first =
-            new NumberOf(13.37);
+            new AsNumber(13.37);
         INumber second =
-            new NumberOf(13.39);
+            new AsNumber(13.39);
 
         Assert.False(
             new Similar(first, second, 2).Value()

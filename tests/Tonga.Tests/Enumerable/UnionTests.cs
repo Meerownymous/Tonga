@@ -70,7 +70,7 @@ namespace Tonga.Tests.Enumerable
                             return result;
                         }
                     )
-                ).AsString()
+                ).Str()
             );
         }
     }

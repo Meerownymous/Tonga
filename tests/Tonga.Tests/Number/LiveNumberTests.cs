@@ -13,14 +13,14 @@ public sealed class LiveNumberTests
         var text = "gkb";
         var number = new LiveNumber(() => text);
         text = "42";
-        Assert.Equal(42, number.AsInt());
+        Assert.Equal(42, number.ToInt());
     }
 
     [Fact]
     public void ParsesFloat()
     {
         Assert.True(
-            new LiveNumber(() => 4673.453F).AsFloat() == 4673.453F
+            new LiveNumber(() => 4673.453F).ToFloat() == 4673.453F
         );
     }
 
@@ -28,7 +28,7 @@ public sealed class LiveNumberTests
     public void RejectsNoFloatText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new LiveNumber(() => "ghki").AsFloat()
+            new LiveNumber(() => "ghki").ToFloat()
         );
     }
 
@@ -36,7 +36,7 @@ public sealed class LiveNumberTests
     public void ParsesInt()
     {
         Assert.True(
-            new LiveNumber(() => 1337).AsInt() == 1337
+            new LiveNumber(() => 1337).ToInt() == 1337
         );
     }
 
@@ -44,7 +44,7 @@ public sealed class LiveNumberTests
     public void RejectsNoIntText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new LiveNumber(() => "ghki").AsInt()
+            new LiveNumber(() => "ghki").ToInt()
         );
     }
 
@@ -52,7 +52,7 @@ public sealed class LiveNumberTests
     public void ParsesDouble()
     {
         Assert.True(
-            new LiveNumber(() => 843.23969274001D).AsDouble() == 843.23969274001D
+            new LiveNumber(() => 843.23969274001D).ToDouble() == 843.23969274001D
         );
     }
 
@@ -60,7 +60,7 @@ public sealed class LiveNumberTests
     public void RejectsNoDoubleText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new LiveNumber(() => "ghki").AsDouble()
+            new LiveNumber(() => "ghki").ToDouble()
         );
     }
 
@@ -68,7 +68,7 @@ public sealed class LiveNumberTests
     public void ParsesLong()
     {
         Assert.True(
-            new LiveNumber(() => 139807814253711).AsLong() == 139807814253711L
+            new LiveNumber(() => 139807814253711).ToLong() == 139807814253711L
         );
     }
 
@@ -76,7 +76,7 @@ public sealed class LiveNumberTests
     public void RejectsNoLongText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new LiveNumber(() => "ghki").AsLong()
+            new LiveNumber(() => "ghki").ToLong()
         );
     }
 
@@ -86,7 +86,7 @@ public sealed class LiveNumberTests
         Assert.True(
             new LiveNumber(
                 () => 5
-            ).AsDouble() == 5d
+            ).ToDouble() == 5d
         );
     }
 
@@ -96,7 +96,7 @@ public sealed class LiveNumberTests
         Assert.True(
             new LiveNumber(
                 () => (551515155.451d)
-            ).AsFloat() == 551515155.451f
+            ).ToFloat() == 551515155.451f
         );
     }
 
@@ -106,7 +106,7 @@ public sealed class LiveNumberTests
         Assert.True(
             new LiveNumber(
                 () => (5.243)
-            ).AsDouble() == 5.243d
+            ).ToDouble() == 5.243d
         );
     }
 
@@ -114,9 +114,9 @@ public sealed class LiveNumberTests
     public void AveragesLiveNumbers()
     {
         var list = new List<int>() { 1, 2, 3 };
-        var liveAverage = new LiveNumber(() => new AvgOf(list));
-        var first = liveAverage.AsDouble();
+        var liveAverage = new LiveNumber(() => new Average(list));
+        var first = liveAverage.ToDouble();
         list.Add(4);
-        Assert.NotEqual(first, liveAverage.AsDouble());
+        Assert.NotEqual(first, liveAverage.ToDouble());
     }
 }

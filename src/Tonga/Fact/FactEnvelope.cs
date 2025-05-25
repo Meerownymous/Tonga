@@ -5,14 +5,17 @@ namespace Tonga.Fact;
 /// <summary>
 /// Envelope for facts.
 /// </summary>
-public abstract class FactEnvelope(IFact origin) : IFact
+public abstract class FactEnvelope(Func<bool> origin) : IFact
 {
-    public bool IsTrue() => origin.IsTrue();
-    public bool IsFalse() => origin.IsFalse();
+    public FactEnvelope(IFact origin) : this(origin.IsTrue)
+    { }
 
-    public IFact IfTrue(Action then) => origin.IfTrue(then);
+    public bool IsTrue() => origin();
+    public bool IsFalse() => !origin();
 
-    public IFact IfFalse(Action then) => origin.IfFalse(then);
+    public IFact IfTrue(Action then) => new AsFact(origin, ifTrue: then, () => { });
 
-    public void Check() => origin.Check();
+    public IFact IfFalse(Action then) => new AsFact(origin, ifTrue: () => { }, ifFalse: then);
+
+    public void Check() { }
 }

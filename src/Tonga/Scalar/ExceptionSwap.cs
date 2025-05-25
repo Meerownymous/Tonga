@@ -50,7 +50,7 @@ namespace Tonga.Scalar
         )
         where ExToSwap : Exception
         where NewEx : Exception, new()
-        => new ExceptionSwap<Value, ExToSwap, NewEx>(value, swap);
+        => new(value, swap);
 
         /// <summary>
         /// If an exception of the given type happens in the given function,
@@ -59,7 +59,7 @@ namespace Tonga.Scalar
         public static ExceptionSwap<Value, Exception, Exception> _<Value>(
             Func<Value> value, Func<Exception, Exception> swap
         )
-        => new ExceptionSwap<Value, Exception, Exception>(value, swap);
+        => new(value, swap);
 
         /// <summary>
         /// If an exception of the given type happens in the given function,
@@ -68,7 +68,7 @@ namespace Tonga.Scalar
         public static ExceptionSwap<Value, Exception, Exception> _<Value>(
             Func<Value> value, Exception swap
         )
-        => new ExceptionSwap<Value, Exception, Exception>(value, (old) => swap);
+        => new(value, _ => swap);
     }
 }
 

@@ -62,7 +62,7 @@ namespace Tonga.IO
                 {
                     throw
                      new ArgumentException(
-                         new Formatted("'{0}' is not a directory.", file.ToString()).AsString()
+                         new Formatted("'{0}' is not a directory.", file.ToString()).Str()
                      );
                 }
                 return file.AbsolutePath;
@@ -137,7 +137,7 @@ namespace Tonga.IO
                     throw
                         new ArgumentException(
                             new Formatted("'{0}' is not a directory.", path.Value()
-                        ).AsString()
+                        ).Str()
                     );
                 }
 

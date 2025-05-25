@@ -13,7 +13,7 @@ namespace Tonga.Tests.Text
                 new SubText(
                     "this_is:the_end",
                     8
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -26,7 +26,7 @@ namespace Tonga.Tests.Text
                     "this_is:the_end",
                     8,
                     3
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -38,7 +38,7 @@ namespace Tonga.Tests.Text
                 new SubText(
                     AsText._("this_is:the_end"),
                     8
-                ).AsString()
+                ).Str()
             );
         }
 
@@ -51,7 +51,7 @@ namespace Tonga.Tests.Text
                     AsText._("this_is:the_end"),
                     8,
                     3
-                ).AsString()
+                ).Str()
             );
         }
     }

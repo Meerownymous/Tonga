@@ -19,7 +19,7 @@ namespace Tonga.Tests.Enumerable
                         input => new Upper(AsText._((string)input)),
                         AsEnumerable._("hello", "world", "damn")),
                     0
-                ).Value().AsString()
+                ).Value().Str()
             );
         }
 
@@ -92,7 +92,7 @@ namespace Tonga.Tests.Enumerable
                         AsEnumerable._("hello", "world", "damn")
                     ),
                     1
-                ).Value().AsString()
+                ).Value().Str()
             );
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Tonga.Scalar;
 
 namespace Tonga.Map
 {
@@ -48,7 +49,7 @@ namespace Tonga.Map
 
         private AsPair(Func<KeyValuePair<TKey, Func<TValue>>> kvp, bool isLazy)
         {
-            this.entry = Scalar.Sticky._(kvp.Invoke);
+            this.entry = kvp.AsSticky();
             this.value = () => this.entry.Value().Value.Invoke();
             this.isLazy = isLazy;
         }

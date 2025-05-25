@@ -44,7 +44,7 @@ namespace Tonga.Scalar
             source,
             new AsFunc<Exception, IEnumerable<T>, T>((ex, itr) =>
                 throw new ArgumentException(
-                    new Formatted("Cannot get first element: {0}", ex.Message).AsString()
+                    new Formatted("Cannot get first element: {0}", ex.Message).Str()
                 )
             )
         )
@@ -127,7 +127,7 @@ namespace Tonga.Scalar
                                 position+1,
                                 ex.Message,
                                 position
-                            ).AsString()
+                            ).Str()
                     );
                 }
             )
@@ -194,7 +194,7 @@ namespace Tonga.Scalar
                             new Formatted(
                                 "The position must be non-negative but is {0}",
                                 position
-                            ).AsString()
+                            ).Str()
                         );
                     }
 

@@ -28,7 +28,7 @@ namespace Tonga.Bytes
         {
             this.bytes = new AsScalar<byte[]>(() =>
             {
-                var hex = origin.AsString();
+                var hex = origin.Str();
                 if ((hex.Length & 1) == 1)
                 {
                     throw new IOException("Length of hexadecimal text is odd");

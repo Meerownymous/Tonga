@@ -13,7 +13,7 @@ namespace Tonga.Tests.Text
             Assert.True(
                 new Lower(
                     AsText._("HelLo!")
-                ).AsString() == "hello!"
+                ).Str() == "hello!"
             );
         }
     }

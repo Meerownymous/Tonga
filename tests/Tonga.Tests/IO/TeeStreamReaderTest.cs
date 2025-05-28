@@ -15,8 +15,8 @@ namespace Tonga.Tests.IO
             var content = "Hello, товарищ!";
 
             var reader = new TeeStreamReader(
-                new AsReader(content),
-                new WriterTo(
+                new AsStreamReader(content),
+                new AsStreamWriter(
                     new AsConduit(baos))
             );
             int done = 0;
@@ -29,7 +29,7 @@ namespace Tonga.Tests.IO
                 String.Compare(
                     AsText._(
                         new Tonga.IO.AsConduit(
-                            new AsReader(baos.ToArray()))
+                            new AsStreamReader(baos.ToArray()))
                     ).AsString(),
                     content,
                     StringComparison.Ordinal

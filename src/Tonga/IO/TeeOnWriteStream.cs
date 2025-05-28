@@ -2,110 +2,91 @@ using System;
 using System.IO;
 
 #pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.IO
+namespace Tonga.IO;
+
+/// <summary>
+/// <see cref="Stream"/> which copies to another <see cref="Stream"/> while writing.
+/// </summary>
+public sealed class TeeOnWriteStream(Stream target, Stream copy) : Stream
 {
-    /// <summary>
-    /// <see cref="Stream"/> which copies to another <see cref="Stream"/> while writing.
-    /// </summary>
-    public sealed class TeeOnWriteStream : Stream
+    public override void Write(byte[] buffer, int offset, int count)
     {
-        /// <summary>
-        /// the target
-        /// </summary>
-        private readonly Stream _target;
-
-        /// <summary>
-        /// the copy
-        /// </summary>
-        private readonly Stream _copy;
-
-        /// <summary>
-        /// <see cref="Stream"/> which copies to another <see cref="Stream"/> while writing.
-        /// </summary>
-        /// <param name="tgt">the target</param>
-        /// <param name="cpy">the copy target</param>
-        public TeeOnWriteStream(Stream tgt, Stream cpy) : base()
+        try
         {
-            this._target = tgt;
-            this._copy = cpy;
+            target.Write(buffer, offset, count);
         }
+        finally
+        {
+            copy.Write(buffer, offset, count);
+        }
+    }
 
-#pragma warning disable CS1591
-        public override void Write(byte[] buffer, int offset, int count)
+
+    public override void Flush()
+    {
+        try
+        {
+            target.Flush();
+        }
+        finally
+        {
+            copy.Flush();
+        }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        try
+        {
+            target.Dispose();
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+        finally
         {
             try
             {
-                this._target.Write(buffer, offset, count);
+                copy.Dispose();
             }
-            finally
+            catch (Exception)
             {
-                this._copy.Write(buffer, offset, count);
+                // ignored
             }
         }
+        base.Dispose(disposing);
+    }
 
+    public override bool CanRead => false;
 
-        public override void Flush()
+    public override bool CanSeek => false;
+
+    public override bool CanWrite => true;
+
+    public override long Length => target.Length;
+
+    public override long Position
+    {
+        get => target.Position;
+        set => target.Position = value;
+    }
+
+    public override int Read(byte[] buffer, int offset, int count) =>
+        throw new NotImplementedException();
+
+    public override long Seek(long offset, SeekOrigin origin) =>
+        throw new NotImplementedException();
+
+    public override void SetLength(long value)
+    {
+        try
         {
-            try
-            {
-                this._target.Flush();
-            }
-            finally
-            {
-                this._copy.Flush();
-            }
+            target.SetLength(value);
         }
-
-        protected override void Dispose(bool disposing)
+        finally
         {
-            try
-            {
-                this._target.Dispose();
-            }
-            catch (Exception) { }
-            finally
-            {
-                try
-                {
-                    this._copy.Dispose();
-                }
-                catch (Exception) { }
-            }
-            base.Dispose(disposing);
-        }
-
-        public override bool CanRead => false;
-
-        public override bool CanSeek => false;
-
-        public override bool CanWrite => true;
-
-        public override long Length => this._target.Length;
-
-        public override long Position { get { return this._target.Position; } set { this._target.Position = value; } }
-
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetLength(long value)
-        {
-            try
-            {
-                this._target.SetLength(value);
-            }
-            finally
-            {
-                this._copy.SetLength(value);
-            }
+            copy.SetLength(value);
         }
     }
 }
-#pragma warning restore MaxPublicMethodCount // a public methods count maximum
-#pragma warning restore CS1591

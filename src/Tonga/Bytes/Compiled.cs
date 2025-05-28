@@ -8,7 +8,7 @@ namespace Tonga.Bytes
     /// <summary>
     /// Bytes out of other objects that are reloaded on every call
     /// </summary>
-    public sealed class Sticky : IBytes
+    public sealed class Compiled : IBytes
     {
         private readonly Lazy<byte[]> bytes;
 
@@ -16,17 +16,17 @@ namespace Tonga.Bytes
         /// Reloads the bytes input on every call
         /// </summary>
         /// <param name="input">The input</param>
-        public Sticky(Func<IConduit> input) : this(() => new AsBytes(input()))
+        public Compiled(Func<IConduit> input) : this(() => new AsBytes(input()))
         { }
 
         /// <summary>
         /// Relaods the bytes on every call
         /// </summary>
         /// <param name="bytes"></param>
-        public Sticky(IScalar<IBytes> bytes) : this(() => bytes.Value())
+        public Compiled(IScalar<IBytes> bytes) : this(() => bytes.Value())
         { }
 
-        public Sticky(Func<IBytes> bytes)
+        public Compiled(Func<IBytes> bytes)
         {
             this.bytes = new Lazy<byte[]>(() => bytes().Bytes());
         }

@@ -33,7 +33,7 @@ namespace Tonga.Map
         /// </summary>
         public OneToMany(TKey key, params TValue[] many) : this(
             key,
-            () => AsEnumerable._(many)
+            () => many.AsEnumerable()
         )
         { }
 
@@ -49,7 +49,7 @@ namespace Tonga.Map
         /// A key to many values.
         /// </summary>
         public OneToMany(TKey key, Func<IEnumerable<TValue>> many) : base(
-            AsPair._(key, many)
+            (key, many).AsPair()
         )
         { }
     }

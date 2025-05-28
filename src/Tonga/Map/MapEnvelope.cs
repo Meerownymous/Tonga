@@ -19,15 +19,10 @@ namespace Tonga.Map
         }
 
         public Value this[Key key] => Origin()[key];
-
         public ICollection<Key> Keys() => Origin().Keys();
-
         public Func<Value> Lazy(Key key) => this.origin.Lazy(key);
-
         public IEnumerable<IPair<Key, Value>> Pairs() => this.Origin().Pairs();
-
         public IMap<Key, Value> With(IPair<Key, Value> pair) => this.Origin().With(pair);
-
         private IMap<Key, Value> Origin() => this.origin;
     }
 }

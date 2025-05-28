@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Tonga.Enumerable;
 using Tonga.List;
 
 namespace Tonga.Map
@@ -17,15 +19,20 @@ namespace Tonga.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public Grouped(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value) : base(
-            AsMap._(() =>
+        public Grouped(IEnumerable<T> src, System.Func<T, Key> key, System.Func<T, Value> value) : base(
+            new AsMap<Key, IList<Value>>(() =>
             {
                 IMap<Key, IList<Value>> temp = new Empty<Key, IList<Value>>();
-                foreach (var entry in src)
+                var fix = src.ToArray();
+                foreach (var entry in fix)
                 {
                     temp =
                         temp.With(
-                            AsPair._(key.Invoke(entry), Mapped._(value, src))
+                            (key.Invoke(entry),
+                                new AsList<Value>(
+                                    fix.AsMapped(value)
+                                )
+                            ).AsPair()
                         );
                 }
                 return temp.Pairs();
@@ -34,7 +41,7 @@ namespace Tonga.Map
         { }
     }
 
-    public static class Grouped
+    public static partial class MapSmarts
     {
         /// <summary>
         /// ctor
@@ -42,7 +49,11 @@ namespace Tonga.Map
         /// <param name="src">Source Enumerable</param>
         /// <param name="key">Function to convert Source Type to Key Type</param>
         /// <param name="value">Function to Convert Source Type to Key Týpe</param>
-        public static IMap<Key, IList<Value>> _<T, Key, Value>(IEnumerable<T> src, IFunc<T, Key> key, IFunc<T, Value> value)
+        public static IMap<Key, IList<Value>> AsGrouped<T, Key, Value>(
+            this IEnumerable<T> src,
+            System.Func<T, Key> key,
+            System.Func<T, Value> value
+        )
             => new Grouped<T, Key, Value>(src, key, value);
     }
 }

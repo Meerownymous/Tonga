@@ -6,30 +6,42 @@ namespace Tonga.Map
     /// <summary>
     /// A map whose keys and values are sticky per value once retrieved for the first time time.
     /// </summary>
-    public sealed class Sticky<Key, Value> : IMap<Key, Value>
+    public sealed class Compiled<Key, Value>(Func<IMap<Key, Value>> source) : IMap<Key, Value>
     {
-        private readonly IMap<Key, Value> source;
-        private readonly IDictionary<Key, IPair<Key, Value>> memory;
+        private readonly Dictionary<Key, IPair<Key, Value>> memory = new();
         private bool allCopied;
 
-        /// <summary>
-        /// A map whose keys and values are sticky per value once retrieved for the first time time.
-        /// </summary>
-        public Sticky(Func<IMap<Key, Value>> source)
+        public Compiled(IMap<Key, Value> source) : this(() => source)
+        { }
+
+        public Value this[Key key]
         {
-            this.source = AsMap._(() => source().Pairs());
-            this.memory = new Dictionary<Key, IPair<Key,Value>>();
+            get
+            {
+                if (!allCopied)
+                {
+                    CopyAll(source(), this.memory);
+                }
+                return this.memory[key].Value();
+            }
         }
 
-        public Value this[Key key] => MemorizedValue(key, this.source, this.memory);
+        public ICollection<Key> Keys()
+        {
+            if (!this.allCopied)
+            {
+                CopyAll(source(), this.memory);
+                this.allCopied = true;
+            }
 
-        public ICollection<Key> Keys() => this.source.Keys();
+            return this.memory.Keys;
+        }
 
         public ICollection<IPair<Key, Value>> Pairs()
         {
             if (!this.allCopied)
             {
-                CopyAll(this.source, this.memory);
+                CopyAll(source(), this.memory);
                 this.allCopied = true;
             }
             return this.memory.Values;
@@ -39,7 +51,7 @@ namespace Tonga.Map
         {
             if(!memory.ContainsKey(key) && source.Keys().Contains(key))
             {
-                memory[key] = AsPair._(key, source[key]);
+                memory[key] = (key, source[key]).AsPair();
             }
             return memory[key].Value();
         }
@@ -49,15 +61,26 @@ namespace Tonga.Map
             foreach (var key in source.Keys())
             {
                 if (!target.ContainsKey(key))
-                    target.Add(key, AsPair._(key, source[key]));
+                    target.Add(key, (key, source[key]).AsPair());
             }
         }
 
-        public Func<Value> Lazy(Key key) => () => MemorizedValue(key, this.source, this.memory);
+        public Func<Value> Lazy(Key key)
+        {
+            if (!allCopied)
+            {
+                CopyAll(source(), this.memory);
+            }
+            return () => this.memory[key].Value();
+        }
 
         IEnumerable<IPair<Key, Value>> IMap<Key, Value>.Pairs()
         {
-            CopyAll(this.source, this.memory);
+            if (!allCopied)
+            {
+                CopyAll(source(), this.memory);
+            }
+
             return this.memory.Values;
         }
 
@@ -65,23 +88,23 @@ namespace Tonga.Map
         {
             var key = pair.Key();
             var value = pair.Value();
-            this.memory[key] = AsPair._(key, value);
+            this.memory[key] = (key, value).AsPair();
             return this;
         }
     }
 
-    public static class Sticky
+    public static partial class MapSmarts
     {
         /// <summary>
         /// A map whose keys and values are sticky per value once retrieved for the first time time.
         /// </summary>
-        public static Sticky<Key, Value> _<Key, Value>(IMap<Key, Value> origin) =>
-            new Sticky<Key, Value>(() => origin);
+        public static IMap<Key,Value> AsCompiled<Key, Value>(IMap<Key, Value> origin) =>
+            new Compiled<Key, Value>(origin);
 
         /// <summary>
         /// A map whose keys and values are sticky per value once retrieved for the first time time.
         /// </summary>
-        public static Sticky<Key, Value> _<Key, Value>(Func<IMap<Key, Value>> origin) =>
-            new Sticky<Key, Value>(origin);
+        public static IMap<Key, Value> AsCompiled<Key, Value>(Func<IMap<Key, Value>> origin) =>
+            new Compiled<Key, Value>(origin);
     }
 }

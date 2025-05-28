@@ -7,11 +7,10 @@ using Tonga.IO;
 using Tonga.Scalar;
 using Tonga.Text;
 using Xunit;
-using Sticky = Tonga.IO.Sticky;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class StickyTest
+    public sealed class EconomicTest
     {
         [Fact]
         public void ReadsFileContent()
@@ -41,7 +40,7 @@ namespace Tonga.Tests.IO
 
 
             var ipt =
-                new Sticky(
+                new Compiled(
                     new AsConduit(
                         new Uri(file.Value())
                     )
@@ -58,7 +57,7 @@ namespace Tonga.Tests.IO
             Assert.Contains(
                 "<html",
                 AsText._(
-                    new Sticky(
+                    new Compiled(
                         new AsConduit(
                             new Url("http://www.google.de")
                         )
@@ -73,7 +72,7 @@ namespace Tonga.Tests.IO
             long size = 100_000L;
             Assert.True(
                 Length._(
-                    new Sticky(
+                    new Compiled(
                         new SlowIConduit(size)
                     )
                 ).Value() == size,
@@ -88,7 +87,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 size,
                 new AsBytes(
-                    new Sticky(
+                    new Compiled(
                         new SlowIConduit(size)
                     )
                 ).Bytes().Length

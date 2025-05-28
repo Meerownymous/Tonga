@@ -69,7 +69,7 @@ namespace Tonga.Tests.IO
             Assert.EndsWith(
                 "text!",
                 AsText._(
-                    new ConduitWithFallback(
+                    new BackFalling(
                         new AsConduit(() =>
                             throw new Exception()
                         ),

@@ -9,12 +9,8 @@ namespace Tonga.IO
     /// <summary>
     /// Logged input stream.
     /// </summary>
-    public sealed class LoggingOnReadStream : Stream
+    public sealed class LoggingOnReadStream(Stream origin, string source, Action<String> log) : Stream
     {
-
-        private readonly Stream origin;
-        private readonly string source;
-        private readonly Action<string> log;
         private long bytes;
         private long time;
 
@@ -26,33 +22,12 @@ namespace Tonga.IO
         public LoggingOnReadStream(Stream input, string source) : this(input, source, (msg) => Debug.WriteLine(msg))
         { }
 
-        /// <summary>
-        /// Logged input stream
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="source"></param>
-        /// <param name="log"></param>
-        public LoggingOnReadStream(Stream input, string source, Action<String> log)
-        {
-            this.origin = input;
-            this.source = source;
-            this.log = log;
-        }
-
-        public override bool CanRead => this.origin.CanRead;
-
-        public override bool CanSeek => this.origin.CanSeek;
-
-        public override bool CanWrite => this.origin.CanWrite;
-
-        public override long Length => this.origin.Length;
-
-        public override long Position { get => this.origin.Position; set => this.origin.Position = value; }
-
-        public override void Flush()
-        {
-            this.origin.Flush();
-        }
+        public override bool CanRead => origin.CanRead;
+        public override bool CanSeek => origin.CanSeek;
+        public override bool CanWrite => origin.CanWrite;
+        public override long Length => origin.Length;
+        public override long Position { get => origin.Position; set => origin.Position = value; }
+        public override void Flush() => origin.Flush();
 
         public override int ReadByte()
         {
@@ -72,7 +47,7 @@ namespace Tonga.IO
         public override int Read(byte[] buffer, int offset, int count)
         {
             DateTime start = DateTime.UtcNow;
-            int byts = this.origin.Read(buffer, offset, count);
+            int byts = origin.Read(buffer, offset, count);
             DateTime end = DateTime.UtcNow;
 
             long millis = (long)end.Subtract(start).TotalMilliseconds;
@@ -81,28 +56,23 @@ namespace Tonga.IO
                 this.bytes += byts;
                 this.time += millis;
             }
-            var msg = $"Read {this.bytes} byte(s) from {this.source} in {this.time}.";
+            var msg = $"Read {this.bytes} byte(s) from {source} in {this.time}.";
             log.Invoke(msg);
 
             return byts;
         }
 
-        public override long Seek(long offset, SeekOrigin origin)
+        public override long Seek(long offset, SeekOrigin seekOrigin)
         {
-            long skipped = this.origin.Seek(offset, origin);
-            var msg = $"Skipped {skipped} byte(s) from {this.source}.";
+            long skipped = origin.Seek(offset, seekOrigin);
+            var msg = $"Skipped {skipped} byte(s) from {source}.";
             log.Invoke(msg);
             return skipped;
         }
 
-        public override void SetLength(long value)
-        {
-            this.origin.SetLength(value);
-        }
+        public override void SetLength(long value) => origin.SetLength(value);
 
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            this.origin.Write(buffer, offset, count);
-        }
+        public override void Write(byte[] buffer, int offset, int count) =>
+            origin.Write(buffer, offset, count);
     }
 }

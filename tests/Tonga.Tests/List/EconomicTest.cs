@@ -1,10 +1,10 @@
 using Tonga.Enumerable;
+using Tonga.List;
 using Xunit;
-using Sticky = Tonga.List.Sticky;
 
 namespace Tonga.Tests.List;
 
-public sealed class StickyTest
+public sealed class EconomicTest
 {
     [Fact]
     public void AdvancesOnlyWhenAsked()

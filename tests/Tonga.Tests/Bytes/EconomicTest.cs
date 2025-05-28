@@ -1,17 +1,17 @@
 using Tonga.IO;
 using Xunit;
-using Sticky = Tonga.Bytes.Sticky;
+using Compiled = Tonga.Bytes.Compiled;
 
 namespace Tonga.Tests.Bytes
 {
-    public sealed class StickyTest
+    public sealed class EconomicTest
     {
         [Fact]
         public void RemembersInput()
         {
             var calls = 0;
             var bytes =
-                new Sticky(() =>
+                new Compiled(() =>
                     new AsConduit(() =>
                     {
                         ++calls;

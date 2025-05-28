@@ -23,40 +23,21 @@ public sealed class Formatted : TextEnvelope
     public Formatted(String ptn, params IText[] arguments) : this(
         ptn.AsText(),
         CultureInfo.InvariantCulture,
-        () =>
-            Mapped._(
-                txt => txt.Str(),
-                arguments
-            ).ToArray()
+        () => arguments.AsMapped(txt => txt.Str()).ToArray()
     )
-    {
-    }
+    { }
 
     /// <summary>
     /// A <see cref="IText"/> formatted with arguments.
     /// </summary>
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="arguments">arguments to apply</param>
-    public Formatted(String ptn, params object[] arguments) : this(
+    public Formatted(String ptn, params string[] arguments) : this(
         ptn.AsText(),
-        CultureInfo.InvariantCulture,
-        arguments.AsMapped(a => a.ToString())
-    )
-    {
-    }
-
-    /// <summary>
-    /// A <see cref="IText"/> formatted with arguments.
-    /// </summary>
-    /// <param name="ptn">pattern to put arguments in</param>
-    /// <param name="arguments">arguments to apply</param>
-    public Formatted(IText ptn, params object[] arguments) : this(
-        ptn,
         CultureInfo.InvariantCulture,
         arguments
     )
-    {
-    }
+    { }
 
     /// <summary>
     /// A <see cref="IText"/> formatted with arguments.
@@ -64,7 +45,7 @@ public sealed class Formatted : TextEnvelope
     /// <param name="ptn">pattern</param>
     /// <param name="local">CultureInfo</param>
     /// <param name="arguments">arguments to apply</param>
-    public Formatted(IText ptn, CultureInfo local, params object[] arguments) : this(
+    public Formatted(IText ptn, CultureInfo local, params string[] arguments) : this(
         ptn, local, () => arguments
     )
     {
@@ -76,7 +57,7 @@ public sealed class Formatted : TextEnvelope
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="locale">a specific culture</param>
     /// <param name="arguments">arguments to apply</param>
-    public Formatted(String ptn, CultureInfo locale, params object[] arguments) : this(
+    public Formatted(String ptn, CultureInfo locale, params string[] arguments) : this(
         ptn.AsText(), locale, arguments)
     {
     }
@@ -92,11 +73,9 @@ public sealed class Formatted : TextEnvelope
         locale,
         () =>
         {
-            object[] strings = new object[Length._(arguments).Value()];
+            object[] strings = new object[arguments.Length];
             for (int i = 0; i < arguments.Length; i++)
-            {
                 strings[i] = arguments[i].Str();
-            }
 
             return strings;
         }
@@ -155,16 +134,7 @@ public static partial class TextSmarts
     /// </summary>
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="arguments">arguments to apply</param>
-    public static Formatted AsFormatted(this String ptn, params object[] arguments) =>
-        new(ptn, arguments);
-
-
-    /// <summary>
-    /// A <see cref="IText"/> formatted with arguments.
-    /// </summary>
-    /// <param name="ptn">pattern to put arguments in</param>
-    /// <param name="arguments">arguments to apply</param>
-    public static Formatted AsFormatted(this IText ptn, params object[] arguments) =>
+    public static Formatted AsFormatted(this String ptn, params string[] arguments) =>
         new(ptn, arguments);
 
     /// <summary>
@@ -173,7 +143,7 @@ public static partial class TextSmarts
     /// <param name="ptn">pattern</param>
     /// <param name="local">CultureInfo</param>
     /// <param name="arguments">arguments to apply</param>
-    public static Formatted AsFormatted(this IText ptn, CultureInfo local, params object[] arguments) =>
+    public static Formatted AsFormatted(this IText ptn, CultureInfo local, params string[] arguments) =>
         new(ptn, local, arguments);
 
     /// <summary>
@@ -182,7 +152,7 @@ public static partial class TextSmarts
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="locale">a specific culture</param>
     /// <param name="arguments">arguments to apply</param>
-    public static Formatted AsFormatted(this String ptn, CultureInfo locale, params object[] arguments) =>
+    public static Formatted AsFormatted(this String ptn, CultureInfo locale, params string[] arguments) =>
         new(ptn, locale, arguments);
 
     /// <summary>

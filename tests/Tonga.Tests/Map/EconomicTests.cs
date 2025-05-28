@@ -3,14 +3,14 @@ using Xunit;
 
 namespace Tonga.Tests.Map;
 
-public sealed class StickyTests
+public sealed class EconomicTests
 {
     [Fact]
     public void RetrievesValueFromSource()
     {
         Assert.Equal(
             "one",
-            Sticky._(
+            Compiled<,>._(
                 AsMap._(
                     AsPair._(1, "one")
                 )
@@ -22,7 +22,7 @@ public sealed class StickyTests
     public void RemembersValue()
     {
         var map =
-            Sticky._(
+            Compiled<,>._(
                 AsMap._(
                     OneTimePair._(
                         AsPair._(1, "one")

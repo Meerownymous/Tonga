@@ -14,11 +14,8 @@ namespace Tonga.IO
         private readonly List<long> processed = [0L];
 
         public override bool CanRead => stream.CanRead;
-
         public override bool CanSeek => stream.CanSeek;
-
         public override bool CanWrite => stream.CanWrite;
-
         public override long Length => stream.Length;
 
         public override long Position

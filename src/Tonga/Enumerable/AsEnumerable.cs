@@ -53,40 +53,7 @@ namespace Tonga.Enumerable
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
-    public static class AsEnumerable
-    {
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
-        /// </summary>
-        /// <param name="items">enumerated content</param>
-        public static IEnumerable<T> _<T>(params T[] items) => new AsEnumerable<T>(items);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> from a <see cref="Func{T}"/>"/>.
-        /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> fnc) => new AsEnumerable<T>(fnc);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> form a <see cref="Func{T}"/>"/>.
-        /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
-        public static IEnumerable<T> _<T>(Func<IEnumerable<T>> fnc) => new AsEnumerable<T>(fnc);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
-        /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
-        public static IEnumerable<T> _<T>(IEnumerator<T> fnc) => new AsEnumerable<T>(fnc);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> out of a <see cref="IEnumerator{T}"/> returned by a <see cref="Func{T}"/>"/>.
-        /// </summary>
-        /// <param name="fnc">function which retrieves enumerator</param>
-        public static IEnumerable<T> _<T>(Func<IEnumerator<T>> fnc) => new AsEnumerable<T>(fnc);
-    }
-
-    public static class EnumerableSmarts
+    public static partial class EnumerableSmarts
     {
 
         public static IEnumerable<TItem> AsEnumerable<TItem>(this TItem[] source) =>

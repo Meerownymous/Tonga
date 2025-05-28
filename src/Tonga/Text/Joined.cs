@@ -24,10 +24,7 @@ public sealed class Joined(IText delimit, Func<IEnumerable<IText>> txts) : TextE
     /// <param name="strs">texts to join</param>
     public Joined(String delimit, IEnumerable<string> strs) : this(
         delimit.AsText(),
-        Mapped._(
-            str => str.AsText(),
-            strs
-        )
+        strs.AsMapped(str => str.AsText())
     )
     { }
 

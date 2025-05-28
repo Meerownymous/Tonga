@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using Tonga.Enumerable;
 using Tonga.Func;
 using Tonga.IO;
 using Tonga.Scalar;
@@ -19,7 +20,7 @@ namespace Tonga.Tests.IO
             ReadAll._(
                 new TeeOnRead(
                     "Hello!",
-                    new GZipCompression(new AsConduit(zipped))
+                    new GZipCompressing(new AsConduit(zipped))
                 )
             ).Invoke();
 
@@ -50,7 +51,7 @@ namespace Tonga.Tests.IO
                     Length._(
                         new TeeOnRead(
                             "Hello!",
-                            new GZipCompression(
+                            new GZipCompressing(
                                 new AsConduit(stream)
                             )
                         )

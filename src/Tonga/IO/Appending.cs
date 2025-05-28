@@ -10,13 +10,15 @@ namespace Tonga.IO
     /// <summary>
     /// Append <see cref="IConduit"/> to a target.
     /// </summary>
-    public sealed class AppendTo(IScalar<IConduit> target) : IConduit, IDisposable
+    public sealed class Appending(Func<IConduit> target) : IConduit, IDisposable
     {
+        private readonly Lazy<Stream> stream = new(target().Stream);
+
         /// <summary>
         /// Append <see cref="IConduit"/> to a target file Uri.
         /// </summary>
         /// <param name="path">a file uri, retrieve with Path.GetFullPath(absOrRelativePath) or prefix with file://. Must be absolute</param>
-        public AppendTo(Uri path) : this(
+        public Appending(Uri path) : this(
             () => new FileStream(Uri.UnescapeDataString(path.AbsolutePath), FileMode.OpenOrCreate))
         { }
 
@@ -24,7 +26,7 @@ namespace Tonga.IO
         /// Append <see cref="IConduit"/> to a target <see cref="StreamWriter"/>.
         /// </summary>
         /// <param name="wtr">a writer</param>
-        public AppendTo(StreamWriter wtr) : this(wtr, Encoding.UTF8)
+        public Appending(StreamWriter wtr) : this(wtr, Encoding.UTF8)
         { }
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="wtr">a writer</param>
         /// <param name="enc"><see cref="Encoding"/> of the writer</param>
-        public AppendTo(StreamWriter wtr, Encoding enc) : this(
+        public Appending(StreamWriter wtr, Encoding enc) : this(
             new WriterAsOutputStream(wtr, enc)
         )
         { }
@@ -41,30 +43,28 @@ namespace Tonga.IO
         /// Append <see cref="IConduit"/> to a target <see cref="Stream"/> returned by a <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="fnc">target stream returning function</param>
-        public AppendTo(Func<Stream> fnc) : this(new AsConduit(fnc))
+        public Appending(Func<Stream> fnc) : this(new AsConduit(fnc))
         { }
 
         /// <summary>
         /// Append <see cref="IConduit"/> to a target <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">target stream</param>
-        public AppendTo(Stream stream) : this(new AsConduit(stream))
+        public Appending(Stream stream) : this(new AsConduit(stream))
         { }
 
         /// <summary>
         /// Append <see cref="IConduit"/> to a target <see cref="IConduit"/>.
         /// </summary>
         /// <param name="output">target output</param>
-        public AppendTo(IConduit output) : this(AsScalar._(output))
+        public Appending(IConduit output) : this(() => output)
         { }
 
         /// <summary>
         /// Disposes the stream
         /// </summary>
-        public void Dispose()
-        {
-            (target.Value() as IDisposable)?.Dispose();
-        }
+        public void Dispose() =>
+            (stream.Value as IDisposable)?.Dispose();
 
         /// <summary>
         /// Get the stream to append
@@ -72,9 +72,8 @@ namespace Tonga.IO
         /// <returns>the stream</returns>
         public Stream Stream()
         {
-            var result = target.Value().Stream();
+            var result = stream.Value;
             result.Seek(0, SeekOrigin.End);
-
             return result;
         }
     }

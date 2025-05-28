@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO;
 
-public sealed class WriterToTest
+public sealed class AsStreamWriterTest
 {
     [Fact]
     public void WritesContentToFile()
@@ -18,13 +18,13 @@ public sealed class WriterToTest
         var content = "yada yada";
 
         string s;
-        using (var output = new WriterTo(uri))
+        using (var output = new AsStreamWriter(uri))
         {
             s =
                 AsText._(
                     new TeeOnRead(
                         new AsConduit(content),
-                        new WriterAsConduit(output)
+                        new StreamWriterAsConduit(output)
                     )
                 ).AsString();
         }

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class DirectoryOfTests
+    public sealed class DirectoryContentTests
     {
         [Fact]
         public void EnumeratesFiles()
@@ -24,11 +24,11 @@ namespace Tonga.Tests.IO
 
                 Assert.True(
                     new Contains<string>(
-                        new DirectoryOf(Path.GetFullPath(dir)),
+                        new DirectoryContent(Path.GetFullPath(dir)),
                         file1
                     ).IsTrue() &&
                     new Contains<string>(
-                        new DirectoryOf(Path.GetFullPath(dir)),
+                        new DirectoryContent(Path.GetFullPath(dir)),
                         file2
                     ).IsTrue()
                 );
@@ -48,7 +48,7 @@ namespace Tonga.Tests.IO
 
             Assert.True(
                 new Contains<string>(
-                    new DirectoryOf(dir),
+                    new DirectoryContent(dir),
                     subdir
                 ).IsTrue()
             );
@@ -67,7 +67,7 @@ namespace Tonga.Tests.IO
                     File.Create(file).Close();
 
                     Assert.Throws<ArgumentException>(() =>
-                        new DirectoryOf(file).GetEnumerator()
+                        new DirectoryContent(file).GetEnumerator()
                     );
 
                 },
@@ -89,7 +89,7 @@ namespace Tonga.Tests.IO
 
                 Assert.True(
                     new Contains<string>(
-                        new DirectoryOf(dir, true),
+                        new DirectoryContent(dir, true),
                         file
                     ).IsTrue()
                 );

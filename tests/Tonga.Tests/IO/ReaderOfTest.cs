@@ -29,7 +29,7 @@ namespace Tonga.Tests.IO
                 content,
                 AsText._(
                     new AsConduit(
-                        new AsReader(
+                        new AsStreamReader(
                             new Uri(path)))
                 ).AsString()
             );

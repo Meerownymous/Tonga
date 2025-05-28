@@ -70,36 +70,36 @@ namespace Tonga.Map
         }
     }
 
-    public static class AsPair
+    public static partial class MapSmarts
     {
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static IPair<TKey, TValue> _<TKey, TValue>(TKey key, Func<TValue> value)
-            => new AsPair<TKey, TValue>(key, value);
+        public static IPair<TKey, TValue> AsPair<TKey, TValue>(this (TKey key, Func<TValue> value) pair)
+            => new AsPair<TKey, TValue>(pair.key, pair.value);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static IPair<TKey, TValue> _<TKey, TValue>(TKey key, TValue value)
-            => new AsPair<TKey, TValue>(key, value);
+        public static IPair<TKey, TValue> AsPair<TKey, TValue>(this (TKey key, TValue value) pair)
+            => new AsPair<TKey, TValue>(pair.key, pair.value);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static IPair<TKey, TValue> _<TKey, TValue>(IScalar<KeyValuePair<TKey, TValue>> kvp)
+        public static IPair<TKey, TValue> AsPair<TKey, TValue>(this IScalar<KeyValuePair<TKey, TValue>> kvp)
             => new AsPair<TKey, TValue>(kvp);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static IPair<TKey, TValue> _<TKey, TValue>(KeyValuePair<TKey, TValue> kvp)
+        public static IPair<TKey, TValue> AsPair<TKey, TValue>(this KeyValuePair<TKey, TValue> kvp)
             => new AsPair<TKey, TValue>(() => kvp);
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.
         /// </summary>
-        public static IPair<TKey, TValue> _<TKey, TValue>(Func<KeyValuePair<TKey, TValue>> kvp)
+        public static IPair<TKey, TValue> AsPair<TKey, TValue>(this Func<KeyValuePair<TKey, TValue>> kvp)
             => new AsPair<TKey, TValue>(kvp);
     }
 }

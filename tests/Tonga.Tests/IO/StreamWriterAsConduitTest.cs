@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO;
 
-public sealed class WriterAsConduitTest
+public sealed class StreamWriterAsConduitTest
 {
     [Fact]
     public void WritesLargeContentToFile()
@@ -53,7 +53,7 @@ public sealed class WriterAsConduitTest
                     new AsConduit(
                         new Uri(Path.GetFullPath(inputPath))
                     ),
-                    new WriterAsConduit(
+                    new StreamWriterAsConduit(
                         new StreamWriter(filestream)
                     )
                 )

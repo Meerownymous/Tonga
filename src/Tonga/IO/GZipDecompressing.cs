@@ -8,7 +8,7 @@ namespace Tonga.IO;
 /// <summary>
 /// A conduit that decompresses.
 /// </summary>
-public sealed class GZipDecompression(IConduit origin) : IConduit
+public sealed class GZipDecompressing(IConduit origin) : IConduit
 {
     /// <summary>
     /// A stream which is decompressing.

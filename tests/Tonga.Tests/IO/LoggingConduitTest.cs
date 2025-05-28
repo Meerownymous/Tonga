@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Tonga.Bytes;
+using Tonga.Enumerable;
 using Tonga.Func;
 using Tonga.IO;
 using Tonga.Scalar;
@@ -35,7 +36,7 @@ namespace Tonga.Tests.IO
         {
             using (var tempfile = new TempFile("txt"))
             {
-                using (var append = new AppendTo(new Uri(tempfile.Value())))
+                using (var append = new Appending(new Uri(tempfile.Value())))
                 {
                     var output =
                         new LoggingOnReadConduit(
@@ -66,7 +67,7 @@ namespace Tonga.Tests.IO
             {
                 var bytes = new AsBytes("Hello World!").Bytes();
 
-                using (var append = new AppendTo(new Uri(tempfile.Value())))
+                using (var append = new Appending(new Uri(tempfile.Value())))
                 {
                     var output =
                     new LoggingOnReadConduit(
@@ -97,7 +98,7 @@ namespace Tonga.Tests.IO
         {
             using (var tempfile = new TempFile("txt"))
             {
-                using (var append = new AppendTo(new Uri(tempfile.Value())))
+                using (var append = new Appending(new Uri(tempfile.Value())))
                 {
                     var output =
                     new LoggingOnReadConduit(

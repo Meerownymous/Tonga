@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class AppendToTests
+    public sealed class AppendingTests
     {
         [Fact]
         public void WritesSimplePathContent()
@@ -21,7 +21,7 @@ namespace Tonga.Tests.IO
 
             var pipe =
                 new TeeOnRead(txt,
-                    new AppendTo(
+                    new Appending(
                         new AsConduit(new Uri(file))
                     )
                 );
@@ -46,7 +46,7 @@ namespace Tonga.Tests.IO
             var txt = "Hello, Objects!";
             var tee =
                 new TeeOnRead(txt,
-                    new AppendTo(
+                    new Appending(
                         new AsConduit(new Uri(file.Value()))
                     )
                 );
@@ -73,7 +73,7 @@ namespace Tonga.Tests.IO
             using (var temp = new TempFile())
             {
 
-                var appendTo = new AppendTo(new Uri(temp.Value()));
+                var appendTo = new Appending(new Uri(temp.Value()));
                 var stream = appendTo.Stream();
                 Assert.True(stream.CanWrite);
                 appendTo.Dispose();

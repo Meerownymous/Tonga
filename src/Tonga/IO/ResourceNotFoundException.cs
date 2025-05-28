@@ -20,8 +20,11 @@ namespace Tonga.IO.Error
             new Formatted(
                 "Resource '{0}' not found.\r\n{1} resources are available\r\n{2}",
                 missing,
-                container.GetManifestResourceNames().Length,
-                Joined._("\r\n", container.GetManifestResourceNames()).AsString()
+                container.GetManifestResourceNames().Length.ToString(),
+                container
+                    .GetManifestResourceNames()
+                    .AsJoined("\r\n")
+                    .Str()
             ).Str()
         )
         { }

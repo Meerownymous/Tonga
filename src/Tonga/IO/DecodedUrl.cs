@@ -45,11 +45,9 @@ namespace Tonga.IO
         /// Get the value.
         /// </summary>
         /// <returns>the value</returns>
-        public String Value()
-        {
-            return WebUtility.UrlDecode(
+        public String Value() =>
+            WebUtility.UrlDecode(
                 this.source.Str()
             );
-        }
     }
 }

@@ -6,14 +6,14 @@ using Xunit;
 
 namespace Tonga.Tests.IO
 {
-    public sealed class ConduitWithFallbackTest
+    public sealed class BackFallingTest
     {
         [Fact]
         public void ReadsAlternativeInput()
         {
             Assert.True(
                 AsText._(
-                    new ConduitWithFallback(
+                    new BackFalling(
                         new AsConduit(
                             () => throw new Exception()
                         ),

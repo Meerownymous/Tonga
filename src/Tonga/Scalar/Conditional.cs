@@ -24,24 +24,10 @@ public sealed class Conditional<Out>(Func<bool> condition, Func<Out> consequent,
         Func<Out> consequent,
         Func<Out> alternative
     ) : this(
-        () => condition.IsTrue(),
+        condition.IsTrue,
         consequent,
         alternative
     )
-    { }
-
-    /// <summary>
-    /// A ternary operation using the given input and functions.
-    /// </summary>
-    /// <param name="condition">condition</param>
-    /// <param name="consequent">consequent</param>
-    /// <param name="alternative">alternative</param>
-    public Conditional(IFunc<Boolean> condition, IFunc<Out> consequent, IFunc<Out> alternative)
-        : this(
-            condition.Invoke(),
-            consequent.Invoke(),
-            alternative.Invoke()
-        )
     { }
 
     /// <summary>
@@ -67,15 +53,15 @@ public sealed class Conditional<Out>(Func<bool> condition, Func<Out> consequent,
     { }
 }
 
-public static class Conditional
+public static partial class ScalarSmarts
 {
     /// <summary>
-    /// A ternary operation using the given input and functions.
+    /// A conditional scalar using the given input and functions.
     /// </summary>
     /// <param name="condition">condition</param>
     /// <param name="consequent">consequent</param>
     /// <param name="alternative">alternative</param>
-    public static IScalar<Out> _<Out>(
+    public static IScalar<Out> AsConditional<Out>(
         Func<Boolean> condition,
         Func<Out> consequent,
         Func<Out> alternative
@@ -88,7 +74,7 @@ public static class Conditional
     /// <param name="condition">condition</param>
     /// <param name="consequent">consequent</param>
     /// <param name="alternative">alternative</param>
-    public static IScalar<Out> _<Out>(IFunc<Boolean> condition, IFunc<Out> consequent, IFunc<Out> alternative)
+    public static IScalar<Out> AsConditional<Out>(Boolean condition, Out consequent, Out alternative)
         => new Conditional<Out>(condition, consequent, alternative);
 
     /// <summary>
@@ -97,7 +83,7 @@ public static class Conditional
     /// <param name="condition">condition</param>
     /// <param name="consequent">consequent</param>
     /// <param name="alternative">alternative</param>
-    public static IScalar<Out> _<Out>(Boolean condition, Out consequent, Out alternative)
+    public static IScalar<Out> AsConditional<Out>(IFact condition, Out consequent, Out alternative)
         => new Conditional<Out>(condition, consequent, alternative);
 
     /// <summary>
@@ -106,16 +92,7 @@ public static class Conditional
     /// <param name="condition">condition</param>
     /// <param name="consequent">consequent</param>
     /// <param name="alternative">alternative</param>
-    public static IScalar<Out> _<Out>(IFact condition, Out consequent, Out alternative)
-        => new Conditional<Out>(condition, consequent, alternative);
-
-    /// <summary>
-    /// A ternary operation using the given input and functions.
-    /// </summary>
-    /// <param name="condition">condition</param>
-    /// <param name="consequent">consequent</param>
-    /// <param name="alternative">alternative</param>
-    public static IScalar<Out> _<Out>(IFact condition,
+    public static IScalar<Out> AsConditional<Out>(IFact condition,
         IScalar<Out> consequent, IScalar<Out> alternative
     ) =>
         new Conditional<Out>(

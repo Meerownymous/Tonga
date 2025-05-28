@@ -38,7 +38,7 @@ public sealed class Strict(IText candidate, IEnumerable<IText> valid, Func<Strin
     /// <param name="valid">The valid texts</param>
     public Strict(string candidate, params string[] valid) : this(
         candidate,
-        AsEnumerable._(valid)
+        valid.AsEnumerable()
     )
     { }
 

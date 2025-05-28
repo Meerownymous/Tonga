@@ -6,12 +6,12 @@ namespace Tonga.Enumerable;
 /// <summary>
 /// Delivers contents from a fallback source in case the original source is empty.
 /// </summary>
-public sealed class FallingBack<T>(IEnumerable<T> origin, IEnumerable<T> fallback) : IEnumerable<T>
+public sealed class BackFalling<T>(IEnumerable<T> origin, IEnumerable<T> fallback) : IEnumerable<T>
 {
     /// <summary>
     /// Delivers contents from a fallback source in case the original source is empty.
     /// </summary>
-    public FallingBack(IEnumerable<T> origin, params T[] fallback) : this(
+    public BackFalling(IEnumerable<T> origin, params T[] fallback) : this(
         origin, new AsEnumerable<T>(fallback)
     )
     { }
@@ -35,10 +35,10 @@ public sealed class FallingBack<T>(IEnumerable<T> origin, IEnumerable<T> fallbac
 }
 
 /// <summary>
-/// Smarts for <see cref="FallingBack{T}"/>
+/// Smarts for <see cref="BackFalling{T}"/>
 /// </summary>
 public static class FallbackSmarts
 {
     public static IEnumerable<T> AsBackFalling<T>(this IEnumerable<T> origin, IEnumerable<T> fallback) =>
-        new FallingBack<T>(origin, fallback);
+        new BackFalling<T>(origin, fallback);
 }

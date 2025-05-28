@@ -5,13 +5,13 @@ using Xunit;
 
 namespace Tonga.Tests.Bytes
 {
-    public sealed class BytesEqualTest
+    public sealed class IsEqualTest
     {
         [Fact]
         public void TrueCorrectBytes()
         {
             Assert.True(
-                new BytesEqual(
+                new IsEqual(
                     new AsBytes(3.2d),
                     new AsBytes(3.2d)
                 ).Value()
@@ -22,7 +22,7 @@ namespace Tonga.Tests.Bytes
         public void FalseDifferentLenght()
         {
             Assert.False(
-                new BytesEqual(
+                new IsEqual(
                     new AsBytes(1),
                     new AsBytes(3.2d)
                 ).Value()
@@ -33,7 +33,7 @@ namespace Tonga.Tests.Bytes
         public void FalseDifferentBytes()
         {
             Assert.False(
-                new BytesEqual(
+                new IsEqual(
                     new AsBytes(1),
                     new AsBytes(3.2d)
                 ).Value()

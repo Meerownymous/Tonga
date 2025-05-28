@@ -1,6 +1,8 @@
 
 
 using System;
+using System.Collections.Generic;
+using Tonga.Enumerable;
 
 namespace Tonga.Scalar;
 
@@ -15,14 +17,6 @@ public sealed class AsScalar<T>(Func<T> origin) : IScalar<T>
     /// </summary>
     /// <param name="src">func to cache result from</param>
     public AsScalar(T src) : this(() => src)
-    {
-    }
-
-    /// <summary>
-    /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
-    /// </summary>
-    /// <param name="srcFunc">func to cache result from</param>
-    public AsScalar(IFunc<T> srcFunc) : this(srcFunc.Invoke)
     {
     }
 
@@ -48,8 +42,16 @@ public static partial class ScalarSmarts
     public static IScalar<T> AsScalar<T>(this T src) => new AsScalar<T>(src);
 
     /// <summary>
-    /// A s<see cref="IScalar{T}"/> that will return the same value from a cache as long the reload condition is false.
+    /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
     /// </summary>
-    /// <param name="srcFunc">func to cache result from</param>
-    public static IScalar<T> AsScalar<T>(IFunc<T> srcFunc) => new AsScalar<T>(srcFunc);
+    /// <param name="src">func to cache result from</param>
+    public static IEnumerable<IScalar<T>> AsScalars<T>(this IEnumerable<T> src) =>
+        src.AsMapped(item => item.AsScalar());
+
+    /// <summary>
+    /// A s<see cref="IScalar{T}"/> that will return the same value from a cache always.
+    /// </summary>
+    /// <param name="src">func to cache result from</param>
+    public static IEnumerable<IScalar<T>> AsScalars<T>(this IEnumerable<Func<T>> src) =>
+        src.AsMapped(item => item.AsScalar());
 }

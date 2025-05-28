@@ -8,44 +8,33 @@ namespace Tonga.Fact;
 public sealed class And : FactEnvelope
 {
     /// <summary> Logical AND </summary>
-    public And(params Func<bool>[] funcs) : this(AsEnumerable._(funcs))
+    public And(params Func<bool>[] funcs) : this(funcs.AsEnumerable())
     { }
 
     /// <summary> Logical AND </summary>
     public And(IEnumerable<Func<bool>> funcs) : this(
-        Mapped._(
-            func => new AsFact(func),
-            funcs
-        )
+        funcs.AsMapped(func => new AsFact(func))
     )
     { }
 
     /// <summary> Logical AND </summary>
     public And(params IFact[] src) : this(
-        AsEnumerable._(src)
+        src.AsEnumerable()
     )
     { }
 
     /// <summary> Logical AND </summary>
     public And(params bool[] src) : this(
-        Mapped._(
-            tBool => new AsFact(tBool),
-            src
-        )
+        src.AsMapped(tBool => new AsFact(tBool))
     )
-    {
-    }
+    { }
 
     /// <summary> Logical AND </summary>
     /// <param name="src"> list of items </param>
     public And(IEnumerable<bool> src) : this(
-        Mapped._(
-            tBool => new AsFact(tBool),
-            src
-        )
+        src.AsMapped(tBool => new AsFact(tBool))
     )
-    {
-    }
+    { }
 
     /// <summary> Logical AND </summary>
     public And(IEnumerable<IFact> src) : base(

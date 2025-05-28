@@ -15,8 +15,8 @@ namespace Tonga.Enumerable
         private readonly IEnumerable<T> result =
             new AsEnumerable<T>(() =>
                 Produced(
-                    Filtered._(match, a),
-                    Filtered._(match, b)
+                    a.AsFiltered(match),
+                    b.AsFiltered(match)
                 )
             );
 
@@ -66,35 +66,19 @@ namespace Tonga.Enumerable
                 }
             }
 
-            foreach (var item in Joined._(notin1, notin2))
+            foreach (var item in notin1.AsJoined(notin2))
             {
                 yield return item;
             }
         }
     }
 
-    /// <summary>
-    /// Items which do only exist in one enumerable.
-    /// </summary>
-    public static class Divergency
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
-
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b) => new Divergency<T>(a, b);
-    }
-
-    public static class DivergencySmarts
-    {
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<TItem> Divergency<TItem>(
+        public static IEnumerable<TItem> AsDivergency<TItem>(
             this TItem[] source,
             IEnumerable<TItem> other
         ) =>
@@ -103,7 +87,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Items which do only exist in one enumerable.
         /// </summary>
-        public static IEnumerable<TItem> Divergency<TItem>(
+        public static IEnumerable<TItem> AsDivergency<TItem>(
             this TItem[] source,
             IEnumerable<TItem> other,
             Func<TItem, bool> match

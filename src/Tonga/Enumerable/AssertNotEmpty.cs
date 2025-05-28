@@ -10,7 +10,7 @@ namespace Tonga.Enumerable
     /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
     /// <typeparam name="T">Type of the enumerable</typeparam>
-    public sealed class NotEmpty<T>(IEnumerable<T> origin, Exception ex) : IEnumerable<T>
+    public sealed class AssertNotEmpty<T>(IEnumerable<T> origin, Exception ex) : IEnumerable<T>
     {
         private readonly IEnumerable<T> result =
             new AsEnumerable<T>(() => Produced(origin, ex));
@@ -19,7 +19,7 @@ namespace Tonga.Enumerable
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public NotEmpty(IEnumerable<T> origin) : this(
+        public AssertNotEmpty(IEnumerable<T> origin) : this(
             origin,
             new Exception("Enumerable is empty")
         )
@@ -47,38 +47,19 @@ namespace Tonga.Enumerable
     /// <summary>
     /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
     /// </summary>
-    public static class NotEmpty
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> origin) => new NotEmpty<T>(origin);
+        public static IEnumerable<T> AssertNotEmpty<T>(this IEnumerable<T> origin) => new AssertNotEmpty<T>(origin);
 
         /// <summary>
         /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
         /// </summary>
         /// <param name="origin">Enumerable</param>
         /// <param name="ex">Execption to be thrown if empty</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
-    }
-
-    /// <summary>
-    /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
-    /// </summary>
-    public static class NotEmptySmarts
-    {
-        /// <summary>
-        /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
-        /// </summary>
-        /// <param name="origin">Enumerable</param>
-        public static IEnumerable<T> NotEmpty<T>(this IEnumerable<T> origin) => new NotEmpty<T>(origin);
-
-        /// <summary>
-        /// Ensures that <see cref="IEnumerable{T}" /> is not empty/>
-        /// </summary>
-        /// <param name="origin">Enumerable</param>
-        /// <param name="ex">Execption to be thrown if empty</param>
-        public static IEnumerable<T> NotEmpty<T>(IEnumerable<T> origin, Exception ex) => new NotEmpty<T>(origin, ex);
+        public static IEnumerable<T> AssertNotEmpty<T>(this IEnumerable<T> origin, Exception ex) => new AssertNotEmpty<T>(origin, ex);
     }
 }

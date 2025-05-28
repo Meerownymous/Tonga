@@ -307,14 +307,6 @@ public sealed class AsText(Func<string> txt) : IText
     {
     }
 
-    /// <summary>
-    /// A <see cref="IText"/> out of the return value of a <see cref="IFunc{T}"/>.
-    /// </summary>
-    /// <param name="fnc">func returning a string</param>
-    public AsText(IFunc<string> fnc) : this(fnc.Invoke)
-    {
-    }
-
     public string Str() => txt();
 }
 
@@ -513,12 +505,6 @@ public static partial class TextSmarts
     /// <param name="input">a string</param>
     /// <param name="encoding"><see cref="Encoding"/> of the string</param>
     public static AsText AsText(this String input, Encoding encoding) => new(input, encoding);
-
-    /// <summary>
-    /// A <see cref="IText"/> out of the return value of a <see cref="IFunc{T}"/>.
-    /// </summary>
-    /// <param name="fnc">func returning a string</param>
-    public static AsText AsText(this IFunc<string> fnc) => new(fnc);
 
     /// <summary>
     /// A <see cref="IText"/> out of encapsulating <see cref="IScalar{T}"/>.

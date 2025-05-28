@@ -1,17 +1,42 @@
-
-
 using System;
 using System.Collections.Generic;
-using Tonga.Enumerable;
+using Tonga.Scalar;
 
-
-namespace Tonga.Scalar
+namespace Tonga.Enumerable
 {
     /// <summary>
     /// First element in <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class First<T> : ScalarEnvelope<T>
+    public sealed class First<T>(
+        Func<T, bool> condition,
+        IEnumerable<T> src,
+        Func<Exception, IEnumerable<T>, T> fallback
+    ) :
+        ScalarEnvelope<T>(
+        () =>
+        {
+            T result;
+            try
+            {
+                using var filtered = src.AsFiltered(condition).GetEnumerator();
+
+
+                if (filtered.MoveNext())
+                {
+                    result = filtered.Current;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Cannot get first element - enumerable is empty.");
+                }
+            }
+            catch (Exception e)
+            {
+                result = fallback(e, src);
+            }
+            return result;
+        })
     {
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/>.
@@ -19,7 +44,7 @@ namespace Tonga.Scalar
         public First(IEnumerable<T> source, Exception ex) : this(
             _ => true,
             source,
-            _ => throw ex
+            (_,_) => throw ex
         )
         { }
 
@@ -46,7 +71,7 @@ namespace Tonga.Scalar
         public First(Func<T, bool> condition, IEnumerable<T> source, Exception ex) : this(
             condition,
             source,
-            _ => throw ex)
+            (_,_) => throw ex)
         { }
 
         /// <summary>
@@ -55,9 +80,9 @@ namespace Tonga.Scalar
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
         public First(IEnumerable<T> source, T fallback) : this(
-            enm => true,
+            _ => true,
             source,
-            _ => fallback
+            (_,_) => fallback
         )
         { }
 
@@ -70,7 +95,7 @@ namespace Tonga.Scalar
         public First(Func<T, bool> condition, IEnumerable<T> source, T fallback) : this(
             condition,
             source,
-            _ => fallback
+            (_,_) => fallback
         )
         { }
 
@@ -82,7 +107,7 @@ namespace Tonga.Scalar
         public First(IEnumerable<T> source, IScalar<T> fallback) : this(
             _ => true,
             source,
-            _ => fallback.Value()
+            (_,_) => fallback.Value()
         )
         { }
 
@@ -93,7 +118,9 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="src">source enumerable</param>
         /// <param name="fallback">fallback if no match</param>
-        public First(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback) : this(item => true, src, fallback)
+        public First(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback) : this(
+            _ => true, src, (_, e) => fallback(e)
+        )
         { }
 
         /// <summary>
@@ -101,64 +128,53 @@ namespace Tonga.Scalar
         ///     <cref>IBiFunc{X, Y, Z}</cref>
         /// </see>
         /// </summary>
-        public First(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback) : base(
-            () =>
-            {
-                using var filtered = Filtered._(condition, src).GetEnumerator();
-
-                T result;
-                if (filtered.MoveNext())
-                {
-                    result = filtered.Current;
-                }
-                else
-                {
-                    result = fallback(src);
-                }
-                return result;
-            })
+        /// <param name="src">source enumerable</param>
+        /// <param name="fallback">fallback if no match</param>
+        public First(IEnumerable<T> src, Func<Exception, IEnumerable<T>, T> fallback) : this(
+            _ => true, src, fallback
+        )
         { }
     }
 
-    public static class First
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
-        public static IScalar<T> _<T>(IEnumerable<T> source, Exception ex)
+        public static IScalar<T> First<T>(this IEnumerable<T> source, Exception ex)
             => new First<T>(source, ex);
 
-        public static IScalar<T> _<T>(IEnumerable<T> source)
+        public static IScalar<T> First<T>(this IEnumerable<T> source)
             => new First<T>(source);
 
         /// <summary>
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
-        public static IScalar<T> _<T>(Func<T, bool> condition, IEnumerable<T> source)
+        public static IScalar<T> First<T>(this IEnumerable<T> source, Func<T, bool> condition)
             => new First<T>(condition, source);
 
         /// <summary>
         /// Element from position in a <see cref="IEnumerable{T}"/>.
         /// </summary>
-        public static IScalar<T> _<T>(Func<T, bool> condition, IEnumerable<T> source, Exception ex)
+        public static IScalar<T> First<T>(this IEnumerable<T> source, Func<T, bool> condition, Exception ex)
             => new First<T>(condition, source, ex);
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
-        public static IScalar<T> _<T>(IEnumerable<T> source, T fallback)
+        public static IScalar<T> First<T>(this IEnumerable<T> source, T fallback)
             => new First<T>(source, fallback);
 
         /// <summary>
         /// First element in a <see cref="IEnumerable{T}"/> with a fallback value.
         /// </summary>
-        public static IScalar<T> _<T>(Func<T, bool> condition, IEnumerable<T> source, T fallback)
+        public static IScalar<T> First<T>(this IEnumerable<T> source, Func<T, bool> condition, T fallback)
             => new First<T>(condition, source, fallback);
 
         /// <summary>
         /// First Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
-        public static IScalar<T> _<T>(IEnumerable<T> source, IScalar<T> fallback)
+        public static IScalar<T> First<T>(this IEnumerable<T> source, IScalar<T> fallback)
             => new First<T>(source, fallback);
 
         /// <summary>
@@ -166,7 +182,7 @@ namespace Tonga.Scalar
         ///     <cref>IBiFunc{X, Y, Z}</cref>
         /// </see>
         /// </summary>
-        public static IScalar<T> _<T>(IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
+        public static IScalar<T> First<T>(this IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
             => new First<T>(src, fallback);
 
         /// <summary>
@@ -174,7 +190,15 @@ namespace Tonga.Scalar
         ///     <cref>IBiFunc{X, Y, Z}</cref>
         /// </see>
         /// </summary>
-        public static IScalar<T> _<T>(Func<T, bool> condition, IEnumerable<T> src, Func<IEnumerable<T>, T> fallback)
+        public static IScalar<T> First<T>(this IEnumerable<T> src, Func<T, bool> condition, Func<IEnumerable<T>, T> fallback)
+            => new First<T>(condition, src, (_, e) => fallback(e));
+
+        /// <summary>
+        /// First element in a <see cref="IEnumerable{T}"/> fallback function <see>
+        ///     <cref>IBiFunc{X, Y, Z}</cref>
+        /// </see>
+        /// </summary>
+        public static IScalar<T> First<T>(this IEnumerable<T> src, Func<T, bool> condition, Func<Exception, IEnumerable<T>, T> fallback)
             => new First<T>(condition, src, fallback);
 
     }

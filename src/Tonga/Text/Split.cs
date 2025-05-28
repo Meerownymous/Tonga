@@ -16,19 +16,14 @@ public sealed class Split(IText text, IText rgx, bool remBlank = true) : Enumera
     () =>
     {
         IEnumerable<string> split =
-            AsEnumerable._(
                 new Regex(rgx.Str())
                     .Split(text.Str())
-            );
+                    .AsEnumerable();
 
         return
-            remBlank ?
-                Filtered._(
-                    (str) => !String.IsNullOrWhiteSpace(str),
-                    split
-                )
-                :
-                split;
+            remBlank
+                ? split.AsFiltered(str => !String.IsNullOrWhiteSpace(str))
+                : split;
     }
 )
 {

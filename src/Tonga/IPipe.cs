@@ -10,3 +10,14 @@ public interface IPipe<in TInput, out TOutput>
     /// </summary>
     TOutput Yield(TInput input);
 }
+
+/// <summary>
+/// Prepared pipe that yields from pre-fed input.
+/// </summary>
+public interface IPipe<out TOutput>
+{
+    /// <summary>
+    /// Gem after traveling through pipe.
+    /// </summary>
+    TOutput Yield();
+}

@@ -1,6 +1,5 @@
 using System.IO;
 using System.IO.Compression;
-using Tonga.Func;
 using Tonga.Text;
 
 namespace Tonga.IO;
@@ -23,26 +22,26 @@ public sealed class Zip(string path) : IConduit
         {
             var entry = zip.CreateEntry(file);
             using var entryStream = entry.Open();
-            ReadAll._(
-                new TeeOnRead(
-                    new AsConduit(file),
-                    new AsConduit(entryStream)
-                )
-            ).Invoke();
+
+            new TeeOnRead(
+                new AsConduit(file),
+                new AsConduit(entryStream)
+            ).FullRead()
+            .Yield();
         }
 
         return memory;
     }
 
-    private void AssumeIsDirectory(string path)
+    private static void AssumeIsDirectory(string directoryPath)
     {
-        if (!Directory.Exists(path))
+        if (!Directory.Exists(directoryPath))
         {
             throw
                 new DirectoryNotFoundException(
                     new Formatted(
                         "Path is not a directory or does not exist: {0}",
-                        path
+                        directoryPath
                     ).Str()
                 );
         }

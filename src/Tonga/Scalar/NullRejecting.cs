@@ -1,8 +1,5 @@
-
-
 using System;
 using System.IO;
-using Tonga.Func;
 
 namespace Tonga.Scalar
 {
@@ -28,7 +25,7 @@ namespace Tonga.Scalar
         /// <param name="ex">error to raise if null</param>
         public NullRejecting(T origin, Exception ex) : this(
             origin.AsScalar(),
-            new AsFunc<T>(() => throw ex)
+            () => throw ex
         )
         { }
 
@@ -50,7 +47,8 @@ namespace Tonga.Scalar
         /// <param name="fallback">the fallback value</param>
         public NullRejecting(IScalar<T> origin, T fallback) : this(
             origin,
-            new AsFunc<T>(() => fallback))
+            () => fallback
+        )
         { }
 
         /// <summary>
@@ -58,8 +56,10 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback</param>
-        public NullRejecting(IScalar<T> origin, IFunc<T> fallback) : base(
-            () => origin.Value() ?? fallback.Invoke()){ }
+        public NullRejecting(IScalar<T> origin, Func<T> fallback) : base(
+            () => origin.Value() ?? fallback.Invoke()
+        )
+        { }
     }
 
     public static partial class ScalarSmarts
@@ -100,7 +100,7 @@ namespace Tonga.Scalar
         /// </summary>
         /// <param name="origin">the original scalar</param>
         /// <param name="fallback">the fallback</param>
-        public static IScalar<T> AsNullRejecting<T>(this IScalar<T> origin, IFunc<T> fallback)
+        public static IScalar<T> AsNullRejecting<T>(this IScalar<T> origin, Func<T> fallback)
             => new NullRejecting<T>(origin, fallback);
     }
 }

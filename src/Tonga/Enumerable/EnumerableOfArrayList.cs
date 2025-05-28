@@ -1,14 +1,8 @@
-
-
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
+namespace Tonga.Enumerable;
 
-namespace Tonga.Enumerable
-{
     /// <summary>
     /// A <see cref="ArrayList"/> converted to IEnumerable&lt;object&gt;
     /// </summary>
@@ -38,4 +32,3 @@ namespace Tonga.Enumerable
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
-}

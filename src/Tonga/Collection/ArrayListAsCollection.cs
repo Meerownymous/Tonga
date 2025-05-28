@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using Tonga.Func;
 
 namespace Tonga.Collection
 {
@@ -14,12 +13,12 @@ namespace Tonga.Collection
         /// </summary>
         /// <param name="src">source ArrayList</param>
         public ArrayListAsCollection(ArrayList src) : base(
-            AsCollection._(() =>
+            (() =>
             {
                 var col = new Collection<object>();
-                foreach (var lst in src)
+                foreach (var item in src)
                 {
-                    new Each<object>(item => col.Add(item), lst).Invoke();
+                    col.Add(item);
                 }
                 return col;
             })

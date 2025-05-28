@@ -33,26 +33,13 @@ namespace Tonga.Enumerable
     /// <summary>
     /// A reversed <see cref="IEnumerable{T}"/>
     /// </summary>
-    public static class Reversed
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// A reversed <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="src">enumerable to reverse</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> src) =>
-            new Reversed<T>(src);
-    }
-
-    /// <summary>
-    /// A reversed <see cref="IEnumerable{T}"/>
-    /// </summary>
-    public static class ReversedSmarts
-    {
-        /// <summary>
-        /// A reversed <see cref="IEnumerable{T}"/>
-        /// </summary>
-        /// <param name="src">enumerable to reverse</param>
-        public static IEnumerable<T> Reversed<T>(this IEnumerable<T> src) =>
+        public static IEnumerable<T> AsReversed<T>(this IEnumerable<T> src) =>
             new Reversed<T>(src);
     }
 }

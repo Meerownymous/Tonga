@@ -9,7 +9,8 @@ namespace Tonga.Tests.Fact
         public void AsValue()
         {
             Assert.False(
-                new False().IsTrue());
+                new False().IsTrue()
+            );
         }
     }
 }

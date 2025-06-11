@@ -51,7 +51,7 @@ namespace Tonga.Tests.Text
             Assert.Equal(
                 expected,
                 new Strict(expected,
-                    AsEnumerable._("NotValid", expected)
+                    ("NotValid", expected).AsEnumerable()
                 ).Str()
             );
         }
@@ -62,10 +62,11 @@ namespace Tonga.Tests.Text
             var expected = "expected";
             var counter = 0;
             var text =
-                new Strict(AsText._(() => expected),
+                new Strict(
+                    new AsText(() => expected),
                     new AsEnumerable<IText>(
-                        AsText._(() => counter++.ToString()),
-                        AsText._(expected)
+                        new AsText(() => counter++.ToString()),
+                        new AsText(expected)
                     )
                 );
             text.Str();
@@ -82,12 +83,15 @@ namespace Tonga.Tests.Text
             var expected = "expected";
             Assert.Equal(
                 expected,
-                new Strict(AsText._(expected), false,
-                    AsEnumerable._(
-                        AsText._("Expected"),
-                        AsText._("Not Valid"),
-                        AsText._(expected)
-                    )
+                new Strict(
+                    new AsText(expected),
+                    false,
+                    (
+                        "Expected",
+                        "Not Valid",
+                        expected
+                    ).AsEnumerable()
+                    .AsMapped(t => t.AsText())
                 ).Str()
             );
         }
@@ -99,12 +103,13 @@ namespace Tonga.Tests.Text
             Assert.Equal(
                 expected,
                 new Strict(
-                    expected, true,
-                    AsEnumerable._(
+                    expected,
+                    true,
+                    (
                         "Not Valid",
                         "As well not valid",
                         "ExpEcteD"
-                    )
+                    ).AsEnumerable()
                 ).Str()
             );
         }

@@ -181,7 +181,7 @@ public sealed class AsBytes(Func<Byte[]> bytes) : IBytes
     /// Bytes out of IBytes object.
     /// </summary>
     /// <param name="bytes">bytes</param>
-    public AsBytes(IBytes bytes) : this(bytes.Bytes)
+    public AsBytes(IBytes bytes) : this(bytes.Raw)
     {
     }
 
@@ -245,7 +245,7 @@ public sealed class AsBytes(Func<Byte[]> bytes) : IBytes
     /// Get the content as byte array.
     /// </summary>
     /// <returns>content as byte array</returns>
-    public byte[] Bytes() => bytes();
+    public byte[] Raw() => bytes();
 
 }
 

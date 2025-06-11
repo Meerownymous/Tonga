@@ -8,6 +8,6 @@ public sealed class EmptyMapTests
     [Fact]
     public void GenericIsEmpty()
     {
-        Assert.Empty(Empty._<double, string>().Pairs());
+        Assert.Empty(new Empty<double, string>().Pairs());
     }
 }

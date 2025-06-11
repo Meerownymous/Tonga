@@ -20,7 +20,6 @@ public sealed class Mapped<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src)
         new AsEnumerable<Out>(() => Produced(src, fnc));
 
     /// <summary>
-    /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
     /// </summary>
     /// <param name="src">enumerable to map</param>
     /// <param name="fnc">function used to map</param>
@@ -31,7 +30,6 @@ public sealed class Mapped<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src)
     { }
 
     /// <summary>
-    /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
     /// </summary>
     /// <param name="src">enumerable to map</param>
     /// <param name="fnc">function used to map</param>
@@ -61,7 +59,6 @@ public sealed class Mapped<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src)
 public static partial class EnumerableSmarts
 {
     /// <summary>
-    /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="IFunc{In, Out}"/> function.
     /// </summary>
     /// <param name="src">enumerable to map</param>
     /// <param name="fnc">function used to map</param>

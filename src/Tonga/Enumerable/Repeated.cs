@@ -90,6 +90,13 @@ public static partial class EnumerableSmarts
     public static IEnumerable<T> AsRepeated<T>(this T elm, int cnt) => new Repeated<T>(elm, cnt);
 
     /// <summary>
+    /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
+    /// </summary>
+    /// <param name="elm">element to repeat</param>
+    /// <param name="cnt">how often to repeat</param>
+    public static IEnumerable<T> AsRepeated<T>(this T elm, Func<int> cnt) => new Repeated<T>(() => elm, cnt);
+
+    /// <summary>
     /// ctor
     /// </summary>
     /// <param name="elm">scalar to get element to repeat</param>

@@ -2,9 +2,7 @@ using System;
 using Tonga.Enumerable;
 using Tonga.List;
 using Tonga.Map;
-using Tonga.Scalar;
 using Xunit;
-using Sorted = Tonga.Map.Sorted;
 
 namespace Tonga.Tests.Map
 {
@@ -17,13 +15,13 @@ namespace Tonga.Tests.Map
         public void ValueStillBehindCorrectKeyMap(int key, int expectedValue)
         {
             var unsorted =
-                AsMap._(
-                    (1, 4),
-                    (6, 3),
-                    (-5, 2)
-                );
+                (
+                    (1, 4).AsPair(),
+                    (6, 3).AsPair(),
+                    (-5, 2).AsPair()
+                ).AsMap();
 
-            var sorted = Sorted._(unsorted);
+            var sorted = unsorted.AsSorted();
             Assert.Equal(expectedValue, sorted[key]);
         }
 
@@ -35,15 +33,14 @@ namespace Tonga.Tests.Map
         {
             Assert.Equal(
                 expectedValue,
-                Sorted._(
-                    AsList._(
-                        AsEnumerable._(
-                            AsPair._(1, 4),
-                            AsPair._(6, 3),
-                            AsPair._(-5, 2)
-                        )
-                    )
-                )[key]
+                (
+                    (1, 4).AsPair(),
+                    (6, 3).AsPair(),
+                    (-5, 2).AsPair()
+                )
+                .AsMap()
+                .AsSorted()
+                [key]
             );
         }
 
@@ -55,18 +52,14 @@ namespace Tonga.Tests.Map
         {
             Assert.Equal(
                 expectedKey,
-                ItemAt._(
-                    Sorted._(
-                        AsMap._(
-                            (1, 4),
-                            (6, 3),
-                            (-5, 2)
-                        ),
-                        (a, b) => a.CompareTo(b)
-                    )
-                    .Pairs(),
-                    index
-                )
+                (
+                    (1, 4).AsPair(),
+                    (6, 3).AsPair(),
+                    (-5, 2).AsPair()
+                ).AsMap()
+                .AsSorted((a, b) => a.CompareTo(b))
+                .Pairs()
+                .ItemAt(index)
                 .Value()
                 .Key()
             );
@@ -80,15 +73,15 @@ namespace Tonga.Tests.Map
         {
             Assert.Equal(
                 expectedKey,
-                AsList._(
-                    Sorted._(
-                        AsMap._(
-                            (1, 4),
-                            (6, 3),
-                            (-5, 2)
-                        )
-                    ).Pairs()
-                )[index]
+                (
+                    (1, 4).AsPair(),
+                    (6, 3).AsPair(),
+                    (-5, 2).AsPair()
+                ).AsMap()
+                .AsSorted()
+                .Pairs()
+                .AsList()
+                [index]
                 .Key()
             );
         }
@@ -101,16 +94,15 @@ namespace Tonga.Tests.Map
         {
             Assert.Equal(
                 expectedKey,
-                ItemAt._(
-                    Sorted._(
-                        AsMap._(
-                            AsPair._(1, () => { throw new Exception("i shall not be called"); }),
-                            AsPair._(6, () => { throw new Exception("i shall not be called"); }),
-                            AsPair._(-5, () => { throw new Exception("i shall not be called"); })
-                        )
-                    ).Keys(),
-                    index
-                ).Value()
+                (
+                    1.AsPair(() => throw new Exception("i shall not be called")),
+                    6.AsPair(() => throw new Exception("i shall not be called")),
+                    (-5).AsPair(() => throw new Exception("i shall not be called"))
+                ).AsMap()
+                .AsSorted()
+                .Keys()
+                .ItemAt(index)
+                .Value()
             );
         }
 
@@ -119,13 +111,13 @@ namespace Tonga.Tests.Map
         {
             Assert.Equal(
                 4,
-                Sorted._(
-                    AsMap._(
-                        AsPair._(1, () => 4),
-                        AsPair._<int, int>(6, () => { throw new Exception("i shall not be called"); }),
-                        AsPair._<int, int>(-5, () => { throw new Exception("i shall not be called"); })
-                    )
-                )[1]
+                (
+                    1.AsPair(() => 4),
+                    6.AsPair(() => throw new Exception("i shall not be called")),
+                    (-5).AsPair(() => throw new Exception("i shall not be called"))
+                )
+                .AsMap()
+                .AsSorted()[1]
             );
         }
     }

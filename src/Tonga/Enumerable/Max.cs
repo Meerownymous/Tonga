@@ -63,7 +63,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params IScalar<T>[] items) : this(items.AsEnumerable)
+        public Max(params IScalar<T>[] items) : this(items.AsEnumerable())
         { }
     }
 

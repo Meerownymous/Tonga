@@ -9,9 +9,9 @@ public sealed class HasAnyTests
     public void KnowsTrue()
     {
         Assert.True(
-            new HasAny<int>(
-                new AsEnumerable<int>(1)
-            ).IsTrue()
+            1.AsSingle()
+                .HasAny()
+                .IsTrue()
         );
     }
 
@@ -19,9 +19,9 @@ public sealed class HasAnyTests
     public void KnowsFalse()
     {
         Assert.False(
-            new HasAny<int>(
-                new None<int>()
-            ).IsTrue()
+            new None<int>()
+                .HasAny()
+                .IsTrue()
         );
     }
 }

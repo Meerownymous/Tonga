@@ -69,5 +69,62 @@ namespace Tonga.Map
         /// </summary>
         public static IMap<Key, Value> AsMerged<Key, Value>(this IEnumerable<IMap<Key, Value>> maps)
             => new Merged<Key, Value>(maps);
+
+        /// <summary>
+        /// Merged map.
+        /// </summary>
+        public static IMap<Key, Value> AsMerged<Key, Value>(this
+            (IMap<Key, Value> m1, IMap<Key, Value> m2) maps
+        ) => new Merged<Key, Value>(maps.m1, maps.m2);
+
+        /// <summary>
+        /// Merged map.
+        /// </summary>
+        public static IMap<Key, Value> AsMerged<Key, Value>(this
+            (IMap<Key, Value> m1, IMap<Key, Value> m2, IMap<Key, Value> m3) maps
+        ) => new Merged<Key, Value>(maps.m1, maps.m2, maps.m3);
+
+        /// <summary>
+        /// Merged map.
+        /// </summary>
+        public static IMap<Key, Value> AsMerged<Key, Value>(this
+            (IMap<Key, Value> m1, IMap<Key, Value> m2, IMap<Key, Value> m3, IMap<Key,Value> m4) maps
+        ) => new Merged<Key, Value>(maps.m1, maps.m2, maps.m3, maps.m4);
+
+        /// <summary>
+        /// Merged map.
+        /// </summary>
+        public static IMap<Key, Value> AsMerged<Key, Value>(this
+            (IMap<Key, Value> m1, IMap<Key, Value> m2, IMap<Key, Value> m3, IMap<Key,Value> m4, IMap<Key, Value> m5) maps
+        ) => new Merged<Key, Value>(maps.m1, maps.m2, maps.m3, maps.m4, maps.m5);
+
+        /// <summary>
+        /// Merged map.
+        /// </summary>
+        public static IMap<Key, Value> AsMerged<Key, Value>(this
+            (IMap<Key, Value> m1, IMap<Key, Value> m2, IMap<Key, Value> m3, IMap<Key,Value> m4, IMap<Key, Value> m5, IMap<Key,Value> m6) maps
+        ) => new Merged<Key, Value>(maps.m1, maps.m2, maps.m3, maps.m4, maps.m5, maps.m6);
+
+        /// <summary>
+        /// Merged map.
+        /// </summary>
+        public static IMap<Key, Value> AsMerged<Key, Value>(this
+            (IMap<Key, Value> m1, IMap<Key, Value> m2,
+            IMap<Key, Value> m3, IMap<Key,Value> m4,
+            IMap<Key, Value> m5, IMap<Key,Value> m6,
+            IMap<Key, Value> m7
+            ) maps
+        ) => new Merged<Key, Value>(maps.m1, maps.m2, maps.m3, maps.m4, maps.m5, maps.m6, maps.m7);
+
+        /// <summary>
+        /// Merged map.
+        /// </summary>
+        public static IMap<Key, Value> AsMerged<Key, Value>(this
+            (IMap<Key, Value> m1, IMap<Key, Value> m2,
+            IMap<Key, Value> m3, IMap<Key,Value> m4,
+            IMap<Key, Value> m5, IMap<Key,Value> m6,
+            IMap<Key, Value> m7, IMap<Key,Value> m8
+            ) maps
+        ) => new Merged<Key, Value>(maps.m1, maps.m2, maps.m3, maps.m4, maps.m5, maps.m6, maps.m7, maps.m8);
     }
 }

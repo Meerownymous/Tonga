@@ -49,7 +49,6 @@ public sealed class Last<T> : ScalarEnvelope<T>
     { }
 
     /// <summary>
-    /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
     /// </summary>
     /// <param name="source">source enum</param>
     /// <param name="fallback">fallback func</param>
@@ -88,7 +87,6 @@ public sealed class Last<T> : ScalarEnvelope<T>
             => new Last<T>(source, fallback);
 
         /// <summary>
-        /// Last Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>

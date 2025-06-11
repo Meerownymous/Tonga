@@ -12,7 +12,8 @@ public sealed class AsStreamWriterTest
     [Fact]
     public void WritesContentToFile()
     {
-        var dir = "artifacts/WriterToTest"; var file = "txt.txt";
+        var dir = "artifacts/WriterToTest";
+        var file = "txt.txt";
         var uri = new Uri(Path.GetFullPath(Path.Combine(dir, file)));
         Directory.CreateDirectory(dir);
         var content = "yada yada";
@@ -21,21 +22,22 @@ public sealed class AsStreamWriterTest
         using (var output = new AsStreamWriter(uri))
         {
             s =
-                AsText._(
-                    new TeeOnRead(
-                        new AsConduit(content),
-                        new StreamWriterAsConduit(output)
-                    )
-                ).AsString();
+                new TeeOnRead(
+                    new AsConduit(content),
+                    new StreamWriterAsConduit(output)
+                ).AsText()
+                .Str();
         }
 
         Assert.Equal(
             0,
-            String.Compare(AsText._(
+            String.Compare(
                 new ConduitAsBytes(
                     new AsConduit(uri)
-                )
-            ).AsString(), s, StringComparison.Ordinal)
+                ).AsText().Str(),
+                s,
+                StringComparison.Ordinal
+            )
             //.CompareTo is needed because Streamwriter writes UTF8 _with_ BOM, which results in a different encoding.
         );
     }

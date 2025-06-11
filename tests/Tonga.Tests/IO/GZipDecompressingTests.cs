@@ -21,11 +21,9 @@ namespace Tonga.Tests.IO
 
             Assert.Equal(
                 "Hello!",
-                AsText._(
-                    new GZipDecompressing(
-                        new Tonga.IO.AsConduit(bytes)
-                    )
-                ).AsString()
+                new GZipDecompressing(
+                    new AsConduit(bytes)
+                ).AsText().Str()
             );
         }
     }

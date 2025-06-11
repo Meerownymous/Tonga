@@ -38,14 +38,21 @@ namespace Tonga.Map
         }
     }
 
-    public static class OneTimePair
+    public static partial class MapSmarts
     {
         /// <summary>
         /// Pair that allows retrieving its value only one time.
         /// Useful for testing of sticky objects.
         /// </summary>
-        public static OneTimePair<Key, Value> _<Key, Value>(IPair<Key, Value> origin) =>
+        public static IPair<Key, Value> AsOneTimePair<Key, Value>(this IPair<Key, Value> origin) =>
             new OneTimePair<Key, Value>(origin);
+
+        /// <summary>
+        /// Pair that allows retrieving its value only one time.
+        /// Useful for testing of sticky objects.
+        /// </summary>
+        public static IPair<Key, Value> AsOneTimePair<Key, Value>(this Key key, Func<Value> value) =>
+            new OneTimePair<Key, Value>(new AsPair<Key, Value>(key, value));
     }
 }
 

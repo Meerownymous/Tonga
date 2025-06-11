@@ -1,10 +1,7 @@
 using System;
 using System.IO;
 using Tonga.Bytes;
-using Tonga.Enumerable;
-using Tonga.Func;
 using Tonga.IO;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.IO
@@ -15,7 +12,7 @@ namespace Tonga.Tests.IO
         public void LogsZeroBytesOnEmptyInput()
         {
             var res =
-                Length._(
+                new FullRead(
                     new TeeOnRead(
                         new AsConduit(""),
                         new LoggingOnReadConduit(
@@ -23,7 +20,7 @@ namespace Tonga.Tests.IO
                             "memory"
                         )
                     )
-                ).Value();
+                ).Yield().Length;
 
             Assert.Equal(
                 0L,
@@ -34,63 +31,58 @@ namespace Tonga.Tests.IO
         [Fact]
         public void LogsWriteOneBytesToTextFile()
         {
-            using (var tempfile = new TempFile("txt"))
+            using var tempfile = new TempFile("txt");
+            using (var append = new Appending(new Uri(tempfile.Value())))
             {
-                using (var append = new Appending(new Uri(tempfile.Value())))
-                {
-                    var output =
-                        new LoggingOnReadConduit(
-                            append,
-                            "memory"
-                        ).Stream();
+                var output =
+                    new LoggingOnReadConduit(
+                        append,
+                        "memory"
+                    ).Stream();
 
-                    output.Write(new AsBytes("a").Bytes(), 0, 1);
+                output.Write(new AsBytes("a").Raw(), 0, 1);
 
-                }
-                var inputStream = new Tonga.IO.AsConduit(new Uri(tempfile.Value())).Stream();
-                var content = "";
-                using (var reader = new StreamReader(inputStream))
-                {
-                    content = reader.ReadToEnd();
-                }
-                Assert.Equal(
-                    "a",
-                    content
-                );
             }
+            string content;
+            using (var reader = new Uri(tempfile.Value()).AsStreamReader())
+            {
+                content = reader.ReadToEnd();
+            }
+            Assert.Equal(
+                "a",
+                content
+            );
         }
 
         [Fact]
         public void LogsWriteTextToTextFile()
         {
-            using (var tempfile = new TempFile("txt"))
-            {
-                var bytes = new AsBytes("Hello World!").Bytes();
+            using var tempfile = new TempFile("txt");
+            var bytes = new AsBytes("Hello World!").Raw();
 
-                using (var append = new Appending(new Uri(tempfile.Value())))
-                {
-                    var output =
+            using (var append = new Appending(new Uri(tempfile.Value())))
+            {
+                var output =
                     new LoggingOnReadConduit(
                         append,
                         "memory"
                     ).Stream();
 
 
-                    output.Write(bytes, 0, bytes.Length);
-                }
-
-                var inputStream = new Tonga.IO.AsConduit(new Uri(tempfile.Value())).Stream();
-                var content = "";
-                using (var reader = new StreamReader(inputStream))
-                {
-                    content = reader.ReadToEnd();
-                }
-
-                Assert.Equal(
-                    bytes,
-                    new AsBytes(content).Bytes()
-                );
+                output.Write(bytes, 0, bytes.Length);
             }
+
+
+            string content;
+            using (var reader = new Uri(tempfile.Value()).AsStreamReader())
+            {
+                content = reader.ReadToEnd();
+            }
+
+            Assert.Equal(
+                bytes,
+                new AsBytes(content).Raw()
+            );
         }
 
         [Fact]
@@ -106,12 +98,12 @@ namespace Tonga.Tests.IO
                         "text file"
                     ).Stream();
 
-                    ReadAll._(
+                    new FullRead(
                         new TeeOnRead(
                             new Resource("Assets/Txt/large-text.txt", this.GetType()),
                             new AsConduit(output)
                         )
-                    ).Invoke();
+                    ).Yield();
                 }
 
                 var inputStream = new AsConduit(new Uri(tempfile.Value())).Stream();

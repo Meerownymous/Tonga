@@ -282,7 +282,7 @@ public sealed class AsText(Func<string> txt) : IText
     public AsText(IBytes bytes, Encoding encoding) : this(
         () =>
         {
-            var memoryStream = new MemoryStream(bytes.Bytes());
+            var memoryStream = new MemoryStream(bytes.Raw());
             return new StreamReader(memoryStream, encoding).ReadToEnd(); // removes the BOM from the Byte-Array
         })
     {
@@ -312,6 +312,12 @@ public sealed class AsText(Func<string> txt) : IText
 
 public static partial class TextSmarts
 {
+    /// <summary>
+    /// A <see cref="IText"/> out of a int.
+    /// </summary>
+    /// <param name="input">number</param>
+    public static AsText AsText(this byte[] input) => new(input);
+
     /// <summary>
     /// A <see cref="IText"/> out of a int.
     /// </summary>
@@ -402,8 +408,8 @@ public static partial class TextSmarts
     /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
     /// </summary>
     /// <param name="conduit">a input</param>
-    /// <param name="max">maximum buffer size</param>
-    public static AsText AsText(this IConduit conduit, int max) => new(conduit, max);
+    /// <param name="maxBufferSize">maximum buffer size</param>
+    public static AsText AsText(this IConduit conduit, int maxBufferSize) => new(conduit, maxBufferSize);
 
     /// <summary>
     /// A <see cref="IText"/> out of a <see cref="IConduit"/>.
@@ -417,8 +423,8 @@ public static partial class TextSmarts
     /// </summary>
     /// <param name="conduit">a <see cref="IConduit"/></param>
     /// <param name="encoding">encoding of the <see cref="IConduit"/></param>
-    /// <param name="max">maximum buffer size</param>
-    public static AsText AsText(this IConduit conduit, int max, Encoding encoding) => new(conduit, max, encoding);
+    /// <param name="maxBufferSize">maximum buffer size</param>
+    public static AsText AsText(this IConduit conduit, int maxBufferSize, Encoding encoding) => new(conduit, maxBufferSize, encoding);
 
     /// <summary>
     /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.

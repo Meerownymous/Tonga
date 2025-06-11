@@ -11,16 +11,15 @@ namespace Tonga.Tests.IO
         [Fact]
         public void ReadsAlternativeInput()
         {
-            Assert.True(
-                AsText._(
-                    new BackFalling(
-                        new AsConduit(
-                            () => throw new Exception()
-                        ),
-                        new AsConduit("hello, world!")
-                    )
-                ).AsString().EndsWith("world!"),
-                "Can't read alternative source"
+            Assert.EndsWith(
+                "world!",
+                new BackFalling(
+                    new AsConduit(
+                        new Func<FileInfo>(() => throw new Exception())
+                    ),
+                    new AsConduit("hello, world!")
+                ).AsText()
+                .Str()
             );
         }
 

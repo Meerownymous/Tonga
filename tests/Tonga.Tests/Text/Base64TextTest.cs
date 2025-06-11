@@ -1,11 +1,8 @@
 using System;
 using Tonga.Bytes;
-using Tonga.Func;
 using Tonga.IO;
 using Tonga.Text;
 using Xunit;
-using Base64Decoded = Tonga.Text.Base64Decoded;
-using Base64Encoded = Tonga.Bytes.Base64Encoded;
 
 namespace Tonga.Tests.Text
 {
@@ -15,31 +12,26 @@ namespace Tonga.Tests.Text
         [InlineData("A fancy text")]
         [InlineData("A fancy text with \n line break")]
         [InlineData("A fancy text with € special character")]
-        public void DecodesFromFile(string text)
+        public void DecodesFromFile(string str)
         {
             using var tempFile = new TempFile("test.txt");
-            ReadAll._(
+            new FullRead(
                 new TeeOnRead(
-                    AsText._(
-                        new Base64Encoded(
-                            new AsBytes(
-                                AsText._(text)
-                            )
-                        )
-                    ).AsString(),
+                    str.AsText()
+                        .AsBytes()
+                        .AsBase64Encoded()
+                        .AsText()
+                        .Str(),
                     new AsConduit(new Uri(tempFile.Value()))
                 )
-            ).Invoke();
+            ).Yield();
 
             Assert.True(
                 new Comparable(
-                    new Base64Decoded(
-                        AsText._(
-                            new Uri(tempFile.Value())
-                        )
-                    )
+                    new Uri(tempFile.Value()).AsText()
+                        .AsBase64Decoded()
                 ).CompareTo(
-                    AsText._(text)
+                    str.AsText()
                 ) == 0
             );
         }

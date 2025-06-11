@@ -110,7 +110,7 @@ public static partial class MapSmarts
     /// It matches the version range, not the exact version.
     /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
     /// </summary>
-    public static IMap<Version,Value> AsVersionMap<Value>(this IEnumerable<IPair<Version, Value>> pairs, bool openEnd) =>
+    public static IMap<Version,Value> AsVersionMap<Value>(this IEnumerable<IPair<Version, Value>> pairs, bool openEnd = true) =>
         new VersionMap<Value>(pairs, openEnd);
 
     /// <summary>
@@ -118,7 +118,7 @@ public static partial class MapSmarts
     /// It matches the version range, not the exact version.
     /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
     /// </summary>
-    public static IMap<Version,Value> AsVersionMap<Value>(this IPair<Version, Value>[] pairs, bool openEnd) =>
+    public static IMap<Version,Value> AsVersionMap<Value>(this IPair<Version, Value>[] pairs, bool openEnd = true) =>
         new VersionMap<Value>(pairs, openEnd);
 
     /// <summary>
@@ -126,6 +126,192 @@ public static partial class MapSmarts
     /// It matches the version range, not the exact version.
     /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
     /// </summary>
-    public static IMap<Version,Value> AsVersionMap<Value>(this (Version version, Value value)[] pairs, bool openEnd) =>
-        new VersionMap<Value>(openEnd, pairs);
+    public static IMap<Version,Value> AsVersionMap<Value>(this (Version version, Value value) pair, bool openEnd = true) =>
+        new VersionMap<Value>(openEnd, pair);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (
+            (Version ver,Value v) p1,
+            (Version ver,Value v) p2
+        ) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (
+            (Version ver,Value v) p1,
+            (Version ver,Value v) p2,
+            (Version ver,Value v) p3
+        ) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (
+            (Version ver,Value v) p1,
+            (Version ver,Value v) p2,
+            (Version ver,Value v) p3,
+            (Version ver,Value v) p4
+        ) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (
+            (Version ver,Value v) p1,
+            (Version ver,Value v) p2,
+            (Version ver,Value v) p3,
+            (Version ver,Value v) p4,
+            (Version ver,Value v) p5
+        ) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (
+            (Version ver,Value v) p1,
+            (Version ver,Value v) p2,
+            (Version ver,Value v) p3,
+            (Version ver,Value v) p4,
+            (Version ver,Value v) p5,
+            (Version ver,Value v) p6
+        ) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5, pairs.p6);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (
+            (Version ver,Value v) p1,
+            (Version ver,Value v) p2,
+            (Version ver,Value v) p3,
+            (Version ver,Value v) p4,
+            (Version ver,Value v) p5,
+            (Version ver,Value v) p6,
+            (Version ver,Value v) p7
+        ) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5, pairs.p6 ,pairs.p7);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (
+            (Version ver,Value v) p1,
+            (Version ver,Value v) p2,
+            (Version ver,Value v) p3,
+            (Version ver,Value v) p4,
+            (Version ver,Value v) p5,
+            (Version ver,Value v) p6,
+            (Version ver,Value v) p7,
+            (Version ver,Value v) p8
+        ) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5, pairs.p6 ,pairs.p7, pairs.p8);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+        (IPair<Version,Value> p1, IPair<Version,Value> p2) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+            (IPair<Version,Value> p1, IPair<Version,Value> p2, IPair<Version,Value> p3) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+            (IPair<Version,Value> p1, IPair<Version,Value> p2, IPair<Version,Value> p3, IPair<Version,Value> p4) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+            (IPair<Version,Value> p1, IPair<Version,Value> p2, IPair<Version,Value> p3, IPair<Version,Value> p4,
+            IPair<Version,Value> p5) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+            (IPair<Version,Value> p1, IPair<Version,Value> p2, IPair<Version,Value> p3, IPair<Version,Value> p4,
+            IPair<Version,Value> p5, IPair<Version,Value> p6) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5, pairs.p6);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+            (IPair<Version,Value> p1, IPair<Version,Value> p2, IPair<Version,Value> p3, IPair<Version,Value> p4,
+            IPair<Version,Value> p5, IPair<Version,Value> p6, IPair<Version,Value> p7) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5, pairs.p6 ,pairs.p7);
+
+    /// <summary>
+    /// A map which matches a version.
+    /// It matches the version range, not the exact version.
+    /// This means if you have two pairs inside: 1.0 and 3.0, and your key is 2.0, the version 1.0 is matched.
+    /// </summary>
+    public static IMap<Version,Value> AsVersionMap<Value>(this
+            (IPair<Version,Value> p1, IPair<Version,Value> p2, IPair<Version,Value> p3, IPair<Version,Value> p4,
+            IPair<Version,Value> p5, IPair<Version,Value> p6, IPair<Version,Value> p7, IPair<Version,Value> p8) pairs,
+        bool openEnd = true
+    ) => new VersionMap<Value>(openEnd, pairs.p1, pairs.p2, pairs.p3, pairs.p4, pairs.p5, pairs.p6 ,pairs.p7, pairs.p8);
 }

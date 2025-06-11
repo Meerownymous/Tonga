@@ -33,6 +33,18 @@ namespace Tonga.Map
         /// <summary>
         /// LookupInput from pairs.
         /// </summary>
+        public static IMapInput<Key, Value> AsMapInput<Key, Value>(this (Key key, Value value) pair) =>
+            new AsMapInput<Key, Value>(new AsPair<Key, Value>(pair.key, pair.value));
+
+        /// <summary>
+        /// LookupInput from pairs.
+        /// </summary>
+        public static IMapInput<Key, Value> AsMapInput<Key, Value>(this IPair<Key, Value> pair) =>
+            new AsMapInput<Key, Value>(pair);
+
+        /// <summary>
+        /// LookupInput from pairs.
+        /// </summary>
         public static IMapInput<Key, Value> AsMapInput<Key, Value>(this IPair<Key, Value>[] pairs) =>
             new AsMapInput<Key, Value>(pairs);
 

@@ -1,43 +1,27 @@
-
-
 using System;
 using System.Linq;
+using Tonga.Enumerable;
+using Tonga.Fact;
 using Tonga.Scalar;
 
-namespace Tonga.Text
+namespace Tonga.Text;
+
+/// <summary>
+/// Checks if a text is whitespace.
+/// </summary>
+public sealed class IsBlank(Func<string> str) : FactEnvelope(() =>
+    string.IsNullOrWhiteSpace(str())
+)
 {
     /// <summary>
-    /// Checks if a text is whitespace.
+    /// Checks if a A <see cref="string"/> is whitespace.
     /// </summary>
-    public sealed class IsBlank : IScalar<Boolean>
-    {
-        private readonly Func<bool> result;
+    public IsBlank(string str) : this(() => str)
+    { }
 
-        /// <summary>
-        /// Checks if a A <see cref="string"/> is whitespace.
-        /// </summary>
-        /// <param name="text">text to check</param>
-        public IsBlank(string text) : this(
-            new AsText(text)
-        )
-        { }
-
-        /// <summary>
-        /// Checks if a A <see cref="IText"/> is whitespace.
-        /// </summary>
-        /// <param name="text">text to check</param>
-        public IsBlank(IText text)
-        {
-            this.result = () => !text.Str().ToCharArray().Any(c => !String.IsNullOrWhiteSpace(c + ""));
-        }
-
-        /// <summary>
-        /// Get the result.
-        /// </summary>
-        /// <returns>the result</returns>
-        public Boolean Value()
-        {
-            return this.result();
-        }
-    }
+    /// <summary>
+    /// Checks if a A <see cref="string"/> is whitespace.
+    /// </summary>
+    public IsBlank(IText txt) : this(txt.Str)
+    { }
 }

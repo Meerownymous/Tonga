@@ -10,11 +10,12 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 "1 a",
-                string.Join(" ",
+                string.Join(
+                    " ",
                     new Conditional<string>(
-                        AsEnumerable._("1", "a"),
-                        AsEnumerable._("2", "b"),
-                        ()=> true
+                        new AsEnumerable<string>("1", "a"),
+                        new AsEnumerable<string>("2", "b"),
+                        () => true
                     )
                 )
             );
@@ -27,8 +28,8 @@ namespace Tonga.Tests.Enumerable
                 "2 b",
                 string.Join(" ",
                     new Conditional<string>(
-                        AsEnumerable._("1", "a"),
-                        AsEnumerable._("2", "b"),
+                        new AsEnumerable<string>("1", "a"),
+                        new AsEnumerable<string>("2", "b"),
                         () => false
                     )
                 )

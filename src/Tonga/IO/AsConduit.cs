@@ -136,7 +136,7 @@ public sealed class AsConduit : IConduit, IDisposable
     /// <param name="enc">encoding of the stringbuilder</param>
     public AsConduit(StringBuilder builder, Encoding enc) : this(
         () => new MemoryStream(
-            new AsBytes(builder, enc).Bytes()
+            new AsBytes(builder, enc).Raw()
         )
     )
     { }
@@ -207,7 +207,7 @@ public sealed class AsConduit : IConduit, IDisposable
     public AsConduit(IBytes src) : this(
         () =>
         {
-            var b = src.Bytes();
+            var b = src.Raw();
             var m = new MemoryStream();
             m.Write(b, 0, b.Length);
             m.Seek(0, SeekOrigin.Begin);

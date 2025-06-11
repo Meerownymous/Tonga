@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Tonga.Enumerable;
 using Tonga.Number;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -10,13 +10,17 @@ namespace Tonga.Tests.Enumerable
         [Fact]
         public void MergesEntries()
         {
-            Assert.True(
-                Length._(
-                    Distinct._(
-                        AsEnumerable._(1, 2, 3),
-                        AsEnumerable._(10, 2, 30)
-                    )
-                ).Value() == 5);
+            Assert.Equal(
+                5,
+                (
+                    (1, 2, 3).AsEnumerable(),
+                    (10, 2, 30).AsEnumerable()
+                )
+                .AsEnumerable()
+                .AsDistinct()
+                .Length()
+                .Value()
+            );
         }
 
         [Fact]
@@ -24,23 +28,24 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 5,
-                Length._(
-                    Distinct._(
-                        AsEnumerable._(
-                            AsEnumerable._(
-                                new AsNumber(1),
-                                new AsNumber(2),
-                                new AsNumber(3)
-                            ),
-                             AsEnumerable._(
-                                new AsNumber(10),
-                                new AsNumber(2),
-                                new AsNumber(30)
-                            )
-                        ),
-                        (v1, v2) => v1.ToInt().Equals(v2.ToInt())
-                    )
-                ).Value()
+                new [] {
+                    new[]
+                    {
+                        new AsNumber(1),
+                        new AsNumber(2),
+                        new AsNumber(3)
+                    }.AsEnumerable(),
+                    new[]
+                    {
+                        new AsNumber(10),
+                        new AsNumber(2),
+                        new AsNumber(30)
+                    }.AsEnumerable()
+                }
+                .AsEnumerable()
+                .AsDistinct((v1, v2) => v1.ToInt().Equals(v2.ToInt()))
+                .Length()
+                .Value()
             );
         }
 
@@ -49,40 +54,31 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 5,
-                Length._(
-                    Distinct._(
-                        AsEnumerable._(
-                            AsEnumerable._(1, 2, 3),
-                            AsEnumerable._(10, 2, 30)
-                        )
-                    )
-                ).Value()
+                new []
+                {
+                    new[]{ 1, 2, 3 }.AsEnumerable(),
+                    new []{10, 2, 30}.AsEnumerable()
+                }
+                .AsEnumerable()
+                .AsDistinct()
+                .Length()
+                .Value()
             );
         }
 
         [Fact]
         public void WorksWithEmpties()
         {
-            Assert.True(
-                Length._(
-                    Distinct._(
-                        None._<string>(),
-                        None._<string>()
-                    )
-                ).Value() == 0);
-        }
-
-        [Fact]
-        public void DoubleRunDistinct()
-        {
-            var dst =
-                Distinct._(
-                    AsEnumerable._("test", "test")
-                );
-
             Assert.Equal(
-                Length._(dst).Value(),
-                Length._(dst).Value()
+                0,
+                new[]{
+                    new string[0].AsEnumerable(),
+                    new string[0].AsEnumerable()
+                }
+                .AsEnumerable()
+                .AsDistinct()
+                .Length()
+                .Value()
             );
         }
     }

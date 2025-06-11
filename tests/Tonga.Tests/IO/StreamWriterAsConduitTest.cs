@@ -23,32 +23,26 @@ public sealed class StreamWriterAsConduitTest
         if (File.Exists(outputPath)) File.Delete(outputPath);
 
         //Create large file
-        Length._(
+        new FullRead(
             new AsConduit(
-                new TeeStream(
+                new TeeOnReadStream(
                     new MemoryStream(
-                        new AsBytes(
-                            new global::Tonga.Text.Joined(",",
-                                new Head<string>(
-                                    new Endless<string>("Hello World"),
-                                    1000
-                                )
-                            )
-                        ).Bytes()
+                        new global::Tonga.Text.Joined(",",
+                            "Hello World".AsRepeated(1000)
+                        ).AsBytes()
+                        .Raw()
                     ),
-                    new AsConduit(
-                        new Uri(inputPath)
-                    ).Stream()
+                    new Uri(inputPath).AsStream()
                 )
             )
-        ).Value();
+        ).Yield();
 
         //Read from large file and write to output file (make a copy)
         var filestream = new FileStream(outputPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
 
         long left;
         left =
-            Length._(
+            new FullRead(
                 new TeeOnRead(
                     new AsConduit(
                         new Uri(Path.GetFullPath(inputPath))
@@ -57,16 +51,16 @@ public sealed class StreamWriterAsConduitTest
                         new StreamWriter(filestream)
                     )
                 )
-            ).Value();
+            ).Yield().Length;
 
         long right =
-            Length._(
-                new Tonga.IO.AsConduit(
+            new FullRead(
+                new AsConduit(
                     new Uri(Path.GetFullPath(outputPath))
                 )
-            ).Value();
+            ).Yield().Length;
 
-        Assert.True(left == right, "input and output are not the same size");
+        Assert.Equal(left, right);
     }
 
 }

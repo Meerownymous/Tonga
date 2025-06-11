@@ -14,9 +14,9 @@ public sealed class Base64Decoded(IBytes bytes) : IBytes
     /// The
     /// </summary>
     /// <returns></returns>
-    public byte[] Bytes()
+    public byte[] Raw()
     {
-        var byts = bytes.Bytes();
+        var byts = bytes.Raw();
         string base64String = Encoding.UTF8.GetString(byts, 0, byts.Length);
         return Convert.FromBase64String(base64String);
     }

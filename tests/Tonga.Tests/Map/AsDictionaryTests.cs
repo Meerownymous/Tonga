@@ -10,9 +10,10 @@ public sealed class AsDictionaryTests
     {
         Assert.Equal(
             "Rock",
-            AsDictionary._(
-                AsMap._("Castle", "Rock")
-            )["Castle"]
+            ("Castle", "Rock")
+                .AsMap()
+                .AsDictionary()
+                ["Castle"]
         );
     }
 
@@ -20,9 +21,9 @@ public sealed class AsDictionaryTests
     public void OverwritesValue()
     {
         var dict =
-            AsDictionary._(
-                AsMap._("Castle", "Rock")
-            );
+            ("Castle", "Rock")
+                .AsMap()
+                .AsDictionary();
 
         dict["Castle"] = "Wolfenstein";
 

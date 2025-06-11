@@ -12,15 +12,16 @@ public sealed class AsNumberTest
     {
         Assert.Equal(
             4673.453,
-            new AsNumber(AsText._("4673.453")).ToDouble()
+            new AsNumber("4673.453").ToDouble()
         );
     }
 
     [Fact]
     public void ParsesFloat()
     {
-        Assert.True(
-            new AsNumber(4673.453F).ToFloat() == 4673.453F
+        Assert.Equal(
+            4673.453F,
+            new AsNumber(4673.453F).ToFloat()
         );
     }
 

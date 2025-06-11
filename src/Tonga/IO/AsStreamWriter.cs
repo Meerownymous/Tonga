@@ -58,7 +58,7 @@ public sealed class AsStreamWriter(Func<StreamWriter> tgt) : StreamWriter(new De
 
     #pragma warning disable CS1591
     public override void Write(char[] cbuf) => target.Value.Write(cbuf);
-    public override async Task FlushAsync() => target.Value.FlushAsync();
+    public override async Task FlushAsync() => await target.Value.FlushAsync();
     public override void Write(bool value) =>  target.Value.Write(value);
 
     public override void Write(char value) => target.Value.Write(value);

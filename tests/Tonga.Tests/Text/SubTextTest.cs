@@ -1,58 +1,50 @@
 using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Tests.Text
+namespace Tonga.Tests.Text;
+
+public sealed class SubTextText
 {
-    public sealed class SubTextText
+    [Fact]
+    public void CutString()
     {
-        [Fact]
-        public void CutString()
-        {
-            Assert.Equal(
-                "the_end",
-                new SubText(
-                    "this_is:the_end",
-                    8
-                ).Str()
-            );
-        }
+        Assert.Equal(
+            "the_end",
+            "this_is:the_end"
+                .AsSubText(8)
+                .Str()
+        );
+    }
 
-        [Fact]
-        public void CutStringwithLength()
-        {
-            Assert.Equal(
-                "the",
-                new SubText(
-                    "this_is:the_end",
-                    8,
-                    3
-                ).Str()
-            );
-        }
+    [Fact]
+    public void CutStringwithLength()
+    {
+        Assert.Equal(
+            "the",
+            "this_is:the_end"
+                .AsSubText(8,3)
+                .Str()
+        );
+    }
 
-        [Fact]
-        public void CutIText()
-        {
-            Assert.Equal(
-                "the_end",
-                new SubText(
-                    AsText._("this_is:the_end"),
-                    8
-                ).Str()
-            );
-        }
+    [Fact]
+    public void CutIText()
+    {
+        Assert.Equal(
+            "the_end",
+            "this_is:the_end".AsText()
+                .AsSubText(8)
+                .Str()
+        );
+    }
 
-        [Fact]
-        public void CutITextwithLength()
-        {
-            Assert.Equal(
-                "the",
-                new SubText(
-                    AsText._("this_is:the_end"),
-                    8,
-                    3
-                ).Str()
-            );
-        }
+    [Fact]
+    public void CutITextwithLength()
+    {
+        Assert.Equal(
+            "the",
+                "this_is:the_end".AsText()
+                    .AsSubText(8, 3).Str()
+        );
     }
 }

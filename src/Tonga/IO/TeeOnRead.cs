@@ -23,7 +23,7 @@ public sealed class TeeOnRead(IConduit source, IConduit output) : IConduit
     /// <see cref="IConduit"/> out of a <see cref="string"/> which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
     public TeeOnRead(String input, Uri file) : this(
-        new BytesAsConduit(input), new AsConduit(file)
+        new AsConduit(input), new AsConduit(file)
     )
     { }
 
@@ -31,7 +31,7 @@ public sealed class TeeOnRead(IConduit source, IConduit output) : IConduit
     /// <see cref="IConduit"/> out of a <see cref="byte"/> array which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
     public TeeOnRead(byte[] input, Uri file) : this(
-        new BytesAsConduit(input), new AsConduit(file)
+        new AsConduit(input), new AsConduit(file)
     )
     { }
 
@@ -39,7 +39,7 @@ public sealed class TeeOnRead(IConduit source, IConduit output) : IConduit
     /// <see cref="IConduit"/> out of a <see cref="string"/>  which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
     public TeeOnRead(String input, IConduit output) : this(
-        new BytesAsConduit(input),
+        new AsConduit(input),
         output
     )
     { }
@@ -49,5 +49,5 @@ public sealed class TeeOnRead(IConduit source, IConduit output) : IConduit
     /// </summary>
     /// <returns></returns>
     public Stream Stream() =>
-        new TeeStream(source.Stream(), output.Stream());
+        new TeeOnReadStream(source.Stream(), output.Stream());
 }

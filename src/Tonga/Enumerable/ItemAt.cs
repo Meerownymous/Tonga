@@ -92,7 +92,6 @@ public sealed class ItemAt<T>(
     { }
 
     /// <summary>
-    /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
     /// </summary>
     /// <param name="source">source enum</param>
     /// <param name="position">position of item</param>
@@ -135,7 +134,6 @@ public static partial class EnumerableSmarts
         => new ItemAt<T>(source, position);
 
     /// <summary>
-    /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
     /// </summary>
     /// <param name="source">source enum</param>
     /// <param name="position">position of item</param>
@@ -144,7 +142,6 @@ public static partial class EnumerableSmarts
         => new ItemAt<T>(source, position, fallback);
 
     /// <summary>
-    /// Element from position in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
     /// </summary>
     /// <param name="source">source enum</param>
     /// <param name="position">position of item</param>

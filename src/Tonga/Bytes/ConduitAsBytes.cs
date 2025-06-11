@@ -36,6 +36,6 @@ namespace Tonga.Bytes
         /// Get the content as byte array. (Self-Disposing)
         /// </summary>
         /// <returns>content as byte array</returns>
-        public byte[] Bytes()=> this.bytes.Value();
+        public byte[] Raw()=> this.bytes.Value();
     }
 }

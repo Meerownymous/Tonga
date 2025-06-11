@@ -1,10 +1,7 @@
 using System;
 using System.IO;
-using Tonga.Bytes;
 using Tonga.Enumerable;
-using Tonga.Func;
 using Tonga.IO;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.IO;
@@ -24,32 +21,21 @@ public sealed class WriterAsOutputStreamTest
                 var outputPath = Path.GetFullPath(outputFile.Value());
 
                 //Create large file
-                ReadAll._(
-                    new Tonga.IO.AsConduit(
-                        new TeeStream(
-                            new MemoryStream(
-                                new AsBytes(
-                                    new global::Tonga.Text.Joined(",",
-                                        new Head<string>(
-                                            new Endless<string>("Hello World"),
-                                            1000
-                                        )
-                                    )
-                                ).Bytes()
-                            ),
-                            new AsConduit(
-                                new Uri(inputPath)
-                            ).Stream()
+                new FullRead(
+                    new AsConduit(
+                        new TeeOnReadStream(
+                            new global::Tonga.Text.Joined(",",
+                                "Hello World".AsRepeated(1000)
+                            ).AsStream(),
+                            new Uri(inputPath).AsStream()
                         )
                     )
-                ).Invoke();
+                ).Yield();
 
                 using (var tee =
-                       new Tonga.IO.AsConduit(
-                           new TeeStream(
-                               new Tonga.IO.AsConduit(
-                                   inputPath
-                               ).Stream(),
+                       new AsConduit(
+                           new TeeOnReadStream(
+                               new AsConduit(inputPath).Stream(),
                                new WriterAsOutputStream(
                                    new StreamWriter(outputPath)
                                )
@@ -58,17 +44,11 @@ public sealed class WriterAsOutputStreamTest
                       )
                 {
 
-                    ReadAll._(tee).Invoke(flush: true, close: false);
+                    new FullRead(tee, flush: true, close: false).Yield();
 
                     Assert.Equal(
-                        Length._(
-                            tee
-                        ).Value(),
-                        Length._(
-                            new Tonga.IO.AsConduit(
-                                new Uri(Path.GetFullPath(outputPath))
-                            )
-                        ).Value()
+                        tee.Length().Value(),
+                        new Uri(Path.GetFullPath(outputPath)).AsStream().Length
                     );
                 }
             }
@@ -83,7 +63,7 @@ public sealed class WriterAsOutputStreamTest
                 new StreamWriter(
                     new MemoryStream()
                 )
-            ).Read(new byte[] {}, 0, 1)
+            ).Read([], 0, 1)
         );
     }
 

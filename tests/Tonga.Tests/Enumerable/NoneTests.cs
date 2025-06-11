@@ -9,7 +9,7 @@ namespace Tonga.Tests.Enumerable
         public void StringIsEmpty()
         {
             Assert.False(
-                None._<string>().GetEnumerator().MoveNext()
+                new None<string>().GetEnumerator().MoveNext()
             );
         }
 
@@ -17,7 +17,7 @@ namespace Tonga.Tests.Enumerable
         public void GenericIsEmpty()
         {
             Assert.False(
-                None._<int>().GetEnumerator().MoveNext()
+                new None<int>().GetEnumerator().MoveNext()
             );
         }
     }

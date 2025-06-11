@@ -7,12 +7,18 @@ namespace Tonga.IO;
 /// <summary>
 /// Reads all content of a given input and then resets it.
 /// </summary>
-public sealed class FullRead(bool flush = true, bool close = true) : IPipe<IConduit, IConduit>
+public sealed class FullRead(Func<Stream> source, bool flush = true, bool close = true) : IPipe<Stream>
 {
-    public IConduit Yield(IConduit input)
+    public FullRead(IConduit conduit, bool flush = true, bool close = true) : this(conduit.Stream, flush, close)
+    { }
+
+    public FullRead(Stream stream, bool flush = true, bool close = true) : this(() => stream, flush, close)
+    { }
+
+    public Stream Yield()
     {
         long size = 0;
-        var stream = input.Stream();
+        var stream = source();
         var memorizedPosition = 0L;
         if (stream.CanSeek)
             memorizedPosition = stream.Position;
@@ -28,12 +34,21 @@ public sealed class FullRead(bool flush = true, bool close = true) : IPipe<ICond
             stream.Seek(memorizedPosition, SeekOrigin.Begin);
         if (flush) stream.Flush();
         if (close) stream.Close();
-        return input;
+        return stream;
     }
 }
 
 public static partial class IOSmarts
 {
-    public static IPipe<IConduit> FullRead(this IConduit conduit, bool flush = true, bool close = true) =>
-        new Func<IConduit>(() => new FullRead(flush, close).Yield(conduit)).AsPipe();
+    /// <summary>
+    /// Reads all content of a given input and then resets it.
+    /// </summary>
+    public static IPipe<Stream> FullRead(this IConduit conduit, bool flush = true, bool close = true) =>
+        new Func<Stream>(() => new FullRead(conduit, flush, close).Yield()).AsPipe();
+
+    /// <summary>
+    /// Reads all content of a given input and then resets it.
+    /// </summary>
+    public static IPipe<Stream> FullRead(this Stream stream, bool flush = true, bool close = true) =>
+        new Func<Stream>(() => new FullRead(stream, flush, close).Yield()).AsPipe();
 }

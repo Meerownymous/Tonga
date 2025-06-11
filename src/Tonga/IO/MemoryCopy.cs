@@ -6,14 +6,26 @@ using System.IO;
 namespace Tonga.IO;
 
 /// <summary>
-/// A <see cref="IConduit"/> which copies the input to memory and returns the copy.
+/// Input copied to and then returning from memory.
 /// </summary>
-public sealed class MemoryCopy(IConduit origin) : IConduit
+public sealed class MemoryCopy(Func<Stream> origin) : IConduit
 {
+    /// <summary>
+    /// Input copied to and then returning from memory.
+    /// </summary>
+    public MemoryCopy(Stream origin) : this(() => origin)
+    { }
+
+    /// <summary>
+    /// Input copied to and then returning from memory.
+    /// </summary>
+    public MemoryCopy(IConduit origin) : this(origin.Stream)
+    { }
+
     private readonly Lazy<MemoryStream> memory = new(() =>
         {
             var memStream = new MemoryStream();
-            origin.Stream().CopyTo(memStream);
+            origin().CopyTo(memStream);
             memStream.Seek(0, SeekOrigin.Begin);
             return memStream;
         }

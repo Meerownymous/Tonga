@@ -23,7 +23,7 @@ public sealed class Base64Encoded : IBytes
             () =>
                 Encoding.UTF8.GetBytes(
                     Convert.ToBase64String(
-                        bytes.Bytes()
+                        bytes.Raw()
                     )
                 );
     }
@@ -32,11 +32,11 @@ public sealed class Base64Encoded : IBytes
     /// The bytes encoded as Base64
     /// </summary>
     /// <returns></returns>
-    public byte[] Bytes() => bytes();
+    public byte[] Raw() => bytes();
 }
 
 
 public static partial class BytesSmarts
 {
-    public static IBytes AsBase64Encoded(IBytes bytes) => new Base64Encoded(bytes);
+    public static IBytes AsBase64Encoded(this IBytes bytes) => new Base64Encoded(bytes);
 }

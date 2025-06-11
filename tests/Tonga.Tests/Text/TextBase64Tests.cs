@@ -1,6 +1,5 @@
 using System;
 using Tonga.Bytes;
-using Tonga.Func;
 using Tonga.IO;
 using Tonga.Text;
 using Xunit;
@@ -14,31 +13,25 @@ public sealed class TextBase64Tests
     [InlineData("A fancy text")]
     [InlineData("A fancy text with \n line break")]
     [InlineData("A fancy text with € special character")]
-    public void EncodesText(string text)
+    public void EncodesText(string str)
     {
         using var tempFile = new TempFile("test.txt");
-        ReadAll._(
+        new FullRead(
             new TeeOnRead(
-                AsText._(
-                    new Tonga.Bytes.Base64Encoded(
-                        new AsBytes(
-                            AsText._(text)
-                        )
-                    )
-                ).AsString(),
-                new AsConduit(new Uri(tempFile.Value()))
+                str.AsText()
+                    .AsBytes()
+                    .AsBase64Encoded()
+                    .AsText()
+                    .Str(),
+                new Uri(tempFile.Value()).AsConduit()
             )
-        ).Invoke();
+        ).Yield();
 
         Assert.True(
             new Comparable(
-                AsText._(
-                    new Uri(tempFile.Value())
-                )
+                new Uri(tempFile.Value()).AsText()
             ).CompareTo(
-                new Base64Encoded(
-                    AsText._(text)
-                )
+                new Base64Encoded(str)
             ) == 0
         );
     }
@@ -50,13 +43,11 @@ public sealed class TextBase64Tests
     public void EncodesString(string text)
     {
         Assert.Equal(
-            AsText._(
-                new Tonga.Bytes.Base64Encoded(
-                    new AsBytes(
-                        AsText._(text)
-                    )
-                )
-            ).AsString(),
+            text.AsText()
+                .AsBytes()
+                .AsBase64Encoded()
+                .AsText()
+                .Str(),
             new Base64Encoded(text).Str()
         );
     }

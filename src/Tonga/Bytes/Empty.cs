@@ -17,6 +17,6 @@ public sealed class Empty : IBytes
     /// Get the content as byte array.
     /// </summary>
     /// <returns>content as byte array</returns>
-    public byte[] Bytes() => [];
+    public byte[] Raw() => [];
 }
 

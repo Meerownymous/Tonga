@@ -15,7 +15,7 @@ public sealed class TeeOnWriteStreamTest
         String content = "Hello, товарищ!";
         Assert.True(
             AsString(
-                new TeeStream(
+                new TeeOnReadStream(
                     new MemoryStream(
                         Encoding.UTF8.GetBytes(content)
                     ),

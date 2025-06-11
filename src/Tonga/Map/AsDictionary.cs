@@ -68,7 +68,7 @@ namespace Tonga.Map
         /// Map as read/write dictionary.
         /// Lazy pairs are finalized and copied on first access.
         /// </summary>
-        public static IDictionary<Key,Value> AsDictionary<Key, Value>(IMap<Key, Value> map) =>
+        public static IDictionary<Key,Value> AsDictionary<Key, Value>(this IMap<Key, Value> map) =>
             new AsDictionary<Key, Value>(map);
     }
 }

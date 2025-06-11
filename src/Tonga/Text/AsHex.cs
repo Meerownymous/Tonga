@@ -19,7 +19,7 @@ public sealed class AsHex : TextEnvelope
     public AsHex(IBytes bytes) : base(
         () =>
         {
-            var rawBytes = bytes.Bytes();
+            var rawBytes = bytes.Raw();
             var hex = new char[rawBytes.Length * 2];
             var chr = -1;
             for (int i = 0; i < rawBytes.Length; i++)

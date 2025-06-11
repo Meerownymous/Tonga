@@ -1,74 +1,61 @@
+using Tonga.Enumerable;
 using Tonga.IO;
-using Tonga.Scalar;
 using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Tests.IO
+namespace Tonga.Tests.IO;
+
+public sealed class HeadTest
 {
-    public sealed class HeadTest
+    [Fact]
+    void ReadsHeadOfLongerInput()
     {
-        [Fact]
-        void ReadsHeadOfLongerInput()
-        {
-            Assert.Contains(
-                "reads",
-                AsText._(
-                    new Head(
-                        new AsConduit("readsHeadOfLongInput"),
-                        5
-                    )
-                ).AsString()
-            );
-        }
+        Assert.Contains(
+            "reads",
+            new AsConduit("readsHeadOfLongInput")
+                .AsHead(5)
+                .AsText()
+                .Str()
+        );
+    }
 
-        [Fact]
-        void ReadsOnlyLength()
-        {
-            var res =
-                AsText._(
-                    new Head(
-                        new Tonga.IO.AsConduit("readsHeadOfLongInput"),
-                        5
-                    )
-                ).AsString();
+    [Fact]
+    void ReadsOnlyLength()
+    {
+        Assert.Equal(
+            5,
+            new AsConduit("readsHeadOfLongInput")
+                .AsHead(5)
+                .AsText()
+                .Str()
+                .AsConduit()
+                .Length()
+                .Value()
+        );
+    }
 
-            Assert.Equal(
-                5,
-                Length._(
-                    new Tonga.IO.AsConduit(
-                        res
-                    )
-                ).Value()
-            );
-        }
+    [Fact]
+    void ReadsEmptyHeadOfInput()
+    {
+        Assert.Contains(
+            "",
+            new AsConduit("readsEmptyHeadOfInput")
+                .AsHead(0)
+                .AsText()
+                .Str()
+        );
+    }
 
-        [Fact]
-        void ReadsEmptyHeadOfInput()
-        {
-            Assert.Contains(
-                "",
-                AsText._(
-                    new Head(
-                        new AsConduit("readsEmptyHeadOfInput"),
-                        0
-                    )
-                ).AsString()
-            );
-        }
-
-        [Fact]
-        void ReadsHeadOfShorterInput()
-        {
-            var input = "readsHeadOfShorterInput";
-            Assert.Contains(
-                input,
-                AsText._(
-                    new Head(
-                        new Tonga.IO.AsConduit(input),
-                        35
-                    )
-                ).AsString()
-            );
-        }
+    [Fact]
+    void ReadsHeadOfShorterInput()
+    {
+        var input = "readsHeadOfShorterInput";
+        Assert.Contains(
+            input,
+            new AsConduit(input)
+                .AsHead(35)
+                .AsText()
+                .Str()
+        );
     }
 }

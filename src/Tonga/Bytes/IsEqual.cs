@@ -10,8 +10,8 @@ namespace Tonga.Bytes;
 public sealed class IsEqual(IBytes left, IBytes right) : FactEnvelope(
     () =>
     {
-        var leftByte = left.Bytes();
-        var rightByte = right.Bytes();
+        var leftByte = left.Raw();
+        var rightByte = right.Raw();
         var equal = leftByte.Length == rightByte.Length;
 
         for (var i = 0; i < leftByte.Length && equal; i++)

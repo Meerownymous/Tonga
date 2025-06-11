@@ -82,6 +82,18 @@ namespace Tonga.Enumerable
             new Joined<T>(lst, item);
 
         /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        public static IEnumerable<T> AsJoined<T>(this IEnumerable<T> lst, params T[] item) =>
+            new Joined<T>(lst, item);
+
+        /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        public static IEnumerable<string> AsJoined<T>(this IEnumerable<string> lst, string item) =>
+            new Joined<string>(lst, item);
+
+        /// <summary>
         /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>

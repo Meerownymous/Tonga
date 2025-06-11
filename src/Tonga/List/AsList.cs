@@ -127,4 +127,55 @@ public static partial class ListSmarts
     /// <param name="src">source enumerable</param>
     public static IList<T> AsList<T>(this IEnumerable<T> src)
         => new AsList<T>(src);
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="src">source enumerable</param>
+    public static IList<T> AsList<T>(this (T i1, T i2) src)
+        => new AsList<T>(src.i1, src.i2);
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="src">source enumerable</param>
+    public static IList<T> AsList<T>(this (T i1, T i2, T i3) src)
+        => new AsList<T>(src.i1, src.i2, src.i3);
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="src">source enumerable</param>
+    public static IList<T> AsList<T>(this (T i1, T i2, T i3, T i4) src)
+        => new AsList<T>(src.i1, src.i2, src.i3, src.i4);
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="src">source enumerable</param>
+    public static IList<T> AsList<T>(this (T i1, T i2, T i3, T i4, T i5) src)
+        => new AsList<T>(src.i1, src.i2, src.i3, src.i4, src.i5);
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="src">source enumerable</param>
+    public static IList<T> AsList<T>(this (T i1, T i2, T i3, T i4, T i5, T i6) src)
+        => new AsList<T>(src.i1, src.i2, src.i3, src.i4, src.i5, src.i6);
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="src">source enumerable</param>
+    public static IList<T> AsList<T>(this (T i1, T i2, T i3, T i4, T i5, T i6, T i7) src)
+        => new AsList<T>(src.i1, src.i2, src.i3, src.i4, src.i5, src.i6, src.i7);
+
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="src">source enumerable</param>
+    public static IList<T> AsList<T>(this (T i1, T i2, T i3, T i4, T i5, T i6, T i7, T i8) src)
+        => new AsList<T>(src.i1, src.i2, src.i3, src.i4, src.i5, src.i6, src.i7, src.i8);
+
+
 }

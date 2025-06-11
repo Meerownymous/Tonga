@@ -1,4 +1,6 @@
+using System.Linq;
 using Tonga.Enumerable;
+using Tonga.Text;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -9,10 +11,9 @@ namespace Tonga.Tests.Enumerable
         public void FindsItem()
         {
             Assert.True(
-                Contains._(
-                    AsEnumerable._("Hello", "my", "cat", "is", "missing"),
-                    str => str == "cat"
-                ).IsTrue()
+                new AsEnumerable<string>("Hello", "my", "cat", "is", "missing")
+                    .Contains(str => str == "cat")
+                    .IsTrue()
             );
         }
 
@@ -20,10 +21,9 @@ namespace Tonga.Tests.Enumerable
         public void DoesntFindItem()
         {
             Assert.False(
-                Contains._(
-                    AsEnumerable._("Hello", "my", "cat", "is", "missing"),
-                    (str) => str == "elephant"
-                ).IsTrue()
+                new AsEnumerable<string>("Hello", "my", "cat", "is", "missing")
+                    .Contains(str => str == "elephant")
+                    .IsTrue()
             );
         }
 
@@ -31,10 +31,9 @@ namespace Tonga.Tests.Enumerable
         public void DoesntFindInEmtyList()
         {
             Assert.False(
-                Contains._(
-                    None._<string>(),
-                    (str) => str == "elephant"
-                ).IsTrue()
+                new None<string>()
+                    .Contains(str => str == "elephant")
+                    .IsTrue()
             );
         }
     }

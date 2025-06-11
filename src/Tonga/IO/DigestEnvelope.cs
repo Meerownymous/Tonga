@@ -12,7 +12,7 @@ namespace Tonga.IO
         /// <summary>
         /// Digest
         /// </summary>
-        public byte[] Bytes()
+        public byte[] Raw()
         {
             using var sha = algorithmFactory();
             return sha.ComputeHash(source.Stream());

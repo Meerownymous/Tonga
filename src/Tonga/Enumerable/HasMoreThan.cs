@@ -31,5 +31,5 @@ public static partial class EnumerableSmarts
     /// <summary>
     /// Tells if an enumerable has more than the specified items.
     /// </summary>
-    public static IFact HasMoreThan(IEnumerable source, int amount) => new HasMoreThan(amount, source);
+    public static IFact HasMoreThan(this IEnumerable source, int amount) => new HasMoreThan(amount, source);
 }

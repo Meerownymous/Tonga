@@ -89,7 +89,6 @@ namespace Tonga.Number
         /// <summary>
         /// A <see cref="INumber"/> from a <see cref="double"/>
         /// </summary>
-        /// <param name="dbl"></param>
         public NumberEnvelope(
             Func<double> dbl,
             Func<Int32> itg,

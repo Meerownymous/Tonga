@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Tonga.Text;
 using Xunit;
 
@@ -11,15 +10,9 @@ namespace Tonga.Tests.Text
         public void SplitText()
         {
             Assert.Equal(
-                2,
-                Length._(
-                    Filtered._(
-                        s => s == "Hello" || s == "world!",
-                        new Split(
-                            "Hello world!", "\\s+"
-                        )
-                    )
-                ).Value()
+                ["Hello", "world!"],
+                "Hello world!"
+                    .AsSplit("\\s+")
             );
         }
 
@@ -27,9 +20,8 @@ namespace Tonga.Tests.Text
         public void SplitEmptyText()
         {
             Assert.Equal(
-                0,
-                Length._(
-                    new Split("", "\n")).Value()
+                [],
+                "".AsSplit("\n")
             );
         }
 
@@ -37,16 +29,8 @@ namespace Tonga.Tests.Text
         public void SplitStringWithTextRegex()
         {
             Assert.Equal(
-                2,
-                Length._(
-                    Filtered._(
-                        s => s == "Atoms" || s == "OOP!",
-                        new Split(
-                            "Atoms OOP!",
-                            AsText._("\\s")
-                        )
-                    )
-                ).Value()
+                ["Tonga", "OOP!"],
+                "Tonga OOP!".AsSplit("\\s")
             );
         }
 
@@ -54,14 +38,8 @@ namespace Tonga.Tests.Text
         public void SplitTextWithStringRegex()
         {
             Assert.Equal(
-                2,
-                Length._(
-                    Filtered._(
-                        s => s == "Atoms" || s == "Primitives!",
-                        new Split(
-                            AsText._("Atoms4Primitives!"), "\\d+")
-                    )
-                ).Value()
+                ["Atoms", "Primitives!"],
+                "Atoms4Primitives!".AsSplit("\\d+")
             );
         }
 
@@ -69,13 +47,8 @@ namespace Tonga.Tests.Text
         public void SplitTextWithTextRegex()
         {
             Assert.Equal(
-                2,
-                Length._(
-                    Filtered._(
-                        s => s == "Split" || s == "OOP",
-                        new Split(AsText._("Split#OOP!"), "\\W+")
-                    )
-                ).Value()
+                ["Split", "OOP"],
+                "Split#OOP!".AsSplit("\\W+")
             );
         }
 
@@ -84,12 +57,8 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 2,
-                Length._(
-                    new Split(
-                        AsText._("Split##OOP!"),
-                        "\\W+")
-                    ).Value()
-                );
+                "Split##OOP!".AsSplit("\\W+").Length().Value()
+            );
         }
 
         [Fact]
@@ -97,13 +66,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 3,
-                Length._(
-                    new Split(
-                        AsText._("Split##OOP!"),
-                        "\\W+",
-                        false
-                    )
-                ).Value()
+                "Split##OOP!".AsSplit("\\W+",false).Length().Value()
             );
         }
     }

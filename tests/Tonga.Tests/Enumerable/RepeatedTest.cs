@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -14,15 +13,11 @@ namespace Tonga.Tests.Enumerable
 
             Assert.Equal(
                 size,
-                Length._(
-                    Filtered._(
-                    input => input == element,
-                    Repeated._(
-                            element,
-                            size
-                        )
-                    )
-                ).Value()
+                element
+                    .AsRepeated(size)
+                    .AsFiltered(input => input == element)
+                    .Length()
+                    .Value()
             );
         }
 
@@ -31,9 +26,9 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 0,
-                Length._(
-                    Repeated._(0, 0)
-                ).Value()
+                123.AsRepeated(0)
+                    .Length()
+                    .Value()
             );
         }
     }

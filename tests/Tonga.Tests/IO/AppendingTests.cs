@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using Tonga.Bytes;
-using Tonga.Func;
 using Tonga.IO;
 using Tonga.Text;
 using Xunit;
@@ -19,22 +18,21 @@ namespace Tonga.Tests.IO
 
             var txt = "Hello, товарищ!";
 
-            var pipe =
+            var stream =
                 new TeeOnRead(txt,
                     new Appending(
                         new AsConduit(new Uri(file))
                     )
                 );
 
-            ReadAll._(pipe).Invoke();
-            ReadAll._(pipe).Invoke();
+            new FullRead(stream).Yield();
+            new FullRead(stream).Yield();
 
-            Assert.True(
-                AsText._(
-                    new ConduitAsBytes(
-                        new AsConduit(new Uri(file))))
-                .AsString() == (txt + txt),
-                "Can't append path content");
+            Assert.Equal(
+                txt + txt,
+                new ConduitAsBytes(
+                    new AsConduit(new Uri(file))).AsText().Str()
+            );
         }
 
         [Fact]
@@ -42,7 +40,7 @@ namespace Tonga.Tests.IO
         {
             using var file = new TempFile();
 
-            var path = file.Value();
+            _ = file.Value();
             var txt = "Hello, Objects!";
             var tee =
                 new TeeOnRead(txt,
@@ -51,19 +49,18 @@ namespace Tonga.Tests.IO
                     )
                 );
 
-            ReadAll._(tee).Invoke();
-            ReadAll._(tee).Invoke();
+            new FullRead(tee).Yield();
+            new FullRead(tee).Yield();
             tee.Stream().Close();
 
             Assert.Equal(
                 txt + txt,
-                AsText._(
-                    new ConduitAsBytes(
-                        new AsConduit(
-                            new FileInfo(file.Value())
-                        )
+                new ConduitAsBytes(
+                    new AsConduit(
+                        new FileInfo(file.Value())
                     )
-                ).AsString()
+                ).AsText()
+                .Str()
             );
         }
 

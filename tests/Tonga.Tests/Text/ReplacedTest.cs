@@ -11,10 +11,10 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 "Hi!",
-                new Replaced(
-                    AsText._("Hello!"),
-                    "ello", "i"
-                ).Str()
+                "Hello!"
+                    .AsText()
+                    .AsReplaced("ello", "i")
+                    .Str()
             );
         }
 
@@ -24,10 +24,7 @@ namespace Tonga.Tests.Text
             String text = "HelloAgain!";
             Assert.Equal(
                 text,
-                new Replaced(
-                    AsText._(text),
-                    "xyz", "i"
-                ).Str()
+                text.AsText().AsReplaced("xyz", "i").Str()
             );
         }
 
@@ -36,11 +33,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 "one dog, two dogs, three dogs",
-                new Replaced(
-                    AsText._("one cat, two cats, three cats"),
-                    "cat",
-                    "dog"
-                ).Str()
+                "one cat, two cats, three cats".AsText().AsReplaced("cat","dog").Str()
             );
         }
     }

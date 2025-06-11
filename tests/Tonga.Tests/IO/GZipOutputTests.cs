@@ -1,64 +1,54 @@
 using System;
 using System.IO;
 using System.IO.Compression;
-using Tonga.Enumerable;
-using Tonga.Func;
 using Tonga.IO;
-using Tonga.Scalar;
 using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Tests.IO
+namespace Tonga.Tests.IO;
+
+public sealed class GZipCompressing
 {
-    public sealed class GzipOutputTest
+
+    [Fact]
+    public void WritesToGzipOutput()
     {
-
-        [Fact]
-        public void WritesToGzipOutput()
-        {
-            MemoryStream zipped = new MemoryStream();
-            ReadAll._(
-                new TeeOnRead(
-                    "Hello!",
-                    new GZipCompressing(new AsConduit(zipped))
-                )
-            ).Invoke();
-
-            Assert.Equal(
+        MemoryStream zipped = new MemoryStream();
+        new FullRead(
+            new TeeOnRead(
                 "Hello!",
-                AsText._(
-                    new AsConduit(
-                        new GZipStream(
-                            new MemoryStream(zipped.ToArray()),
-                            CompressionMode.Decompress
-                        )
-                    )
-                ).AsString()
-            );
-        }
+                new Tonga.IO.GZipCompressing(zipped.AsConduit())
+            )
+        ).Yield();
 
-        [Fact]
-        public void RejectsWhenClosed()
-        {
-
-            var path = Path.GetFullPath("assets/GZipOutput.txt");
-
-            Assert.Throws<ArgumentException>(() =>
-                {
-                    var stream = new MemoryStream(new byte[256], true);
-                    stream.Close();
-
-                    Length._(
-                        new TeeOnRead(
-                            "Hello!",
-                            new GZipCompressing(
-                                new AsConduit(stream)
-                            )
-                        )
-                    ).Value();
-                }
-            );
-        }
+        Assert.Equal(
+            "Hello!",
+            new AsConduit(
+                new GZipStream(
+                    new MemoryStream(zipped.ToArray()),
+                    CompressionMode.Decompress
+                )
+            ).AsText().Str()
+        );
     }
 
+    [Fact]
+    public void RejectsClosedStream()
+    {
+        Path.GetFullPath("assets/GZipOutput.txt");
+        Assert.Throws<ArgumentException>(() =>
+            {
+                var stream = new MemoryStream(new byte[256], true);
+                stream.Close();
+                new FullRead(
+                    new TeeOnRead(
+                        "Hello!",
+                        new Tonga.IO.GZipCompressing(
+                            new AsConduit(stream)
+                        )
+                    )
+                ).Yield();
+            }
+        );
+    }
 }

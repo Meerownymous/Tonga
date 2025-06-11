@@ -178,89 +178,89 @@ public static partial class IOSmarts
     /// A <see cref="StreamReader"/> out of a <see cref="char"/> array.
     /// </summary>
     /// <param name="chars">some chars</param>
-    public static StreamReader AsReader(this char[] chars) => new AsStreamReader(chars);
+    public static StreamReader AsStreamReader(this char[] chars) => new AsStreamReader(chars);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="char"/> array.
     /// </summary>
     /// <param name="chars">some chars</param>
     /// <param name="enc">encoding of the chars</param>
-    public static StreamReader AsReader(this char[] chars, Encoding enc) => new AsStreamReader(chars, enc);
+    public static StreamReader AsStreamReader(this char[] chars, Encoding enc) => new AsStreamReader(chars, enc);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="byte"/> array.
     /// </summary>
     /// <param name="bytes">some bytes</param>
-    public static StreamReader AsReader(this byte[] bytes) => new AsStreamReader(bytes);
+    public static StreamReader AsStreamReader(this byte[] bytes) => new AsStreamReader(bytes);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="byte"/> array.
     /// </summary>
     /// <param name="bytes">some bytes</param>
     /// <param name="enc">encoding of the bytes</param>
-    public static StreamReader AsReader(this byte[] bytes, Encoding enc) => new AsStreamReader(bytes, enc);
+    public static StreamReader AsStreamReader(this byte[] bytes, Encoding enc) => new AsStreamReader(bytes, enc);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="Url"/> array.
     /// </summary>
     /// <param name="url">a www url starting with http:// or https://</param>
-    public static StreamReader AsReader(this Url url) => new AsStreamReader(url);
+    public static StreamReader AsStreamReader(this Url url) => new AsStreamReader(url);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="string"/>.
     /// </summary>
     /// <param name="content">a string</param>
-    public static StreamReader AsReader(this string content) => new AsStreamReader(content);
+    public static StreamReader AsStreamReader(this string content) => new AsStreamReader(content);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a file <see cref="Uri"/> array.
     /// </summary>
     /// <param name="uri">a file Uri, create with Path.GetFullPath(absOrRelativePath) or prefix with file:/// </param>
-    public static StreamReader AsReader(this Uri uri) => new AsStreamReader(uri);
+    public static StreamReader AsStreamReader(this Uri uri) => new AsStreamReader(uri);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="IBytes"/> object.
     /// </summary>
     /// <param name="bytes">a <see cref="IBytes"/> object</param>
-    public static StreamReader AsReader(this IBytes bytes) => new AsStreamReader(bytes);
+    public static StreamReader AsStreamReader(this IBytes bytes) => new AsStreamReader(bytes);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="IText"/> object.
     /// </summary>
     /// <param name="text">some <see cref="IText"/></param>
-    public static StreamReader AsReader(this IText text) => new AsStreamReader(text);
+    public static StreamReader AsStreamReader(this IText text) => new AsStreamReader(text);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="IText"/> object.
     /// </summary>
     /// <param name="text">some <see cref="IText"/></param>
     /// <param name="enc">encoding of the text</param>
-    public static StreamReader AsReader(this IText text, Encoding enc) => new AsStreamReader(text, enc);
+    public static StreamReader AsStreamReader(this IText text, Encoding enc) => new AsStreamReader(text, enc);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="IConduit"/> object.
     /// </summary>
     /// <param name="source">a input</param>
-    public static StreamReader AsReader(this IConduit source) => new AsStreamReader(source);
+    public static StreamReader AsStreamReader(this IConduit source) => new AsStreamReader(source);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="IConduit"/> object.
     /// </summary>
     /// <param name="source">a input</param>
     /// <param name="enc">encoding of the input</param>
-    public static StreamReader AsReader(this IConduit source, Encoding enc) =>
+    public static StreamReader AsStreamReader(this IConduit source, Encoding enc) =>
         new AsStreamReader(source, enc);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="Stream"/>.
     /// </summary>
     /// <param name="stream">a stream</param>
-    public static StreamReader AsReader(this Stream stream) => new AsStreamReader(stream);
+    public static StreamReader AsStreamReader(this Stream stream) => new AsStreamReader(stream);
 
     /// <summary>
     /// A <see cref="StreamReader"/> out of a <see cref="Stream"/> object.
     /// </summary>
     /// <param name="stream">a stream</param>
     /// <param name="enc">encoding of the stream</param>
-    public static StreamReader AsReader(this Stream stream, Encoding enc) => new AsStreamReader(stream, enc);
+    public static StreamReader AsStreamReader(this Stream stream, Encoding enc) => new AsStreamReader(stream, enc);
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Tonga.Scalar;
 
 namespace Tonga.Map
@@ -83,6 +84,22 @@ namespace Tonga.Map
         /// </summary>
         public static IPair<TKey, TValue> AsPair<TKey, TValue>(this (TKey key, TValue value) pair)
             => new AsPair<TKey, TValue>(pair.key, pair.value);
+
+        /// <summary>
+        /// Key-value pair matching a key type to specified type value.
+        /// </summary>
+        public static IPair<TKey, TValue> AsPair<TKey, TValue>(this TKey key, Func<TValue> value)
+            => new AsPair<TKey, TValue>(key, value);
+
+        /// <summary>
+        /// Key-value pair matching a key type to specified type value.
+        /// </summary>
+        public static IPair<TKey, TKey> AsPair<TKey>(this TKey key, Action act)
+            => new AsPair<TKey, TKey>(key, () =>
+            {
+                act();
+                throw new ArgumentException("An action has been performed which returned no value.");
+            });
 
         /// <summary>
         /// Key-value pair matching a key type to specified type value.

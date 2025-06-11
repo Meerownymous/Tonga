@@ -44,7 +44,7 @@ public sealed class HexBytes(Func<string> origin) : IBytes
     public HexBytes(IText origin) : this(origin.Str)
     { }
 
-    public byte[] Bytes() => bytes.Value;
+    public byte[] Raw() => bytes.Value;
 }
 
 public static partial class BytesSmarts

@@ -6,102 +6,91 @@ using Tonga.IO;
 using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Tests.IO
+namespace Tonga.Tests.IO;
+
+public sealed class AsStreamTest
 {
-    public sealed class AsStreamTest
+    [Fact]
+    public void ReadsSimpleFileContent()
     {
-        [Fact]
-        public void ReadsSimpleFileContent()
-        {
-            using (var file = new TempFile())
-            {
-                String content = "Hello, товарищ!";
-                File.WriteAllBytes(
-                    file.Value(),
-                    new AsBytes(
-                        AsText._(content, Encoding.UTF8)
-                    ).Bytes()
-                );
+        using var file = new TempFile();
+        String content = "Hello, товарищ!";
+        File.WriteAllBytes(
+            file.Value(),
+            content
+                .AsText(Encoding.UTF8)
+                .AsBytes()
+                .Raw()
+        );
 
-                Assert.Equal(
-                    content,
-                    AsText._(
-                        new ConduitAsBytes(
-                            new Tonga.IO.AsConduit(
-                                new AsStream(
-                                    new Uri(file.Value())
-                                )
-                            )
-                        )
-                    ).AsString()
-                );
-
-            }
-        }
-
-        [Fact]
-        public void ReadsFromReader()
-        {
-            String content = "Hello, дорогой товарищ!";
-            Assert.True(
-                AsText._(
-                    new Tonga.IO.AsConduit(
-                        new AsStream(
-                            new StreamReader(
-                                new Tonga.IO.AsConduit(content).Stream())))
-                ).AsString() == content);
-        }
-
-        [Fact]
-        public void ReadsFromReaderThroughSmallBuffer()
-        {
-            String content = "Hello, صديق!";
-            Assert.Equal(
-                content,
-                AsText._(
-                    new Tonga.IO.AsConduit(
-                        new AsStream(
-                            new StreamReader(
-                                new Tonga.IO.AsConduit(content).Stream()),
-                            1
-                        )
+        Assert.Equal(
+            content,
+            new ConduitAsBytes(
+                new AsConduit(
+                    new AsStream(
+                        new Uri(file.Value())
                     )
-                ).AsString()
-            );
-        }
+                )
+            ).AsText()
+            .Str()
+        );
+    }
 
-        [Fact]
-        public void MakesDataAvailable()
-        {
-            String content = "Hello,חבר!";
-            Assert.True(
-                new AsStream(content).Length > 0,
-                "Can't show that data is available"
-            );
-        }
+    [Fact]
+    public void ReadsFromReader()
+    {
+        String content = "Hello, дорогой товарищ!";
+        Assert.Equal(
+            content,
+            new AsConduit(
+                new AsStream(
+                    new StreamReader(
+                        new AsConduit(content).Stream()
+                    )
+                )
+            ).AsText().Str()
+        );
+    }
 
-        [Fact]
-        public void ReadsSimpleFileContentWithWhitespacesInUri()
-        {
-            var dir = "artifacts/Input StreamOf Test";
-            var file = "txt-1";
-            var path = Path.GetFullPath(Path.Combine(dir, file));
+    [Fact]
+    public void ReadsFromReaderThroughSmallBuffer()
+    {
+        String content = "Hello, صديق!";
+        Assert.Equal(
+            content,
+            new StreamReader(
+                new AsConduit(content).Stream()
+            )
+            .AsStream(1)
+            .AsText()
+            .Str()
+        );
+    }
 
-            Directory.CreateDirectory(dir);
-            if (File.Exists(path)) File.Delete(path);
+    [Fact]
+    public void MakesDataAvailable()
+    {
+        Assert.True(
+            "Hello,חבר!".AsStream().Length > 0
+        );
+    }
 
-            String content = "Hello, товарищ!";
-            File.WriteAllBytes(path, new AsBytes(AsText._(content, Encoding.UTF8)).Bytes());
+    [Fact]
+    public void ReadsSimpleFileContentWithWhitespacesInUri()
+    {
+        var dir = "artifacts/Input StreamOf Test";
+        var file = "txt-1";
+        var path = Path.GetFullPath(Path.Combine(dir, file));
 
-            Assert.True(
-                AsText._(
-                    new ConduitAsBytes(
-                        new Tonga.IO.AsConduit(
-                            new AsStream(
-                                new Uri(path))))
-                ).AsString() == content,
-                "Can't read file content"
-            );
-        }
+        Directory.CreateDirectory(dir);
+        if (File.Exists(path)) File.Delete(path);
+
+        String content = "Hello, товарищ!";
+        File.WriteAllBytes(path, new AsBytes(content.AsText(Encoding.UTF8)).Raw());
+
+        Assert.Equal(
+            content,
+            new Uri(path).AsStream().AsText().Str()
+        );
     }
 }

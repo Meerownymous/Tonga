@@ -20,16 +20,10 @@ namespace Tonga.Enumerable
             try
             {
                 using var filtered = src.AsFiltered(condition).GetEnumerator();
-
-
-                if (filtered.MoveNext())
-                {
-                    result = filtered.Current;
-                }
-                else
-                {
-                    throw new InvalidOperationException($"Cannot get first element - enumerable is empty.");
-                }
+                result =
+                    filtered.MoveNext()
+                        ? filtered.Current
+                        : fallback(new ArgumentException("Source is empty"), src);
             }
             catch (Exception e)
             {
@@ -71,7 +65,8 @@ namespace Tonga.Enumerable
         public First(Func<T, bool> condition, IEnumerable<T> source, Exception ex) : this(
             condition,
             source,
-            (_,_) => throw ex)
+            (_,_) => throw ex
+        )
         { }
 
         /// <summary>
@@ -100,7 +95,6 @@ namespace Tonga.Enumerable
         { }
 
         /// <summary>
-        /// First Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         /// <param name="source">source enum</param>
         /// <param name="fallback">fallback func</param>
@@ -172,7 +166,6 @@ namespace Tonga.Enumerable
             => new First<T>(condition, source, fallback);
 
         /// <summary>
-        /// First Element in a <see cref="IEnumerable{T}"/> fallback function <see cref="IFunc{In, Out}"/>.
         /// </summary>
         public static IScalar<T> First<T>(this IEnumerable<T> source, IScalar<T> fallback)
             => new First<T>(source, fallback);

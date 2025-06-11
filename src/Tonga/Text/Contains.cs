@@ -26,6 +26,14 @@ public sealed class Contains(
     )
     { }
 
+    /// <summary> Checks if a text contains a pattern using strings </summary>
+    public Contains(string inputStr, string patternStr, StringComparison comparison) : this(
+        () => inputStr,
+        () => patternStr,
+        () => comparison
+    )
+    { }
+
     /// <summary> Checks if a text contains a pattern using IText </summary>
     /// <param name="inputText"> text as IText </param>
     /// <param name="patternText"> pattern as IText </param>
@@ -34,6 +42,14 @@ public sealed class Contains(
         inputText.Str,
         patternText.Str,
         () => ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture
+    )
+    { }
+
+    /// <summary> Checks if a text contains a pattern using IText </summary>
+    public Contains(IText inputText, IText patternText, StringComparison comparison) : this(
+        inputText.Str,
+        patternText.Str,
+        () => comparison
     )
     { }
 
@@ -55,6 +71,17 @@ public sealed class Contains(
         text.Value,
         textToSearch.Value,
         stringComparison.Value
+    )
+    { }
+
+    /// <summary> Checks if a text contains a pattern using IScalar </summary>
+    /// <param name="text"> text as IScalar of string </param>
+    /// <param name="textToSearch"> pattern as IScalar of string </param>
+    /// <param name="stringComparison"> Enables case sensitivity (as IScalar of bool) </param>
+    public Contains(IScalar<string> text, IScalar<string> textToSearch, StringComparison stringComparison) : this(
+        text.Value,
+        textToSearch.Value,
+        () => stringComparison
     )
     { }
 }

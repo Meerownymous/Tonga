@@ -2,50 +2,47 @@ using System;
 using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Tests.Scalar
+namespace Tonga.Tests.Scalar;
+
+public class BackFallingTest
 {
-    public class BackFallingTest
+    [Fact]
+    public void GivesFallback()
     {
-        [Fact]
-        public void GivesFallback()
-        {
-            var fbk = "strong string";
+        var fbk = "strong string";
 
-            Assert.True(
-                BackFalling<>._(
-                    AsScalar._<string>(
-                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")
-                    ),
-                    fbk
-                ).Value() == fbk
-            );
-        }
+        Assert.True(
+            new AsScalar<string>(
+                () => throw new Exception("NO STRINGS ATTACHED HAHAHA")
+            ).AsBackFalling(fbk)
+            .Value() == fbk
+        );
+    }
 
-        [Fact]
-        public void GivesFallbackByFunc()
-        {
-            var fbk = "strong string";
+    [Fact]
+    public void GivesFallbackByFunc()
+    {
+        var fbk = "strong string";
 
-            Assert.True(
-                BackFalling<>._(
-                    AsScalar._<string>(
-                        () => throw new Exception("NO STRINGS ATTACHED HAHAHA")),
-                    () => fbk
-                    ).Value() == fbk);
-        }
+        Assert.Equal(
+            fbk,
+            new AsScalar<string>(
+                () => throw new Exception("NO STRINGS ATTACHED HAHAHA")
+            ).AsBackFalling(() => fbk)
+            .Value()
+        );
+    }
 
-        [Fact]
-        public void InjectsException()
-        {
-            var notAmused = new Exception("All is broken :(");
+    [Fact]
+    public void InjectsException()
+    {
+        var notAmused = new Exception("All is broken :(");
 
-            Assert.Equal(
-                notAmused.Message,
-                BackFalling<>._(
-                    AsScalar._<string>(() => throw notAmused),
-                    (ex) => ex.Message
-                ).Value()
-            );
-        }
+        Assert.Equal(
+            notAmused.Message,
+            new AsScalar<string>(() => throw notAmused)
+                .AsBackFalling(ex => ex.Message)
+                .Value()
+        );
     }
 }

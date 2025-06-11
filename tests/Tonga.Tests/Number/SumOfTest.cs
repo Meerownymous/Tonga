@@ -20,7 +20,7 @@ public sealed class SumOfTest
     {
         Assert.True(
             new SumOf(
-                AsEnumerable._(1.5F, 2.5F, 3.5F)
+                (1.5F, 2.5F, 3.5F).AsEnumerable()
             ).ToFloat() == 7.5F
         );
     }

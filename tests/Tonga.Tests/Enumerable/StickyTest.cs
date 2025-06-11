@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Tonga.Tests.Enumerable
 {
-    public class EconomicTests
+    public class StickyTests
     {
         [Fact]
         public void ChangesOfSourceAreIgnored()

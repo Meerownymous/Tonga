@@ -1,4 +1,3 @@
-using System.Linq;
 using Tonga.Enumerable;
 using Xunit;
 
@@ -11,10 +10,12 @@ public sealed class BackFallingTests
     {
         Assert.Equal(
             1137,
-            new FallingBack<int>(
-                    new None<int>(), 1137
+            new BackFalling<int>(
+                new None<int>(),
+                1137
             )
             .First()
+            .Value()
         );
     }
 }

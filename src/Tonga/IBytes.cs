@@ -11,5 +11,5 @@ public interface IBytes
     /// Get the content as a byte array.
     /// </summary>
     /// <returns></returns>
-    byte[] Bytes();
+    byte[] Raw();
 }

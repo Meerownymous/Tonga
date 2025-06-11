@@ -11,7 +11,7 @@ public sealed class AverageTest
     {
         Assert.True(
             new Average(
-                None._<long>()
+                new None<long>()
             ).ToLong() == 0L);
     }
 

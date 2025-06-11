@@ -8,40 +8,30 @@ namespace Tonga.Tests.Enumerable
         [Fact]
         public void SortsAnArray()
         {
-            Assert.True(
+            Assert.Equal(
+                "-6, 0, 2, 3, 10, 44",
                 new global::Tonga.Text.Joined(", ",
-                    new Mapped<int, string>(
-                        i => i.ToString(),
-                        new Sorted<int>(
-                            AsEnumerable._(3, 2, 10, 44, -6, 0)
-                        )
-                    )
-                ).Str() == "-6, 0, 2, 3, 10, 44",
-            "Can't sort an enumerable");
+                            (3, 2, 10, 44, -6, 0).AsEnumerable().AsSorted().AsMapped(i => i.ToString())
+                ).Str()
+            );
         }
 
         [Fact]
         public void SortsAnArrayWithComparator()
         {
-            Assert.True(
+            Assert.Equal(
+                "hello, Friend, dude, c, a",
                 new global::Tonga.Text.Joined(", ",
-                    new Sorted<string>(
-                        AsReverseCompare<string>.Default,
-                        AsEnumerable._(
-                            "a", "c", "hello", "dude", "Friend"
-                        )
-                    )
-                ).Str() == "hello, Friend, dude, c, a",
-                "Can't sort an enumerable with a custom comparator");
+                        ("a", "c", "hello", "dude", "Friend").AsEnumerable().AsSorted(AsReverseCompare<string>.Default)
+                ).Str()
+            );
         }
 
         [Fact]
         public void SortsAnEmptyArray()
         {
             Assert.Empty(
-                new Sorted<string>(
-                    None._<string>()
-                )
+                new None<string>().AsSorted()
             );
         }
     }

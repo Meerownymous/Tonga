@@ -145,7 +145,7 @@ public static partial class EnumerableSmarts
     /// </summary>
     /// <param name="source">source enum</param>
     /// <param name="item">item to start</param>
-    public static IScalar<T> Sibling<T>(IEnumerable<T> source, T item)
+    public static IScalar<T> Sibling<T>(this IEnumerable<T> source, T item)
         where T : IComparable<T> =>
         new Sibling<T>(item, source);
 
@@ -155,7 +155,7 @@ public static partial class EnumerableSmarts
     /// <param name="source">source enum</param>
     /// <param name="fallback">fallback func</param>
     /// <param name="item">item to start</param>
-    public static IScalar<T> Sibling<T>(IEnumerable<T> source, T item, T fallback)
+    public static IScalar<T> Sibling<T>(this IEnumerable<T> source, T item, T fallback)
         where T : IComparable<T> =>
         new Sibling<T>(item, source, fallback);
 

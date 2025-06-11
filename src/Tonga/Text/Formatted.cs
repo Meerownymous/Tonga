@@ -54,6 +54,17 @@ public sealed class Formatted : TextEnvelope
     /// <summary>
     /// A <see cref="IText"/> formatted with arguments.
     /// </summary>
+    /// <param name="ptn">pattern</param>
+    /// <param name="arguments">arguments to apply</param>
+    public Formatted(IText ptn, params string[] arguments) : this(
+        ptn, CultureInfo.InvariantCulture, () => arguments
+    )
+    {
+    }
+
+    /// <summary>
+    /// A <see cref="IText"/> formatted with arguments.
+    /// </summary>
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="locale">a specific culture</param>
     /// <param name="arguments">arguments to apply</param>

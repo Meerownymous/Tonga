@@ -10,10 +10,11 @@ namespace Tonga.Tests.Text
         [Fact]
         public void ConvertsText()
         {
-            Assert.True(
+            Assert.Equal(
+                "hello!",
                 new Lower(
-                    AsText._("HelLo!")
-                ).Str() == "hello!"
+                    "HelLo!".AsText()
+                ).Str()
             );
         }
     }

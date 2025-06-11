@@ -12,10 +12,10 @@ public sealed class DeepMap
             1,
             new DeepMap<string[], string, int>(
                 digDown: key => key[0],
-                AsMap._(
-                    (["one", "rubbish"], 1),
-                    (new[] { "two", "irrelevant stuff" }, 2)
-                )
+                (
+                    (new[] { "one", "rubbish" }, 1).AsPair(),
+                    (new[] { "two", "irrelevant stuff" }, 2).AsPair()
+                ).AsMap()
             )[["one", "otherthings"]]
         );
     }
@@ -27,12 +27,12 @@ public sealed class DeepMap
             3,
             new DeepMap<string[], string, int>(
                     digDown: key => key[0],
-                    AsMap._(
-                        (new[] { "one", "rubbish" }, 1),
-                        (new[] { "two", "irrelevant stuff" }, 2)
-                    )
+                    (
+                        (new[] { "one", "rubbish" }, 1).AsPair(),
+                        (new[] { "two", "irrelevant stuff" }, 2).AsPair()
+                    ).AsMap()
                 )
-                .With(AsPair._(new[] { "three", "trash" }, 3))
+                .With((new[] { "three", "trash" }, 3).AsPair())
                 [["three", "otherthings"]]
         );
     }

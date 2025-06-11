@@ -1,5 +1,5 @@
+using System.Linq;
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -10,14 +10,13 @@ namespace Tonga.Tests.Enumerable
         public void TransformsList()
         {
             Assert.Equal(
-                8,
-                Length._(
-                    Joined._(
-                        AsEnumerable._("hello", "world", "друг"),
-                        AsEnumerable._("how", "are", "you"),
-                        AsEnumerable._("what's", "up")
-                    )
-                ).Value()
+                ["hello", "world", "друг", "how", "are", "you", "what's", "up"],
+                new[]{
+                    ("hello", "world", "друг").AsEnumerable(),
+                    ("how", "are", "you").AsEnumerable(),
+                    ("what's", "up").AsEnumerable()
+                }.AsJoined()
+                .ToArray()
             );
         }
 
@@ -25,15 +24,11 @@ namespace Tonga.Tests.Enumerable
         public void JoinsEnumerables()
         {
             Assert.Equal(
-                1,
-                Length._(
-                    Joined._(
-                        Mapped._(
-                           str => AsEnumerable._(str),
-                           AsEnumerable._("x")
-                        )
-                    )
-                ).Value()
+                [],
+                "x".AsEnumerable()
+                    .AsEnumerable()
+                    .AsJoined()
+                    .ToArray()
             );
         }
 
@@ -41,17 +36,16 @@ namespace Tonga.Tests.Enumerable
         public void JoinsSingleElemtns()
         {
             Assert.Equal(
-                8,
-                Length._(
-                    Joined._(
-                        AsEnumerable._("hello", "world", "друг"),
+                ["hello", "world", "друг", "how", "are", "you", "what's", "up"],
+                ("hello", "world", "друг")
+                    .AsEnumerable()
+                    .AsJoined(
                         "how",
                         "are",
                         "you",
                         "what's",
                         "up"
                     )
-                ).Value()
             );
         }
     }

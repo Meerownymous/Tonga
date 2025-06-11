@@ -14,27 +14,8 @@ namespace Tonga.Tests.Collection
         {
             Assert.Contains(
                 -1,
-                AsCollection._(
-                    AsEnumerable._(1, 2, 0, -1)
-                )
+                new[] { 1, 2, 0, -1 }.AsCollection()
             );
-        }
-
-        [Fact]
-        public void IgnoresChangesInIterable()
-        {
-            int size = 2;
-            var list =
-                AsCollection._(
-                    Repeated._(
-                        AsScalar._(() => 0),
-                        AsScalar._(() =>
-                        {
-                            Interlocked.Increment(ref size);
-                            return size;
-                        })
-                    ));
-
         }
 
         [Fact]
@@ -102,8 +83,9 @@ namespace Tonga.Tests.Collection
         {
             Assert.Contains(
                 -1,
-                AsCollection._(
-                    AsEnumerable._(1, 2, 0, -1).GetEnumerator())
+                new AsEnumerable<int>(1, 2, 0, -1)
+                    .GetEnumerator()
+                    .AsCollection()
             );
         }
 
@@ -112,16 +94,14 @@ namespace Tonga.Tests.Collection
         {
             var count = 1;
             var col =
-                AsCollection._(() =>
-                    Repeated._(
-                        () =>
-                        {
-                            count++;
-                            return 0;
-                        },
-                        count
-                    ).GetEnumerator()
-                );
+                count
+                    .AsRepeated(() =>
+                    {
+                        count++;
+                        return 0;
+                    })
+                    .AsCollection();
+
             Assert.NotEqual(col.Count, col.Count);
         }
     }

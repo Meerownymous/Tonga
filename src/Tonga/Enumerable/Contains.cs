@@ -31,3 +31,8 @@ public sealed class Contains<T>(IEnumerable<T> src, Func<T, bool> match) : FactE
         cdd => cdd.Equals(item))
     { }
 }
+
+public static partial class EnumerabeSmarts
+{
+    public static IFact Contains<T>(this IEnumerable<T> src, Func<T, bool> match) => new Contains<T>(src, match);
+}

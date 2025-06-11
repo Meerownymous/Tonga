@@ -9,8 +9,7 @@ public sealed class AsPairTests
     [Fact]
     public void SensesChanges()
     {
-        var pair =
-            AsPair._(1, () => Guid.NewGuid().ToString());
+        var pair = 1.AsPair(() => Guid.NewGuid().ToString());
         Assert.NotEqual(pair.Value(), pair.Value());
     }
 
@@ -19,7 +18,8 @@ public sealed class AsPairTests
     {
         Assert.Equal(
             "value",
-            AsPair._("key", () => "value").Value()
+            "key".AsPair(() => "value")
+                .Value()
         );
     }
 
@@ -28,19 +28,23 @@ public sealed class AsPairTests
     {
         Assert.Equal(
             "key",
-            AsPair._<string, int>("key", () => throw new ApplicationException()).Key()
+            new AsPair<string, int>("key", () => throw new ApplicationException()).Key()
         );
     }
 
     [Fact]
     public void KnowsAboutBeingLazy()
     {
-        Assert.True(AsPair._("2", () => "4").IsLazy());
+        Assert.True("2".AsPair(() => "4").IsLazy());
     }
 
     [Fact]
     public void KnowsAboutBeingNotLazy()
     {
-        Assert.False(AsPair._("2", "4").IsLazy());
+        Assert.False(
+            ("2","4")
+                .AsPair()
+                .IsLazy()
+        );
     }
 }

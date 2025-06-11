@@ -9,9 +9,8 @@ namespace Tonga.Enumerable;
 /// </summary>
 public sealed class Length : ScalarEnvelope<Int64>
 {
-
     public Length(IEnumerable enumerable) : base(
-        () => new Enumerator.LengthOf(enumerable.GetEnumerator()).Value()
+        () => new Enumerator.StickyLength(enumerable.GetEnumerator()).Value()
     )
     { }
 }

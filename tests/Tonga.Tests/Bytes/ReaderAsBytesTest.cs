@@ -1,4 +1,3 @@
-using System.IO;
 using Tonga.Bytes;
 using Tonga.IO;
 using Tonga.Text;
@@ -13,12 +12,11 @@ namespace Tonga.Tests.Bytes
         {
             Assert.Equal(
                 "hello, друг!",
-                AsText._(
                     new ReaderAsBytes(
-                        new StreamReader(
-                            new AsConduit("hello, друг!").Stream())
+                        "hello, друг!".AsStreamReader()
                     )
-                ).AsString()
+                    .AsText()
+                    .Str()
             );
         }
     }

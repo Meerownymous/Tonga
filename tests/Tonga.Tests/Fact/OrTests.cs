@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Tonga.Enumerable;
 using Tonga.Fact;
-using Tonga.Func;
 using Xunit;
 
 namespace Tonga.Tests.Fact
@@ -13,10 +12,10 @@ namespace Tonga.Tests.Fact
         {
             Assert.True(
                 new Or(
-                    AsEnumerable._<IFact>(
+                    (
                         new True(),
                         new False()
-                    )
+                    ).AsEnumerable<IFact>()
                 ).IsTrue()
             );
         }

@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tonga.Enumerable;
 using Tonga.Map;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Map;
@@ -15,24 +14,28 @@ public sealed class AsMapTests
     [Fact]
     public void IsThreadSafe()
     {
-        IMap<string, string> oldMap = AsMap._();
-        Parallel.For(0, 10000, (index) =>
-        {
-            oldMap = oldMap.With(AsPair._(index.ToString(), index.ToString()));
-            oldMap.Keys();
-            _ = oldMap[index.ToString()];
-            _ = oldMap.Lazy(index.ToString())();
-        });
+        IMap<int, int> oldMap = new Empty<int, int>();
+        Parallel.For(0, 10000, index =>
+            {
+                oldMap = oldMap.With((index, index).AsPair());
+                oldMap.Keys();
+                _ = oldMap[index];
+                _ = oldMap.Lazy(index)();
+            }
+        );
         Assert.Equal(10000, oldMap.Keys().Count);
     }
 
     [Fact]
     public void MapsKeysToValues()
     {
-        var one = AsPair._(45, 10);
-        var two = AsPair._(33, 20);
+        var one = (45, 10).AsPair();
+        var two = (33, 20).AsPair();
 
-        var map = AsMap._(one, two);
+        var map =
+            new Empty<int, int>()
+                .With(one)
+                .With(two);
 
         Assert.Equal(
             20,
@@ -45,7 +48,7 @@ public sealed class AsMapTests
     {
         Assert.Equal(
             20,
-            AsMap._(
+            new AsMap<int,int>(
                 (45, 10),
                 (33, 20)
             )[33]
@@ -59,9 +62,9 @@ public sealed class AsMapTests
     {
         Assert.Equal(
             value,
-            AsMap._(
-                AsMapInput._(AsPair._(12, 39478624)),
-                AsMapInput._(AsPair._(24, 60208801))
+            new AsMap<int,int>(
+                (12, 39478624).AsPair().AsMapInput(),
+                (24, 60208801).AsPair().AsMapInput()
             )[key]
         );
     }
@@ -72,10 +75,10 @@ public sealed class AsMapTests
     public void BuildsFromPairs(int key, int value)
     {
         var m =
-            AsMap._(
-                AsPair._(9, 0),
-                AsPair._(10, 1)
-            );
+            (
+                (9, 0).AsPair(),
+                (10, 1).AsPair()
+            ).AsMap();
 
         Assert.Equal(m[key], value);
     }
@@ -87,16 +90,14 @@ public sealed class AsMapTests
         var random = new Random();
 
         var map =
-            AsMap._(
-                Repeated._(
-                    () => AsPair._(random.Next(), 1),
-                    () =>
-                    {
-                        Interlocked.Increment(ref size);
-                        return size;
-                    }
-                )
-            );
+            new Repeated<IPair<int,int>>(
+                () => (random.Next(), 1).AsPair(),
+                () =>
+                {
+                    Interlocked.Increment(ref size);
+                    return size;
+                }
+            ).AsMap();
 
         Assert.Equal(map.Keys(), map.Keys());
     }
@@ -105,9 +106,9 @@ public sealed class AsMapTests
     public void SensesChangesInValues()
     {
         var map =
-            AsMap._(
-                AsPair._(123, () => new Random().NextInt64())
-            );
+            new AsPair<int,long>(
+                123, () => new Random().NextInt64()
+            ).AsMap();
 
         Assert.NotEqual(map[123], map[123]);
     }
@@ -117,9 +118,9 @@ public sealed class AsMapTests
     {
         Assert.Equal(
             "works",
-            AsMap._(
-                AsPair._<string, string>("name", () => throw new ApplicationException()),
-                AsPair._("anothername", () => "works")
+            new AsMap<string,string>(
+                new AsPair<string, string>("name", () => throw new ApplicationException()),
+                new AsPair<string, string>("anothername", () => "works")
             )["anothername"]
         );
     }
@@ -127,19 +128,18 @@ public sealed class AsMapTests
     [Fact]
     public void WorksWithEmptyList()
     {
-        var map = Empty._<int, int>();
-        Assert.Equal(0, Length._(map.Pairs()).Value());
+        var map = new Empty<int, int>();
+        Assert.Equal(0, map.Pairs().Length().Value());
     }
-
 
     [Fact]
     public void BehavesAsMap()
     {
         var m =
-            AsMap._(
-                AsPair._("hello", "map"),
-                AsPair._("goodbye", "dictionary")
-            );
+            (
+                ("hello", "map").AsPair(),
+                ("goodbye", "dictionary").AsPair()
+            ).AsMap();
 
         Assert.Equal(
             "dictionary",
@@ -152,21 +152,10 @@ public sealed class AsMapTests
     {
         Assert.Equal(
             "B",
-            AsMap._(
-                "A", "B",
-                "C", "D"
-            )["A"]
-        );
-    }
-
-    [Fact]
-    public void RejectsOddValueCount()
-    {
-        Assert.Throws<ArgumentException>(() =>
-            AsMap._(
-                "A", "B",
-                "C"
-            )["A"]
+            (
+                ("A", "B").AsPair(),
+                ("C", "D").AsPair()
+            ).AsMap()["A"]
         );
     }
 
@@ -179,23 +168,19 @@ public sealed class AsMapTests
         for (var i = 0; i < 100; i++)
         {
             inputs.Add(
-                AsMapInput._(
-                    AsPair._<string, string>(i.ToString(), Guid.NewGuid().ToString())
-                )
+                (i.ToString(), Guid.NewGuid().ToString()).AsMapInput()
             );
         }
 
         for (var i = 0; i < 100; i++)
         {
             inputs2.Add(
-                AsMapInput._(
-                    AsPair._<string, string>(i.ToString(), Guid.NewGuid().ToString())
-                )
+                (i.ToString(), Guid.NewGuid().ToString()).AsMapInput()
             );
         }
 
-        var map1 = AsMap._(inputs);
-        var map2 = AsMap._(inputs2);
+        var map1 = inputs.AsMap();
+        var map2 = inputs2.AsMap();
 
         Debug.WriteLine(
             new ElapsedTime(() =>

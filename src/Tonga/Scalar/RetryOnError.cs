@@ -31,12 +31,11 @@ namespace Tonga.Scalar
         { }
 
         /// <summary>
-        /// <see cref="IScalar{T}"/> which will retry until the given condition <see cref="IFunc{In, Out}"/> matches before throwing an exception.
         /// </summary>
         /// <param name="scalar">scalar to retry when needed</param>
         /// <param name="exit"></param>
         public RetryOnError(IScalar<T> scalar, Func<Int32, Boolean> exit) : base(() =>
-            new RetryOnError<Boolean, T>(
+            new Retry<Boolean, T>(
                 _ => scalar.Value(),
                 exit
             ).Yield(true)

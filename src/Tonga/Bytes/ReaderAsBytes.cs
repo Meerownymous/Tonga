@@ -67,7 +67,7 @@ public sealed class ReaderAsBytes(Func<StreamReader> rdr, Encoding encoding, int
     /// Get the content as byte array.
     /// </summary>
     /// <returns>content as a byte array.</returns>
-    public byte[] Bytes()
+    public byte[] Raw()
     {
         var rdr = this.reader.Value;
         var buffer = new char[max];

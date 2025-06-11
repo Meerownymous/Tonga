@@ -11,9 +11,7 @@ namespace Tonga.Tests.IO
         {
             Assert.Equal(
                 string.Empty,
-                AsText._(
-                    new DeadConduit())
-                .AsString()
+                new DeadConduit().AsText().Str()
             );
         }
 

@@ -27,10 +27,10 @@ public static partial class TextSmarts
     /// <summary>
     /// Checks if a text ends with a given content.
     /// </summary>
-    public static IFact AsEndsWith(this IText text, string tail) => new EndsWith(text, tail);
+    public static IFact EndsWith(this IText text, string tail) => new EndsWith(text, tail);
 
     /// <summary>
     /// Checks if a text ends with a given content.
     /// </summary>
-    public static IFact AsEndsWith(this IText text, IText tail) => new EndsWith(text, tail);
+    public static IFact EndsWith(this IText text, IText tail) => new EndsWith(text, tail);
 }

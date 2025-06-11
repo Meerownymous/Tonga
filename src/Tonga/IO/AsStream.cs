@@ -133,7 +133,7 @@ public sealed class AsStream(Func<Stream> src) : Stream, IDisposable
     public override void Write(byte[] buffer, int offset, int count) =>
         throw new InvalidOperationException("Writing is not supported."); //intended
 
-    public void Dispose() =>
+    public new void Dispose() =>
         source.Value.Dispose();
 }
 

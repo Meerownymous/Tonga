@@ -55,7 +55,6 @@ namespace Tonga.Enumerable
 
     public static partial class EnumerableSmarts
     {
-
         public static IEnumerable<TItem> AsEnumerable<TItem>(this TItem[] source) =>
             new AsEnumerable<TItem>(source);
 
@@ -67,5 +66,46 @@ namespace Tonga.Enumerable
 
         public static IEnumerable<TItem> AsEnumerable<TItem>(this IEnumerator<TItem> origin) =>
             new AsEnumerable<TItem>(origin);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this (TItem a, TItem b) origin) =>
+            new AsEnumerable<TItem>(origin.a, origin.b);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this (TItem a, TItem b, TItem c) origin) =>
+            new AsEnumerable<TItem>(origin.a, origin.b, origin.c);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this (TItem a, TItem b, TItem c, TItem d) origin) =>
+            new AsEnumerable<TItem>(origin.a, origin.b, origin.c, origin.d);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this (TItem a, TItem b, TItem c, TItem d, TItem e) origin) =>
+            new AsEnumerable<TItem>(origin.a, origin.b, origin.c, origin.d, origin.e);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this (TItem a, TItem b, TItem c, TItem d, TItem e, TItem f) origin) =>
+            new AsEnumerable<TItem>(origin.a, origin.b, origin.c, origin.d, origin.e, origin.f);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this (TItem a, TItem b, TItem c, TItem d, TItem e, TItem f, TItem g) origin) =>
+            new AsEnumerable<TItem>(origin.a, origin.b, origin.c, origin.d, origin.e, origin.f, origin.g);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this
+            (TItem a, TItem b, TItem c, TItem d, TItem e, TItem f, TItem g, TItem h, TItem i) origin
+        ) =>
+            new AsEnumerable<TItem>(origin.a, origin.b, origin.c, origin.d, origin.e, origin.f, origin.g, origin.h, origin.i);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this
+            (TItem a, TItem b, TItem c, TItem d, TItem e, TItem f, TItem g, TItem h, TItem i, TItem j) origin) =>
+            new AsEnumerable<TItem>(origin.a, origin.b, origin.c, origin.d, origin.e, origin.f, origin.g, origin.h, origin.i, origin.j);
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this
+            (TItem a, TItem b, TItem c, TItem d, TItem e, TItem f, TItem g, TItem h, TItem i, TItem j, TItem k)
+        origin) =>
+            new AsEnumerable<TItem>(
+                origin.a, origin.b, origin.c, origin.d, origin.e, origin.f, origin.g, origin.h, origin.i, origin.j, origin.k
+            );
+
+        public static IEnumerable<TItem> AsEnumerable<TItem>(this
+            (TItem a, TItem b, TItem c, TItem d, TItem e, TItem f, TItem g, TItem h, TItem i, TItem j, TItem k, TItem l)
+            origin) =>
+            new AsEnumerable<TItem>(
+                origin.a, origin.b, origin.c, origin.d, origin.e, origin.f, origin.g, origin.h, origin.i, origin.j, origin.k, origin.l
+            );
     }
 }

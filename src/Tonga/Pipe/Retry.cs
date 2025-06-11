@@ -9,13 +9,13 @@ namespace Tonga.Pipe;
 /// </summary>
 /// <typeparam name="In">type of input</typeparam>
 /// <typeparam name="Out">type of output</typeparam>
-public sealed class RetryOnError<In, Out>(Func<In, Out> yield, Func<Int32, Boolean> exit) : IPipe<In, Out>
+public sealed class Retry<In, Out>(Func<In, Out> yield, Func<Int32, Boolean> exit) : IPipe<In, Out>
 {
     /// <summary>
     /// Function that will retry if it fails.
     /// </summary>
     /// <param name="yield">func to retry</param>
-    public RetryOnError(Func<In, Out> yield) : this(yield, 3)
+    public Retry(Func<In, Out> yield) : this(yield, 3)
     { }
 
     /// <summary>
@@ -23,7 +23,7 @@ public sealed class RetryOnError<In, Out>(Func<In, Out> yield, Func<Int32, Boole
     /// </summary>
     /// <param name="yield">func to retry</param>
     /// <param name="attempts">how often to retry</param>
-    public RetryOnError(Func<In, Out> yield, int attempts = 3) : this(
+    public Retry(Func<In, Out> yield, int attempts = 3) : this(
         yield, attempt => attempt >= attempts
     )
     { }
@@ -58,14 +58,14 @@ public sealed class RetryOnError<In, Out>(Func<In, Out> yield, Func<Int32, Boole
 public static partial class PipeSmarts
 {
     public static IPipe<In,Out> RetryOnError<In, Out>(Func<In, Out> yield, Func<Int32, Boolean> exit) =>
-        new RetryOnError<In, Out>(yield, exit);
+        new Retry<In, Out>(yield, exit);
 
     /// <summary>
     /// Function that will retry if it fails.
     /// </summary>
     /// <param name="yield">func to retry</param>
     public static IPipe<In, Out> RetryOnError<In, Out>(Func<In, Out> yield) =>
-        new RetryOnError<In, Out>(yield, 3);
+        new Retry<In, Out>(yield, 3);
 
     /// <summary>
     /// Function that will retry if it fails.
@@ -73,5 +73,5 @@ public static partial class PipeSmarts
     /// <param name="yield">func to retry</param>
     /// <param name="attempts">how often to retry</param>
     public static IPipe<In, Out> RetryOnError<In, Out>(Func<In, Out> yield, int attempts = 3) =>
-        new RetryOnError<In, Out>(yield, attempts);
+        new Retry<In, Out>(yield, attempts);
 }

@@ -1,43 +1,40 @@
-
-
 using Tonga.Bytes;
 using Xunit;
 
-namespace Tonga.Tests.Bytes
+namespace Tonga.Tests.Bytes;
+
+public sealed class IsEqualTest
 {
-    public sealed class IsEqualTest
+    [Fact]
+    public void IsTrueOnEqualBytes()
     {
-        [Fact]
-        public void TrueCorrectBytes()
-        {
-            Assert.True(
-                new IsEqual(
-                    new AsBytes(3.2d),
-                    new AsBytes(3.2d)
-                ).Value()
-            );
-        }
+        Assert.True(
+            new IsEqual(
+                3.2d.AsBytes(),
+                3.2d.AsBytes()
+            ).IsTrue()
+        );
+    }
 
-        [Fact]
-        public void FalseDifferentLenght()
-        {
-            Assert.False(
-                new IsEqual(
-                    new AsBytes(1),
-                    new AsBytes(3.2d)
-                ).Value()
-            );
-        }
+    [Fact]
+    public void IsFalseOnDifferentLength()
+    {
+        Assert.True(
+            new IsEqual(
+                new AsBytes(1),
+                new AsBytes(3.2d)
+            ).IsTrue()
+        );
+    }
 
-        [Fact]
-        public void FalseDifferentBytes()
-        {
-            Assert.False(
-                new IsEqual(
-                    new AsBytes(1),
-                    new AsBytes(3.2d)
-                ).Value()
-            );
-        }
+    [Fact]
+    public void IsFalseOnDifferentBytes()
+    {
+        Assert.False(
+            new IsEqual(
+                1.AsBytes(),
+                3.2d.AsBytes()
+            ).IsTrue()
+        );
     }
 }

@@ -35,11 +35,10 @@ public sealed class FullRead(Func<Stream> source, bool flush = true, bool close 
         if (!close && stream.Value.CanSeek)
             stream.Value.Seek(memorizedPosition, SeekOrigin.Begin);
         if (flush) stream.Value.Flush();
-
         if (close)
         {
-            stream.Value.Dispose();
             stream.Value.Close();
+            stream.Value.Dispose();
         }
     }
 }

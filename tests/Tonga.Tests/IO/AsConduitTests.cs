@@ -172,15 +172,14 @@ namespace Tonga.Tests.IO
         {
             using var file = new TempFile();
             //new FullRead(
-            new AsConduit(
+
                 new TeeOnReadStream(
                     "Hello World\r\n"
                         .AsRepeated(1000)
                         .AsStream(),
                     new Uri(file.Value())
                         .AsStream()
-                )
-            ).Stream().Flush();
+                ).Flush();
             //).Trigger();
 
             System.Threading.Thread.Sleep(1000);

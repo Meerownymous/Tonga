@@ -76,6 +76,18 @@ public sealed class TeeOnReadStream(Stream src, Stream tgt) : Stream
         tgt.Close();
     }
 
+    public new void Dispose()
+    {
+        src.Dispose();
+        tgt.Dispose();
+    }
+
+    public new void DisposeAsync()
+    {
+        src.DisposeAsync();
+        tgt.DisposeAsync();
+    }
+
     public override long Seek(long offset, SeekOrigin origin) =>
         src.Seek(offset, origin);
 

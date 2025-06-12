@@ -32,26 +32,26 @@ public sealed class WriterAsOutputStreamTest
                     )
                 ).Trigger();
 
-                // using (var tee =
-                //        new AsConduit(
-                //            new TeeOnReadStream(
-                //                new AsConduit(inputPath).Stream(),
-                //                new WriterAsOutputStream(
-                //                    new StreamWriter(outputPath)
-                //                )
-                //            )
-                //        )
-                //       )
-                // {
-                //     tee.Stream().Flush();
-                //     tee.Stream().Dispose();
-                //     // new FullRead(tee, flush: true, close: false).Trigger();
-                //     //
-                //     // Assert.Equal(
-                //     //     tee.Length().Int(),
-                //     //     new Uri(Path.GetFullPath(outputPath)).AsStream().Length
-                //     // );
-                // }
+                using (var tee =
+                       new AsConduit(
+                           new TeeOnReadStream(
+                               new AsConduit(inputPath).Stream(),
+                               new WriterAsOutputStream(
+                                   new StreamWriter(outputPath)
+                               )
+                           )
+                       )
+                      )
+                {
+                    // tee.Stream().Flush();
+                    // tee.Stream().Dispose();
+                    // new FullRead(tee, flush: true, close: false).Trigger();
+                    //
+                    // Assert.Equal(
+                    //     tee.Length().Int(),
+                    //     new Uri(Path.GetFullPath(outputPath)).AsStream().Length
+                    // );
+                }
             }
         }
     }

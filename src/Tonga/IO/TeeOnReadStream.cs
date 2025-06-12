@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Tonga.IO;
 
@@ -62,6 +63,24 @@ public sealed class TeeOnReadStream(Stream src, Stream tgt) : Stream
         catch (Exception) { }
 
         base.Dispose(disposing);
+    }
+
+    public override ValueTask DisposeAsync()
+    {
+        try
+        {
+            src.FlushAsync();
+            src.DisposeAsync();
+        }
+        catch (Exception) { }
+        try
+        {
+            tgt.FlushAsync();
+            tgt.DisposeAsync();
+        }
+        catch (Exception) { }
+
+        return base.DisposeAsync();
     }
 
     public override void Flush()

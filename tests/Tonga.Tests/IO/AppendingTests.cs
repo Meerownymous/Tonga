@@ -17,22 +17,21 @@ namespace Tonga.Tests.IO
             if (File.Exists(file)) File.Delete(file);
 
             var txt = "Hello, товарищ!";
-
-            var stream =
+            var conduit =
                 new TeeOnRead(txt,
                     new Appending(
                         new AsConduit(new Uri(file))
                     )
                 );
 
-            new FullRead(stream, close: false).Trigger();
-            new FullRead(stream, close: false).Trigger();
+                new FullRead(conduit, close: false).Trigger();
+                new FullRead(conduit).Trigger();
 
-            Assert.Equal(
-                txt + txt,
-                new ConduitAsBytes(
-                    new AsConduit(new Uri(file))).AsText().Str()
-            );
+                Assert.Equal(
+                    txt + txt,
+                    new ConduitAsBytes(
+                        new AsConduit(new Uri(file))).AsText().Str()
+                );
         }
 
         [Fact]
@@ -67,15 +66,12 @@ namespace Tonga.Tests.IO
         [Fact]
         public void DisposesStream()
         {
-            using (var temp = new TempFile())
-            {
-
-                var appendTo = new Appending(new Uri(temp.Value()));
-                var stream = appendTo.Stream();
-                Assert.True(stream.CanWrite);
-                appendTo.Dispose();
-                Assert.False(stream.CanWrite);
-            }
+            using var temp = new TempFile();
+            var appendTo = new Appending(new Uri(temp.Value()));
+            var stream = appendTo.Stream();
+            Assert.True(stream.CanWrite);
+            appendTo.Dispose();
+            Assert.False(stream.CanWrite);
         }
     }
 }

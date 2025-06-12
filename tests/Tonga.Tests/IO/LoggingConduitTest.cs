@@ -34,20 +34,23 @@ namespace Tonga.Tests.IO
             using var tempfile = new TempFile("txt");
             using (var append = new Appending(new Uri(tempfile.Value())))
             {
-                var output =
-                    new LoggingOnReadConduit(
-                        append,
-                        "memory"
-                    ).Stream();
-
-                output.Write(new AsBytes("a").Raw(), 0, 1);
-
+                using (var output =
+                       new LoggingOnReadConduit(
+                           append,
+                           "memory"
+                       ).Stream()
+                      )
+                {
+                    output.Write(new AsBytes("a").Raw(), 0, 1);
+                }
             }
+
             string content;
             using (var reader = new Uri(tempfile.Value()).AsStreamReader())
             {
                 content = reader.ReadToEnd();
             }
+
             Assert.Equal(
                 "a",
                 content

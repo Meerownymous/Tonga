@@ -173,13 +173,16 @@ namespace Tonga.Tests.IO
             using var file = new TempFile();
             //new FullRead(
 
+            var stream =
                 new TeeOnReadStream(
                     "Hello World\r\n"
                         .AsRepeated(1000)
                         .AsStream(),
                     new Uri(file.Value())
                         .AsStream()
-                ).Flush();
+                );
+            stream.Flush();
+            stream.Close();
             //).Trigger();
 
             System.Threading.Thread.Sleep(1000);

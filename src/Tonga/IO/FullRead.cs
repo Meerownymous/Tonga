@@ -10,6 +10,8 @@ namespace Tonga.IO;
 /// </summary>
 public sealed class FullRead(Func<Stream> source, bool flush = true, bool close = true) : ITap
 {
+    private readonly Lazy<Stream> stream = new(source);
+
     public FullRead(IConduit conduit, bool flush = true, bool close = true) : this(conduit.Stream, flush, close)
     { }
 
@@ -19,22 +21,21 @@ public sealed class FullRead(Func<Stream> source, bool flush = true, bool close 
     public void Trigger()
     {
         long size = 0;
-        var stream = source();
         var memorizedPosition = 0L;
-        if (stream.CanSeek)
-            memorizedPosition = stream.Position;
+        if (stream.Value.CanSeek)
+            memorizedPosition = stream.Value.Position;
         byte[] buf = new byte[16 << 10];
 
         int bytesRead;
-        while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
+        while ((bytesRead = stream.Value.Read(buf, 0, buf.Length)) > 0)
         {
             size += bytesRead;
         }
 
-        if (stream.CanSeek)
-            stream.Seek(memorizedPosition, SeekOrigin.Begin);
-        if (flush) stream.Flush();
-        if (close) stream.Close();
+        if (!close && stream.Value.CanSeek)
+            stream.Value.Seek(memorizedPosition, SeekOrigin.Begin);
+        if (flush) stream.Value.Flush();
+        if (close) stream.Value.Dispose();
     }
 }
 

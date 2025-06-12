@@ -45,12 +45,15 @@ public sealed class WriterAsOutputStreamTest
                 {
                     // tee.Stream().Flush();
                     // tee.Stream().Dispose();
-                    // new FullRead(tee, flush: true, close: false).Trigger();
-                    //
-                    // Assert.Equal(
-                    //     tee.Length().Int(),
-                    //     new Uri(Path.GetFullPath(outputPath)).AsStream().Length
-                    // );
+                    new FullRead(tee, flush: true, close: false).Trigger();
+                    Assert.Equal(
+                        tee.Length()
+                            .Int(),
+                        new Uri(Path.GetFullPath(outputPath))
+                            .AsStream()
+                            .Length()
+                            .Int()
+                    );
                 }
             }
         }

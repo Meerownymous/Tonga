@@ -57,32 +57,34 @@ namespace Tonga.Tests.IO
         [Fact]
         public void LogsWriteTextToTextFile()
         {
-            using var tempfile = new TempFile("txt");
-            var bytes = new AsBytes("Hello World!").Raw();
-
-            using (var append = new Appending(new Uri(tempfile.Value())))
+            using(var tempfile = new TempFile("txt"))
             {
-                var output =
-                    new LoggingOnReadConduit(
-                        append,
-                        "memory"
-                    ).Stream();
+                var bytes = new AsBytes("Hello World!").Raw();
+
+                using (var append = new Appending(new Uri(tempfile.Value())))
+                {
+                    var output =
+                        new LoggingOnReadConduit(
+                            append,
+                            "memory"
+                        ).Stream();
 
 
-                output.Write(bytes, 0, bytes.Length);
+                    output.Write(bytes, 0, bytes.Length);
+                }
+
+
+                string content;
+                using (var reader = new Uri(tempfile.Value()).AsStreamReader())
+                {
+                    content = reader.ReadToEnd();
+                }
+
+                Assert.Equal(
+                    bytes,
+                    new AsBytes(content).Raw()
+                );
             }
-
-
-            string content;
-            using (var reader = new Uri(tempfile.Value()).AsStreamReader())
-            {
-                content = reader.ReadToEnd();
-            }
-
-            Assert.Equal(
-                bytes,
-                new AsBytes(content).Raw()
-            );
         }
 
         [Fact]

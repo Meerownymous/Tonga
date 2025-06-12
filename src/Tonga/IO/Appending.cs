@@ -10,9 +10,9 @@ namespace Tonga.IO
     /// <summary>
     /// Append <see cref="IConduit"/> to a target.
     /// </summary>
-    public sealed class Appending(Func<IConduit> target) : IConduit, IDisposable
+    public sealed class Appending(Func<Stream> target) : IConduit, IDisposable
     {
-        private readonly Lazy<Stream> stream = new(target().Stream);
+        private readonly Lazy<Stream> stream = new(target);
 
         /// <summary>
         /// Append <see cref="IConduit"/> to a target file Uri.
@@ -43,7 +43,7 @@ namespace Tonga.IO
         /// Append <see cref="IConduit"/> to a target <see cref="Stream"/> returned by a <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="fnc">target stream returning function</param>
-        public Appending(Func<Stream> fnc) : this(new AsConduit(fnc))
+        public Appending(IConduit fnc) : this(fnc.Stream)
         { }
 
         /// <summary>
@@ -51,13 +51,6 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="stream">target stream</param>
         public Appending(Stream stream) : this(new AsConduit(stream))
-        { }
-
-        /// <summary>
-        /// Append <see cref="IConduit"/> to a target <see cref="IConduit"/>.
-        /// </summary>
-        /// <param name="output">target output</param>
-        public Appending(IConduit output) : this(() => output)
         { }
 
         /// <summary>

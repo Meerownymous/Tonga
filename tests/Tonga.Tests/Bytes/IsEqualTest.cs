@@ -19,7 +19,7 @@ public sealed class IsEqualTest
     [Fact]
     public void IsFalseOnDifferentLength()
     {
-        Assert.True(
+        Assert.False(
             new IsEqual(
                 new AsBytes(1),
                 new AsBytes(3.2d)

@@ -9,10 +9,10 @@ namespace Tonga.IO;
 /// </summary>
 public sealed class FullRead(Func<Stream> source, bool flush = true, bool close = true) : IPipe<Stream>
 {
-    public FullRead(IConduit conduit, bool flush = true, bool close = true) : this(conduit.Stream, flush, close)
+    public FullRead(IConduit conduit, bool flush = true, bool close = false) : this(conduit.Stream, flush, close)
     { }
 
-    public FullRead(Stream stream, bool flush = true, bool close = true) : this(() => stream, flush, close)
+    public FullRead(Stream stream, bool flush = true, bool close = false) : this(() => stream, flush, close)
     { }
 
     public Stream Yield()

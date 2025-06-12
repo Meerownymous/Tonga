@@ -25,5 +25,5 @@ public static partial class EnumerableSmarts
     /// <summary>
     /// Tells if an enumerable has less than the specified items.
     /// </summary>
-    public static IFact HasAtLeast(this IEnumerable source, int amount) => new HasLessThan(amount, source);
+    public static IFact HasAtLeast(this IEnumerable source, int amount) => new HasAtLeast(amount, source);
 }

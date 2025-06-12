@@ -112,9 +112,9 @@ public sealed class TrimmedTest
     {
         Assert.Equal(
             "ello! \t",
-            new Trimmed(" \b   \t      Hello! \t \b   \t      H"
+            " \b   \t      Hello! \t \b   \t      H"
                 .AsText()
-                .AsTrimmed(" \b   \t      H".AsText()))
+                .AsTrimmed(" \b   \t      H".AsText())
                 .Str()
         );
     }
@@ -124,11 +124,10 @@ public sealed class TrimmedTest
     {
         Assert.Equal(
             "World ",
-            new Trimmed(
-                "Hello Hello World Hello "
-                    .AsText()
-                    .AsTrimmed("Hello ".AsText())
-            ).Str()
+            "Hello Hello World Hello "
+                .AsText()
+                .AsTrimmed("Hello ")
+                .Str()
         );
     }
 }

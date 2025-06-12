@@ -169,14 +169,13 @@ public sealed class AsText(Func<string> txt) : IText
     /// <param name="encoding">encoding of the <see cref="IConduit"/></param>
     /// <param name="max">maximum buffer size</param>
     public AsText(IConduit origin, int max, Encoding encoding) : this(new AsBytes(origin, max), encoding)
-    {
-    }
+    { }
 
     /// <summary>
     /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
     /// </summary>
     /// <param name="rdr">a <see cref="StreamReader"/></param>
-    public AsText(StringReader rdr) : this(new AsBytes(new AsConduit(rdr)))
+    public AsText(StringReader rdr) : this(new ReaderAsBytes(rdr))
     {
     }
 
@@ -185,7 +184,7 @@ public sealed class AsText(Func<string> txt) : IText
     /// </summary>
     /// <param name="rdr">a <see cref="StreamReader"/></param>
     /// <param name="enc"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
-    public AsText(StringReader rdr, Encoding enc) : this(new AsBytes(rdr), enc)
+    public AsText(StringReader rdr, Encoding enc) : this(new ReaderAsBytes(rdr, enc))
     {
     }
 
@@ -201,8 +200,8 @@ public sealed class AsText(Func<string> txt) : IText
     /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
     /// </summary>
     /// <param name="rdr">a <see cref="StreamReader"/></param>
-    /// <param name="cset"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
-    public AsText(StreamReader rdr, Encoding cset) : this(new AsBytes(rdr, cset))
+    /// <param name="enc"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
+    public AsText(StreamReader rdr, Encoding enc) : this(new AsBytes(rdr, enc))
     {
     }
 
@@ -210,9 +209,9 @@ public sealed class AsText(Func<string> txt) : IText
     /// A <see cref="IText"/> out of a <see cref="StreamReader"/>.
     /// </summary>
     /// <param name="rdr">a <see cref="StreamReader"/></param>
-    /// <param name="cset"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
+    /// <param name="enc"><see cref="Encoding"/> of the <see cref="StreamReader"/></param>
     /// <param name="max">maximum buffer size</param>
-    public AsText(StreamReader rdr, Encoding cset, int max) : this(new AsBytes(rdr, cset, max))
+    public AsText(StreamReader rdr, Encoding enc, int max) : this(new AsBytes(rdr, enc, max))
     {
     }
 

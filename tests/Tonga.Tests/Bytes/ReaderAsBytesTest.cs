@@ -10,6 +10,14 @@ namespace Tonga.Tests.Bytes
         [Fact]
         public void ReadsString()
         {
+            var reader = "hello, друг!".AsStreamReader();
+            var bytes = new ReaderAsBytes(reader).Raw();
+
+            var x =
+                new ReaderAsBytes(
+                    "hello, друг!".AsStreamReader()
+                ).AsStream();//.FullRead().Yield();
+
             Assert.Equal(
                 "hello, друг!",
                     new ReaderAsBytes(

@@ -13,21 +13,19 @@ namespace Tonga.Tests.IO
         [Fact]
         public void CopiesFromUrlToFile()
         {
-            using (var directory = new TempDirectory())
-            {
-                var directoryPath = directory.Value().FullName;
-                new FullRead(
-                    new TeeOnRead(
-                        new Uri("http://www.google.de"),
-                        new Uri($@"file://{directoryPath}\output.txt")
-                    )
-                ).Yield();
+            using var directory = new TempDirectory();
+            var directoryPath = directory.Value().FullName;
+            new FullRead(
+                new TeeOnRead(
+                    new Uri("http://www.google.de"),
+                    new Uri($@"file://{directoryPath}\output.txt")
+                )
+            ).Yield();
 
-                Assert.Contains(
-                    "<html",
-                    File.ReadAllText($@"{directoryPath}\output.txt")
-                );
-            }
+            Assert.Contains(
+                "<html",
+                File.ReadAllText($@"{directoryPath}\output.txt")
+            );
         }
 
         [Fact]
@@ -59,11 +57,11 @@ namespace Tonga.Tests.IO
             var baos = new MemoryStream();
             String content = "Hello, товарищ!";
             Assert.Equal(
-                Encoding.UTF8.GetString(baos.ToArray()),
                 new TeeOnRead(
                     new AsConduit(content),
                     new AsConduit(baos)
-                ).AsText().Str()
+                ).AsText().Str(),
+                Encoding.UTF8.GetString(baos.ToArray())
             );
         }
 

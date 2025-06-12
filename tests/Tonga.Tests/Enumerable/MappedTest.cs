@@ -90,7 +90,7 @@ namespace Tonga.Tests.Enumerable
                     .AsEnumerable()
                     .AsMapped((input, index) => new Upper((input + index)
                     .AsText())
-                ).First()
+                ).ItemAt(1)
                 .Value()
                 .Str()
             );

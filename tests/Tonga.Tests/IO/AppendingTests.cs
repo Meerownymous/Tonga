@@ -25,8 +25,8 @@ namespace Tonga.Tests.IO
                     )
                 );
 
-            new FullRead(stream).Yield();
-            new FullRead(stream).Yield();
+            new FullRead(stream, close: false).Yield();
+            new FullRead(stream, close: false).Yield();
 
             Assert.Equal(
                 txt + txt,
@@ -49,8 +49,8 @@ namespace Tonga.Tests.IO
                     )
                 );
 
-            new FullRead(tee).Yield();
-            new FullRead(tee).Yield();
+            new FullRead(tee, close: false).Yield();
+            new FullRead(tee, close: false).Yield();
             tee.Stream().Close();
 
             Assert.Equal(

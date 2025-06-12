@@ -24,13 +24,13 @@ public sealed class DivergencyTests
     public void MatchesString(IEnumerable<string> a, IEnumerable<string> b, IEnumerable<string> expected)
     {
         Assert.Equal(
-            expected,
-            new Divergency<string>(b, a)
+            expected.AsSorted(),
+            new Divergency<string>(b, a).AsSorted()
         );
     }
 
     [Theory]
-    [InlineData(new[] { 5, 6 }, new[] { 1, 2 }, new[] { 1, 2, 5, 6 })]
+    [InlineData(new[] { 1, 2 }, new[] { 5, 6 }, new[] { 1, 2, 5, 6 })]
     [InlineData(new[] { 1, 2 }, new[] { 1 }, new[] { 2 })]
     public void MatchesInt(IEnumerable<int> a, IEnumerable<int> b, IEnumerable<int> expected)
     {

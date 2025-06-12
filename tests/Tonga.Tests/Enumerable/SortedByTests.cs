@@ -13,7 +13,7 @@ namespace Tonga.Tests.Enumerable
                 ["nr-6", "nr0", "nr2", "nr3", "nr10", "nr44"],
                 ("nr3", "nr2", "nr10", "nr44", "nr-6", "nr0")
                     .AsEnumerable()
-                    .AsSortedBy(s => Convert.ToInt32(s[2]))
+                    .AsSortedBy(s => Convert.ToInt32(s.Substring(2)))
             );
         }
 

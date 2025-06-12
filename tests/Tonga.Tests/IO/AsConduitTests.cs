@@ -82,17 +82,19 @@ namespace Tonga.Tests.IO
         [Fact]
         public void ReadsSimpleFileContent()
         {
-            var dir = @"artifacts/InputOfTest"; var file = "simple-filecontent.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));
-            Directory.CreateDirectory(dir);
+            using var tempDir = new TempDirectory();
+            var file = "simple-filecontent.txt";
+            var path = Path.GetFullPath(Path.Combine(tempDir.Value().FullName, file));
             String content = "Hello, товарищ!";
 
             new FullRead(
                 new TeeOnReadStream(
                     new MemoryStream(
-                        new Joined(
-                            "\r\n",
-                            content.AsRepeated(10)
-                        ).AsBytes().Raw()
+                        $"{content}\r\n"
+                            .AsRepeated(10)
+                            .AsTrimmedRight("\r\n")
+                            .AsBytes()
+                            .Raw()
                     ),
                     new Uri(path)
                         .AsConduit()
@@ -103,10 +105,10 @@ namespace Tonga.Tests.IO
             Assert.EndsWith(
                 content,
                 new AsConduit(
-                    new Uri(path)
-                )
-                .AsText()
-                .Str()
+                        new Uri(path)
+                    )
+                    .AsText()
+                    .Str()
             );
         }
 
@@ -118,16 +120,15 @@ namespace Tonga.Tests.IO
             {
                 new AsConduit(input).AsText().Str();
             }
-
             Assert.False(input.CanRead);
         }
 
         [Fact]
         public void ReadsFileContent()
         {
-            var dir = "artifacts/InputOfTest"; var file = "small-text.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));
-            Directory.CreateDirectory(dir);
-            if (File.Exists(path)) File.Delete(path);
+            using var tempDir = new TempDirectory();
+            var file = "small-text.txt";
+            var path = Path.GetFullPath(Path.Combine(tempDir.Value().FullName, file));
 
             new FullRead(
                 new TeeOnReadStream(
@@ -173,9 +174,9 @@ namespace Tonga.Tests.IO
             new FullRead(
                 new AsConduit(
                     new TeeOnReadStream(
-                        new Joined("\r\n",
-                            "Hello World".AsRepeated(1000)
-                        ).AsStream(),
+                            "Hello World\r\n"
+                                .AsRepeated(1000)
+                                .AsStream(),
                         new Uri(file.Value()).AsStream()
                     )
                 )

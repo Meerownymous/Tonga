@@ -10,8 +10,8 @@ namespace Tonga.Tests.Bytes
         public void BytesFromHex()
         {
             Assert.Equal(
-                "666f6f626172",
-                "foobar"
+                "foobar",
+                "666f6f626172"
                     .AsText()
                     .AsHexBytes()
                     .AsText()

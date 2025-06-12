@@ -95,11 +95,12 @@ namespace Tonga.Tests.Collection
             var count = 1;
             var col =
                 count
-                    .AsRepeated(() =>
-                    {
-                        count++;
-                        return 0;
-                    })
+                    .AsRepeated(
+                        repeats: () =>
+                        {
+                            Interlocked.Increment(ref count);
+                            return count;
+                        })
                     .AsCollection();
 
             Assert.NotEqual(col.Count, col.Count);

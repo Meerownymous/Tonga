@@ -9,9 +9,10 @@ namespace Tonga.Tests.Enumerable
         public void DetectsMatch()
         {
             Assert.True(
-                ("a", "b", "c").AsEnumerable()
-                .HasAtLeast(3)
-                .IsTrue()
+                ("a", "b", "c")
+                    .AsEnumerable()
+                    .HasAtLeast(3)
+                    .IsTrue()
             );
         }
 

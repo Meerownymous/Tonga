@@ -4,10 +4,8 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using Tonga.Bytes;
-using Tonga.Scalar;
 
 namespace Tonga.IO;
 
@@ -31,12 +29,19 @@ public sealed class AsConduit : IConduit, IDisposable
             Stream result;
             if (uri.HostNameType == UriHostNameType.Dns)
             {
-                result = new AsConduit(new Url(uri.AbsoluteUri)).Stream();
+                var stream = Task.Run(async () =>
+                {
+                    using HttpClient client = new HttpClient();
+                    HttpResponseMessage response = await client.GetAsync(uri.AbsoluteUri);
+                    HttpContent content = response.Content;
+                    {
+                        return await content.ReadAsStreamAsync();
+                    }
+                });
+                result = stream.Result;
             }
             else
-            {
                 result = new FileStream(Uri.UnescapeDataString(uri.LocalPath), FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            }
             return result;
         })
     { }
@@ -78,16 +83,8 @@ public sealed class AsConduit : IConduit, IDisposable
                     return await content.ReadAsStreamAsync();
                 }
             });
-
             return stream.Result;
         })
-    { }
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="rdr">a stringreader</param>
-    public AsConduit(StringReader rdr) : this(new AsBytes(rdr))
     { }
 
     /// <summary>
@@ -134,8 +131,8 @@ public sealed class AsConduit : IConduit, IDisposable
     /// </summary>
     /// <param name="builder">a stringbuilder</param>
     /// <param name="enc">encoding of the stringbuilder</param>
-    public AsConduit(StringBuilder builder, Encoding enc) : this(
-        () => new MemoryStream(
+    public AsConduit(StringBuilder builder, Encoding enc) : this(() =>
+        new MemoryStream(
             new AsBytes(builder, enc).Raw()
         )
     )
@@ -274,12 +271,6 @@ public static partial class IOSmarts
     /// </summary>
     /// <param name="url">a url starting with http:// or https://</param>
     public static IConduit AsConduit(this Func<Url> url) => new AsConduit(url);
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="rdr">a stringreader</param>
-    public static IConduit AsConduit(this StringReader rdr) => new AsConduit(rdr);
 
     /// <summary>
     /// ctor

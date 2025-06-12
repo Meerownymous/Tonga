@@ -49,14 +49,6 @@ public sealed class AsBytes(Func<Byte[]> bytes) : IBytes
     }
 
     /// <summary>
-    /// Bytes out of a StringReader.
-    /// </summary>
-    /// <param name="rdr">stringreader</param>
-    public AsBytes(StringReader rdr) : this(new ReaderAsBytes(rdr))
-    {
-    }
-
-    /// <summary>
     /// Bytes out of a StreamReader.
     /// </summary>
     /// <param name="rdr">streamreader</param>
@@ -73,8 +65,7 @@ public sealed class AsBytes(Func<Byte[]> bytes) : IBytes
     public AsBytes(StreamReader rdr, Encoding enc, int max = 16 << 10) : this(
         new ReaderAsBytes(rdr, enc, max)
     )
-    {
-    }
+    { }
 
     /// <summary>
     /// Bytes out of a list of chars.
@@ -246,7 +237,6 @@ public sealed class AsBytes(Func<Byte[]> bytes) : IBytes
     /// </summary>
     /// <returns>content as byte array</returns>
     public byte[] Raw() => bytes();
-
 }
 
 
@@ -257,7 +247,6 @@ public static partial class BytesSmarts
     public static IBytes AsBytes(this StringBuilder builder) => new AsBytes(builder);
     public static IBytes AsBytes(this StringBuilder builder, Encoding enc) =>
         new AsBytes(builder, enc);
-    public static IBytes AsBytes(this StringReader rdr) => new AsBytes(rdr);
     public static IBytes AsBytes(this StreamReader rdr) => new AsBytes(rdr);
     public static IBytes AsBytes(this StreamReader rdr, Encoding enc, int max = 16 << 10) =>
         new AsBytes(rdr, enc, max);

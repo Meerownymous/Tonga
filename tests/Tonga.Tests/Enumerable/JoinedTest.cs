@@ -24,8 +24,9 @@ namespace Tonga.Tests.Enumerable
         public void JoinsEnumerables()
         {
             Assert.Equal(
-                [],
-                "x".AsEnumerable()
+                new[] { "x", "x" },
+                "x".AsRepeated(2)
+                    .AsMapped(item => item.AsSingle())
                     .AsEnumerable()
                     .AsJoined()
                     .ToArray()
@@ -33,7 +34,7 @@ namespace Tonga.Tests.Enumerable
         }
 
         [Fact]
-        public void JoinsSingleElemtns()
+        public void JoinsSingleElements()
         {
             Assert.Equal(
                 ["hello", "world", "друг", "how", "are", "you", "what's", "up"],

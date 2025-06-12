@@ -26,7 +26,7 @@ namespace Tonga.Tests.Enumerable
                 1,
                 (1, 2, 3)
                     .AsEnumerable()
-                    .Sibling(-1)
+                    .Sibling(2, -1)
                     .Value()
             );
         }

@@ -4,8 +4,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using Tonga.Enumerable;
-using Tonga.Scalar;
-using Tonga.Text;
 
 namespace Tonga.Text;
 
@@ -20,11 +18,8 @@ public sealed class Formatted : TextEnvelope
     /// </summary>
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="arguments">arguments to apply</param>
-    public Formatted(String ptn, params IText[] arguments) : this(
-        ptn.AsText(),
-        CultureInfo.InvariantCulture,
-        () => arguments.AsMapped(txt => txt.Str()).ToArray()
-    )
+    public Formatted(String ptn, params object[] arguments) : this(
+        new AsText(ptn), CultureInfo.InvariantCulture, () => arguments)
     { }
 
     /// <summary>
@@ -32,8 +27,8 @@ public sealed class Formatted : TextEnvelope
     /// </summary>
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="arguments">arguments to apply</param>
-    public Formatted(String ptn, params string[] arguments) : this(
-        ptn.AsText(),
+    public Formatted(IText ptn, params object[] arguments) : this(
+        ptn,
         CultureInfo.InvariantCulture,
         arguments
     )
@@ -45,22 +40,10 @@ public sealed class Formatted : TextEnvelope
     /// <param name="ptn">pattern</param>
     /// <param name="local">CultureInfo</param>
     /// <param name="arguments">arguments to apply</param>
-    public Formatted(IText ptn, CultureInfo local, params string[] arguments) : this(
+    public Formatted(IText ptn, CultureInfo local, params object[] arguments) : this(
         ptn, local, () => arguments
     )
-    {
-    }
-
-    /// <summary>
-    /// A <see cref="IText"/> formatted with arguments.
-    /// </summary>
-    /// <param name="ptn">pattern</param>
-    /// <param name="arguments">arguments to apply</param>
-    public Formatted(IText ptn, params string[] arguments) : this(
-        ptn, CultureInfo.InvariantCulture, () => arguments
-    )
-    {
-    }
+    { }
 
     /// <summary>
     /// A <see cref="IText"/> formatted with arguments.
@@ -68,10 +51,29 @@ public sealed class Formatted : TextEnvelope
     /// <param name="ptn">pattern to put arguments in</param>
     /// <param name="locale">a specific culture</param>
     /// <param name="arguments">arguments to apply</param>
-    public Formatted(String ptn, CultureInfo locale, params string[] arguments) : this(
-        ptn.AsText(), locale, arguments)
-    {
-    }
+    public Formatted(String ptn, CultureInfo locale, params object[] arguments) : this(
+        new AsText(ptn), locale, arguments)
+    { }
+
+    /// <summary>
+    ///  A <see cref="IText"/> formatted with arguments.
+    /// </summary>
+    /// <param name="ptn">pattern to put arguments in</param>
+    /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
+    public Formatted(string ptn, params IText[] arguments) : this(
+        new AsText(ptn),
+        CultureInfo.InvariantCulture,
+        () =>
+        {
+            object[] strings = new object[arguments.Length];
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                strings[i] = arguments[i].Str();
+            }
+            return strings;
+        }
+    )
+    { }
 
     /// <summary>
     ///  A <see cref="IText"/> formatted with arguments.
@@ -80,37 +82,11 @@ public sealed class Formatted : TextEnvelope
     /// <param name="locale">a specific culture</param>
     /// <param name="arguments">arguments as <see cref="IText"/> to apply</param>
     public Formatted(string ptn, CultureInfo locale, params IText[] arguments) : this(
-        ptn.AsText(),
+        new AsText(ptn),
         locale,
-        () =>
-        {
-            object[] strings = new object[arguments.Length];
-            for (int i = 0; i < arguments.Length; i++)
-                strings[i] = arguments[i].Str();
-
-            return strings;
-        }
+        () => arguments.AsMapped(txt => txt.Str()).ToArray()
     )
-    {
-    }
-
-    /// <summary>
-    /// A <see cref="IText"/> formatted with arguments.
-    /// </summary>
-    /// <param name="ptn">pattern to put arguments in</param>
-    /// <param name="locale">a specific culture</param>
-    /// <param name="arguments">arguments to apply</param>
-    public Formatted(
-        IText ptn,
-        CultureInfo locale,
-        IScalar<object[]> arguments
-    ) : this(
-        ptn,
-        locale,
-        arguments.Value
-    )
-    {
-    }
+    { }
 
     /// <summary>
     /// A <see cref="IText"/> formatted with arguments.
@@ -123,12 +99,11 @@ public sealed class Formatted : TextEnvelope
         CultureInfo locale,
         Func<object[]> arguments
     ) : base(
-        new AsText(
-            () => String.Format(locale, ptn.Str(), arguments())
-        )
+        () => String.Format(locale, ptn.Str(), arguments())
     )
     { }
 }
+
 
 public static partial class TextSmarts
 {

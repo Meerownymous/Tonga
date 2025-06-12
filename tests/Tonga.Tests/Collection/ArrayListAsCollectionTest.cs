@@ -15,7 +15,7 @@ namespace Tonga.Tests.Collection
                 new ArrayListAsCollection(
                         new ArrayList { "A", "B", "C" }
                     )
-                    .ItemAt(1)
+                    .ItemAt(0)
                     .Value()
             );
         }

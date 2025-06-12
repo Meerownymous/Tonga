@@ -25,7 +25,6 @@ public sealed class HexBytes(Func<string> origin) : IBytes
         {
             raw[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
         }
-
         return raw;
     });
 

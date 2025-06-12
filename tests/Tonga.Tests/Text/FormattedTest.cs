@@ -46,7 +46,7 @@ namespace Tonga.Tests.Text
                 new Formatted(
                     "{0:0.0}",
                     new CultureInfo("de-DE"),
-                    1234567890.ToString()
+                    1234567890
                 ).Str()
             );
         }

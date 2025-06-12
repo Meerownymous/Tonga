@@ -10,7 +10,9 @@ namespace Tonga.Enumerable;
 /// A <see cref="IEnumerable{T}"/> sorted by the given <see cref="Comparer{T}"/>.
 /// </summary>
 public sealed class SortedBy<T, TKey>(
-    Func<T, TKey> subjectExtraction, Comparer<TKey> cmp, IEnumerable<T> src
+    Func<T, TKey> subjectExtraction,
+    Comparer<TKey> cmp,
+    IEnumerable<T> src
 ) : IEnumerable<T> where TKey : IComparable<TKey>
 {
     /// <summary>
@@ -49,7 +51,7 @@ public sealed class SortedBy<T, TKey>(
 
     public IEnumerator<T> GetEnumerator()
     {
-        foreach (var item in this.Sorted(cmp))
+        foreach (var item in Sorted(src, cmp, subjectExtraction))
         {
             yield return item.Value;
         }
@@ -57,7 +59,11 @@ public sealed class SortedBy<T, TKey>(
 
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-    private SortedDictionary<TKey, T> Sorted(Comparer<TKey> cmp)
+    private static SortedDictionary<TKey, T> Sorted(
+        IEnumerable<T> src,
+        Comparer<TKey> cmp,
+        Func<T, TKey> subjectExtraction
+    )
     {
         var map = new SortedDictionary<TKey, T>(cmp);
         foreach (var item in src)

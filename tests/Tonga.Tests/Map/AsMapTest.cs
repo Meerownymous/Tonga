@@ -14,8 +14,12 @@ public sealed class AsMapTests
     [Fact]
     public void IsThreadSafe()
     {
-        IMap<int, int> oldMap = new Empty<int, int>();
-        Parallel.For(0, 10000, index =>
+        IMap<int, int> oldMap =
+            new AsMap<int, int>(
+                new AsPair<int, int>(0,0)
+            );
+
+        Parallel.For(1, 10000, index =>
             {
                 oldMap = oldMap.With((index, index).AsPair());
                 oldMap.Keys();

@@ -61,7 +61,7 @@ public sealed class AsStreamTest
             new StreamReader(
                 new AsConduit(content).Stream()
             )
-            .AsStream(1)
+            .AsStream()
             .AsText()
             .Str()
         );

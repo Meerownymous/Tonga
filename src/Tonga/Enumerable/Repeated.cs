@@ -79,8 +79,8 @@ public static partial class EnumerableSmarts
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <param name="elm">function to get element to repeat</param>
-    /// <param name="cnt">how often to repeat</param>
-    public static IEnumerable<T> AsRepeated<T>(this Func<T> elm, Func<int> cnt) => new Repeated<T>(elm, cnt);
+    /// <param name="repeats">how often to repeat</param>
+    public static IEnumerable<T> AsRepeated<T>(this Func<T> elm, Func<int> repeats) => new Repeated<T>(elm, repeats);
 
     /// <summary>
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
@@ -93,8 +93,8 @@ public static partial class EnumerableSmarts
     /// <see cref="IEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
     /// <param name="elm">element to repeat</param>
-    /// <param name="cnt">how often to repeat</param>
-    public static IEnumerable<T> AsRepeated<T>(this T elm, Func<int> cnt) => new Repeated<T>(() => elm, cnt);
+    /// <param name="repeats">how often to repeat</param>
+    public static IEnumerable<T> AsRepeated<T>(this T elm, Func<int> repeats) => new Repeated<T>(() => elm, repeats);
 
     /// <summary>
     /// ctor

@@ -12,10 +12,8 @@ namespace Tonga.Tests.IO
         [Fact]
         public void WritesSimplePathContent()
         {
-            var temp = Directory.CreateDirectory("artifacts/AppendToTest/");
-            var file = Path.GetFullPath(Path.Combine(temp.FullName, "file.txt"));
-            if (File.Exists(file)) File.Delete(file);
-
+            using var tempDir = new TempDirectory();
+            var file = Path.GetFullPath(Path.Combine(tempDir.Value().FullName, "file.txt"));
             var txt = "Hello, товарищ!";
             var conduit =
                 new TeeOnRead(txt,

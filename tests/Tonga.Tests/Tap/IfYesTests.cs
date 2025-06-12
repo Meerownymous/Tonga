@@ -30,11 +30,4 @@ public sealed class IfYesTests
 
         Assert.False(acted);
     }
-
-    [Fact]
-    public void IsChainable()
-    {
-        bool acted = false;
-        new IfYes(new True(), () => { acted = true; });
-    }
 }

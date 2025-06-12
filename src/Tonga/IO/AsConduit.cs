@@ -238,7 +238,7 @@ public sealed class AsConduit : IConduit, IDisposable
     /// <summary>
     /// Clean up.
     /// </summary>
-    public void Dispose() => Stream().Dispose();
+    public void Dispose() => this.origin.Value.Dispose();
 }
 
 public static partial class IOSmarts

@@ -174,13 +174,16 @@ namespace Tonga.Tests.IO
             new FullRead(
                 new AsConduit(
                     new TeeOnReadStream(
-                            "Hello World\r\n"
-                                .AsRepeated(1000)
-                                .AsStream(),
-                        new Uri(file.Value()).AsStream()
+                        "Hello World\r\n"
+                            .AsRepeated(1000)
+                            .AsStream(),
+                        new Uri(file.Value())
+                            .AsStream()
                     )
                 )
             ).Trigger();
+
+            System.Threading.Thread.Sleep(1000);
             //
             // Assert.Equal(
             //     1000,

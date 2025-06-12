@@ -127,6 +127,8 @@ public sealed class AsStream(Func<Stream> src) : Stream, IDisposable
     public new void Dispose() =>
         this.stream.Value.Dispose();
 
+    public override void Close() => this.stream.Value.Close();
+
     private static Func<Stream> Streamified(Func<byte[]> src) => () =>
     {
         var b = src();

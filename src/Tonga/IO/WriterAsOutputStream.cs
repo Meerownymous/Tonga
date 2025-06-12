@@ -126,6 +126,8 @@ public sealed class WriterAsOutputStream : Stream, IDisposable
 
     public override void Flush() => this.writer.Flush();
 
+    public override void Close() => this.writer.Close();
+
     public override int Read(byte[] buffer, int offset, int count) =>
         throw new NotImplementedException();
 
@@ -135,7 +137,7 @@ public sealed class WriterAsOutputStream : Stream, IDisposable
     public override void SetLength(long value) =>
         throw new NotImplementedException();
 
-    protected override void Dispose(bool disposing)
+    public new void Dispose(bool disposing)
     {
         try
         {

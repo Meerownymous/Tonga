@@ -171,32 +171,26 @@ namespace Tonga.Tests.IO
         public void ReadsFile()
         {
             using var file = new TempFile();
-            //new FullRead(
-
-            var stream =
+            new FullRead(
                 new TeeOnReadStream(
                     "Hello World\r\n"
                         .AsRepeated(1000)
                         .AsStream(),
                     new Uri(file.Value())
                         .AsStream()
-                );
-            stream.Flush();
-            stream.Close();
-            //).Trigger();
-
-            System.Threading.Thread.Sleep(1000);
-            //
-            // Assert.Equal(
-            //     1000,
-            //     new Uri(file.Value())
-            //         .AsConduit()
-            //         .AsBytes()
-            //         .AsText()
-            //         .AsSplit("\r\n")
-            //         .Length()
-            //         .Value()
-            // );
+                )
+            ).Trigger();
+            
+            Assert.Equal(
+                1000,
+                new Uri(file.Value())
+                    .AsConduit()
+                    .AsBytes()
+                    .AsText()
+                    .AsSplit("\r\n")
+                    .Length()
+                    .Value()
+            );
         }
 
         [Fact]

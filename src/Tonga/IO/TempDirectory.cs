@@ -2,76 +2,60 @@
 
 using System;
 using System.IO;
-using Tonga.Scalar;
 
-namespace Tonga.IO
+namespace Tonga.IO;
+
+/// <summary>
+/// A directory that cleans up when disposed.
+/// </summary>
+public sealed class TempDirectory(Func<string> path) : IScalar<DirectoryInfo>, IDisposable
 {
+    private readonly Lazy<string> path = new(path);
+
     /// <summary>
     /// A directory that cleans up when disposed.
     /// </summary>
-    public sealed class TempDirectory : IScalar<DirectoryInfo>, IDisposable
+    public TempDirectory() : this(
+        () => Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())
+    )
+    { }
+
+    /// <summary>
+    /// A directory that cleans up when disposed.
+    /// </summary>
+    public TempDirectory(string path) : this(() => path)
+    { }
+
+    public void Dispose()
     {
-        private readonly IScalar<string> path;
-
-        /// <summary>
-        /// A directory that cleans up when disposed.
-        /// </summary>
-        public TempDirectory() : this(
-            AsScalar._(() =>
-                Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())
-            )
-        )
-        { }
-
-        /// <summary>
-        /// A directory that cleans up when disposed.
-        /// </summary>
-        public TempDirectory(string path) : this(
-            AsScalar._(path)
-        )
-        { }
-
-        /// <summary>
-        /// A directory that cleans up when disposed.
-        /// </summary>
-        private TempDirectory(IScalar<string> path)
+        if (Directory.Exists(path.Value))
         {
-            this.path = Scalar.Sticky._(path);
+            DeleteDirectory(path.Value);
         }
+    }
 
-        public void Dispose()
+    public DirectoryInfo Value()
+    {
+        if (!Directory.Exists(path.Value))
         {
-            if (Directory.Exists(path.Value()))
-            {
-                DeleteDirectory(path.Value());
-            }
+            Directory.CreateDirectory(path.Value);
         }
+        return new DirectoryInfo(path.Value);
+    }
 
-        public DirectoryInfo Value()
+    private void DeleteDirectory(string pathToRemove)
+    {
+        foreach (string subDir in Directory.GetDirectories(pathToRemove))
+            DeleteDirectory(subDir);
+
+        foreach (string fileName in Directory.EnumerateFiles(pathToRemove))
         {
-            if (!Directory.Exists(this.path.Value()))
+            var fileInfo = new FileInfo(fileName)
             {
-                Directory.CreateDirectory(this.path.Value());
-            }
-            return new DirectoryInfo(this.path.Value());
+                Attributes = FileAttributes.Normal
+            };
+            fileInfo.Delete();
         }
-
-        private void DeleteDirectory(string path)
-        {
-            foreach (string subDir in Directory.GetDirectories(path))
-            {
-                DeleteDirectory(subDir);
-            }
-
-            foreach (string fileName in Directory.EnumerateFiles(path))
-            {
-                var fileInfo = new FileInfo(fileName)
-                {
-                    Attributes = FileAttributes.Normal
-                };
-                fileInfo.Delete();
-            }
-            Directory.Delete(path, true);
-        }
+        Directory.Delete(pathToRemove, true);
     }
 }

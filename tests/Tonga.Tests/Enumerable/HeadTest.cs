@@ -1,6 +1,5 @@
 using Tonga.Enumerable;
 using Tonga.Number;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -13,11 +12,10 @@ namespace Tonga.Tests.Enumerable
             Assert.Equal(
                 3,
                 new SumOf(
-                    Head._(
-                        AsEnumerable._(0, 1, 2, 3, 4),
-                        3
-                    )
-                ).AsInt()
+                    (0, 1, 2, 3, 4)
+                        .AsEnumerable()
+                        .AsHead(3)
+                ).Int()
             );
         }
 
@@ -27,53 +25,39 @@ namespace Tonga.Tests.Enumerable
             Assert.Equal(
                 15,
                 new SumOf(
-                    Head._(
-                        AsEnumerable._(0, 1, 2, 3, 4, 5),
-                        10
-                    )
-                ).AsInt()
+                    (0, 1, 2, 3, 4, 5)
+                        .AsEnumerable()
+                        .AsHead(10)
+                ).Int()
             );
         }
 
         [Fact]
         public void LimitOfZeroProducesEmptyEnumerable()
         {
-            Assert.Equal(
-                0,
-                Length._(
-                    Head._(
-                        AsEnumerable._(0, 1, 2, 3, 4),
-                        0
-                    )
-                ).Value()
+            Assert.Empty(
+                (0, 1, 2, 3, 4)
+                    .AsEnumerable()
+                    .AsHead(0)
             );
         }
 
         [Fact]
         public void NegativeLimitProducesEmptyEnumerable()
         {
-            Assert.Equal(
-                0,
-                Length._(
-                    Head._(
-                        AsEnumerable._(0, 1, 2, 3, 4),
-                        -1
-                    )
-                ).Value()
+            Assert.Empty(
+                (0, 1, 2, 3, 4)
+                    .AsEnumerable()
+                    .AsHead(-1)
             );
         }
 
         [Fact]
         public void EmptyEnumerableProducesEmptyEnumerable()
         {
-            Assert.Equal(
-                0,
-                Length._(
-                    Head._(
-                        None._<Nothing>(),
-                        10
-                    )
-                ).Value()
+            Assert.Empty(
+                new None<Nothing>()
+                    .AsHead(10)
             );
         }
     }

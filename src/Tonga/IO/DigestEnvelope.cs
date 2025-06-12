@@ -7,31 +7,15 @@ namespace Tonga.IO
     /// <summary>
     /// Digest Envelope
     /// </summary>
-    public abstract class DigestEnvelope : IBytes
+    public abstract class DigestEnvelope(IConduit source, System.Func<HashAlgorithm> algorithmFactory) : IBytes
     {
-        private readonly IConduit source;
-        private readonly IScalar<HashAlgorithm> algorithmFactory;
-
-        /// <summary>
-        /// Digest Envelope of Input
-        /// </summary>
-        /// <param name="source">Input</param>
-        /// <param name="algorithmFactory">Factory to create Hash Algorithm</param>
-        public DigestEnvelope(IConduit source, IScalar<HashAlgorithm> algorithmFactory)
-        {
-            this.source = source;
-            this.algorithmFactory = algorithmFactory;
-        }
-
         /// <summary>
         /// Digest
         /// </summary>
-        public byte[] Bytes()
+        public byte[] Raw()
         {
-            using (var sha = algorithmFactory.Value())
-            {
-                return sha.ComputeHash(source.Stream());
-            }
+            using var sha = algorithmFactory();
+            return sha.ComputeHash(source.Stream());
         }
     }
 }

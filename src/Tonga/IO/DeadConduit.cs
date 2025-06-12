@@ -20,9 +20,6 @@ namespace Tonga.IO
         /// Get the stream.
         /// </summary>
         /// <returns>the stream</returns>
-        public Stream Stream()
-        {
-            return new BytesAsConduit(new EmptyBytes()).Stream();
-        }
+        public Stream Stream() => new DeadStream();
     }
 }

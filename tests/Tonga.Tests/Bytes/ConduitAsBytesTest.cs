@@ -3,84 +3,72 @@ using System.Text;
 using Tonga.Bytes;
 using Tonga.Enumerable;
 using Tonga.IO;
-using Tonga.IO.Tests;
 using Tonga.Tests.IO;
 using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Tests.Bytes
+namespace Tonga.Tests.Bytes;
+
+public sealed class ConduitAsBytesTest
 {
-    public sealed class ConduitAsBytesTest
+
+    [Fact]
+    public void ReadsLargeInMemoryContent()
     {
+        int multiplier = 5_000;
+        String text = "1234567890";
+        Assert.Equal(
+            text.Length * multiplier,
+            new ConduitAsBytes(
+                text.AsEndless()
+                    .AsHead(multiplier)
+                    .AsJoined("")
+                    .AsConduit()
+            ).Raw().Length
+        );
+    }
 
-        [Fact]
-        public void ReadsLargeInMemoryContent()
-        {
-            int multiplier = 5_000;
-            String body = "1234567890";
-            Assert.True(
+    [Fact]
+    public void ReadsLargeContent()
+    {
+        int size = 100_000;
+        using var slow = new SlowInputStream(size);
+        Assert.Equal(
+            size,
+            new ConduitAsBytes(
+                slow.AsConduit()
+            ).Raw().Length
+        );
+    }
+
+    [Fact]
+    public void ReadsInputIntoBytes()
+    {
+        var content = "Hello, друг!";
+        Assert.Equal(
+            content,
+            Encoding.UTF8.GetString(
                 new ConduitAsBytes(
-                        new AsConduit(
-                        String.Join(
-                            "",
-                                new Head<string>(
-                                new Endless<string>(body),
-                                multiplier
-                            )
-                        )
-                    )
-                ).Bytes().Length == body.Length * multiplier,
-                "Can't read large content from in-memory Input");
-        }
+                    content.AsText().AsBytes().AsConduit()
+                ).Raw()
+            )
+        );
+    }
 
-        [Fact]
-        public void ReadsLargeContent()
-        {
-            int size = 100_000;
-            using (var slow = new SlowInputStream(size))
-            {
-                Assert.True(
-                    new ConduitAsBytes(
-                        new AsConduit(slow)
-                    ).Bytes().Length == size,
-                    "Can't read large content from Input");
-            }
-        }
-
-        [Fact]
-        public void ReadsInputIntoBytes()
-        {
-            var content = "Hello, друг!";
-
-            Assert.True(
-                    Encoding.UTF8.GetString(
-                        new ConduitAsBytes(
-                            new AsConduit(
-                                new AsBytes(
-                                    AsText._(content)
-                                )
-                            )
-                        ).Bytes()) == content,
-                    "cannot read bytes into input");
-        }
-
-        [Fact]
-        public void ReadsInputIntoBytesWithSmallBuffer()
-        {
-            var content = "Hello, товарищ!";
-
-            Assert.True(
-                    Encoding.UTF8.GetString(
-                        new ConduitAsBytes(
-                            new AsConduit(
-                                new AsBytes(
-                                    AsText._(content)
-                                )
-                            ),
-                            2
-                        ).Bytes()) == content,
-                    "cannot read bytes with small buffer");
-        }
-
+    [Fact]
+    public void ReadsInputIntoBytesWithSmallBuffer()
+    {
+        var content = "Hello, товарищ!";
+        Assert.Equal(
+            content,
+            Encoding.UTF8.GetString(
+                new ConduitAsBytes(
+                    content.AsText()
+                        .AsBytes()
+                        .AsConduit(),
+                    2
+                ).Raw()
+            )
+        );
     }
 }

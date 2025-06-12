@@ -46,14 +46,14 @@ namespace Tonga.Text
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
         public IsNumber(IText text, IFormatProvider provider) : base(
-            new AsFact(() =>
+            () =>
                 double.TryParse(
-                    text.AsString(),
+                    text.Str(),
                     NumberStyles.Any,
                     provider,
                     out var unused
                 )
-            )
+
         )
         { }
     }

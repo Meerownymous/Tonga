@@ -34,25 +34,12 @@ namespace Tonga.Enumerable
         }
     }
 
-    /// <summary>
-    /// Enumerable partitioned by a given size.
-    /// <para>Is a IEnumerable</para>
-    /// </summary>
-    public static class Partitioned
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// Enumerable partitioned by a given size.
         /// </summary>
-        public static IEnumerable<IEnumerable<T>> _<T>(int size, IEnumerable<T> items) =>
-            new Partitioned<T>(size, items);
-    }
-
-    public static class PartitionedSmarts
-    {
-        /// <summary>
-        /// Enumerable partitioned by a given size.
-        /// </summary>
-        public static IEnumerable<IEnumerable<T>> Partitioned<T>(this IEnumerable<T> items, int size) =>
+        public static IEnumerable<IEnumerable<T>> AsPartitioned<T>(this IEnumerable<T> items, int size) =>
             new Partitioned<T>(size, items);
     }
 }

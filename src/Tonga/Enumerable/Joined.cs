@@ -1,15 +1,10 @@
-
-
 using System.Collections;
 using System.Collections.Generic;
-
-#pragma warning disable NoGetOrSet // No Statics
-#pragma warning disable CS1591
 
 namespace Tonga.Enumerable
 {
     /// <summary>
-    /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
+    /// Multiple <see cref="IEnumerable{T}"/> joined together.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class Joined<T>(IEnumerable<IEnumerable<T>> items) : IEnumerable<T>
@@ -21,9 +16,9 @@ namespace Tonga.Enumerable
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         public Joined(T first, T second, IEnumerable<T> lst, params T[] items) : this(
-            AsEnumerable._(first, second),
+            new AsEnumerable<T>(first, second),
             lst,
-            AsEnumerable._(items)
+            new AsEnumerable<T>(items)
         )
         { }
 
@@ -31,10 +26,10 @@ namespace Tonga.Enumerable
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         public Joined(T first, IEnumerable<T> lst, params T[] items) : this(
-            AsEnumerable._(
-                Single._(first),
+            new AsEnumerable<IEnumerable<T>>(
+                first.AsSingle(),
                 lst,
-                AsEnumerable._(items)
+                items.AsEnumerable()
             )
         )
         { }
@@ -43,9 +38,8 @@ namespace Tonga.Enumerable
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
         public Joined(IEnumerable<T> lst, params T[] items) : this(
-            AsEnumerable._(lst,
-                AsEnumerable._(items)
-            )
+            lst,
+            items.AsEnumerable()
         )
         { }
 
@@ -53,7 +47,7 @@ namespace Tonga.Enumerable
         /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         public Joined(params IEnumerable<T>[] items) : this(
-            AsEnumerable._(items)
+            items.AsEnumerable()
         )
         { }
 
@@ -73,54 +67,37 @@ namespace Tonga.Enumerable
         }
     }
 
-    /// <summary>
-    /// Multiple <see cref="IEnumerable{T}"/> Joined together.
-    /// </summary>
-    public static class Joined
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
-        /// <param name="lst">enumerable of items to join</param>
-        /// <param name="items">array of items to join</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> lst, params T[] items) => new Joined<T>(lst, items);
+        public static IEnumerable<T> AsJoined<T>(this IEnumerable<T> lst, IEnumerable<T> items) =>
+            new Joined<T>(lst, items);
 
-        /// <summary>
-        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
-        /// </summary>
-        /// <param name="items">enumerables to join</param>
-        public static IEnumerable<T> _<T>(params IEnumerable<T>[] items) => new Joined<T>(items);
-
-        /// <summary>
-        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
-        /// </summary>
-        /// <param name="items">enumerables to join</param>
-        public static IEnumerable<T> _<T>(IEnumerable<IEnumerable<T>> items) => new Joined<T>(items);
-    }
-
-    public static class JoinedSmarts
-    {
         /// <summary>
         /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
-        public static IEnumerable<T> Joined<T>(this IEnumerable<T> lst, params T[] items) => new Joined<T>(lst, items);
+        public static IEnumerable<T> AsJoined<T>(this IEnumerable<T> lst, T item) =>
+            new Joined<T>(lst, item);
 
         /// <summary>
-        /// Join a single Element with an enumerable.
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
         /// </summary>
-        public static IEnumerable<T> Joined<T>(this T firstItem, IEnumerable<T> items) => new Joined<T>(new Single<T>(firstItem), items);
+        public static IEnumerable<T> AsJoined<T>(this IEnumerable<T> lst, params T[] item) =>
+            new Joined<T>(lst, item);
+
+        /// <summary>
+        /// Join a <see cref="IEnumerable{T}"/> with (multiple) single Elements.
+        /// </summary>
+        public static IEnumerable<string> AsJoined<T>(this IEnumerable<string> lst, string item) =>
+            new Joined<string>(lst, item);
 
         /// <summary>
         /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
         /// </summary>
         /// <param name="items">enumerables to join</param>
-        public static IEnumerable<T> Joined<T>(this IEnumerable<T>[] items) => new Joined<T>(items);
-
-
-        /// <summary>
-        /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
-        /// </summary>
-        /// <param name="items">enumerables to join</param>
-        public static IEnumerable<T> Joined<T>(this IEnumerable<IEnumerable<T>> items) => new Joined<T>(items);
+        public static IEnumerable<T> AsJoined<T>(this IEnumerable<IEnumerable<T>> items) =>
+            new Joined<T>(items);
     }
 }

@@ -3,7 +3,6 @@ using System.Globalization;
 using Tonga.Text;
 using Xunit;
 
-#pragma warning disable MaxPublicMethodCount // a public methods count maximum
 namespace Tonga.Tests.Text
 {
     public sealed class FormattedTest
@@ -11,33 +10,21 @@ namespace Tonga.Tests.Text
         [Fact]
         public void FormatsText()
         {
-            Assert.True(
+            Assert.Equal(
+                "1 Formatted text",
                 new Formatted(
-                    "{0} Formatted {1}", 1, "text"
-                ).AsString().Contains("1 Formatted text"),
-                "Can't format a text");
-        }
-
-        [Fact]
-        public void FormatsTextWithObjects()
-        {
-            Assert.True(
-                new Formatted(
-                    AsText._("{0}. Number as {1}"),
-                    1,
-                    "string"
-                ).AsString().Contains("1. Number as string"),
-                "Can't format a text with objects");
+                    "{0} Formatted {1}", 1.ToString(), "text"
+                ).Str()
+            );
         }
 
         [Fact]
         public void FailsForInvalidPattern()
         {
-            Assert.Throws<FormatException>(
-                () => new Formatted(
-                    AsText._("Formatted { {0} }"),
-                    new string[] { "invalid" }
-            ).AsString());
+            Assert.Throws<FormatException>(() =>
+                new Formatted(
+                    "Formatted { {0} }", "invalid").Str()
+                );
         }
 
         [Fact]
@@ -46,20 +33,22 @@ namespace Tonga.Tests.Text
             Assert.Equal(
                 "1. Formatted as txt",
                 new Formatted(
-                    AsText._("{0}. Formatted as {1}"),
-                    new String[] { "1", "txt" }
-                ).AsString()
+                    "{0}. Formatted as {1}".AsText(), "1", "txt"
+                ).Str()
             );
         }
 
         [Fact]
         public void FormatsWithLocale()
         {
-            Assert.True(
+            Assert.Equal(
+                "1234567890,0",
                 new Formatted(
-                    "{0:0.0}", new CultureInfo("de-DE"), 1234567890
-                ).AsString() == "1234567890,0",
-                "Can't format a text with Locale");
+                    "{0:0.0}",
+                    new CultureInfo("de-DE"),
+                    1234567890
+                ).Str()
+            );
         }
 
         [Fact]
@@ -69,9 +58,9 @@ namespace Tonga.Tests.Text
                 "This is a FormattedText test",
                 new Formatted(
                     "{0} is a {1} test",
-                    AsText._("This"),
-                    AsText._("FormattedText")
-                ).AsString()
+                    "This".AsText(),
+                    "FormattedText".AsText()
+                ).Str()
             );
 
         }

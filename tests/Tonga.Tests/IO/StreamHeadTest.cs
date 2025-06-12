@@ -3,52 +3,42 @@ using Tonga.IO;
 using Tonga.Text;
 using Xunit;
 
-namespace Tonga.Tests.IO
+namespace Tonga.Tests.IO;
+
+public sealed class StreamHeadTest
 {
-    public sealed class StreamHeadTest
+    [Fact]
+    void IsSkippingLessThanTotal()
     {
-        [Fact]
-        void IsSkippingLessThanTotal()
-        {
-            var stream =
-                new StreamHead(
-                    new Tonga.IO.AsConduit("testSkippingLessThanTotal").Stream(),
-                    5
-                );
+        var stream =
+            "testSkippingLessThanTotal"
+                .AsStream()
+                .AsHead(5);
 
-            var skipped = stream.Seek(3L, SeekOrigin.Begin);
+        var skipped = stream.Seek(3L, SeekOrigin.Begin);
 
-            Assert.Equal(
-                3L,
-                skipped
-            );
+        Assert.Equal(3L, skipped);
 
-            Assert.Contains(
-                "tS",
-                AsText._(new Tonga.IO.AsConduit(stream)).AsString()
-            );
-        }
+        Assert.Contains(
+            "tS",
+            stream.AsText().Str()
+        );
+    }
 
-        [Fact]
-        void IsSkippingMoreThanTotal()
-        {
-            var stream =
-                new StreamHead(
-                    new Tonga.IO.AsConduit("testSkippingMoreThanTotal").Stream(),
-                    5
-                );
-            var skipped = stream.Seek(7L, SeekOrigin.Begin);
+    [Fact]
+    void IsSkippingMoreThanTotal()
+    {
+        var stream =
+            "testSkippingMoreThanTotal"
+                .AsStream()
+                .AsHead(5);
 
-            Assert.Equal(
-                5L,
-                skipped
-            );
+        var skipped = stream.Seek(7L, SeekOrigin.Begin);
 
-            var input = AsText._(stream).AsString();
-            Assert.Equal(
-                "",
-                input
-            );
-        }
+        Assert.Equal(5L, skipped);
+
+        var input = stream.AsText().Str();
+
+        Assert.Equal("", input);
     }
 }

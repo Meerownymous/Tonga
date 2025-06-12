@@ -1,75 +1,67 @@
-using System.Collections.Generic;
 using Tonga.Enumerable;
-using Tonga.List;
-using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Tests.Enumerable
+namespace Tonga.Tests.Enumerable;
+public sealed class FilteredTests
 {
-    public sealed class FilteredTests
+    [Fact]
+    public void Filters()
     {
-        [Fact]
-        public void Filters()
-        {
-            Assert.True(
-                Length._(
-                    Filtered._(
-                       (input) => input != "B",
-                       new List<string>() { "A", "B", "C" }
-                    )
-                ).Value() == 2,
-                "cannot filter items"
-            );
-        }
+        Assert.Equal(
+            2,
+            new []{ "A", "B", "C" }
+                .AsEnumerable()
+                .AsFiltered(input => input != "B")
+                .Length()
+                .Value()
+        );
+    }
 
-        [Fact]
-        public void SensesChanges()
-        {
-            var filterings = 0;
-            var filtered =
-                Filtered._(
-                    (input) =>
+    [Fact]
+    public void SensesChanges()
+    {
+        var filterings = 0;
+        var filtered =
+            new[]{ "A", "B", "C" }.AsEnumerable()
+                .AsFiltered(
+                    input =>
                     {
                         filterings++;
                         return input != "B";
-                    },
-                    AsList._("A", "B", "C")
+                    }
                 );
 
-            var enm1 = filtered.GetEnumerator();
-            enm1.MoveNext();
-            var current = enm1.Current;
+        var enm1 = filtered.GetEnumerator();
+        enm1.MoveNext();
+        _ = enm1.Current;
 
-            var enm2 = filtered.GetEnumerator();
-            enm2.MoveNext();
-            var current2 = enm2.Current;
+        var enm2 = filtered.GetEnumerator();
+        enm2.MoveNext();
+        _ = enm2.Current;
 
-            Assert.Equal(2, filterings);
-        }
+        Assert.Equal(2, filterings);
+    }
 
-        [Fact]
-        public void FiltersEmptyList()
-        {
-            Assert.Empty(
-                Filtered._(
-                    input => input.Length > 1,
-                    None._<string>()
-                )
-            );
-        }
+    [Fact]
+    public void FiltersEmptyList()
+    {
+        Assert.Empty(
+            new string[0]
+                .AsEnumerable()
+                .AsFiltered(input => input.Length > 1)
+        );
+    }
 
-        [Fact]
-        public void FiltersItemsGivenByParamsCtor()
-        {
-            Assert.Equal(
-                2,
-                Length._(
-                    Filtered._(
-                       (input) => input != "B",
-                       AsEnumerable._("A", "B", "C")
-                    )
-                ).Value()
-            );
-        }
+    [Fact]
+    public void FiltersItemsGivenByParamsCtor()
+    {
+        Assert.Equal(
+            2,
+            new[]{"A", "B", "C"}
+                .AsEnumerable()
+                .AsFiltered(input => input != "B")
+                .Length()
+                .Value()
+        );
     }
 }

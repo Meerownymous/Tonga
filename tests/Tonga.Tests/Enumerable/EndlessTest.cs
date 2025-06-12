@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -11,10 +10,9 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 1,
-                ItemAt._(
-                    Endless._(1),
-                    0
-                ).Value()
+                1.AsEndless()
+                .ItemAt(0)
+                .Value()
             );
         }
     }

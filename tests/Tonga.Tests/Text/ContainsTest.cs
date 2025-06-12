@@ -14,7 +14,7 @@ namespace Tonga.Tests.Text
                 new Contains(
                     "Hallo Welt!",
                     "Welt"
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -26,7 +26,7 @@ namespace Tonga.Tests.Text
                     "Hallo Welt!",
                     "welt",
                     true
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -35,9 +35,9 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Contains(
-                    AsText._("Hallo Welt!"),
-                    AsText._("Welt")
-                ).Value()
+                    "Hallo Welt!".AsText(),
+                    "Welt".AsText()
+                ).IsTrue()
             );
         }
 
@@ -46,10 +46,10 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Contains(
-                    AsText._("Hallo Welt!"),
-                    AsText._("welt"),
+                    "Hallo Welt!".AsText(),
+                    "welt".AsText(),
                     true
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -58,9 +58,9 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Contains(
-                    AsScalar._("Hallo Welt!"),
-                    AsScalar._("Welt")
-                ).Value()
+                    "Hallo Welt!".AsScalar(),
+                    "Welt".AsScalar()
+                ).IsTrue()
             );
         }
 
@@ -69,10 +69,10 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Contains(
-                    AsScalar._("Hallo Welt!"),
-                    AsScalar._("welt"),
-                    AsScalar._(StringComparison.CurrentCultureIgnoreCase)
-                ).Value()
+                    "Hallo Welt!".AsText(),
+                    "welt".AsText(),
+                    StringComparison.CurrentCultureIgnoreCase
+                ).IsTrue()
             );
         }
 
@@ -83,7 +83,7 @@ namespace Tonga.Tests.Text
                 new Contains(
                     "Hallo Welt!",
                     "welt"
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -95,7 +95,7 @@ namespace Tonga.Tests.Text
                     "Hallo Welt!",
                     "world",
                     true
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -104,9 +104,9 @@ namespace Tonga.Tests.Text
         {
             Assert.False(
                 new Contains(
-                    AsText._("Hallo Welt!"),
-                    AsText._("welt")
-                ).Value()
+                    "Hallo Welt!".AsText(),
+                    "welt".AsText()
+                ).IsTrue()
             );
         }
 
@@ -115,10 +115,10 @@ namespace Tonga.Tests.Text
         {
             Assert.False(
                 new Contains(
-                    AsText._("Hallo Welt!"),
-                    AsText._("world"),
+                    "Hallo Welt!".AsText(),
+                    "world".AsText(),
                     true
-                ).Value()
+                ).IsTrue()
             );
         }
 
@@ -127,9 +127,9 @@ namespace Tonga.Tests.Text
         {
             Assert.False(
                 new Contains(
-                    AsScalar._("Hallo Welt!"),
-                    AsScalar._("welt")
-                ).Value()
+                    "Hallo Welt!".AsScalar(),
+                    "welt".AsScalar()
+                ).IsTrue()
             );
         }
 
@@ -138,12 +138,10 @@ namespace Tonga.Tests.Text
         {
             Assert.False(
                 new Contains(
-                    AsScalar._("Hallo Welt!"),
-                    AsScalar._("world"),
-                    AsScalar._(
-                        StringComparison.CurrentCultureIgnoreCase
-                    )
-                ).Value()
+                    "Hallo Welt!".AsScalar(),
+                    "world".AsScalar(),
+                    StringComparison.CurrentCultureIgnoreCase
+                ).IsTrue()
             );
         }
     }

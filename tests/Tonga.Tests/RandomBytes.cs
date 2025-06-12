@@ -13,7 +13,7 @@ public sealed class RandomBytes : ListEnvelope<byte>
     /// </summary>
     /// <param name="size">size of N</param>
     public RandomBytes(int size) : base(
-        AsList._(() =>
+        new AsList<byte>(() =>
         {
             byte[] bytes = new byte[size];
             new Random().NextBytes(bytes);

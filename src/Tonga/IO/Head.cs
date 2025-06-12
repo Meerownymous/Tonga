@@ -2,30 +2,17 @@
 
 using System.IO;
 
-namespace Tonga.IO
+namespace Tonga.IO;
+
+/// <summary>
+/// Input that only shows the first N bytes of the original input.
+/// </summary>
+public sealed class Head(IConduit origin, int length) : IConduit
 {
-    /// <summary>
-    /// Input that only shows the first N bytes of the original input.
-    /// </summary>
-    public sealed class Head : IConduit
-    {
-        private readonly IConduit origin;
-        private readonly int length;
+    public Stream Stream() => new StreamHead(origin.Stream(), length);
+}
 
-        /// <summary>
-        /// Input that only shows the first N bytes of the original input.
-        /// </summary>
-        /// <param name="origin">Input</param>
-        /// <param name="length">Length</param>
-        public Head(IConduit origin, int length)
-        {
-            this.origin = origin;
-            this.length = length;
-        }
-
-        public Stream Stream()
-        {
-            return new StreamHead(this.origin.Stream(), this.length);
-        }
-    }
+public static partial class IOSmarts
+{
+    public static IConduit AsHead(this IConduit origin, int length) => new Head(origin, length);
 }

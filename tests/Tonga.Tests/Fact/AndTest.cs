@@ -3,69 +3,72 @@ using Tonga.Enumerable;
 using Tonga.Fact;
 using Xunit;
 
-#pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.Tests.Fact
+namespace Tonga.Tests.Fact;
+
+public sealed class AndTest
 {
-    public sealed class AndTest
+    [Fact]
+    public void IsTrueOnAllTrue()
     {
-        [Fact]
-        public void AllTrue()
-        {
-            Assert.True(
-                new And(
-                    new True(),
-                    new True(),
-                    new True()
-                ).IsTrue()
-            );
-        }
+        Assert.True(
+            new And(
+                new True(),
+                new True(),
+                new True()
+            ).IsTrue()
+        );
+    }
 
-        [Fact]
-        public void OneFalse()
-        {
-            Assert.True(
-                new And(
-                    new True(),
+    [Fact]
+    public void IsFalseOnOneFalse()
+    {
+        Assert.True(
+            new And(
+                new True(),
+                new False(),
+                new True()
+            ).IsFalse()
+        );
+    }
+
+    [Fact]
+    public void AllFalse()
+    {
+        Assert.False(
+            new And(
+                (
                     new False(),
-                    new True()
-                ).IsFalse()
-            );
-        }
+                    new False(),
+                    new False()
+                ).AsEnumerable()
+            ).IsTrue()
+        );
+    }
 
-        [Fact]
-        public void AllFalse()
-        {
-            Assert.False(
-                new And(
-                    AsEnumerable._(
-                        new False(),
-                        new False(),
-                        new False()
-                    )
-                ).IsTrue()
-            );
-        }
+    [Fact]
+    public void IsTrueOnEmptyEnumerable()
+    {
+        Assert.True(
+            new And(new None<IFact>())
+                .IsTrue()
+        );
+    }
 
-        [Fact]
-        public void EmptyIterator()
-        {
-            Assert.True(
-                new And(new None<IFact>())
-                    .IsTrue()
-            );
-        }
+    [Fact]
+    public void IsTrueOnBooleans()
+    {
+        Assert.True(
+            new And(true, true, true).IsTrue()
+        );
+    }
 
-        [Fact]
-        public void ValidatesBooleansToTrue()
-        {
-            Assert.True(new And(true, true, true).IsTrue());
-        }
-
-        [Fact]
-        public void ValidatesBooleansToFalse()
-        {
-            Assert.False(new And(new List<bool> { true, false, true }).IsTrue());
-        }
+    [Fact]
+    public void IsFalseOnOneBooleanFalse()
+    {
+        Assert.False(
+            new And(
+                new List<bool> { true, false, true }
+            ).IsTrue()
+        );
     }
 }
-#pragma warning restore MaxPublicMethodCount // a public methods count maximum

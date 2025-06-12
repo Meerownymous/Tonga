@@ -12,10 +12,10 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 3,
-                new Sibling<int>(
-                    2,
-                    AsEnumerable._(1, 2, 3)
-                ).Value()
+                (1, 2, 3)
+                    .AsEnumerable()
+                    .Sibling(2)
+                    .Value()
             );
         }
 
@@ -24,11 +24,10 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 1,
-                new Sibling<int>(
-                    2,
-                    AsEnumerable._(1, 2, 3),
-                    -1
-                ).Value()
+                (1, 2, 3)
+                    .AsEnumerable()
+                    .Sibling(2, -1)
+                    .Value()
             );
         }
 
@@ -37,12 +36,10 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 "15",
-                new Sibling<string>(
-                    "1",
-                    AsEnumerable._("1", "2", "3"),
-                    -1,
-                    "15"
-                ).Value()
+                ("1", "2", "3")
+                    .AsEnumerable()
+                    .Sibling("1", -1, "15")
+                    .Value()
             );
         }
 
@@ -50,11 +47,9 @@ namespace Tonga.Tests.Enumerable
         public void FailForEmptyCollection()
         {
             Assert.Throws<ArgumentException>(
-                () =>
-                    new Sibling<int>(
-                        1337,
-                        new None<int>()
-                    ).Value()
+                () => new None<int>()
+                    .Sibling(1337)
+                    .Value()
             );
         }
 
@@ -62,14 +57,12 @@ namespace Tonga.Tests.Enumerable
         public void FallbackTest()
         {
             String fallback = "fallback";
-            Assert.True(
-                new Sibling<string>(
-                    "Not-there",
-                    new None<string>(),
-                    12,
-                    fallback
-                ).Value() == fallback,
-            "Can't fallback to default value");
+            Assert.Equal(
+                fallback,
+                new None<string>()
+                    .Sibling("Not-there", 12, fallback)
+                    .Value()
+            );
         }
 
         [Fact]
@@ -80,31 +73,20 @@ namespace Tonga.Tests.Enumerable
             var nb1 = new FakeSibling(DateTime.ParseExact("11.10.2017", format, provider));
             var nb2 = new FakeSibling(DateTime.ParseExact("10.10.2017", format, provider));
 
-            Assert.True(
-                new Sibling<FakeSibling>(
-                    nb1,
-                    AsEnumerable._(nb1, nb2),
-                    -1,
-                    nb2
-                ).Value().TimeStamp() == nb2.TimeStamp(),
-            "Can't take the item by position from the enumerable");
+            Assert.Equal(
+                nb2.TimeStamp(),
+                (nb1, nb2)
+                    .AsEnumerable()
+                    .Sibling(nb1, -1, nb2)
+                    .Value()
+                    .TimeStamp()
+            );
         }
 
-        internal class FakeSibling : IComparable<FakeSibling>
+        internal class FakeSibling(DateTime stmp) : IComparable<FakeSibling>
         {
-            private readonly DateTime stmp;
-
-            public FakeSibling(DateTime stmp)
-            {
-                this.stmp = stmp;
-            }
-
-            public DateTime TimeStamp() { return stmp; }
-
-            public int CompareTo(FakeSibling obj)
-            {
-                return stmp.CompareTo(obj.TimeStamp());
-            }
+            public DateTime TimeStamp() =>stmp;
+            public int CompareTo(FakeSibling obj) => stmp.CompareTo(obj.TimeStamp());
         }
     }
 }

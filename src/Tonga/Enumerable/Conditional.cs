@@ -8,12 +8,8 @@ namespace Tonga.Enumerable
     /// Enumerable sourced depending on a given condition.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Conditional<T> : IEnumerable<T>
+    public sealed class Conditional<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition) : IEnumerable<T>
     {
-        private readonly IEnumerable<T> whenMatching;
-        private readonly IEnumerable<T> whenNotMatching;
-        private readonly Func<bool> condition;
-
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
@@ -24,44 +20,38 @@ namespace Tonga.Enumerable
         )
         { }
 
-        /// <summary>
-        /// Enumerable sourced depending on a given condition.
-        /// </summary>
-        public Conditional(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition)
-        {
-            this.whenMatching = whenMatching;
-            this.whenNotMatching = whenNotMatching;
-            this.condition = condition;
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            if(this.condition())
-                foreach(var item in this.whenMatching)
+            if(condition())
+                foreach(var item in whenMatching)
                     yield return item;
             else
-                foreach (var item in this.whenNotMatching)
+                foreach (var item in whenNotMatching)
                     yield return item;
         }
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
-    public static class Conditional
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static Conditional<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition) =>
-            new(whenMatching, whenNotMatching, condition);
+        public static IEnumerable<T> AsConditional<T>(
+            this IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, bool condition
+        ) =>
+            new Conditional<T>(whenMatching, whenNotMatching, condition);
 
         /// <summary>
         /// Enumerable sourced depending on a given condition.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static Conditional<T> _<T>(IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition) =>
-            new(whenMatching, whenNotMatching, condition);
+        public static IEnumerable AsConditional<T>(
+            this IEnumerable<T> whenMatching, IEnumerable<T> whenNotMatching, Func<bool> condition
+        ) =>
+            new Conditional<T>(whenMatching, whenNotMatching, condition);
     }
 }
 

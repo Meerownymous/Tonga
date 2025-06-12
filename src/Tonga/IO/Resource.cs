@@ -12,11 +12,9 @@ namespace Tonga.IO
     /// <summary>
     /// <para>An embedded resource.</para>
     /// </summary>
-    public class Resource : IConduit
+    public class Resource(string name, Func<Assembly> container, IEnumerable<char> symbols) : IConduit
     {
-        private readonly string name;
-        private readonly IScalar<Assembly> container;
-        private readonly IEnumerable<char> symbols;
+        private readonly Lazy<Assembly> assembly = new(container);
 
         /// <summary>
         /// <para>A resource embedded in the container.</para>
@@ -29,7 +27,7 @@ namespace Tonga.IO
         /// <param name="type">a class that is in the same container (assembly) with the resource</param>
         public Resource(string name, Type type) : this(
             name,
-            AsScalar._(Assembly.GetAssembly(type))
+            () => Assembly.GetAssembly(type)
         )
         { }
 
@@ -44,7 +42,7 @@ namespace Tonga.IO
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
         public Resource(string name, Assembly container) : this(
             name,
-            AsScalar._(container)
+            () => container
         )
         { }
 
@@ -57,7 +55,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="name">name of the resource</param>
         /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
-        public Resource(string name, IScalar<Assembly> container) : this(
+        public Resource(string name, Func<Assembly> container) : this(
             name,
             container,
             new List<char>()
@@ -68,30 +66,13 @@ namespace Tonga.IO
         { }
 
         /// <summary>
-        /// <para>A resource embedded in the container.</para>
-        /// <para>Name must be provided as a relative path:</para>
-        /// <para>If the resource is in project root path project\resource.txt, address it with resource.txt</para>
-        /// <para>If the resource is in a subpath project\resources\resource.txt, address it with resources\resource.txt</para>
-        /// <para>Please note that the the path is case sensitive.</para>
-        /// </summary>
-        /// <param name="name">name of the resource</param>
-        /// <param name="container">container to search in. Use Assembly.GetExecutingAssembly() for the assembly your current code is in.</param>
-        /// <param name="symbols">list of symbols which has to be encoded.</param>
-        public Resource(string name, IScalar<Assembly> container, IEnumerable<char> symbols)
-        {
-            this.name = name;
-            this.container = container;
-            this.symbols = symbols;
-        }
-
-        /// <summary>
         /// Stream of the resource.
         /// </summary>
         /// <exception cref = "ResourceNotFoundException" >if resource is not present</exception >
         /// <returns>stream of the resource</returns>
         public Stream Stream()
         {
-            var asm = this.container.Value();
+            var asm = assembly.Value;
             var fullName = FullName();
             var s = asm.GetManifestResourceStream(fullName);
 
@@ -105,7 +86,7 @@ namespace Tonga.IO
 
         private string FullName()
         {
-            var folders = this.name.Split('\\', '/');
+            var folders = name.Split('\\', '/');
             for (int current = 0; current < folders.Length - 1; current++)
             {
                 folders[current] =
@@ -115,7 +96,7 @@ namespace Tonga.IO
                         )
                     );
             }
-            return container.Value().GetName().Name + "." + String.Join(".", folders);
+            return assembly.Value.GetName().Name + "." + String.Join(".", folders);
         }
 
         /// <summary>
@@ -168,12 +149,10 @@ namespace Tonga.IO
         private string SymbolsEndoced(string path)
         {
             var encoded = path;
-            foreach (var symbol in this.symbols)
+            foreach (var symbol in symbols)
             {
                 if (encoded.Equals(symbol.ToString()))
-                {
                     encoded = "__";
-                }
                 encoded = encoded.Replace(symbol, '_');
             }
             return encoded;

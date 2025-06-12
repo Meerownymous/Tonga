@@ -22,8 +22,8 @@ namespace Tonga.Tests.Enumerable
                 );
 
             Assert.Equal(
-                new global::Tonga.Text.Joined(" ", items).AsString(),
-                new global::Tonga.Text.Joined(" ", items).AsString()
+                new global::Tonga.Text.Joined(" ", items).Str(),
+                new global::Tonga.Text.Joined(" ", items).Str()
             );
 
         }

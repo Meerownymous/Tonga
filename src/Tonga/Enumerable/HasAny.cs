@@ -28,11 +28,8 @@ public sealed class HasAny<T> : FactEnvelope
     { }
 }
 
-/// <summary>
-/// Tells if an enumerable source has any elements.
-/// </summary>
-public static class HasAnySmarts
+public static partial class EnumerableSmarts
 {
-    public static HasAny<T> HasAny<T>(IEnumerable<T> source) => new(source);
-    public static HasAny<T> HasAny<T>(params T[] source) => new(source);
+    public static HasAny<T> HasAny<T>(this IEnumerable<T> origin) => new(origin);
+    public static HasAny<T> HasAny<T>(this T[] origin) => new(origin);
 }

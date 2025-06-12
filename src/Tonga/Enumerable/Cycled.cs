@@ -32,23 +32,15 @@ namespace Tonga.Enumerable
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 
-    /// <summary>
-    /// A <see cref="IEnumerable{T}"/> that starts from the beginning when ended.
-    /// </summary>
-    public static class Cycled
+    public static partial class EnumerableSmarts
     {
-        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable) => new Cycled<T>(enumerable);
-    }
+        public static IEnumerable<TItem> AsCycled<TItem>(this TItem[] source) =>
+            new Cycled<TItem>(source);
 
-    public static class CycledSmarts
-    {
-        public static IEnumerable<TItem> Cycled<TItem>(this TItem[] source) =>
+        public static IEnumerable<TItem> AsCycled<TItem>(this IEnumerable<TItem> source) =>
             new Cycled<TItem>(source);
     }
 }

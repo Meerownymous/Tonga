@@ -1,13 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Tonga.Func;
 
 namespace Tonga.Tests;
 
-internal class Tidy : IAction
+internal class Tidy
 {
     private readonly Action act;
     private readonly IEnumerable<Uri> files;
@@ -33,12 +30,9 @@ internal class Tidy : IAction
 
     private void Delete()
     {
-        new Each<Uri>((uri) =>
-            {
-                if (File.Exists(uri.AbsolutePath)) File.Delete(uri.AbsolutePath);
-            },
-            this.files
-        ).Invoke();
-
+        foreach (var uri in this.files)
+        {
+            if (File.Exists(uri.AbsolutePath)) File.Delete(uri.AbsolutePath);
+        }
     }
 }

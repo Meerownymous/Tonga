@@ -1,163 +1,114 @@
 using System;
 using System.Collections.Generic;
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Xunit;
 
-namespace Tonga.Tests.Scalar
+namespace Tonga.Tests.Scalar;
+
+public sealed class ItemAtTests
 {
-    public sealed class ItemAtTests
+    [Fact]
+    public void DeliversElementByPos()
     {
-        [Fact]
-        public void DeliversFirstElement()
+        Assert.Equal(
+            2,
+            (1, 2, 3).AsEnumerable()
+            .ItemAt(1)
+            .Value()
+        );
+    }
+
+    [Fact]
+    public void DeliversElementByPosWithFallback()
+    {
+        Assert.Equal(
+            2,
+            (1, 2, 3)
+                .AsEnumerable()
+                .ItemAt(1,4)
+                .Value()
+        );
+    }
+
+    [Fact]
+    public void FailsForEmptyCollection()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            new List<int>()
+                .ItemAt(0)
+                .Value()
+        );
+    }
+
+    [Fact]
+    public void DeliversFallback()
+    {
+        String fallback = "fallback";
+        Assert.Equal(
+            fallback,
+            new None<string>()
+                .ItemAt(12, fallback)
+                .Value()
+        );
+    }
+
+    [Fact]
+    public void FallbackShowsError()
+    {
+        Assert.Throws<InvalidOperationException>(() =>
+                new None<string>()
+                    .ItemAt(12,(ex, _) => throw ex)
+                    .Value()
+        );
+    }
+
+    [Fact]
+    public void FallbackShowsGivenErrorWithPosition()
+    {
+        Assert.Throws<NotFiniteNumberException>(() =>
+            new None<string>()
+                .ItemAt(12, new NotFiniteNumberException("Cannot do this!"))
+                .Value()
+        );
+    }
+
+    [Fact]
+    public void FallbackShowsGivenErrorForNegativePosition()
+    {
+        Assert.Throws<NotFiniteNumberException>(() =>
+            new None<string>()
+                .ItemAt(-12,new NotFiniteNumberException("Cannot do this!"))
+                .Value()
+        );
+    }
+
+    [Fact]
+    public void SensesChanges()
+    {
+        var list = new List<string>{ "pre" };
+        var transient = list.ItemAt(0);
+        transient.Value();
+        list.Clear();
+        list.Add("post");
+
+        Assert.Equal("post", transient.Value());
+    }
+
+    [Fact]
+    public void DeliversLogicErrorMessage()
+    {
+        try
         {
-
-            Assert.True(
-                new ItemAt<int>(
-                    Tonga.Enumerable.AsEnumerable._(1, 2, 3)
-                ).Value() == 1,
-                "Can't take the first item from the enumerable"
-            );
+            new[] { "one", "two", "three" }
+                .ItemAt(3)
+                .Value();
         }
-
-        [Fact]
-        public void DeliversFirstElementWithException()
-        {
-
-            Assert.True(
-                new ItemAt<int>(
-                    Tonga.Enumerable.AsEnumerable._(1, 2, 3),
-                    new NotFiniteNumberException("Cannot do this!")
-                ).Value() == 1,
-                "Can't take the first item from the enumerable"
-            );
-        }
-
-        [Fact]
-        public void DeliversElementByPos()
+        catch (Exception ex)
         {
             Assert.Equal(
-                2,
-                new ItemAt<int>(
-                    Tonga.Enumerable.AsEnumerable._(1, 2, 3),
-                    1
-                ).Value()
+                "Cannot get element at position 4: Cannot get item 4 - The enumerable has only 3 items.",
+                ex.Message
             );
-        }
-
-        [Fact]
-        public void DeliversElementByPosWithFallback()
-        {
-            Assert.True(
-                new ItemAt<int>(
-                    Tonga.Enumerable.AsEnumerable._(1, 2, 3),
-                    1,
-                    4
-                ).Value() == 2,
-                "Can't take the item by position from the enumerable"
-            );
-        }
-
-        [Fact]
-        public void FailsForEmptyCollection()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                new ItemAt<int>(
-                    new List<int>()
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void DeliversFallback()
-        {
-            String fallback = "fallback";
-            Assert.Equal(
-                fallback,
-                ItemAt._(
-                    None._<string>(),
-                    12,
-                    fallback
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void FallbackShowsError()
-        {
-            Assert.Throws<InvalidOperationException>(() =>
-                ItemAt._(
-                    None._<string>(),
-                    12,
-                    (ex, enumerable) => throw ex
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void FallbackShowsGivenErrorWithPosition()
-        {
-            Assert.Throws<NotFiniteNumberException>(() =>
-                ItemAt._(
-                    None._<string>(),
-                    12,
-                    new NotFiniteNumberException("Cannot do this!")
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void FallbackShowsGivenErrorWithoutPosition()
-        {
-            Assert.Throws<NotFiniteNumberException>(() =>
-                ItemAt._(
-                    None._<string>(),
-                    new NotFiniteNumberException("Cannot do this!")
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void FallbackShowsGivenErrorForNegativePosition()
-        {
-            Assert.Throws<NotFiniteNumberException>(() =>
-                ItemAt._(
-                    None._<string>(),
-                    -12,
-                    new NotFiniteNumberException("Cannot do this!")
-                ).Value()
-            );
-        }
-
-        [Fact]
-        public void SensesChanges()
-        {
-            var list = new List<string>{ "pre" };
-            var transient = new ItemAt<string>(list);
-            transient.Value();
-            list.Clear();
-            list.Add("post");
-
-            Assert.Equal("post", transient.Value());
-        }
-
-        [Fact]
-        public void DeliversLogicErrorMessage()
-        {
-            try
-            {
-                ItemAt._(
-                    new string[] { "one", "two", "three" },
-                    3
-                ).Value();
-            }
-            catch (Exception ex)
-            {
-                Assert.Equal(
-                    "Cannot get element at position 4: Cannot get item 4 - The enumerable has only 3 items.",
-                    ex.Message
-                );
-            }
         }
     }
 }

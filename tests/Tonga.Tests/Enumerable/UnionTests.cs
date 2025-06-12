@@ -61,7 +61,7 @@ namespace Tonga.Tests.Enumerable
                         (left, right) =>
                         {
                             var result =
-                                new Equals<string>(
+                                new IsEqual<string>(
                                     Path.GetFileNameWithoutExtension(left),
                                     Path.GetFileNameWithoutExtension(right)
                                 ).IsTrue();
@@ -70,7 +70,7 @@ namespace Tonga.Tests.Enumerable
                             return result;
                         }
                     )
-                ).AsString()
+                ).Str()
             );
         }
     }

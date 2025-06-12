@@ -12,7 +12,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 "hellohello",
-                new Repeated("hello", 2).AsString()
+                new Repeated("hello", 2).Str()
             );
         }
 
@@ -21,7 +21,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 "AAAAA",
-                new Repeated("A", 5).AsString()
+                new Repeated("A", 5).Str()
             );
         }
     }

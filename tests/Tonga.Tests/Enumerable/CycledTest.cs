@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -11,12 +10,10 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 "two",
-                ItemAt._(
-                    Cycled._(
-                        AsEnumerable._("one", "two", "three")
-                    ),
-                    7
-                ).Value()
+                new AsEnumerable<string>("one", "two", "three")
+                    .AsCycled()
+                    .ItemAt(7)
+                    .Value()
             );
         }
     }

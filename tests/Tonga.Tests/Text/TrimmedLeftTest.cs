@@ -9,8 +9,9 @@ public sealed class TrimmedLeftTest
     [Fact]
     public void TrimsWhitespaceEscapeSequences()
     {
-        Assert.True(
-            new TrimmedLeft(AsText._("   \b \f \n \r \t \v   ")).AsString() == string.Empty
+        Assert.Equal(
+            string.Empty,
+            "   \b \f \n \r \t \v   ".AsTrimmedLeft().Str()
         );
     }
 
@@ -19,9 +20,7 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "Hello! \t \b  ",
-            new TrimmedLeft(
-                " \b   \t      Hello! \t \b  "
-            ).AsString()
+            " \b   \t      Hello! \t \b  ".AsTrimmedLeft().Str()
         );
     }
 
@@ -30,9 +29,7 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "Hello! \t \b  ",
-            new TrimmedLeft(
-                AsText._(" \b   \t      Hello! \t \b  ")
-            ).AsString()
+            " \b   \t      Hello! \t \b  ".AsTrimmedLeft().Str()
         );
     }
 
@@ -41,10 +38,9 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b  ",
-            new TrimmedLeft(
-                " \b   \t      Hello! \t \b  ",
-                new char[] { '\b', '\t', ' ', 'H', 'o' }
-            ).AsString()
+            " \b   \t      Hello! \t \b  "
+                .AsTrimmedLeft(['\b', '\t', ' ', 'H', 'o'])
+                .Str()
         );
     }
 
@@ -53,22 +49,9 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b  ",
-            new TrimmedLeft(
-                AsText._(" \b   \t      Hello! \t \b  "),
-                new char[] { '\b', '\t', ' ', 'H', 'o' }
-            ).AsString()
-        );
-    }
-
-    [Fact]
-    public void TrimsTextWithScalar()
-    {
-        Assert.Equal(
-            "ello! \t \b  ",
-            new TrimmedLeft(
-                AsText._(" \b   \t      Hello! \t \b  "),
-                AsScalar._(() => new char[] { '\b', '\t', ' ', 'H', 'o' })
-            ).AsString()
+            " \b   \t      Hello! \t \b  "
+                .AsTrimmedLeft(['\b', '\t', ' ', 'H', 'o'])
+                .Str()
         );
     }
 
@@ -77,9 +60,9 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b   \t      H",
-            new TrimmedLeft(
-                " \b   \t      Hello! \t \b   \t      H", " \b   \t      H"
-            ).AsString()
+            " \b   \t      Hello! \t \b   \t      H"
+                .AsTrimmedLeft(" \b   \t      H")
+                .Str()
         );
     }
 
@@ -88,7 +71,9 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b   \t      H",
-            new TrimmedLeft(AsText._(" \b   \t      Hello! \t \b   \t      H"), " \b   \t      H").AsString()
+            " \b   \t      Hello! \t \b   \t      H"
+                .AsTrimmedLeft(" \b   \t      H")
+                .Str()
         );
     }
 
@@ -97,7 +82,9 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b   \t      H",
-            new TrimmedLeft(" \b   \t      Hello! \t \b   \t      H", AsText._(" \b   \t      H")).AsString()
+            " \b   \t      Hello! \t \b   \t      H"
+                .AsTrimmedLeft(" \b   \t      H")
+                .Str()
         );
     }
 
@@ -106,10 +93,9 @@ public sealed class TrimmedLeftTest
     {
         Assert.Equal(
             "ello! \t \b   \t      H",
-            new TrimmedLeft(
-                AsText._(" \b   \t      Hello! \t \b   \t      H"),
-                AsText._(" \b   \t      H")
-            ).AsString()
+            " \b   \t      Hello! \t \b   \t      H".AsText()
+                .AsTrimmedLeft(" \b   \t      H".AsText())
+                .Str()
         );
     }
 }

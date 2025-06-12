@@ -6,18 +6,17 @@ namespace Tonga.Tests.Bytes
 {
     public sealed class HexBytesTests
     {
-        [Theory]
-        [InlineData("foobar", "666f6f626172")]
-        public void BytesFromHex(string expected, string hex)
+        [Fact]
+        public void BytesFromHex()
         {
             Assert.Equal(
-                    expected,
-                    AsText._(
-                        new HexBytes(
-                            AsText._(hex)
-                        )
-                    ).AsString()
-                );
+                "foobar",
+                "666f6f626172"
+                    .AsText()
+                    .AsHexBytes()
+                    .AsText()
+                    .Str()
+            );
         }
     }
 }

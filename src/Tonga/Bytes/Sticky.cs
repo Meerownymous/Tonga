@@ -23,15 +23,15 @@ namespace Tonga.Bytes
         /// Relaods the bytes on every call
         /// </summary>
         /// <param name="bytes"></param>
-        public Sticky(IScalar<IBytes> bytes) : this(() => bytes.Value())
+        public Sticky(IScalar<IBytes> bytes) : this(bytes.Value)
         { }
 
         public Sticky(Func<IBytes> bytes)
         {
-            this.bytes = new Lazy<byte[]>(() => bytes().Bytes());
+            this.bytes = new Lazy<byte[]>(() => bytes().Raw());
         }
 
-        public byte[] Bytes()
+        public byte[] Raw()
         {
             return this.bytes.Value;
         }

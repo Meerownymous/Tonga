@@ -12,7 +12,7 @@ public sealed class UpperTest
     {
         Assert.Equal(
             "HELLO!",
-            new Upper(AsText._("Hello!")).AsString()
+            "Hello!".AsText().AsUpper().Str()
         );
     }
 

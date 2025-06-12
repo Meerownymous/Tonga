@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -9,15 +8,13 @@ namespace Tonga.Tests.Enumerable
         [Fact]
         public void ReplacesElementAtIndex()
         {
-            Assert.True(
-                new ItemAt<string>(
-                    new Replaced<string>(
-                        new string[] { "A", "B", "C", "D", "E" },
-                        2,
-                        "F"
-                    ),
-                    2
-                ).Value() == "F"
+            Assert.Equal(
+                "F",
+                ( "A", "B", "C", "D", "E" )
+                    .AsEnumerable()
+                    .AsReplaced(2, "F")
+                    .ItemAt(2)
+                    .Value()
             );
         }
     }

@@ -18,8 +18,8 @@ namespace Tonga.Tests.Bytes
                         return new AsStream("");
                     })
                 );
-            bytes.Bytes();
-            bytes.Bytes();
+            bytes.Raw();
+            bytes.Raw();
             Assert.Equal(1, calls);
         }
     }

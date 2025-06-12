@@ -1,61 +1,48 @@
-
-
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Net.Http.Headers;
+using Tonga.Enumerable;
 using Tonga.Scalar;
 
-namespace Tonga.IO
+namespace Tonga.IO;
+
+/// <summary>
+/// A zip input mapped from a given zip input
+/// Maps the zip entry paths according to the given mapping function
+/// </summary>
+public sealed class ZipMappedPaths(Func<string, string> mapping, IConduit zip) : IConduit
 {
-    /// <summary>
-    /// A zip input mapped from a given zip input
-    /// Maps the zip entry paths according to the given mapping function
-    /// </summary>
-    public sealed class ZipMappedPaths : IConduit
+    private readonly Lazy<Stream> mappedZip = new(
+    () =>
     {
-        private readonly IScalar<Stream> input;
+        Stream inMemory = new ValidatedZip(zip).Stream();
+        var newMemory = new MemoryStream();
 
-        /// <summary>
-        /// A zip input mapped from a given zip input
-        /// Maps the zip entry paths according to the given mapping function
-        /// </summary>
-        public ZipMappedPaths(Func<string, string> mapping, IConduit zip)
+        using (var archive = new ZipArchive(inMemory, ZipArchiveMode.Read, true))
+        using (var newArchive = new ZipArchive(newMemory, ZipArchiveMode.Create, true))
         {
-            this.input =
-                new AsScalar<Stream>(() =>
-                {
-                    Stream inMemory = new ValidatedZip(zip).Stream();
-                    var newMemory = new MemoryStream();
+            foreach (var entry in archive.Entries)
+            {
+                Move(entry, newArchive, mapping);
+            }
+            inMemory.Position = 0;
+        }
+        newMemory.Seek(0, SeekOrigin.Begin);
+        return newMemory;
+    });
+    public Stream Stream() => mappedZip.Value;
 
-                    using (var archive = new ZipArchive(inMemory, ZipArchiveMode.Read, true))
-                    using (var newArchive = new ZipArchive(newMemory, ZipArchiveMode.Create, true))
-                    {
-                        foreach (var entry in archive.Entries)
-                        {
-                            Move(entry, newArchive, mapping);
-                        }
-                        inMemory.Position = 0;
-                    }
-                    newMemory.Seek(0, SeekOrigin.Begin);
-                    return newMemory;
-                });
-        }
-        public Stream Stream()
-        {
-            return this.input.Value();
-        }
+    private static void Move(ZipArchiveEntry source, ZipArchive archive, Func<string, string> mapping)
+    {
+        var mapped = mapping(source.FullName);
+        using var sourceStream = source.Open();
+        using var stream = archive.CreateEntry(mapped).Open();
 
-        private void Move(ZipArchiveEntry source, ZipArchive archive, Func<string, string> mapping)
-        {
-            var mapped = mapping(source.FullName);
-            using var sourceStream = source.Open();
-            using var stream = archive.CreateEntry(mapped).Open();
-            Length._(
-                new TeeOnRead(
-                    new AsConduit(sourceStream),
-                    new AsConduit(stream)
-                )
-            ).Value();
-        }
+        new TeeOnRead(
+            new AsConduit(sourceStream),
+            new AsConduit(stream)
+        ).Length()
+        .Int();
     }
 }

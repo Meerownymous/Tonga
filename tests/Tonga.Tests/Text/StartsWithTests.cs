@@ -10,34 +10,29 @@ namespace Tonga.Tests.Text
         [Fact]
         public void MatchesText()
         {
-            var x =
-                new StartsWith(
-                    AsText._("Im an text with a really good end!"),
-                    AsText._("Im a")
-                );
-            Assert.True(x.Value());
+            Assert.True(
+                "Im an text with a really good end!".AsText()
+                    .AsStartsWith("Im a")
+                    .IsTrue()
+            );
         }
 
         [Fact]
         public void MatchesString()
         {
-            var x =
-                new StartsWith(
-                    AsText._("Im a text with a really good end!"),
-                    "Im a"
-                );
-            Assert.True(x.Value());
+            Assert.True(
+                "Im a text with a really good end!".AsText()
+                    .AsStartsWith("Im a")
+                    .IsTrue()
+            );
         }
 
         [Fact]
         public void DoesntMatch()
         {
-            var x =
-                new StartsWith(
-                    AsText._("Im a text with a really good end!"),
-                    AsText._("m an")
-                );
-            Assert.False(x.Value());
+            Assert.False("Im a text with a really good end!".AsText()
+                .AsStartsWith("m an")
+                .IsTrue());
         }
     }
 }

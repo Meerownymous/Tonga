@@ -11,7 +11,7 @@ namespace Tonga.Tests.Text
         public void NormalizesText()
         {
             Assert.True(
-            new Normalized(" \t hello  \t\tworld   \t").AsString() == "hello world",
+            new Normalized(" \t hello  \t\tworld   \t").Str() == "hello world",
             "Can't normalize a text");
         }
     }

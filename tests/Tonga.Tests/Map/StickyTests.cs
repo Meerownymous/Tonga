@@ -10,11 +10,9 @@ public sealed class StickyTests
     {
         Assert.Equal(
             "one",
-            Sticky._(
-                AsMap._(
-                    AsPair._(1, "one")
-                )
-            )[1]
+            (1, "one")
+                .AsMap()
+                .AsSticky()[1]
         );
     }
 
@@ -22,19 +20,12 @@ public sealed class StickyTests
     public void RemembersValue()
     {
         var map =
-            Sticky._(
-                AsMap._(
-                    OneTimePair._(
-                        AsPair._(1, "one")
-                    )
-                )
-            );
+            1.AsOneTimePair(() => "one")
+                .AsMap()
+                .AsSticky();
 
         _ = map[1];
 
-        Assert.Equal(
-            "one",
-            map[1]
-        );
+        Assert.Equal("one", map[1]);
     }
 }

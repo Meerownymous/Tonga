@@ -1,19 +1,15 @@
 
 
-namespace Tonga.Text
+namespace Tonga.Text;
+
+/// <summary>
+/// A <see cref="IText"/> as lowercase.
+/// </summary>
+public sealed class Lower(IText text) : TextEnvelope(
+    () => text.Str().ToLower()
+);
+
+public static partial class TextSmarts
 {
-    /// <summary>
-    /// A <see cref="IText"/> as lowercase.
-    /// </summary>
-    public sealed class Lower : TextEnvelope
-    {
-        /// <summary>
-        /// A <see cref="IText"/>  as lowercase.
-        /// </summary>
-        /// <param name="text">text to lower</param>
-        public Lower(IText text) : base(
-            AsText._(() => text.AsString().ToLower())
-        )
-        { }
-    }
+    public static IText AsLower(this IText text) => new Lower(text);
 }

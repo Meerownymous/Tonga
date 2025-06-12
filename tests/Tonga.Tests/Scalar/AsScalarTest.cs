@@ -11,7 +11,7 @@ namespace Tonga.Tests.Scalar
         {
             Assert.Equal(
                 "52 Degree North",
-                AsScalar._("52 Degree North").Value()
+                "52 Degree North".AsScalar().Value()
             );
         }
 
@@ -19,7 +19,7 @@ namespace Tonga.Tests.Scalar
         public void SensesChanges()
         {
             var scalar =
-                AsScalar._(() => new Random().Next());
+                new AsScalar<int>(() => new Random().Next());
 
             Assert.NotEqual(
                 scalar.Value(),

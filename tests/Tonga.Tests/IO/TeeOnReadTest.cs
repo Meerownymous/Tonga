@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Tonga.Bytes;
-using Tonga.Func;
 using Tonga.IO;
 using Tonga.Text;
 using Xunit;
@@ -14,54 +12,42 @@ namespace Tonga.Tests.IO
         [Fact]
         public void CopiesFromUrlToFile()
         {
-            using (var directory = new TempDirectory())
-            {
-                var directoryPath = directory.Value().FullName;
-                ReadAll._(
-                    new TeeOnRead(
-                        new Uri("http://www.google.de"),
-                        new Uri($@"file://{directoryPath}\output.txt")
-                    )
-                ).Invoke();
+            using var directory = new TempDirectory();
+            var directoryPath = directory.Value().FullName;
+            new FullRead(
+                new TeeOnRead(
+                    new Uri("http://www.google.de"),
+                    new Uri($@"file://{directoryPath}\output.txt")
+                )
+            ).Trigger();
 
-                Assert.True(
-                    File.ReadAllText(
-                        $@"{directoryPath}\output.txt"
-                    ).Contains(
-                        "<html"
-                    ),
-                    "Can't copy website to file"
-                );
-            }
+            Assert.Contains(
+                "<html",
+                File.ReadAllText($@"{directoryPath}\output.txt")
+            );
         }
 
         [Fact]
         public void CopiesFromFileToFile()
         {
-            using (var directory = new TempDirectory())
-            {
-                var directoryPath = directory.Value().FullName;
-                File.WriteAllText(
-                    $@"{directoryPath}\input.txt",
-                    "this is a test"
-                );
+            using var directory = new TempDirectory();
+            var directoryPath = directory.Value().FullName;
+            File.WriteAllText(
+                $@"{directoryPath}\input.txt",
+                "this is a test"
+            );
 
-                ReadAll._(
-                    new TeeOnRead(
-                        new Uri($@"{directoryPath}\input.txt"),
-                        new Uri($@"{directoryPath}\output.txt")
-                    )
-                ).Invoke();
+            new FullRead(
+                new TeeOnRead(
+                    new Uri($@"{directoryPath}\input.txt"),
+                    new Uri($@"{directoryPath}\output.txt")
+                )
+            ).Trigger();
 
-                Assert.True(
-                    File.ReadAllText(
-                        $@"{directoryPath}\output.txt"
-                    ).Contains(
-                        "this is a test"
-                    ),
-                    "Can't copy file to another file"
-                );
-            }
+            Assert.Contains(
+                "this is a test",
+                File.ReadAllText($@"{directoryPath}\output.txt")
+            );
         }
 
         [Fact]
@@ -69,13 +55,12 @@ namespace Tonga.Tests.IO
         {
             var baos = new MemoryStream();
             String content = "Hello, товарищ!";
-            Assert.True(
-                AsText._(
-                    new TeeOnRead(
-                        new AsConduit(content),
-                        new AsConduit(baos)
-                    )
-                ).AsString() == Encoding.UTF8.GetString(baos.ToArray())
+            Assert.Equal(
+                new TeeOnRead(
+                    new AsConduit(content),
+                    new AsConduit(baos)
+                ).AsText().Str(),
+                Encoding.UTF8.GetString(baos.ToArray())
             );
         }
 
@@ -91,19 +76,12 @@ namespace Tonga.Tests.IO
 
 
             var str =
-                AsText._(
-                    new AsBytes(
-                        new TeeOnRead(
-                            "Hello, друг!",
-                            new AsConduit(new Uri(path))
-                        )
-                    )
-                ).AsString();
+                new TeeOnRead(
+                    "Hello, друг!",
+                    new Uri(path).AsConduit()
+                ).AsText().Str();
 
-            Assert.Equal(
-                str,
-                AsText._(new AsConduit(new Uri(path))).AsString()
-            );
+            Assert.Equal(str, new Uri(path).AsText().Str());
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Tonga.Tests.IO
         {
             var input =
                 new LoggingOnReadConduit(
-                    new Tonga.IO.AsConduit(""),
+                    "".AsConduit(),
                     ""
                 );
             Assert.Equal(
@@ -26,12 +26,11 @@ namespace Tonga.Tests.IO
         {
             var input =
                 new LoggingOnReadConduit(
-                    new Tonga.IO.AsConduit(
-                        new byte[] {
-                            // @checkstyle MagicNumberCheck (2 lines)
-                            (byte) 20,
-                            (byte) 10,
-                        }
+                    new AsConduit(
+                        [
+                            20,
+                            10
+                        ]
                     ),
                     "ReadByteByByte"
                 );

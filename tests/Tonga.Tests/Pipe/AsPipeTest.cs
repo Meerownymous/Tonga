@@ -10,9 +10,8 @@ namespace Tonga.Tests.Pipe
         {
             Assert.Equal(
                 1,
-                AsPipe._<int, int>(
-                    _ => 1
-                ).Yield(2)
+                new AsPipe<int, int>(_ => 1)
+                    .Yield(2)
             );
         }
     }

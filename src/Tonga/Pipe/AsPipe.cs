@@ -14,11 +14,17 @@ public sealed class AsPipe<In, Out>(System.Func<In,Out> forge) : IPipe<In, Out>
     public Out Yield(In input) => forge(input);
 }
 
-public static class AsPipe
+public static partial class PipeSmarts
 {
     /// <summary>
     /// Swap an input to one output.
     /// </summary>
-    public static AsPipe<In, Out> _<In, Out>(System.Func<In, Out> forge) =>
-        new(forge);
+    public static IPipe<In, Out> AsPipe<In, Out>(this System.Func<In, Out> yield) =>
+        new AsPipe<In, Out>(yield);
+
+    /// <summary>
+    /// Swap an input to one output.
+    /// </summary>
+    public static IPipe<In, In> AsPipe<In>(this System.Func<In, In> yield) =>
+        new AsPipe<In, In>(yield);
 }

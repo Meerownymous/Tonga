@@ -1,21 +1,20 @@
 using Tonga.Enumerable;
+using Tonga.List;
 using Xunit;
-using Sticky = Tonga.List.Sticky;
 
 namespace Tonga.Tests.List;
 
-public sealed class StickyTest
+public sealed class EconomicTest
 {
     [Fact]
     public void AdvancesOnlyWhenAsked()
     {
         var advances = 0;
         var sticky =
-            Sticky._(
-                Lambda._(() => advances++,
-                    AsEnumerable._("one", "two", "three")
-                )
-            );
+            ("one", "two", "three").AsEnumerable()
+                .OnEach(() => advances++)
+                .AsList()
+                .AsSticky();
         sticky.GetEnumerator().MoveNext();
 
         Assert.Equal(1, advances);
@@ -26,11 +25,11 @@ public sealed class StickyTest
     {
         var advances = 0;
         var sticky =
-            Sticky._(
-                Lambda._(() => advances++,
-                    AsEnumerable._("one", "two", "three")
-                )
-            );
+            ("one", "two", "three")
+                .AsEnumerable()
+                .OnEach(() => advances++)
+                .AsList()
+                .AsSticky();
         _ = sticky[1];
 
         Assert.Equal(2, advances);
@@ -41,11 +40,11 @@ public sealed class StickyTest
     {
         var advances = 0;
         var sticky =
-            Sticky._(
-                Lambda._(() => advances++,
-                    AsEnumerable._("one", "two", "three")
-                )
-            );
+            ("one", "two", "three")
+                .AsEnumerable()
+                .OnEach(() => advances++)
+                .AsList()
+                .AsSticky();
         _ = sticky.Contains("two");
 
         Assert.Equal(2, advances);
@@ -56,13 +55,12 @@ public sealed class StickyTest
     {
         var advances = 0;
         var sticky =
-            Sticky._(
-                Lambda._(() => advances++,
-                    AsEnumerable._("one", "two", "three")
-                )
-            );
+            ("one", "two", "three")
+                .AsEnumerable()
+                .OnEach(() => advances++)
+                .AsList()
+                .AsSticky();
         _ = sticky.Count;
-
         Assert.Equal(3, advances);
     }
 
@@ -71,11 +69,11 @@ public sealed class StickyTest
     {
         var advances = 0;
         var sticky =
-            Sticky._(
-                Lambda._(() => advances++,
-                    AsEnumerable._("one", "two", "three")
-                )
-            );
+            ("one", "two", "three")
+                .AsEnumerable()
+                .OnEach(() => advances++)
+                .AsList()
+                .AsSticky();
         _ = sticky.Count;
         _ = sticky[2];
 

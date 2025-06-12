@@ -11,11 +11,10 @@ public sealed class VersionMapTests
     {
         Assert.Equal(
             "ainz",
-            VersionMap._(
-                true,
-                AsPair._(new Version(1, 0, 0, 0), "ainz"),
-                AsPair._(new Version(2, 0, 0, 0), "zway")
-            )[new Version(1, 0, 0, 0)]
+            (
+                (new Version(1, 0, 0, 0), "ainz").AsPair(),
+                (new Version(2, 0, 0, 0), "zway").AsPair()
+            ).AsVersionMap()[new Version(1, 0, 0, 0)]
         );
     }
 
@@ -24,10 +23,10 @@ public sealed class VersionMapTests
     {
         Assert.Equal(
             "ainz",
-            VersionMap._(true,
-                AsPair._(new Version(1, 0, 0, 0), "ainz"),
-                AsPair._(new Version(5, 0, 0, 0), "zway")
-            )[new Version(2, 0, 0, 0)]
+            (
+                (new Version(1, 0, 0, 0), "ainz"),
+                (new Version(5, 0, 0, 0), "zway")
+            ).AsVersionMap()[new Version(2, 0, 0, 0)]
         );
     }
 
@@ -36,10 +35,10 @@ public sealed class VersionMapTests
     {
         Assert.Equal(
             "zway",
-            VersionMap._(true,
-                AsPair._(new Version(1, 0, 0, 0), "ainz"),
-                AsPair._(new Version(5, 0, 0, 0), "zway")
-            )[new Version(10, 0, 0, 0)]
+            (
+                (new Version(1, 0, 0, 0), "ainz"),
+                (new Version(5, 0, 0, 0), "zway")
+            ).AsVersionMap()[new Version(10, 0, 0, 0)]
         );
     }
 
@@ -47,10 +46,10 @@ public sealed class VersionMapTests
     public void RejectsOverClosedEnd()
     {
         Assert.Throws<ArgumentException>(() =>
-            VersionMap._(false,
-                AsPair._(new Version(1, 0, 0, 0), "ainz"),
-                AsPair._(new Version(5, 0, 0, 0), "zway")
-            )[new Version(10, 0, 0, 0)]
+            (
+                (new Version(1, 0, 0, 0), "ainz"),
+                (new Version(5, 0, 0, 0), "zway")
+            ).AsVersionMap(false)[new Version(10, 0, 0, 0)]
         );
     }
 
@@ -59,10 +58,10 @@ public sealed class VersionMapTests
     {
         Assert.Equal(
             "ainz",
-            VersionMap._(false,
-                AsPair._(new Version(1, 0, 0, 0), "ainz"),
-                AsPair._(new Version(5, 0, 0, 0), "zway")
-            )[new Version(2, 0, 0, 0)]
+            (
+                (new Version(1, 0, 0, 0), "ainz"),
+                (new Version(5, 0, 0, 0), "zway")
+            ).AsVersionMap(false)[new Version(2, 0, 0, 0)]
         );
     }
 
@@ -71,10 +70,10 @@ public sealed class VersionMapTests
     {
         Assert.Equal(
             "ainz",
-            VersionMap._(false,
-                AsPair._(new Version(1, 0, 0, 0), "ainz"),
-                AsPair._(new Version(5, 0, 0, 0), "zway")
-            )[new Version(1, 0)]
+            (
+                (new Version(1, 0, 0, 0), "ainz"),
+                (new Version(5, 0, 0, 0), "zway")
+            ).AsVersionMap(false)[new Version(1, 0)]
         );
     }
 
@@ -83,10 +82,10 @@ public sealed class VersionMapTests
     {
         Assert.Equal(
             "zway",
-            VersionMap._(true,
-                AsPair._(new Version(1, 0, 0, 0), "ainz"),
-                AsPair._(new Version(5, 0, 0, 0), "zway")
-            )[new Version(5, 0)]
+            (
+                (new Version(1, 0, 0, 0), "ainz"),
+                (new Version(5, 0, 0, 0), "zway")
+            ).AsVersionMap()[new Version(5, 0)]
         );
     }
 }

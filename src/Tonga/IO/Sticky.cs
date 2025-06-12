@@ -1,9 +1,5 @@
-
-
 using System;
 using System.IO;
-using Tonga.Func;
-using Tonga.Scalar;
 
 namespace Tonga.IO
 {
@@ -19,9 +15,10 @@ namespace Tonga.IO
             new(() =>
             {
                 MemoryStream copy = new MemoryStream();
-                ReadAll._(
-                    new TeeOnRead(origin, new AsConduit(copy))
-                ).Invoke();
+                new TeeOnRead(origin, new AsConduit(copy))
+                    .FullRead()
+                    .Trigger();
+
                 origin.Stream().Dispose();
                 return copy.ToArray();
             }

@@ -11,9 +11,9 @@ public sealed class OneTimePairTests
     {
         Assert.Equal(
             "one",
-            OneTimePair._(
-                AsPair._(1, () => "one")
-            ).Value()
+            1.AsPair(() => "one")
+            .AsOneTimePair()
+            .Value()
         );
     }
 
@@ -21,9 +21,7 @@ public sealed class OneTimePairTests
     public void RejectsSecondRetrieval()
     {
         var pair =
-            OneTimePair._(
-                AsPair._(1, () => "one")
-            );
+            1.AsPair(() => "one").AsOneTimePair();
 
         pair.Value();
 

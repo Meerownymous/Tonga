@@ -1,113 +1,87 @@
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Tonga.Enumerable
+namespace Tonga.Enumerable;
+
+/// <summary>
+/// Items which do only exist in only one of the enumerables.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class Divergency<T>(IEnumerable<IEnumerable<T>> sources, Func<T, bool> match) : IEnumerable<T>
 {
+    private readonly IEnumerable<T> result =
+        new AsEnumerable<T>(() => Produced(sources.Select(s => s.AsFiltered(match))));
+
     /// <summary>
-    /// Items which do only exist in one enumerable.
+    /// Items which do only exist in only one of the enumerables.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class Divergency<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) : IEnumerable<T>
+    public Divergency(params IEnumerable<T>[] sources) : this(sources, _ => true) { }
+
+    public IEnumerator<T> GetEnumerator() => result.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+    private static IEnumerator<T> Produced(IEnumerable<IEnumerable<T>> filtered)
     {
-        private readonly IEnumerable<T> result =
-            new AsEnumerable<T>(() =>
-                Produced(
-                    Filtered._(match, a),
-                    Filtered._(match, b)
-                )
-            );
+        var sets = filtered.Select(e => new HashSet<T>(e, EqualityComparer<T>.Default)).ToArray();
+        var all = new HashSet<T>(EqualityComparer<T>.Default);
+        var count = new Dictionary<T, int>();
 
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public Divergency(IEnumerable<T> a, IEnumerable<T> b) : this(
-            a, b, _ => true
-        )
-        { }
-
-        public IEnumerator<T> GetEnumerator() => result.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-
-        private static IEnumerator<T> Produced(IEnumerable<T> a, IEnumerable<T> b)
+        foreach (var set in sets)
         {
-            var all1 = new HashSet<T>(EqualityComparer<T>.Default);
-            var all2 = new HashSet<T>(EqualityComparer<T>.Default);
-            var notin1 = new HashSet<T>(EqualityComparer<T>.Default);
-            var notin2 = new HashSet<T>(EqualityComparer<T>.Default);
-
-            foreach (var element in a)
+            foreach (var item in set)
             {
-                all1.Add(element);
-                notin2.Add(element); // Add to `notin2` initially.
-            }
-
-            foreach (var element in b)
-            {
-                all2.Add(element);
-                if (!all1.Contains(element))
-                {
-                    notin1.Add(element); // Only add to `notin1` if not in `a`.
-                }
+                all.Add(item);
+                if (count.ContainsKey(item))
+                    count[item]++;
                 else
-                {
-                    notin2.Remove(element); // Remove from `notin2` if found in `b`.
-                }
-            }
-
-            foreach (var element in a)
-            {
-                if (all2.Contains(element))
-                {
-                    notin2.Remove(element); // Remove from `notin2` if found in `b`.
-                }
-            }
-
-            foreach (var item in Joined._(notin1, notin2))
-            {
-                yield return item;
+                    count[item] = 1;
             }
         }
+
+        foreach (var item in all)
+        {
+            if (count[item] == 1)
+                yield return item;
+        }
     }
+}
+
+public static partial class EnumerableSmarts
+{
+    /// <summary>
+    /// Items which do only exist in only one of the enumerables.
+    /// </summary>
+    public static IEnumerable<TItem> AsDivergency<TItem>(
+        this IEnumerable<TItem>[] sources
+    ) =>
+        new Divergency<TItem>(sources);
 
     /// <summary>
-    /// Items which do only exist in one enumerable.
+    /// Items which do only exist in only one of the enumerables.
     /// </summary>
-    public static class Divergency
-    {
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b, Func<T, bool> match) => new Divergency<T>(a, b, match);
+    public static IEnumerable<TItem> AsDivergency<TItem>(
+        this IEnumerable<TItem>[] sources,
+        Func<TItem, bool> match
+    ) =>
+        new Divergency<TItem>(sources, match);
 
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<T> _<T>(IEnumerable<T> a, IEnumerable<T> b) => new Divergency<T>(a, b);
-    }
+    /// <summary>
+    /// Items which do only exist in only one of the enumerables.
+    /// </summary>
+    public static IEnumerable<TItem> AsDivergency<TItem>(
+        this IEnumerable<IEnumerable<TItem>> sources
+    ) =>
+        new Divergency<TItem>(sources.ToArray());
 
-    public static class DivergencySmarts
-    {
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<TItem> Divergency<TItem>(
-            this TItem[] source,
-            IEnumerable<TItem> other
-        ) =>
-            new Divergency<TItem>(source, other);
-
-        /// <summary>
-        /// Items which do only exist in one enumerable.
-        /// </summary>
-        public static IEnumerable<TItem> Divergency<TItem>(
-            this TItem[] source,
-            IEnumerable<TItem> other,
-            Func<TItem, bool> match
-        ) =>
-            new Divergency<TItem>(source, other, match);
-    }
+    /// <summary>
+    /// Items which do only exist in only one of the enumerables.
+    /// </summary>
+    public static IEnumerable<TItem> AsDivergency<TItem>(
+        this IEnumerable<IEnumerable<TItem>> sources,
+        Func<TItem, bool> match
+    ) =>
+        new Divergency<TItem>(sources.ToArray(), match);
 }

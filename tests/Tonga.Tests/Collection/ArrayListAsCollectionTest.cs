@@ -1,6 +1,6 @@
 using System.Collections;
 using Tonga.Collection;
-using Tonga.Scalar;
+using Tonga.Enumerable;
 using Xunit;
 
 namespace Tonga.Tests.Collection
@@ -10,15 +10,13 @@ namespace Tonga.Tests.Collection
         [Fact]
         public void BuildsFromStrings()
         {
-            var arr = new ArrayList() { "A", "B", "C" };
-
             Assert.Equal(
                 "A",
-                new ItemAt<object>(
-                    new ArrayListAsCollection(arr)
-                )
-                .Value()
-                .ToString()
+                new ArrayListAsCollection(
+                        new ArrayList { "A", "B", "C" }
+                    )
+                    .ItemAt(0)
+                    .Value()
             );
         }
     }

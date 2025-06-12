@@ -1,6 +1,5 @@
+using System;
 using Tonga.Enumerable;
-using Tonga.Primitives;
-using Tonga.Text;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -11,40 +10,33 @@ namespace Tonga.Tests.Enumerable
         public void SortsAnArrayByTextNumber()
         {
             Assert.Equal(
-                "nr-6, nr0, nr2, nr3, nr10, nr44",
-                new global::Tonga.Text.Joined(", ",
-                    new SortedBy<string, int>(
-                        s => new IntOf(s.Substring(2)).Value(),
-                        AsEnumerable._("nr3", "nr2", "nr10", "nr44", "nr-6", "nr0")
-                    )
-                ).AsString()
+                ["nr-6", "nr0", "nr2", "nr3", "nr10", "nr44"],
+                ("nr3", "nr2", "nr10", "nr44", "nr-6", "nr0")
+                    .AsEnumerable()
+                    .AsSortedBy(s => Convert.ToInt32(s.Substring(2)))
             );
         }
 
         [Fact]
         public void SortsAnArrayWithComparator()
         {
-            Assert.True(
+            Assert.Equal(
+                "hello9, Friend7, dude6, c3, a2",
                 new global::Tonga.Text.Joined(", ",
                     new SortedBy<string, int>(
-                        s => new IntOf(s.Substring(s.Length-1)).Value(),
+                        s => Convert.ToInt32(s.Substring(s.Length-1)),
                         AsReverseCompare<int>.Default,
-                        AsEnumerable._(
-                            "a2", "c3", "hello9", "dude6", "Friend7"
-                        )
+                        ("a2", "c3", "hello9", "dude6", "Friend7").AsEnumerable()
                     )
-                ).AsString() == "hello9, Friend7, dude6, c3, a2",
-                "Can't sort an enumerable with a custom comparator");
+                ).Str());
         }
 
         [Fact]
         public void SortsAnEmptyArray()
         {
             Assert.Empty(
-                new SortedBy<int, int>(
-                    i => i,
-                    new None<int>()
-                )
+                new None<int>()
+                    .AsSortedBy(i => i)
             );
         }
     }

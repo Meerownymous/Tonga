@@ -1,5 +1,6 @@
 
 
+using System;
 using System.IO;
 using Tonga.IO;
 using Tonga.Scalar;
@@ -11,14 +12,14 @@ namespace Tonga.Bytes
     /// </summary>
     public sealed class ConduitAsBytes : IBytes
     {
-        private readonly IScalar<byte[]> bytes;
+        private readonly Func<byte[]> bytes;
 
         /// <summary>
         /// Input as bytes.
         /// </summary>
         public ConduitAsBytes(IConduit src, int max = 16 << 10)
         {
-            this.bytes = new AsScalar<byte[]>(() =>
+            this.bytes = () =>
             {
                 var baos = new MemoryStream();
 
@@ -29,13 +30,13 @@ namespace Tonga.Bytes
                 { }
                 var output = baos.ToArray();
                 return output;
-            });
+            };
         }
 
         /// <summary>
         /// Get the content as byte array. (Self-Disposing)
         /// </summary>
         /// <returns>content as byte array</returns>
-        public byte[] Bytes()=> this.bytes.Value();
+        public byte[] Raw()=> this.bytes();
     }
 }

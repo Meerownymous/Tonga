@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 using Tonga.Enumerable;
 
 namespace Tonga.Collection
@@ -12,29 +13,28 @@ namespace Tonga.Collection
     /// Collection out of other things.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class AsCollection<T> : ICollection<T>
+    public sealed class AsCollection<T>(Func<ICollection<T>> origin) : ICollection<T>
     {
         private static readonly InvalidOperationException readOnlyException = new("Collection is readonly.");
-        private readonly Func<ICollection<T>> items;
 
         /// <summary>
         /// A collection from an array
         /// </summary>
-        public AsCollection(params T[] more) : this(AsEnumerable._(more))
+        public AsCollection(params T[] more) : this(more.AsEnumerable())
         { }
 
         /// <summary>
         /// A collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public AsCollection(Func<IEnumerator<T>> src) : this(AsEnumerable._(src))
+        public AsCollection(Func<IEnumerator<T>> src) : this(src.AsEnumerable())
         { }
 
         /// <summary>
         /// A collection from an <see cref="IEnumerator{T}"/>
         /// </summary>
         /// <param name="src"></param>
-        public AsCollection(IEnumerator<T> src) : this(AsEnumerable._(src))
+        public AsCollection(IEnumerator<T> src) : this(src.AsEnumerable())
         { }
 
         /// <summary>
@@ -58,87 +58,15 @@ namespace Tonga.Collection
         )
         { }
 
-        /// <summary>
-        /// A collection out of an <see cref="ICollection{T}"/>
-        /// </summary>
-        /// <param name="src"></param>
-        public AsCollection(Func<ICollection<T>> src)
-        {
-            this.items = src;
-        }
-
-        public int Count => this.items().Count;
-
+        public int Count => origin().Count;
         public bool IsReadOnly => true;
-
-        public void Add(T item)
-        {
-            throw readOnlyException;
-        }
-
-        public void Clear()
-        {
-            throw readOnlyException;
-        }
-
-        public bool Contains(T item)
-        {
-            return this.items().Contains(item);
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            this.items().CopyTo(array, arrayIndex);
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.items().GetEnumerator();
-        }
-
-        public bool Remove(T item)
-        {
-            throw readOnlyException;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.items().GetEnumerator();
-        }
-    }
-
-    public static class AsCollection
-    {
-        /// <summary>
-        /// A collection out of an <see cref="IEnumerable{T}"/>
-        /// </summary>
-        public static ICollection<string> _(params string[] src) => new AsCollection<string>(src);
-
-        /// <summary>
-        /// A collection out of an <see cref="IEnumerable{T}"/>
-        /// </summary>
-        public static ICollection<T> _<T>(Func<IEnumerator<T>> src) => new AsCollection<T>(src);
-
-        /// <summary>
-        /// A collection out of an <see cref="IEnumerable{T}"/>
-        /// </summary>
-        public static ICollection<T> _<T>(IEnumerator<T> src) => new AsCollection<T>(src);
-
-        /// <summary>
-        /// A collection out of an <see cref="IEnumerable{T}"/>
-        /// </summary>
-        public static ICollection<T> _<T>(Func<IEnumerable<T>> src) => new AsCollection<T>(src);
-
-        /// <summary>
-        /// A collection out of an <see cref="IEnumerable{T}"/>
-        /// </summary>
-        public static ICollection<T> _<T>(IEnumerable<T> src) => new AsCollection<T>(src);
-
-        /// <summary>
-        /// A collection out of an <see cref="ICollection{T}"/>
-        /// </summary>
-        public static ICollection<T> _<T>(Func<ICollection<T>> src) => new AsCollection<T>(src);
-
+        public void Add(T item) => throw readOnlyException;
+        public void Clear() => throw readOnlyException;
+        public bool Contains(T item) => origin().Contains(item);
+        public void CopyTo(T[] array, int arrayIndex) => origin().CopyTo(array, arrayIndex);
+        public IEnumerator<T> GetEnumerator() => origin().GetEnumerator();
+        public bool Remove(T item) => throw readOnlyException;
+        IEnumerator IEnumerable.GetEnumerator() => origin().GetEnumerator();
     }
 
     public static class CollectionSmarts

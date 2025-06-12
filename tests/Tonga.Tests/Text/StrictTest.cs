@@ -11,7 +11,7 @@ namespace Tonga.Tests.Text
         public void Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                new Strict("not valid", "valid", "also valid").AsString()
+                new Strict("not valid", "valid", "also valid").Str()
             );
         }
 
@@ -21,7 +21,7 @@ namespace Tonga.Tests.Text
             var expected = "valid";
             Assert.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "valid", "ending").AsString()
+                new Strict(expected, "not valid", "also not", "valid", "ending").Str()
             );
         }
 
@@ -31,7 +31,7 @@ namespace Tonga.Tests.Text
             var expected = "LargeValid";
             Assert.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "LargeValid", "ending").AsString()
+                new Strict(expected, "not valid", "also not", "LargeValid", "ending").Str()
             );
         }
 
@@ -40,7 +40,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Throws<ArgumentException>(
                 () =>
-                new Strict("valid", false, "not valid", "also not", "largeValid", "ending").AsString()
+                new Strict("valid", false, "not valid", "also not", "largeValid", "ending").Str()
             );
         }
 
@@ -51,8 +51,8 @@ namespace Tonga.Tests.Text
             Assert.Equal(
                 expected,
                 new Strict(expected,
-                    AsEnumerable._("NotValid", expected)
-                ).AsString()
+                    ("NotValid", expected).AsEnumerable()
+                ).Str()
             );
         }
 
@@ -62,14 +62,15 @@ namespace Tonga.Tests.Text
             var expected = "expected";
             var counter = 0;
             var text =
-                new Strict(AsText._(() => expected),
+                new Strict(
+                    new AsText(() => expected),
                     new AsEnumerable<IText>(
-                        AsText._(() => counter++.ToString()),
-                        AsText._(expected)
+                        new AsText(() => counter++.ToString()),
+                        new AsText(expected)
                     )
                 );
-            text.AsString();
-            text.AsString();
+            text.Str();
+            text.Str();
             Assert.NotEqual(
                 1,
                 counter
@@ -82,13 +83,16 @@ namespace Tonga.Tests.Text
             var expected = "expected";
             Assert.Equal(
                 expected,
-                new Strict(AsText._(expected), false,
-                    AsEnumerable._(
-                        AsText._("Expected"),
-                        AsText._("Not Valid"),
-                        AsText._(expected)
-                    )
-                ).AsString()
+                new Strict(
+                    new AsText(expected),
+                    false,
+                    (
+                        "Expected",
+                        "Not Valid",
+                        expected
+                    ).AsEnumerable()
+                    .AsMapped(t => t.AsText())
+                ).Str()
             );
         }
 
@@ -99,13 +103,14 @@ namespace Tonga.Tests.Text
             Assert.Equal(
                 expected,
                 new Strict(
-                    expected, true,
-                    AsEnumerable._(
+                    expected,
+                    true,
+                    (
                         "Not Valid",
                         "As well not valid",
                         "ExpEcteD"
-                    )
-                ).AsString()
+                    ).AsEnumerable()
+                ).Str()
             );
         }
 
@@ -120,7 +125,7 @@ namespace Tonga.Tests.Text
                     "Not Valid",
                     "As well not valid",
                     "ExpEcteD"
-                ).AsString()
+                ).Str()
             );
         }
     }

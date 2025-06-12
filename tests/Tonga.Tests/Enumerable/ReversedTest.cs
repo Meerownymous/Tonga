@@ -1,4 +1,5 @@
 using Tonga.Enumerable;
+using Tonga.Text;
 using Xunit;
 
 namespace Tonga.Tests.Enumerable
@@ -10,14 +11,11 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Equal(
                 "dude world hello",
-                new global::Tonga.Text.Joined(
-                    " ",
-                    new Reversed<string>(
-                        AsEnumerable._(
-                            "hello", "world", "dude"
-                        )
-                    )
-                ).AsString()
+                ("hello", "world", "dude")
+                .AsEnumerable()
+                .AsReversed()
+                .AsJoined(" ")
+                .Str()
             );
         }
     }

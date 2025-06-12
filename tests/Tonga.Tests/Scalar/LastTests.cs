@@ -1,6 +1,5 @@
 using System;
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Scalar
@@ -11,10 +10,9 @@ namespace Tonga.Tests.Scalar
         public void ThrowsCustomException()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                Last._(
-                    None._<string>(),
-                    new InvalidOperationException()
-                ).Value()
+                new None<string>()
+                    .Last(new InvalidOperationException())
+                    .Value()
             );
         }
 
@@ -23,10 +21,10 @@ namespace Tonga.Tests.Scalar
         {
             Assert.Equal(
                 "gotcha",
-                Last._(
-                    None._<string>(),
-                    "gotcha"
-                ).Value()
+                new None<string>()
+                    .Last("gotcha")
+                    .Value()
+
             );
         }
 
@@ -35,9 +33,10 @@ namespace Tonga.Tests.Scalar
         {
             Assert.Equal(
                 "Max",
-                Last._(
-                    AsEnumerable._("hallo", "ich", "heisse", "Max")
-                ).Value()
+                ("hallo", "ich", "heisse", "Max")
+                    .AsEnumerable()
+                    .Last()
+                    .Value()
             );
         }
     }

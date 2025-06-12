@@ -8,7 +8,7 @@ namespace Tonga.Tests.Scalar
     {
 
         [Fact]
-        public void ConditionTrue()
+        public void ValueCorrectWhenConditionTrue()
         {
             Assert.True(
                 new Conditional<int>(
@@ -19,7 +19,7 @@ namespace Tonga.Tests.Scalar
         }
 
         [Fact]
-        public void ConditionFalse()
+        public void ValueCorrectWhenConditionFalse()
         {
             Assert.True(
                 new Conditional<int>(
@@ -30,7 +30,7 @@ namespace Tonga.Tests.Scalar
         }
 
         [Fact]
-        public void ConditionBoolean()
+        public void ValueCorrectWhenConditionBooleanTrue()
         {
             Assert.True(
                 new Conditional<int>(
@@ -42,7 +42,7 @@ namespace Tonga.Tests.Scalar
         }
 
         [Fact]
-        public void ConditionFunc()
+        public void ValueCorrectWhenConditionLambdaTrue()
         {
             var value = 5;
             Assert.True(

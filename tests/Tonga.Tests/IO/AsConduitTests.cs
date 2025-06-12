@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using Tonga.Bytes;
 using Tonga.Enumerable;
-using Tonga.Func;
 using Tonga.IO;
-using Tonga.Scalar;
 using Tonga.Text;
 using Xunit;
+using Length = Tonga.Enumerator.Length;
 
 #pragma warning disable MaxPublicMethodCount
 
@@ -29,17 +28,15 @@ namespace Tonga.Tests.IO
                 {
                     for(var i=0;i<times;i++)
                     {
-                        using (var stream = new MemoryStream(content))
-                        {
-                            byte[] buf = new byte[16 << 10];
+                        using var stream = new MemoryStream(content);
+                        byte[] buf = new byte[16 << 10];
 
-                            int bytesRead;
-                            while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
-                            {
-                                _ = (long)bytesRead;
-                            }
-                            stream.Seek(0, SeekOrigin.Begin);
+                        int bytesRead;
+                        while ((bytesRead = stream.Read(buf, 0, buf.Length)) > 0)
+                        {
+                            _ = (long)bytesRead;
                         }
+                        stream.Seek(0, SeekOrigin.Begin);
                     }
                 }).AsTimeSpan().TotalMilliseconds
                 + "vs " +
@@ -68,115 +65,105 @@ namespace Tonga.Tests.IO
         {
             Assert.EndsWith(
                 "text!",
-                AsText._(
-                    new ConduitWithFallback(
-                        new AsConduit(() =>
+                new BackFalling(
+                    new AsConduit(
+                        new Func<FileInfo>(() =>
                             throw new Exception()
-                        ),
-                        new AsConduit(AsText._("Alternative text!"))
+                        )
+                    ),
+                    new AsConduit(
+                        "Alternative text!".AsText()
                     )
-                )
-                .AsString()
+                ).AsText()
+                .Str()
 );
         }
 
         [Fact]
         public void ReadsSimpleFileContent()
         {
-            var dir = @"artifacts/InputOfTest"; var file = "simple-filecontent.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));
-            Directory.CreateDirectory(dir);
+            using var tempDir = new TempDirectory();
+            var file = "simple-filecontent.txt";
+            var path = Path.GetFullPath(Path.Combine(tempDir.Value().FullName, file));
             String content = "Hello, товарищ!";
 
-            ReadAll._(
-                new AsConduit(
-                    new TeeStream(
-                        new MemoryStream(
-                            new AsBytes(
-                                new global::Tonga.Text.Joined("\r\n",
-                                new Head<string>(
-                                    new Endless<string>(content),
-                                    10)
-                                )
-                            ).Bytes()
-                        ),
-                        new AsConduit(
-                            new Uri(path)
-                        ).Stream()
-                    )
+            new FullRead(
+                new TeeOnReadStream(
+                    new MemoryStream(
+                        $"{content}\r\n"
+                            .AsRepeated(10)
+                            .AsTrimmedRight("\r\n")
+                            .AsBytes()
+                            .Raw()
+                    ),
+                    new Uri(path)
+                        .AsConduit()
+                        .Stream()
                 )
-            ).Invoke();
+            ).Trigger();
 
-            Assert.True(
-                    AsText._(
-                        new AsConduit(
-                            new Uri(path))
-                    ).AsString().EndsWith(content),
-                    "Can't read file content");
+            Assert.EndsWith(
+                content,
+                new AsConduit(
+                        new Uri(path)
+                    )
+                    .AsText()
+                    .Str()
+            );
         }
 
         [Fact]
-        public void ClosesInputStream()
+        public void CanCloseInput()
         {
             Stream input;
             using (input = new MemoryStream("how are you?"u8.ToArray()))
             {
-                AsText._(
-                    new AsConduit(
-                        input)).AsString();
+                new AsConduit(input).AsText().Str();
             }
-
-            Assert.False(input.CanRead,
-                "cannot close input stream");
+            Assert.False(input.CanRead);
         }
 
         [Fact]
         public void ReadsFileContent()
         {
-            var dir = "artifacts/InputOfTest"; var file = "small-text.txt"; var path = Path.GetFullPath(Path.Combine(dir, file));
-            Directory.CreateDirectory(dir);
-            if (File.Exists(path)) File.Delete(path);
+            using var tempDir = new TempDirectory();
+            var file = "small-text.txt";
+            var path = Path.GetFullPath(Path.Combine(tempDir.Value().FullName, file));
 
-            ReadAll._(
-                new AsConduit(
-                    new TeeStream(
-                        new MemoryStream(
-                            new AsBytes(
-                                new global::Tonga.Text.Joined("\r\n",
-                                    new Head<string>(
-                                        new Endless<string>("Hello World"),
-                                        10
-                                    )
-                                )
-                            ).Bytes()
-                        ),
-                        new AsConduit(
-                            new Uri(path)
-                        ).Stream()
-                    )
-                )
-            ).Invoke();
+            new FullRead(
+                new TeeOnReadStream(
+                    new MemoryStream(
+                        new Joined("\r\n",
+                            "Hello World".AsRepeated(10)
+                        ).AsBytes()
+                        .Raw()
+                    ),
+                    new AsConduit(
+                        new Uri(path)
+                    ).Stream()
+                ).AsConduit()
+            ).Trigger();
 
             Assert.StartsWith(
                 "Hello World",
-                AsText._(
-                    new AsBytes(
-                        new AsConduit(
-                            new Uri(Path.GetFullPath(path))
-                        )
-                    ).Bytes()
-                ).AsString()
+                new AsBytes(
+                    new AsConduit(
+                        new Uri(Path.GetFullPath(path))
+                    )
+                )
+                .AsText()
+                .Str()
             );
         }
 
         [Fact]
         public void ReadsRealUrl()
         {
-            Assert.True(
-                AsText._(
-                    new AsConduit(
-                        new Url("http://www.google.de"))
-                ).AsString().Contains("<html"),
-                "Can't fetch bytes from the URL"
+            Assert.Contains(
+                "<html",
+                new AsConduit(
+                    new Url("http://www.google.de")
+                ).AsText().Str()
             );
         }
 
@@ -184,38 +171,25 @@ namespace Tonga.Tests.IO
         public void ReadsFile()
         {
             using var file = new TempFile();
-            ReadAll._(
-                new AsConduit(
-                    new TeeStream(
-                        new MemoryStream(
-                            new AsBytes(
-                                new global::Tonga.Text.Joined("\r\n",
-                                    Tonga.Enumerable.Head._(
-                                        Endless._("Hello World"),
-                                        1000
-                                    )
-                                )
-                            ).Bytes()
-                        ),
-                        new AsConduit(
-                            new Uri(file.Value())
-                        ).Stream()
-                    )
+            new FullRead(
+                new TeeOnReadStream(
+                    "Hello World\r\n"
+                        .AsRepeated(1000)
+                        .AsStream(),
+                    new Uri(file.Value())
+                        .AsStream()
                 )
-            ).Invoke();
-
+            ).Trigger();
+            
             Assert.Equal(
                 1000,
-                Length._(
-                    new Split(
-                        AsText._(
-                            new AsBytes(
-                                new AsConduit(
-                                    new Uri(file.Value())
-                                )
-                            )
-                        ), "\r\n")
-                ).Value()
+                new Uri(file.Value())
+                    .AsConduit()
+                    .AsBytes()
+                    .AsText()
+                    .AsSplit("\r\n")
+                    .Length()
+                    .Value()
             );
         }
 
@@ -224,12 +198,14 @@ namespace Tonga.Tests.IO
         {
             var content = "Hello, друг!";
 
-            Assert.True(
-                    Encoding.UTF8.GetString(
-                        new AsBytes(
-                            new AsConduit(content)
-                        ).Bytes()) == content,
-                    "Can't read bytes from Input");
+            Assert.Equal(
+                content,
+                Encoding.UTF8.GetString(
+                    new AsConduit(content)
+                        .AsBytes()
+                        .Raw()
+                )
+            );
         }
 
         [Fact]
@@ -237,56 +213,50 @@ namespace Tonga.Tests.IO
         {
             String starts = "Name it, ";
             String ends = "then it exists!";
-            Assert.True(
-                    AsText._(
-                        new AsBytes(
-                            new AsConduit(
-                                new StringBuilder(starts).Append(ends)
-                            )
-                        ).Bytes()).AsString() == starts + ends,
-                    "can't read from stringbuilder"
-                );
+            Assert.Equal(
+                starts + ends,
+                new AsConduit(
+                    new StringBuilder(starts).Append(ends)
+                ).AsText()
+                .Str()
+            );
         }
 
         [Fact]
         public void ReadsArrayOfChars()
         {
-            Assert.True(
-                    AsText._(
-                        new AsBytes(
-                            new AsConduit(
-                                'H', 'o', 'l', 'd', ' ',
-                                'i', 'n', 'f', 'i', 'n', 'i', 't', 'y'
-                            )
-                        ).Bytes()).AsString() == "Hold infinity",
-                    "Can't read array of chars.");
+            Assert.Equal(
+                "Hold infinity",
+                new AsConduit(
+                    'H', 'o', 'l', 'd', ' ',
+                    'i', 'n', 'f', 'i', 'n', 'i', 't', 'y'
+                ).AsText().Str()
+            );
         }
 
         [Fact]
         public void ReadsEncodedArrayOfChars()
         {
-            Assert.True(
-                AsText._(
-                    new AsBytes(
-                        new AsConduit('O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a')
-                    ).Bytes()
-                ).AsString() == "O que sera que sera",
-                "Can't read array of encoded chars."
-            );
+            Assert.Equal(
+                "O que sera que sera",
+                new AsConduit('O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a')
+                    .AsText()
+                    .Str()
+                );
         }
 
         [Fact]
         public void ReadsStringFromReader()
         {
             String source = "hello, source!";
-            Assert.True(
-                AsText._(
-                    new AsConduit(
-                        new StreamReader(
-                            new AsConduit(source).Stream())
+            Assert.Equal(
+                source,
+                new AsConduit(
+                    new StreamReader(
+                        new AsConduit(source).Stream()
                     )
-                ).AsString() == source,
-                "Can't read string through a reader"
+                ).AsText()
+                .Str()
             );
         }
 
@@ -296,12 +266,13 @@ namespace Tonga.Tests.IO
             String source = "hello, друг!";
             Assert.Equal(
                 source,
-                AsText._(
-                    new AsConduit(
-                            new StreamReader(
-                                new AsConduit(source).Stream()),
-                            Encoding.UTF8)
-                ).AsString()
+                new AsConduit(
+                    new StreamReader(
+                        new AsConduit(source).Stream()
+                    ),
+                    Encoding.UTF8
+                ).AsText()
+                .Str()
             );
         }
 
@@ -314,7 +285,7 @@ namespace Tonga.Tests.IO
                 StructuralComparisons.StructuralEqualityComparer.Equals(
                 new ConduitAsBytes(
                     new AsConduit(bytes)
-                ).Bytes(), bytes)
+                ).Raw(), bytes)
             );
         }
 
@@ -334,19 +305,18 @@ namespace Tonga.Tests.IO
             if (File.Exists(file)) File.Delete(file);
 
             String content = "Hello, товарищ!";
-            ReadAll._(
+            new FullRead(
                 new TeeOnRead(
                     content,
                     new AsConduit(new Uri(file))
                 )
-            ).Invoke();
+            ).Trigger();
 
             Assert.Equal(
                 content,
-                AsText._(
-                        new ConduitAsBytes(
-                            new AsConduit(new Uri(file))))
-                    .AsString()
+                new ConduitAsBytes(
+                    new AsConduit(new Uri(file))
+                ).AsText().Str()
             );
         }
 
@@ -361,20 +331,18 @@ namespace Tonga.Tests.IO
             }
 
             String txt = "Hello, друг!";
-            ReadAll._(
+            new FullRead(
                 new TeeOnRead(
                     txt,
                     new AsConduit(file))
-            ).Invoke();
+            ).Trigger();
 
             Assert.Equal(
                 txt,
-                AsText._(
-                        new ConduitAsBytes(
-                            new AsConduit(file)
-                        )
-                    )
-                    .AsString()
+                new ConduitAsBytes(
+                    new AsConduit(file)
+                ).AsText()
+                .Str()
             );
         }
 

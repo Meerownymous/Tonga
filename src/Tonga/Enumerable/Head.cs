@@ -48,52 +48,26 @@ namespace Tonga.Enumerable
         }
     }
 
-    /// <summary>
-    /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
-    /// </summary>
-    public static class Head
+    public static partial class EnumerableSmarts
     {
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable) => new Head<T>(enumerable);
+        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable) => new Head<T>(enumerable);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> _<T>(IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
-    }
-
-    public static class HeadSmarts
-    {
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> Head<T>(this IEnumerable<T> enumerable) => new Head<T>(enumerable);
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> Head<T>(this IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
-
-        /// <summary>
-        /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
-        /// </summary>
-        /// <param name="enumerable">enumerable to limit</param>
-        /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> Head<T>(this IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
     }
 }

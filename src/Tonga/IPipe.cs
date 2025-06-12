@@ -1,12 +1,12 @@
 namespace Tonga;
 
 /// <summary>
-/// Swaps input to output.
+/// Pipe that lets input travel through and returns output.
 /// </summary>
-public interface IPipe<in TInput, out TOutput>
+public interface IPipe<in TIn, out TOut>
 {
     /// <summary>
-    /// Gem after traveling through pipe.
+    /// Yield output from input.
     /// </summary>
-    TOutput Yield(TInput input);
+    TOut Yield(TIn input);
 }

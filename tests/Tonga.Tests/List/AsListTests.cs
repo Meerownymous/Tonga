@@ -13,17 +13,14 @@ public sealed class ListOfTest
     {
         int size = 2;
         var list =
-            AsList._(
-                Head._(
-                    Endless._(1),
+            new AsList<int>(
+                new Head<int>(
+                    new Endless<int>(1),
                     () => Interlocked.Increment(ref size)
                 )
             );
 
-        Assert.NotEqual(
-            Length._(list).Value(),
-            Length._(list).Value()
-        );
+        Assert.NotEqual(list.Length().Value(), list.Length().Value());
     }
 
     [Fact]
@@ -45,9 +42,10 @@ public sealed class ListOfTest
     {
         var advances = 0;
         var list =
-            AsList._(
-                Lambda._(() => advances++,
-                    AsEnumerable._("item1", "item2", "item3")
+            new AsList<string>(
+                new OnEach<string>(
+                    () => advances++,
+                    ("item1", "item2", "item3").AsEnumerable()
                 )
             );
 
@@ -62,7 +60,7 @@ public sealed class ListOfTest
     {
         Assert.Equal(
             2,
-            AsList._("item1", "item2", "item3")
+            new AsList<string>("item1", "item2", "item3")
                 .IndexOf("item3")
         );
     }
@@ -72,7 +70,7 @@ public sealed class ListOfTest
     {
         Assert.Equal(
             -1,
-            AsList._("item1", "item2", "item3")
+            new AsList<string>("item1", "item2", "item3")
                 .IndexOf("item100")
         );
     }
@@ -81,11 +79,11 @@ public sealed class ListOfTest
     public void CanCopyTo()
     {
         var array = new string[5];
-        var origin = AsList._("item1", "item2", "item3");
+        var origin = new AsList<string>("item1", "item2", "item3");
         origin.CopyTo(array, 2);
 
         Assert.Equal(
-            new string[] { null, null, "item1", "item2", "item3" },
+            new[] { null, null, "item1", "item2", "item3" },
             array
         );
     }
@@ -95,7 +93,7 @@ public sealed class ListOfTest
     {
         Assert.DoesNotContain(
             "item",
-            None._<string>()
+            new None<string>()
         );
     }
 }

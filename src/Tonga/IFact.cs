@@ -18,19 +18,4 @@ public interface IFact
     /// </summary>
     /// <returns></returns>
     bool IsFalse();
-
-    /// <summary>
-    /// Action to take if fact is checked and true.
-    /// </summary>
-    IFact IfTrue(Action then);
-
-    /// <summary>
-    /// Action to take if fact is checked and false.
-    /// </summary>
-    IFact IfFalse(Action then);
-
-    /// <summary>
-    /// Check the fact and invoke the following action.
-    /// </summary>
-    void Check();
 }

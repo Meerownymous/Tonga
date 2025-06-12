@@ -1,6 +1,3 @@
-
-
-
 using Tonga.Text;
 using Xunit;
 
@@ -13,9 +10,9 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Comparable(
-                    AsText._("Hallo Welt")
+                    "Hallo Welt".AsText()
                 ).CompareTo(
-                    AsText._("Tschüss Welt")
+                    "Tschüss Welt".AsText()
                 ) <= -1
             );
         }
@@ -23,23 +20,24 @@ namespace Tonga.Tests.Text
         [Fact]
         public void SeesDifferences()
         {
-            Assert.True(
+            Assert.False(
+                // ReSharper disable once SuspiciousTypeConversion.Global
                 new Comparable(
-                    AsText._("Timm")
+                    "Timm".AsText()
                 ).Equals(
-                    AsText._("Jan-Peter")
-                ) == false
+                    "Jan-Peter".AsText()
+                )
             );
         }
 
         [Fact]
         public void MatchesString()
         {
-            Assert.True(
+            Assert.Equal(
+                "Timm",
                 new Comparable(
-                    AsText._("Timm")
-                ).AsString()
-                == "Timm"
+                    "Timm".AsText()
+                ).Str()
             );
         }
     }

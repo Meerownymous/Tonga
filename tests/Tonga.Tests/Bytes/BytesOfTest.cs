@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Tonga.Bytes;
 using Tonga.Enumerable;
@@ -8,9 +9,8 @@ using Tonga.IO;
 using Tonga.Text;
 using Xunit;
 
-#pragma warning disable MaxPublicMethodCount // a public methods count maximum
-namespace Tonga.Tests.Bytes
-{
+namespace Tonga.Tests.Bytes;
+
     public sealed class BytesOfTest
     {
         [Fact]
@@ -21,7 +21,7 @@ namespace Tonga.Tests.Bytes
                 BitConverter.ToInt32(
                     new AsBytes(
                         value
-                    ).Bytes(),
+                    ).Raw(),
                     0
                 ) == value,
                 "Can't read int into bytes"
@@ -36,7 +36,7 @@ namespace Tonga.Tests.Bytes
                 BitConverter.ToInt64(
                     new AsBytes(
                         value
-                    ).Bytes(),
+                    ).Raw(),
                     0
                 ) == value,
                 "Can't read long into bytes"
@@ -51,7 +51,7 @@ namespace Tonga.Tests.Bytes
                 BitConverter.ToDouble(
                     new AsBytes(
                         value
-                    ).Bytes(),
+                    ).Raw(),
                     0
                 ) == value,
                 "Can't read double into bytes"
@@ -66,7 +66,7 @@ namespace Tonga.Tests.Bytes
                 BitConverter.ToSingle(
                     new AsBytes(
                         value
-                    ).Bytes(),
+                    ).Raw(),
                     0
                 ) == value,
                 "Can't read float into bytes"
@@ -78,45 +78,46 @@ namespace Tonga.Tests.Bytes
         {
             int multiplier = 5_000;
             String body = "1234567890";
-            Assert.True(
+            Assert.Equal(
+                body.Length * multiplier,
                 new AsBytes(
                     new AsConduit(
-                        new Tonga.Text.Joined(
-                            "",
-                            Tonga.Enumerable.Head._(
-                                Endless._(body),
-                                multiplier
-                            )
-                        )
+                        body.AsEndless()
+                            .AsHead(multiplier)
+                            .AsJoined("")
                     )
-                ).Bytes().Length == body.Length * multiplier,
-            "Can't read large content from in-memory Input");
+                ).Raw().Length
+            );
         }
 
         [Fact]
         public void ReadsInputIntoBytes()
         {
-            Assert.True(
+            Assert.Equal(
+                "Hello, друг!",
                 Encoding.UTF8.GetString(
                     new AsBytes(
                         new AsConduit("Hello, друг!")
-                    ).Bytes()) == "Hello, друг!");
+                    ).Raw()
+                )
+            );
         }
 
         [Fact]
         public void ReadsFromReader()
         {
             String source = "hello, друг!";
-            Assert.True(
-                AsText._(
-                    new AsBytes(
-                        new StreamReader(
-                            new MemoryStream(
-                                Encoding.UTF8.GetBytes(source))),
-                        Encoding.UTF8,
-                        16 << 10
+            Assert.Equal(
+                source,
+                    new StreamReader(
+                        new MemoryStream(
+                            Encoding.UTF8.GetBytes(source)
+                        )
                     )
-                ).AsString() == source
+                    .AsBytes(Encoding.UTF8)
+                    .AsText()
+                    .Str()
+
             );
         }
 
@@ -124,44 +125,38 @@ namespace Tonga.Tests.Bytes
         public void ReadsInputIntoBytesWithSmallBuffer()
         {
             String source = "hello, товарищ!";
-            Assert.True(
+            Assert.Equal(
+                source,
                 Encoding.UTF8.GetString(
-                    new AsBytes(
-                        new AsConduit(
-                            AsText._(source)
-                        ),
-                        2
-                    ).Bytes()) == source
-                );
+                    source
+                        .AsText()
+                        .AsConduit()
+                        .AsBytes(2)
+                        .Raw()
+                )
+            );
         }
 
         [Fact]
         public void ClosesInputStream()
         {
             IText t;
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes("how are you?")))
+            using (var stream = new MemoryStream("how are you?"u8.ToArray()))
             {
-                t =
-                    AsText._(
-                        new AsConduit(stream),
-                        Encoding.UTF8
-                    );
+                t = new AsConduit(stream).AsText(Encoding.UTF8);
             }
-
-            Assert.Throws<ObjectDisposedException>(() => t.AsString());
+            Assert.Throws<ObjectDisposedException>(() => t.Str());
         }
 
 
         [Fact]
         public void AsBytes()
         {
-            IText text = AsText._("Hello!");
+            IText text = "Hello!".AsText();
             Assert.True(
                 StructuralComparisons.StructuralEqualityComparer.Equals(
-                    new AsBytes(
-                        new AsConduit(text)
-                        ).Bytes(),
-                    new AsBytes(text.AsString()).Bytes()
+                    text.AsConduit().AsBytes().Raw(),
+                    text.Str().AsBytes().Raw()
                 )
             );
         }
@@ -169,17 +164,11 @@ namespace Tonga.Tests.Bytes
         [Fact]
         public void PrintsStackTrace()
         {
-            string stackTrace = "";
-
+            string stackTrace;
             try { throw new IOException("It doesn't work at all"); }
             catch (IOException ex)
             {
-                stackTrace =
-                    AsText._(
-                        new AsBytes(
-                            ex
-                        )
-                    ).AsString();
+                stackTrace = new AsBytes(ex).AsText().Str();
             }
 
             Assert.True(
@@ -195,15 +184,12 @@ namespace Tonga.Tests.Bytes
             var text = "Hello!";
             Assert.Equal(
                 text,
-                AsText._(
-                    new AsBytes(
-                        new Tonga.List.AsList<char>(text),
-                        Encoding.Unicode
-                    ),
+                new AsBytes(
+                    new Tonga.List.AsList<char>(text),
                     Encoding.Unicode
-                ).AsString()
+                ).AsText(Encoding.Unicode)
+                .Str()
             );
         }
     }
-}
-#pragma warning restore MaxPublicMethodCount // a public methods count maximum
+

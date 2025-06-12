@@ -1,36 +1,41 @@
 
 
 using System.Text.RegularExpressions;
+using Tonga.Fact;
 using Tonga.Scalar;
 
-namespace Tonga.Text
+namespace Tonga.Text;
+
+/// <summary>
+/// Tells if a text starts with a given content.
+/// </summary>
+public sealed class StartsWith(IText text, IText start) : FactEnvelope(() =>
+{
+    var regex = new Regex("^" + Regex.Escape(start.Str()));
+    return regex.IsMatch(text.Str());
+})
 {
     /// <summary>
-    /// Checks if a text starts with a given content.
+    /// Tells if a <see cref="IText"/> starts with a given <see cref="string"/>
     /// </summary>
-    public sealed class StartsWith : ScalarEnvelope<bool>
-    {
-        /// <summary>
-        /// Checks if a <see cref="IText"/> starts with a given <see cref="string"/>
-        /// </summary>
-        /// <param name="text">Text to test</param>
-        /// <param name="start">Starting content to use in the test</param>
-        public StartsWith(IText text, string start) : this(
-            text,
-            AsText._(start)
-        )
-        { }
+    public StartsWith(IText text, string start) : this(
+        text,
+        start.AsText()
+    )
+    { }
+}
 
-        /// <summary>
-        /// Checks if a <see cref="IText"/> starts with a given <see cref="IText"/>
-        /// </summary>
-        /// <param name="text">Text to test</param>
-        /// <param name="start">Starting content to use in the test</param>
-        public StartsWith(IText text, IText start) : base(() =>
-        {
-            var regex = new Regex("^" + Regex.Escape(start.AsString()));
-            return regex.IsMatch(text.AsString());
-        })
-        { }
-    }
+public static partial class TextSmarts
+{
+    /// <summary>
+    /// Tells if a <see cref="IText"/> starts with a given <see cref="string"/>
+    /// </summary>
+    public static IFact AsStartsWith(this IText text, string start) =>
+        new StartsWith(text, start);
+
+    /// <summary>
+    /// Tells if a <see cref="IText"/> starts with a given <see cref="string"/>
+    /// </summary>
+    public static IFact AsStartsWith(this IText text, IText start) =>
+        new StartsWith(text, start);
 }

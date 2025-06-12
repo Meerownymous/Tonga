@@ -12,7 +12,7 @@ namespace Tonga.IO;
 /// <summary>
 /// <see cref="StreamWriter"/> as a writable <see cref="Stream"/>.
 /// </summary>
-public sealed class WriterAsOutputStream : Stream, IDisposable
+public sealed class WriterAsOutputStream : Stream
 {
     /// <summary>
     /// the writer
@@ -124,9 +124,16 @@ public sealed class WriterAsOutputStream : Stream, IDisposable
 
     public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-    public override void Flush() => this.writer.Flush();
+    public override void Flush()
+    {
+        this.writer.Flush();
+    }
 
-    public override void Close() => this.writer.Close();
+    public override void Close()
+    {
+        this.writer.Close();
+        base.Close();
+    }
 
     public override int Read(byte[] buffer, int offset, int count) =>
         throw new NotImplementedException();
@@ -137,7 +144,7 @@ public sealed class WriterAsOutputStream : Stream, IDisposable
     public override void SetLength(long value) =>
         throw new NotImplementedException();
 
-    public new void Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
     {
         try
         {

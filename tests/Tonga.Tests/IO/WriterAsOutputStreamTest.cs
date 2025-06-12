@@ -43,8 +43,6 @@ public sealed class WriterAsOutputStreamTest
                        )
                       )
                 {
-                    // tee.Stream().Flush();
-                    // tee.Stream().Dispose();
                     new FullRead(tee, flush: true, close: false).Trigger();
                     Assert.Equal(
                         tee.Length()

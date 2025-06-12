@@ -19,7 +19,7 @@ namespace Tonga.IO
         /// </summary>
         /// <param name="input"></param>
         /// <param name="source"></param>
-        public LoggingOnReadStream(Stream input, string source) : this(input, source, (msg) => Debug.WriteLine(msg))
+        public LoggingOnReadStream(Stream input, string source) : this(input, source, msg => Debug.WriteLine(msg))
         { }
 
         public override bool CanRead => origin.CanRead;
@@ -74,5 +74,7 @@ namespace Tonga.IO
 
         public override void Write(byte[] buffer, int offset, int count) =>
             origin.Write(buffer, offset, count);
+
+        public override void Close() => origin.Close();
     }
 }

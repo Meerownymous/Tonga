@@ -70,6 +70,12 @@ public sealed class TeeOnReadStream(Stream src, Stream tgt) : Stream
         tgt.Flush();
     }
 
+    public override void Close()
+    {
+        src.Close();
+        tgt.Close();
+    }
+
     public override long Seek(long offset, SeekOrigin origin) =>
         src.Seek(offset, origin);
 

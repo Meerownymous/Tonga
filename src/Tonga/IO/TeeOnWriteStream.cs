@@ -34,6 +34,18 @@ public sealed class TeeOnWriteStream(Stream target, Stream copy) : Stream
         }
     }
 
+    public override void Close()
+    {
+        try
+        {
+            target.Close();
+        }
+        finally
+        {
+            copy.Close();
+        }
+    }
+
     protected override void Dispose(bool disposing)
     {
         try

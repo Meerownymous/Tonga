@@ -66,6 +66,11 @@ namespace Tonga.IO
             log.Invoke($"Written {this.bytes[0]} byte(s) to {this.destination} in {this.time[0]}ms.");
         }
 
+        public override void Close()
+        {
+            this.origin.Close();
+        }
+
         public override int Read(byte[] buffer, int offset, int count)
         {
             return this.origin.Read(buffer, offset, count);

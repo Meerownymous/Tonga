@@ -10,7 +10,7 @@ namespace Tonga.Map
     /// </summary>
     public sealed class AsPair<TKey, TValue> : IPair<TKey, TValue>
     {
-        private readonly IScalar<KeyValuePair<TKey, Func<TValue>>> entry;
+        private readonly Lazy<KeyValuePair<TKey, Func<TValue>>> entry;
         private readonly Func<TValue> value;
         private readonly bool isLazy;
 
@@ -45,30 +45,21 @@ namespace Tonga.Map
             {
                 var simple = kvp.Invoke();
                 return new KeyValuePair<TKey, Func<TValue>>(simple.Key, () => simple.Value);
-            }, true)
+            },
+            true
+        )
         { }
 
         private AsPair(Func<KeyValuePair<TKey, Func<TValue>>> kvp, bool isLazy)
         {
-            this.entry = kvp.AsSticky();
-            this.value = () => this.entry.Value().Value.Invoke();
+            this.entry = new(kvp);
+            this.value = () => this.entry.Value.Value.Invoke();
             this.isLazy = isLazy;
         }
 
-        public TKey Key()
-        {
-            return this.entry.Value().Key;
-        }
-
-        public TValue Value()
-        {
-            return this.value();
-        }
-
-        public bool IsLazy()
-        {
-            return this.isLazy;
-        }
+        public TKey Key() => this.entry.Value.Key;
+        public TValue Value() => this.value();
+        public bool IsLazy() => this.isLazy;
     }
 
     public static partial class MapSmarts

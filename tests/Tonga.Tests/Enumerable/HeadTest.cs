@@ -15,7 +15,7 @@ namespace Tonga.Tests.Enumerable
                     (0, 1, 2, 3, 4)
                         .AsEnumerable()
                         .AsHead(3)
-                ).ToInt()
+                ).Int()
             );
         }
 
@@ -28,7 +28,7 @@ namespace Tonga.Tests.Enumerable
                     (0, 1, 2, 3, 4, 5)
                         .AsEnumerable()
                         .AsHead(10)
-                ).ToInt()
+                ).Int()
             );
         }
 

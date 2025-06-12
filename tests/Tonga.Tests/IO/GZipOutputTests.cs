@@ -19,7 +19,7 @@ public sealed class GZipCompressing
                 "Hello!",
                 new Tonga.IO.GZipCompressing(zipped.AsConduit())
             )
-        ).Yield();
+        ).Trigger();
 
         Assert.Equal(
             "Hello!",
@@ -47,7 +47,7 @@ public sealed class GZipCompressing
                             new AsConduit(stream)
                         )
                     )
-                ).Yield();
+                ).Trigger();
             }
         );
     }

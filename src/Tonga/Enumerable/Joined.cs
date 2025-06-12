@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Tonga.Enumerable
 {
     /// <summary>
-    /// Multiple <see cref="IEnumerable{T}"/> Joined2 together.
+    /// Multiple <see cref="IEnumerable{T}"/> joined together.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class Joined<T>(IEnumerable<IEnumerable<T>> items) : IEnumerable<T>

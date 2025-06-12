@@ -100,7 +100,7 @@ namespace Tonga.Tests.IO
                         .AsConduit()
                         .Stream()
                 )
-            ).Yield();
+            ).Trigger();
 
             Assert.EndsWith(
                 content,
@@ -142,7 +142,7 @@ namespace Tonga.Tests.IO
                         new Uri(path)
                     ).Stream()
                 ).AsConduit()
-            ).Yield();
+            ).Trigger();
 
             Assert.StartsWith(
                 "Hello World",
@@ -180,7 +180,7 @@ namespace Tonga.Tests.IO
                         new Uri(file.Value()).AsStream()
                     )
                 )
-            ).Yield();
+            ).Trigger();
 
             Assert.Equal(
                 1000,
@@ -311,7 +311,7 @@ namespace Tonga.Tests.IO
                     content,
                     new AsConduit(new Uri(file))
                 )
-            ).Yield();
+            ).Trigger();
 
             Assert.Equal(
                 content,
@@ -336,7 +336,7 @@ namespace Tonga.Tests.IO
                 new TeeOnRead(
                     txt,
                     new AsConduit(file))
-            ).Yield();
+            ).Trigger();
 
             Assert.Equal(
                 txt,

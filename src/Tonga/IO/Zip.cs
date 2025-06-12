@@ -27,7 +27,7 @@ public sealed class Zip(string path) : IConduit
                 new AsConduit(file),
                 new AsConduit(entryStream)
             ).FullRead()
-            .Yield();
+            .Trigger();
         }
 
         return memory;

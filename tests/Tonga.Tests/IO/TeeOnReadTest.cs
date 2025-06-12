@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Tonga.Bytes;
 using Tonga.IO;
 using Tonga.Text;
 using Xunit;
@@ -20,7 +19,7 @@ namespace Tonga.Tests.IO
                     new Uri("http://www.google.de"),
                     new Uri($@"file://{directoryPath}\output.txt")
                 )
-            ).Yield();
+            ).Trigger();
 
             Assert.Contains(
                 "<html",
@@ -43,7 +42,7 @@ namespace Tonga.Tests.IO
                     new Uri($@"{directoryPath}\input.txt"),
                     new Uri($@"{directoryPath}\output.txt")
                 )
-            ).Yield();
+            ).Trigger();
 
             Assert.Contains(
                 "this is a test",

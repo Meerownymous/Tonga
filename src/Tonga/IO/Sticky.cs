@@ -17,7 +17,7 @@ namespace Tonga.IO
                 MemoryStream copy = new MemoryStream();
                 new TeeOnRead(origin, new AsConduit(copy))
                     .FullRead()
-                    .Yield();
+                    .Trigger();
 
                 origin.Stream().Dispose();
                 return copy.ToArray();

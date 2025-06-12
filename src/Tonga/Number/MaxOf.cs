@@ -26,13 +26,6 @@ public sealed class MaxOf : NumberEnvelope
     public MaxOf(params double[] src) : this((IEnumerable<double>)src) { }
 
     /// <summary>
-    /// The maximum of the given double values.
-    /// </summary>
-    public MaxOf(IEnumerable<double> src)
-        : base(ScalarsFrom(src).Item1, ScalarsFrom(src).Item2, ScalarsFrom(src).Item3, ScalarsFrom(src).Item4)
-    { }
-
-    /// <summary>
     /// The maximum of the given long values.
     /// </summary>
     public MaxOf(params long[] src) : this(ToDoubles(src)) { }
@@ -52,62 +45,63 @@ public sealed class MaxOf : NumberEnvelope
     /// </summary>
     public MaxOf(IEnumerable<float> src) : this(ToDoubles(src)) { }
 
-    private static (IScalar<double>, IScalar<int>, IScalar<long>, IScalar<float>) ScalarsFrom(IEnumerable<double> src)
-    {
-        return (
-            new AsScalar<double>(() =>
+    /// <summary>
+    /// The maximum of the given double values.
+    /// </summary>
+    public MaxOf(IEnumerable<double> src) : base(
+        () =>
+        {
+            var max = double.MinValue;
+            using var e = src.GetEnumerator();
+            var hasAny = false;
+            while (e.MoveNext())
             {
-                var max = double.MinValue;
-                using var e = src.GetEnumerator();
-                var hasAny = false;
-                while (e.MoveNext())
-                {
-                    hasAny = true;
-                    if (e.Current > max) max = e.Current;
-                }
-                return hasAny ? max : double.MinValue;
-            }),
-            new AsScalar<int>(() =>
+                hasAny = true;
+                if (e.Current > max) max = e.Current;
+            }
+            return hasAny ? max : double.MinValue;
+        },
+        () =>
+        {
+            var max = int.MinValue;
+            using var e = src.GetEnumerator();
+            var hasAny = false;
+            while (e.MoveNext())
             {
-                var max = int.MinValue;
-                using var e = src.GetEnumerator();
-                var hasAny = false;
-                while (e.MoveNext())
-                {
-                    hasAny = true;
-                    var val = (int)e.Current;
-                    if (val > max) max = val;
-                }
-                return hasAny ? max : int.MinValue;
-            }),
-            new AsScalar<long>(() =>
+                hasAny = true;
+                var val = (int)e.Current;
+                if (val > max) max = val;
+            }
+            return hasAny ? max : int.MinValue;
+        },
+        () =>
+        {
+            var max = long.MinValue;
+            using var e = src.GetEnumerator();
+            var hasAny = false;
+            while (e.MoveNext())
             {
-                var max = long.MinValue;
-                using var e = src.GetEnumerator();
-                var hasAny = false;
-                while (e.MoveNext())
-                {
-                    hasAny = true;
-                    var val = (long)e.Current;
-                    if (val > max) max = val;
-                }
-                return hasAny ? max : long.MinValue;
-            }),
-            new AsScalar<float>(() =>
+                hasAny = true;
+                var val = (long)e.Current;
+                if (val > max) max = val;
+            }
+            return hasAny ? max : long.MinValue;
+        },
+        () =>
+        {
+            var max = float.MinValue;
+            using var e = src.GetEnumerator();
+            var hasAny = false;
+            while (e.MoveNext())
             {
-                var max = float.MinValue;
-                using var e = src.GetEnumerator();
-                var hasAny = false;
-                while (e.MoveNext())
-                {
-                    hasAny = true;
-                    var val = (float)e.Current;
-                    if (val > max) max = val;
-                }
-                return hasAny ? max : float.MinValue;
-            })
-        );
-    }
+                hasAny = true;
+                var val = (float)e.Current;
+                if (val > max) max = val;
+            }
+            return hasAny ? max : float.MinValue;
+        }
+    )
+    { }
 
     private static IEnumerable<double> ToDoubles(IEnumerable<int> source)
     {

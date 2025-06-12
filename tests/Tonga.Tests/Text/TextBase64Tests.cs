@@ -25,7 +25,7 @@ public sealed class TextBase64Tests
                     .Str(),
                 new Uri(tempFile.Value()).AsConduit()
             )
-        ).Yield();
+        ).Trigger();
 
         Assert.True(
             new Comparable(

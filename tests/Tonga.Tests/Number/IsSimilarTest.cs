@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Tonga.Tests.Number;
 
-public sealed class SimilarTest
+public sealed class IsSimilarTest
 {
     [Fact]
     public void IsSimilarSame()
@@ -14,7 +14,7 @@ public sealed class SimilarTest
             new AsNumber(13.37);
 
         Assert.True(
-            new Similar(first, second).Value()
+            new IsSimilar(first, second).IsTrue()
         );
     }
 
@@ -27,7 +27,7 @@ public sealed class SimilarTest
             new AsNumber(13);
 
         Assert.True(
-            new Similar(first, second, 10).Value()
+            new IsSimilar(first, second, 10).IsTrue()
         );
     }
 
@@ -40,7 +40,7 @@ public sealed class SimilarTest
             new AsNumber(13.3);
 
         Assert.True(
-            new Similar(first, second, 1).Value()
+            new IsSimilar(first, second, 1).IsTrue()
         );
     }
 
@@ -53,7 +53,7 @@ public sealed class SimilarTest
             new AsNumber(13.33333);
 
         Assert.True(
-            new Similar(first, second, 1).Value()
+            new IsSimilar(first, second, 1).IsTrue()
         );
     }
 
@@ -66,7 +66,7 @@ public sealed class SimilarTest
             new AsNumber(13.333339);
 
         Assert.True(
-            new Similar(first, second, 5).Value()
+            new IsSimilar(first, second, 5).IsTrue()
         );
     }
 
@@ -79,7 +79,7 @@ public sealed class SimilarTest
             new AsNumber(13.33333333339);
 
         Assert.True(
-            new Similar(first, second, 10).Value()
+            new IsSimilar(first, second, 10).IsTrue()
         );
     }
 
@@ -92,7 +92,7 @@ public sealed class SimilarTest
             new AsNumber(13.39);
 
         Assert.False(
-            new Similar(first, second, 2).Value()
+            new IsSimilar(first, second, 2).IsTrue()
         );
     }
 }

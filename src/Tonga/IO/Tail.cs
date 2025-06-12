@@ -42,7 +42,7 @@ public sealed class Tail(IConduit origin, int howMuch, int max = 16384) : ICondu
     private int Copy(byte[] buffer, byte[] response, int read)
     {
         Array.Copy(buffer, read - howMuch, response, 0, howMuch);
-        return new MinOf(howMuch, read).ToInt();
+        return new MinOf(howMuch, read).Int();
     }
 
 

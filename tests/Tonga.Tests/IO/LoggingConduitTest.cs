@@ -12,15 +12,15 @@ namespace Tonga.Tests.IO
         public void LogsZeroBytesOnEmptyInput()
         {
             var res =
-                new FullRead(
-                    new TeeOnRead(
-                        new AsConduit(""),
-                        new LoggingOnReadConduit(
-                            new ConsoleOutput(),
-                            "memory"
-                        )
+                new TeeOnRead(
+                    new AsConduit(""),
+                    new LoggingOnReadConduit(
+                        new ConsoleOutput(),
+                        "memory"
                     )
-                ).Yield().Length;
+                )
+                .Length()
+                .Long();
 
             Assert.Equal(
                 0L,
@@ -103,7 +103,7 @@ namespace Tonga.Tests.IO
                             new Resource("Assets/Txt/large-text.txt", this.GetType()),
                             new AsConduit(output)
                         )
-                    ).Yield();
+                    ).Trigger();
                 }
 
                 var inputStream = new AsConduit(new Uri(tempfile.Value())).Stream();

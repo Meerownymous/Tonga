@@ -30,7 +30,7 @@ public sealed class WriterAsOutputStreamTest
                             new Uri(inputPath).AsStream()
                         )
                     )
-                ).Yield();
+                ).Trigger();
 
                 using (var tee =
                        new AsConduit(
@@ -44,10 +44,10 @@ public sealed class WriterAsOutputStreamTest
                       )
                 {
 
-                    new FullRead(tee, flush: true, close: false).Yield();
+                    new FullRead(tee, flush: true, close: false).Trigger();
 
                     Assert.Equal(
-                        tee.Length().Value(),
+                        tee.Length().Int(),
                         new Uri(Path.GetFullPath(outputPath)).AsStream().Length
                     );
                 }

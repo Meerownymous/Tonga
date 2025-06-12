@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Tonga.Number;
 using Tonga.Scalar;
 
 namespace Tonga.IO;
@@ -7,7 +8,7 @@ namespace Tonga.IO;
 /// <summary>
 /// Length of a stream
 /// </summary>
-public sealed class Length(Func<Stream> origin) : ScalarEnvelope<Int64>(
+public sealed class Length(Func<Stream> origin) : NumberEnvelope(
     () =>
     {
         long result;
@@ -52,15 +53,15 @@ public static partial class IOSmarts
     /// <summary>
     /// Length of a stream
     /// </summary>
-    public static IScalar<Int64> Length(this Stream stream) => new Length(stream);
+    public static INumber Length(this Stream stream) => new Length(stream);
 
     /// <summary>
     /// Length of a conduit
     /// </summary>
-    public static IScalar<Int64> Length(this IConduit conduit) => new Length(conduit);
+    public static INumber Length(this IConduit conduit) => new Length(conduit);
 
     /// <summary>
     /// Length of a stream
     /// </summary>
-    public static IScalar<Int64> Length(this Func<Stream> stream) => new Length(stream);
+    public static INumber Length(this Func<Stream> stream) => new Length(stream);
 }

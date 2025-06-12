@@ -1,5 +1,6 @@
 
 
+using System;
 using Tonga.Scalar;
 
 namespace Tonga.Text;
@@ -22,7 +23,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// <param name="text">text to trim</param>
     public TrimmedLeft(IText text) : this(
         text,
-        new AsScalar<char[]>(() => ['\b', '\f', '\n', '\r', '\t', '\v', ' '])
+        () => ['\b', '\f', '\n', '\r', '\t', '\v', ' ']
     )
     { }
 
@@ -39,7 +40,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="trimText">text that trims the text</param>
-    public TrimmedLeft(IText text, char[] trimText) : this(text, trimText.AsScalar())
+    public TrimmedLeft(IText text, char[] trimText) : this(text, () => trimText)
     { }
 
     /// <summary>
@@ -47,8 +48,8 @@ public sealed class TrimmedLeft : TextEnvelope
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="trimText">text that trims the text</param>
-    public TrimmedLeft(IText text, IScalar<char[]> trimText) : base(
-        new AsText(() => text.Str().TrimStart(trimText.Value()))
+    public TrimmedLeft(IText text, Func<char[]> trimText) : base(
+        new AsText(() => text.Str().TrimStart(trimText()))
     )
     { }
 
@@ -147,7 +148,7 @@ public static partial class TextSmarts
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="trimText">text that trims the text</param>
-    public static IText AsTrimmedLeft(this IText text, IScalar<char[]> trimText) =>
+    public static IText AsTrimmedLeft(this IText text, Func<char[]> trimText) =>
         new TrimmedLeft(text, trimText);
 
     /// <summary>

@@ -19,32 +19,33 @@ public sealed class AsNumber : NumberEnvelope
     /// <param name="blockSeperator">seperator for blocks, for example 1.000</param>
     /// <param name="decimalSeperator">seperator for floating point numbers, for example 16,235 </param>
     public AsNumber(string text, string decimalSeperator, string blockSeperator) : this(
-        new AsScalar<long>(() => Convert.ToInt64(
+        () => Convert.ToInt64(
             text,
             new NumberFormatInfo()
             {
                 NumberDecimalSeparator = decimalSeperator,
                 NumberGroupSeparator = blockSeperator
-            })),
-        new AsScalar<int>(() => Convert.ToInt32(
+            }
+        ),
+        () => Convert.ToInt32(
             text,
             new NumberFormatInfo()
             {
                 NumberDecimalSeparator = decimalSeperator,
                 NumberGroupSeparator = blockSeperator
-            })),
-        new AsScalar<float>(() => (float)Convert.ToDecimal(text, new NumberFormatInfo()
+            }),
+        () => (float)Convert.ToDecimal(text, new NumberFormatInfo()
         {
             NumberDecimalSeparator = decimalSeperator,
             NumberGroupSeparator = blockSeperator
-        })),
-        new AsScalar<double>(() => Convert.ToDouble(
+        }),
+        () => Convert.ToDouble(
             text,
-            new NumberFormatInfo()
+            new NumberFormatInfo
             {
                 NumberDecimalSeparator = decimalSeperator,
                 NumberGroupSeparator = blockSeperator
-            }))
+            })
     )
     { }
 
@@ -84,7 +85,6 @@ public sealed class AsNumber : NumberEnvelope
     /// <param name="text">The text</param>
     /// <param name="provider">a number format provider</param>
     public AsNumber(IText text, IFormatProvider provider) : this(
-        new AsScalar<long>(
             () =>
             {
                 try
@@ -95,8 +95,7 @@ public sealed class AsNumber : NumberEnvelope
                 {
                     throw new ArgumentException(new Formatted("'{0}' is not a number.", text).Str());
                 }
-            }),
-        new AsScalar<int>(
+            },
             () =>
             {
                 try
@@ -107,8 +106,7 @@ public sealed class AsNumber : NumberEnvelope
                 {
                     throw new ArgumentException(new Formatted("'{0}' is not a number.", text).Str());
                 }
-            }),
-        new AsScalar<float>(
+            },
             () =>
             {
                 try
@@ -119,8 +117,7 @@ public sealed class AsNumber : NumberEnvelope
                 {
                     throw new ArgumentException(new Formatted("'{0}' is not a number.", text).Str());
                 }
-            }),
-        new AsScalar<double>(
+            },
             () =>
             {
                 try
@@ -131,7 +128,7 @@ public sealed class AsNumber : NumberEnvelope
                 {
                     throw new ArgumentException(new Formatted("'{0}' is not a number.", text).Str());
                 }
-            })
+            }
         )
     { }
 
@@ -140,10 +137,10 @@ public sealed class AsNumber : NumberEnvelope
     /// </summary>
     /// <param name="integer">The integer</param>
     public AsNumber(int integer) : this(
-        new AsScalar<long>(() => Convert.ToInt64(integer)),
-        new AsScalar<int>(integer),
-        new AsScalar<float>(() => Convert.ToSingle(integer)),
-        new AsScalar<double>(() => Convert.ToDouble(integer))
+        () => Convert.ToInt64(integer),
+        () => integer,
+        () => Convert.ToSingle(integer),
+        () => Convert.ToDouble(integer)
     )
     { }
 
@@ -152,11 +149,11 @@ public sealed class AsNumber : NumberEnvelope
     /// </summary>
     /// <param name="dbl">The double</param>
     public AsNumber(double dbl) : this(
-        new AsScalar<long>(() => Convert.ToInt64(dbl)),
-        new AsScalar<int>(() => Convert.ToInt32(dbl)),
-        new AsScalar<float>(() => Convert.ToSingle(dbl)),
-        new AsScalar<double>(dbl)
-        )
+        () => Convert.ToInt64(dbl),
+        () => Convert.ToInt32(dbl),
+        () => Convert.ToSingle(dbl),
+        () => dbl
+    )
     { }
 
     /// <summary>
@@ -164,11 +161,11 @@ public sealed class AsNumber : NumberEnvelope
     /// </summary>
     /// <param name="lng">The long</param>
     public AsNumber(long lng) : this(
-        new AsScalar<long>(() => lng),
-        new AsScalar<int>(() => Convert.ToInt32(lng)),
-        new AsScalar<float>(() => Convert.ToSingle(lng)),
-        new AsScalar<double>(() => Convert.ToDouble(lng))
-        )
+        () => lng,
+        () => Convert.ToInt32(lng),
+        () => Convert.ToSingle(lng),
+        () => Convert.ToDouble(lng)
+    )
     { }
 
     /// <summary>
@@ -176,11 +173,11 @@ public sealed class AsNumber : NumberEnvelope
     /// </summary>
     /// <param name="flt">The float</param>
     public AsNumber(float flt) : this(
-        new AsScalar<long>(() => Convert.ToInt64(flt)),
-        new AsScalar<int>(() => Convert.ToInt32(flt)),
-        new AsScalar<float>(() => Convert.ToSingle(flt)),
-        new AsScalar<double>(() => Convert.ToDouble(flt))
-        )
+        () => Convert.ToInt64(flt),
+        () => Convert.ToInt32(flt),
+        () => Convert.ToSingle(flt),
+        () => Convert.ToDouble(flt)
+    )
     { }
 
     /// <summary>
@@ -190,9 +187,23 @@ public sealed class AsNumber : NumberEnvelope
     /// <param name="itg"></param>
     /// <param name="flt"></param>
     /// <param name="dbl"></param>
-    public AsNumber(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl) : base(dbl, itg, lng, flt)
-    {
-    }
+    public AsNumber(IScalar<long> lng, IScalar<int> itg, IScalar<float> flt, IScalar<double> dbl) : base(
+        dbl.Value,
+        itg.Value,
+        lng.Value,
+        flt.Value
+    )
+    { }
+
+    /// <summary>
+    /// A <see cref="IText"/> as a <see cref="INumber"/>
+    /// </summary>
+    /// <param name="lng"></param>
+    /// <param name="itg"></param>
+    /// <param name="flt"></param>
+    /// <param name="dbl"></param>
+    public AsNumber(Func<long> lng, Func<int> itg, Func<float> flt, Func<double> dbl) : base(dbl, itg, lng, flt)
+    { }
 }
 
 public static partial class NumberSmarts
@@ -278,5 +289,19 @@ public static partial class NumberSmarts
         IScalar<int> itg,
         IScalar<float> flt,
         IScalar<double> dbl
+    ) => new AsNumber(lng, itg, flt, dbl);
+
+    /// <summary>
+    /// A <see cref="IText"/> as a <see cref="INumber"/>
+    /// </summary>
+    /// <param name="lng"></param>
+    /// <param name="itg"></param>
+    /// <param name="flt"></param>
+    /// <param name="dbl"></param>
+    public static INumber AsNumber(
+        Func<long> lng,
+        Func<int> itg,
+        Func<float> flt,
+        Func<double> dbl
     ) => new AsNumber(lng, itg, flt, dbl);
 }

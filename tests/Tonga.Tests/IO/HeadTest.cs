@@ -30,7 +30,7 @@ public sealed class HeadTest
                 .Str()
                 .AsConduit()
                 .Length()
-                .Value()
+                .Int()
         );
     }
 

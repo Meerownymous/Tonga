@@ -24,7 +24,7 @@ namespace Tonga.Tests.Text
                         .Str(),
                     new AsConduit(new Uri(tempFile.Value()))
                 )
-            ).Yield();
+            ).Trigger();
 
             Assert.True(
                 new Comparable(

@@ -11,7 +11,13 @@ namespace Tonga.Text;
 /// A <see cref="IText"/> formatted with arguments.
 /// Use C# formatting syntax: new FormattedText("{0} is {1}", "OOP", "great").AsString() will be "OOP is great"
 /// </summary>
-public sealed class Formatted : TextEnvelope
+public sealed class Formatted(
+    IText ptn,
+    CultureInfo locale,
+    Func<object[]> arguments
+) : TextEnvelope(
+    () => String.Format(locale, ptn.Str(), arguments())
+)
 {
     /// <summary>
     /// A <see cref="IText"/> formatted with arguments.
@@ -85,21 +91,6 @@ public sealed class Formatted : TextEnvelope
         new AsText(ptn),
         locale,
         () => arguments.AsMapped(txt => txt.Str()).ToArray()
-    )
-    { }
-
-    /// <summary>
-    /// A <see cref="IText"/> formatted with arguments.
-    /// </summary>
-    /// <param name="ptn">pattern to put arguments in</param>
-    /// <param name="locale">a specific culture</param>
-    /// <param name="arguments">arguments to apply</param>
-    public Formatted(
-        IText ptn,
-        CultureInfo locale,
-        Func<object[]> arguments
-    ) : base(
-        () => String.Format(locale, ptn.Str(), arguments())
     )
     { }
 }

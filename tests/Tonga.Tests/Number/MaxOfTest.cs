@@ -14,7 +14,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1, 2, 3, 4
-            ).ToInt() == 4);
+            ).Int() == 4);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1, 2, 3, 4
-            ).ToFloat() == 4F);
+            ).Float() == 4F);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1, 2, 3, 4
-            ).ToLong() == 4L);
+            ).Long() == 4L);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1, 2, 3, 4
-            ).ToInt() == 4D);
+            ).Int() == 4D);
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.2F, 2.1F, 3.6F, 4.9F
-            ).ToInt() == 4);
+            ).Int() == 4);
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.2F, 2.1F, 3.6F, 4.9F
-            ).ToFloat() == 4.9F);
+            ).Float() == 4.9F);
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.2F, 2.1F, 3.6F, 4.9F
-            ).ToLong() == 4L);
+            ).Long() == 4L);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.0D, 2.0D, 3.0D, 4.0D
-            ).ToDouble() == 4.0D);
+            ).Double() == 4.0D);
     }
 
     [Fact]
@@ -94,7 +94,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.2D, 2.1D, 3.6D, 4.9D
-            ).ToInt() == 4);
+            ).Int() == 4);
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.2D, 2.1D, 3.6D, 4.9D
-            ).ToFloat() == 4.9F);
+            ).Float() == 4.9F);
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.2D, 2.1D, 3.6D, 4.9D
-            ).ToLong() == 4L);
+            ).Long() == 4L);
     }
 
     [Fact]
@@ -124,7 +124,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1.0D, 2.0D, 3.0D, 4.0D
-            ).ToDouble() == 4.0D);
+            ).Double() == 4.0D);
     }
 
     [Fact]
@@ -134,7 +134,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1L, 2L, 3L, 4L
-            ).ToInt() == 4);
+            ).Int() == 4);
     }
 
     [Fact]
@@ -144,7 +144,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1L, 2L, 3L, 4L
-            ).ToFloat() == 4.0F);
+            ).Float() == 4.0F);
     }
 
     [Fact]
@@ -154,7 +154,7 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1L, 2L, 3L, 4L
-            ).ToLong() == 4L);
+            ).Long() == 4L);
     }
 
     [Fact]
@@ -164,6 +164,6 @@ public sealed class MaxOfTest
         Assert.True(
             new MaxOf(
                 1L, 2L, 3L, 4L
-            ).ToDouble() == 4.0D);
+            ).Double() == 4.0D);
     }
 }

@@ -17,9 +17,9 @@ namespace Tonga.Fact
         /// </summary>
         /// <param name="first">function to return first value to compare</param>
         /// <param name="second">function to return second value to compare</param>
-        public IsEqual(Func<T> first, Func<T> second) : this(
-            new AsScalar<T>(first),
-            new AsScalar<T>(second)
+        public IsEqual(IScalar<T> first, IScalar<T> second) : this(
+            first.Value,
+            second.Value
         )
         { }
 
@@ -29,8 +29,8 @@ namespace Tonga.Fact
         /// <param name="first">first value to compare</param>
         /// <param name="second">second value to compare</param>
         public IsEqual(T first, T second) : this(
-            new AsScalar<T>(first),
-            new AsScalar<T>(second)
+            () => first,
+            () => second
         )
         { }
 
@@ -39,8 +39,8 @@ namespace Tonga.Fact
         /// </summary>
         /// <param name="first">scalar of first value to compare</param>
         /// <param name="second">scalar of second value to compare</param>
-        public IsEqual(IScalar<T> first, IScalar<T> second) : base(
-            new AsFact(() => first.Value().CompareTo(second.Value()) == 0)
+        public IsEqual(Func<T> first, Func<T> second) : base(
+            new AsFact(() => first().CompareTo(second()) == 0)
         )
         { }
     }

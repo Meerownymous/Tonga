@@ -12,7 +12,7 @@ public sealed class AsNumberTest
     {
         Assert.Equal(
             4673.453,
-            new AsNumber("4673.453").ToDouble()
+            new AsNumber("4673.453").Double()
         );
     }
 
@@ -21,7 +21,7 @@ public sealed class AsNumberTest
     {
         Assert.Equal(
             4673.453F,
-            new AsNumber(4673.453F).ToFloat()
+            new AsNumber(4673.453F).Float()
         );
     }
 
@@ -29,7 +29,7 @@ public sealed class AsNumberTest
     public void RejectsNoFloatText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new AsNumber("ghki").ToFloat()
+            new AsNumber("ghki").Float()
         );
     }
 
@@ -37,7 +37,7 @@ public sealed class AsNumberTest
     public void ParsesInt()
     {
         Assert.True(
-            new AsNumber(1337).ToInt() == 1337
+            new AsNumber(1337).Int() == 1337
         );
     }
 
@@ -45,7 +45,7 @@ public sealed class AsNumberTest
     public void RejectsNoIntText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new AsNumber("ghki").ToInt()
+            new AsNumber("ghki").Int()
         );
     }
 
@@ -53,7 +53,7 @@ public sealed class AsNumberTest
     public void ParsesDouble()
     {
         Assert.True(
-            new AsNumber(843.23969274001D).ToDouble() == 843.23969274001D
+            new AsNumber(843.23969274001D).Double() == 843.23969274001D
         );
     }
 
@@ -61,7 +61,7 @@ public sealed class AsNumberTest
     public void RejectsNoDoubleText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new AsNumber("ghki").ToDouble()
+            new AsNumber("ghki").Double()
         );
     }
 
@@ -69,7 +69,7 @@ public sealed class AsNumberTest
     public void ParsesLong()
     {
         Assert.True(
-            new AsNumber(139807814253711).ToLong() == 139807814253711L
+            new AsNumber(139807814253711).Long() == 139807814253711L
         );
     }
 
@@ -77,7 +77,7 @@ public sealed class AsNumberTest
     public void RejectsNoLongText()
     {
         Assert.Throws<ArgumentException>(() =>
-            new AsNumber("ghki").ToLong()
+            new AsNumber("ghki").Long()
         );
     }
 
@@ -87,7 +87,7 @@ public sealed class AsNumberTest
         Assert.True(
             new AsNumber(
                 5
-            ).ToDouble() == 5d
+            ).Double() == 5d
         );
     }
 
@@ -97,7 +97,7 @@ public sealed class AsNumberTest
         Assert.True(
             new AsNumber(
                 (551515155.451d)
-            ).ToFloat() == 551515155.451f
+            ).Float() == 551515155.451f
         );
     }
 
@@ -107,7 +107,7 @@ public sealed class AsNumberTest
         Assert.True(
             new AsNumber(
                 (5.243)
-            ).ToDouble() == 5.243d
+            ).Double() == 5.243d
         );
     }
 
@@ -117,7 +117,7 @@ public sealed class AsNumberTest
         Assert.True(
             new AsNumber(
                 (50L)
-            ).ToInt() == 50
+            ).Int() == 50
         );
     }
 
@@ -127,7 +127,7 @@ public sealed class AsNumberTest
         Assert.True(
             new AsNumber(
                 (50)
-            ).ToLong() == 50L
+            ).Long() == 50L
         );
     }
 
@@ -139,7 +139,7 @@ public sealed class AsNumberTest
                 "10.100,11",
                 ",",
                 "."
-            ).ToDouble() == 10100.11
+            ).Double() == 10100.11
         );
     }
 
@@ -149,7 +149,7 @@ public sealed class AsNumberTest
         Assert.True(
             new AsNumber(
                 "100"
-            ).ToInt() == 100
+            ).Int() == 100
         );
     }
 }

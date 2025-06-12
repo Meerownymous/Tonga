@@ -24,7 +24,7 @@ namespace Tonga.Tests.IO
                     new AsConduit(content),
                     new AsConduit(new Uri(path))
                 )
-            ).Yield();
+            ).Trigger();
 
             Assert.Equal(
                 content,

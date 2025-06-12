@@ -43,7 +43,7 @@ namespace Tonga.Tests.Enumerable
                     }.AsEnumerable()
                 }
                 .AsEnumerable()
-                .AsDistinct((v1, v2) => v1.ToInt().Equals(v2.ToInt()))
+                .AsDistinct((v1, v2) => v1.Int().Equals(v2.Int()))
                 .Length()
                 .Value()
             );

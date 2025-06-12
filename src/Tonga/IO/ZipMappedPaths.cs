@@ -43,6 +43,6 @@ public sealed class ZipMappedPaths(Func<string, string> mapping, IConduit zip) :
             new AsConduit(sourceStream),
             new AsConduit(stream)
         ).Length()
-        .Value();
+        .Int();
     }
 }

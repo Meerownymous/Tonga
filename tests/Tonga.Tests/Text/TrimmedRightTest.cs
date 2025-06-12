@@ -63,7 +63,7 @@ public sealed class TrimmedRightTest
         Assert.Equal(
             " \b   \t      Hell",
             " \b   \t      Hello! \t \b  ".AsText()
-                .AsTrimmedRight(new AsScalar<char[]>(() => ['\b', '\t', ' ', 'H', '!', 'o']))
+                .AsTrimmedRight(() => ['\b', '\t', ' ', 'H', '!', 'o'])
                 .Str()
         );
     }

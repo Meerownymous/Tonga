@@ -1,13 +1,14 @@
 using System;
 using System.IO;
 using Tonga.Pipe;
+using Tonga.Tap;
 
 namespace Tonga.IO;
 
 /// <summary>
 /// Reads all content of a given input and then resets it.
 /// </summary>
-public sealed class FullRead(Func<Stream> source, bool flush = true, bool close = true) : IPipe<Stream>
+public sealed class FullRead(Func<Stream> source, bool flush = true, bool close = true) : ITap
 {
     public FullRead(IConduit conduit, bool flush = true, bool close = false) : this(conduit.Stream, flush, close)
     { }
@@ -15,7 +16,7 @@ public sealed class FullRead(Func<Stream> source, bool flush = true, bool close 
     public FullRead(Stream stream, bool flush = true, bool close = false) : this(() => stream, flush, close)
     { }
 
-    public Stream Yield()
+    public void Trigger()
     {
         long size = 0;
         var stream = source();
@@ -34,7 +35,6 @@ public sealed class FullRead(Func<Stream> source, bool flush = true, bool close 
             stream.Seek(memorizedPosition, SeekOrigin.Begin);
         if (flush) stream.Flush();
         if (close) stream.Close();
-        return stream;
     }
 }
 
@@ -43,12 +43,12 @@ public static partial class IOSmarts
     /// <summary>
     /// Reads all content of a given input and then resets it.
     /// </summary>
-    public static IPipe<Stream> FullRead(this IConduit conduit, bool flush = true, bool close = true) =>
-        new Func<Stream>(() => new FullRead(conduit, flush, close).Yield()).AsPipe();
+    public static ITap FullRead(this IConduit conduit, bool flush = true, bool close = true) =>
+        new FullRead(conduit, flush, close);
 
     /// <summary>
     /// Reads all content of a given input and then resets it.
     /// </summary>
-    public static IPipe<Stream> FullRead(this Stream stream, bool flush = true, bool close = true) =>
-        new Func<Stream>(() => new FullRead(stream, flush, close).Yield()).AsPipe();
+    public static ITap FullRead(this Stream stream, bool flush = true, bool close = true) =>
+        new FullRead(stream, flush, close);
 }

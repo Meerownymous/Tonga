@@ -8,7 +8,7 @@ namespace Tonga.Enumerable
     /// The greatest item in the given <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Max<T>(IEnumerable<IScalar<T>> items) : ScalarEnvelope<T>(
+    public sealed class Max<T>(IEnumerable<Func<T>> items) : ScalarEnvelope<T>(
         () =>
         {
             var e = items.GetEnumerator();
@@ -17,10 +17,10 @@ namespace Tonga.Enumerable
                 throw new ArgumentException("Can't find greater element in an empty iterable");
             }
 
-            T max = e.Current.Value();
+            T max = e.Current();
             while (e.MoveNext())
             {
-                T next = e.Current.Value();
+                T next = e.Current();
                 if (next.CompareTo(max) > 0)
                 {
                     max = next;
@@ -46,7 +46,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(IEnumerable<T> items) : this(
-            items.AsMapped(item => item.AsScalar())
+            items.AsMapped(item => new Func<T>(() => item))
         )
         { }
 
@@ -55,7 +55,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="items">list of items</param>
         public Max(params T[] items) : this(
-            items.AsMapped(item => item.AsScalar())
+            items.AsMapped(item => new Func<T>(() => item))
         )
         { }
 
@@ -63,7 +63,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params IScalar<T>[] items) : this(items.AsEnumerable())
+        public Max(params IScalar<T>[] items) : this(items.AsMapped(item => item.Value()))
         { }
     }
 
@@ -104,7 +104,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> Max<T>(this IEnumerable<IScalar<T>> items)
+        public static IScalar<T> Max<T>(this IEnumerable<Func<T>> items)
             where T : IComparable<T>
             => new Max<T>(items);
     }

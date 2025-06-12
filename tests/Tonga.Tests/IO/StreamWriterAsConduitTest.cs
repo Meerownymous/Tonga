@@ -35,32 +35,34 @@ public sealed class StreamWriterAsConduitTest
                     new Uri(inputPath).AsStream()
                 )
             )
-        ).Yield();
+        ).Trigger();
 
         //Read from large file and write to output file (make a copy)
         var filestream = new FileStream(outputPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write);
 
-        long left;
-        left =
-            new FullRead(
-                new TeeOnRead(
-                    new AsConduit(
-                        new Uri(Path.GetFullPath(inputPath))
-                    ),
-                    new StreamWriterAsConduit(
-                        new StreamWriter(filestream)
-                    )
-                )
-            ).Yield().Length;
-
-        long right =
-            new FullRead(
+        new FullRead(
+            new TeeOnRead(
                 new AsConduit(
+                    new Uri(Path.GetFullPath(inputPath))
+                ),
+                new StreamWriterAsConduit(
+                    new StreamWriter(filestream)
+                )
+            )
+        ).Trigger();
+
+        Assert.Equal(
+            new AsConduit(
+                    new Uri(Path.GetFullPath(inputPath))
+                )
+                .Length()
+                .Long(),
+            new AsConduit(
                     new Uri(Path.GetFullPath(outputPath))
                 )
-            ).Yield().Length;
-
-        Assert.Equal(left, right);
+                .Length()
+                .Long()
+        );
     }
 
 }

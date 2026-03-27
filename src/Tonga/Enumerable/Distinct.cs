@@ -80,6 +80,13 @@ public static partial class EnumerableSmarts
     /// <summary>
     /// The distinct elements of one or multiple Enumerables.
     /// </summary>
+    /// <param name="enumerable">enumerables to get distinct elements from</param>
+    public static IEnumerable<T> AsDistinct<T>(this IEnumerable<T> enumerable) =>
+        new Distinct<T>(enumerable);
+
+    /// <summary>
+    /// The distinct elements of one or multiple Enumerables.
+    /// </summary>
     /// <param name="enumerables">enumerables to get distinct elements from</param>
     public static IEnumerable<T> AsDistinct<T>(this IEnumerable<T>[] enumerables) =>
         new Distinct<T>(enumerables);

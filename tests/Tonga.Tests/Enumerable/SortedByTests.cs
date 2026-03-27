@@ -18,6 +18,16 @@ namespace Tonga.Tests.Enumerable
         }
 
         [Fact]
+        public void SortsOnly()
+        {
+            Assert.Equal(
+                ("May", "the", "fourth", "be", "with", "you").AsEnumerable().AsSortedBy(s => s.Length),
+                ["be", "May", "the", "you", "with", "fourth"]
+
+            );
+        }
+
+        [Fact]
         public void SortsAnArrayWithComparator()
         {
             Assert.Equal(

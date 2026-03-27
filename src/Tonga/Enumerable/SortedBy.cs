@@ -53,24 +53,21 @@ public sealed class SortedBy<T, TKey>(
     {
         foreach (var item in Sorted(src, cmp, subjectExtraction))
         {
-            yield return item.Value;
+            yield return item;
         }
     }
 
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-    private static SortedDictionary<TKey, T> Sorted(
+    private static List<T> Sorted(
         IEnumerable<T> src,
         Comparer<TKey> cmp,
         Func<T, TKey> subjectExtraction
     )
     {
-        var map = new SortedDictionary<TKey, T>(cmp);
-        foreach (var item in src)
-        {
-            map[subjectExtraction.Invoke(item)] = item;
-        }
-        return map;
+        var list = new List<T>(src);
+        list.Sort((a, b) => cmp.Compare(subjectExtraction(a), subjectExtraction(b)));
+        return list;
     }
 }
 

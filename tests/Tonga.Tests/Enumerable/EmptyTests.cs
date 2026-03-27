@@ -3,13 +3,13 @@ using Xunit;
 
 namespace Tonga.Tests.Enumerable
 {
-    public sealed class NoneTests
+    public sealed class EmptyTests
     {
         [Fact]
         public void StringIsEmpty()
         {
             Assert.False(
-                new None<string>().GetEnumerator().MoveNext()
+                new Empty<string>().GetEnumerator().MoveNext()
             );
         }
 
@@ -17,7 +17,7 @@ namespace Tonga.Tests.Enumerable
         public void GenericIsEmpty()
         {
             Assert.False(
-                new None<int>().GetEnumerator().MoveNext()
+                new Empty<int>().GetEnumerator().MoveNext()
             );
         }
     }

@@ -56,7 +56,7 @@ namespace Tonga.Tests.Enumerable
         public void EmptyEnumerableProducesEmptyEnumerable()
         {
             Assert.Empty(
-                new None<Nothing>()
+                new Empty<Nothing>()
                     .AsHead(10)
             );
         }

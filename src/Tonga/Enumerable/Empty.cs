@@ -8,7 +8,7 @@ namespace Tonga.Enumerable;
 /// <summary>
 /// Enumerable which is empty.
 /// </summary>
-public sealed class None<T> : IEnumerable<T>
+public sealed class Empty<T> : IEnumerable<T>
 {
     public IEnumerator<T> GetEnumerator()
     {

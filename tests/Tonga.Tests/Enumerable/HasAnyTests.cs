@@ -19,7 +19,7 @@ public sealed class HasAnyTests
     public void KnowsFalse()
     {
         Assert.False(
-            new None<int>()
+            new Empty<int>()
                 .HasAny()
                 .IsTrue()
         );

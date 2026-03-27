@@ -4,14 +4,14 @@ using Xunit;
 
 namespace Tonga.Tests.Scalar
 {
-    public sealed class LastTests
+    public sealed class LastOneTests
     {
         [Fact]
         public void ThrowsCustomException()
         {
             Assert.Throws<InvalidOperationException>(() =>
-                new None<string>()
-                    .Last(new InvalidOperationException())
+                new Empty<string>()
+                    .LastOne(new InvalidOperationException())
                     .Value()
             );
         }
@@ -21,8 +21,8 @@ namespace Tonga.Tests.Scalar
         {
             Assert.Equal(
                 "gotcha",
-                new None<string>()
-                    .Last("gotcha")
+                new Empty<string>()
+                    .LastOne("gotcha")
                     .Value()
 
             );
@@ -35,7 +35,7 @@ namespace Tonga.Tests.Scalar
                 "Max",
                 ("hallo", "ich", "heisse", "Max")
                     .AsEnumerable()
-                    .Last()
+                    .LastOne()
                     .Value()
             );
         }

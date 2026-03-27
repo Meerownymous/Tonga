@@ -35,7 +35,7 @@ namespace Tonga.Tests.Enumerable
         public void SortsAnEmptyArray()
         {
             Assert.Empty(
-                new None<int>()
+                new Empty<int>()
                     .AsSortedBy(i => i)
             );
         }

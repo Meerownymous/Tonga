@@ -10,7 +10,7 @@ namespace Tonga.Tests.Enumerable
         public void EmptyEnumerableThrowsExeption()
         {
             Assert.Throws<Exception>(() =>
-                new None<bool>()
+                new Empty<bool>()
                     .AssertNotEmpty()
                     .Length()
                     .Value()
@@ -33,7 +33,7 @@ namespace Tonga.Tests.Enumerable
         public void EmptyCollectionThrowsCustomExeption()
         {
             Assert.Throws<OperationCanceledException>(() =>
-                new None<object>()
+                new Empty<object>()
                     .AssertNotEmpty(new OperationCanceledException())
                     .Length()
                     .Value()

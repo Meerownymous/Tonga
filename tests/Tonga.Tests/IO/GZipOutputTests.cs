@@ -17,18 +17,17 @@ public sealed class GZipCompressing
         new FullRead(
             new TeeOnRead(
                 "Hello!",
-                new Tonga.IO.GZipCompressing(zipped.AsConduit())
+                new Tonga.IO.GZipCompressing(zipped)
             )
         ).Trigger();
 
-        Assert.Equal(
+        AssertText.Equal(
             "Hello!",
-            new AsConduit(
-                new GZipStream(
-                    new MemoryStream(zipped.ToArray()),
-                    CompressionMode.Decompress
-                )
-            ).AsText().Str()
+            new GZipStream(
+                new MemoryStream(zipped.ToArray()),
+                CompressionMode.Decompress
+            )
+
         );
     }
 
@@ -43,9 +42,7 @@ public sealed class GZipCompressing
                 new FullRead(
                     new TeeOnRead(
                         "Hello!",
-                        new Tonga.IO.GZipCompressing(
-                            new AsConduit(stream)
-                        )
+                        new Tonga.IO.GZipCompressing(stream)
                     )
                 ).Trigger();
             }

@@ -5,8 +5,12 @@ namespace Tonga.Text;
     /// <summary>
     /// A Text that can be compared using the Equals method.
     /// </summary>
-    public sealed class Comparable(IText text) : TextEnvelope(text), IComparable
+    public sealed class Comparable(TextMorph text) : TextEnvelope(text), IComparable
     {
+        public Comparable(IText text) : this(new TextMorph(text))
+        {
+
+        }
         public int CompareTo(object obj)
         {
             if (!(obj is IText))

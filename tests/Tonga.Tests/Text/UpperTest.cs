@@ -10,9 +10,9 @@ public sealed class UpperTest
     [Fact]
     public void ConvertsText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "HELLO!",
-            "Hello!".AsText().AsUpper().Str()
+            "Hello!".AsUpper()
         );
     }
 

@@ -21,18 +21,16 @@ namespace Tonga.Tests.IO
             //Create file through reading source
             new FullRead(
                 new TeeOnRead(
-                    new AsConduit(content),
-                    new AsConduit(new Uri(path))
+                    content,
+                    new Uri(path)
                 )
             ).Trigger();
 
             Assert.Equal(
                 content,
-                new Uri(path)
-                    .AsStreamReader()
-                    .AsConduit()
-                    .AsText()
-                    .Str()
+                new ConduitMorph(
+                    new Uri(path)
+                )
             );
         }
 

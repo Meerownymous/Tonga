@@ -35,8 +35,8 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Contains(
-                    "Hallo Welt!".AsText(),
-                    "Welt".AsText()
+                    "Hallo Welt!",
+                    "Welt"
                 ).IsTrue()
             );
         }
@@ -46,8 +46,8 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Contains(
-                    "Hallo Welt!".AsText(),
-                    "welt".AsText(),
+                    "Hallo Welt!",
+                    "welt",
                     true
                 ).IsTrue()
             );
@@ -69,8 +69,8 @@ namespace Tonga.Tests.Text
         {
             Assert.True(
                 new Contains(
-                    "Hallo Welt!".AsText(),
-                    "welt".AsText(),
+                    "Hallo Welt!",
+                    "welt",
                     StringComparison.CurrentCultureIgnoreCase
                 ).IsTrue()
             );
@@ -104,8 +104,8 @@ namespace Tonga.Tests.Text
         {
             Assert.False(
                 new Contains(
-                    "Hallo Welt!".AsText(),
-                    "welt".AsText()
+                    "Hallo Welt!",
+                    "welt"
                 ).IsTrue()
             );
         }
@@ -115,8 +115,8 @@ namespace Tonga.Tests.Text
         {
             Assert.False(
                 new Contains(
-                    "Hallo Welt!".AsText(),
-                    "world".AsText(),
+                    "Hallo Welt!",
+                    "world",
                     true
                 ).IsTrue()
             );

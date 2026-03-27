@@ -9,106 +9,87 @@ public sealed class TrimmedRightTest
     [Fact]
     public void TrimsWhitespaceEscapeSequences()
     {
-        Assert.Equal(
+        AssertText.Equal(
             string.Empty,
-            "   \b \f \n \r \t \v   ".AsText()
-                .AsTrimmedRight()
-                .Str()
+            new TrimmedLeft("   \b \f \n \r \t \v   ")
         );
     }
 
     [Fact]
     public void TrimsString()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hello!",
-            " \b   \t      Hello! \t \b  ".AsTrimmedRight().Str()
+            " \b   \t      Hello! \t \b  ".AsTrimmedRight()
         );
     }
 
     [Fact]
     public void TrimsText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hello!",
-            " \b   \t      Hello! \t \b  ".AsText().AsTrimmedRight().Str()
+            " \b   \t      Hello! \t \b  ".AsTrimmedRight()
         );
     }
 
     [Fact]
     public void TrimsStringWithCharArray()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hell",
             " \b   \t      Hello! \t \b  "
                 .AsTrimmedRight(['\b', '\t', ' ', 'H', '!', 'o'])
-                .Str()
         );
     }
 
     [Fact]
     public void TrimsTextWithCharArray()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hell",
-            " \b   \t      Hello! \t \b  ".AsText()
+            " \b   \t      Hello! \t \b  "
                 .AsTrimmedRight(['\b', '\t', ' ', 'H', '!', 'o'])
-                .Str()
-        );
-    }
-
-    [Fact]
-    public void TrimsTextWithScalar()
-    {
-        Assert.Equal(
-            " \b   \t      Hell",
-            " \b   \t      Hello! \t \b  ".AsText()
-                .AsTrimmedRight(() => ['\b', '\t', ' ', 'H', '!', 'o'])
-                .Str()
         );
     }
 
     [Fact]
     public void RemovesStringFromString()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hello! \t",
             " \b   \t      Hello! \t \b   \t      H"
                 .AsTrimmedRight(" \b   \t      H")
-                .Str()
         );
     }
 
     [Fact]
     public void RemovesTextFromString()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hello! \t",
             " \b   \t      Hello! \t \b   \t      H"
-                .AsText()
-                .AsTrimmedRight(" \b   \t      H").Str()
+                .AsTrimmedRight(" \b   \t      H")
         );
     }
 
     [Fact]
     public void RemovesStringFromText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hello! \t",
             " \b   \t      Hello! \t \b   \t      H"
-                .AsTrimmedRight(" \b   \t      H".AsText())
-                .Str()
+                .AsTrimmedRight(" \b   \t      H")
         );
     }
 
     [Fact]
     public void RemovesTextFromText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             " \b   \t      Hello! \t",
             " \b   \t      Hello! \t \b   \t      H"
-                .AsTrimmedRight(" \b   \t      H".AsText())
-                .Str()
+                .AsTrimmedRight(" \b   \t      H")
         );
     }
 }

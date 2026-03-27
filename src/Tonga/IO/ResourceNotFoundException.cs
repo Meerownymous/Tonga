@@ -1,10 +1,8 @@
-
-
 using System;
 using System.Reflection;
 using Tonga.Text;
 
-namespace Tonga.IO.Error
+namespace Tonga.IO
 {
     /// <summary>
     /// When a resource cannot be found.

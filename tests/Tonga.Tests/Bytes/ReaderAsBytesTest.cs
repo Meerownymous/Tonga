@@ -18,13 +18,13 @@ namespace Tonga.Tests.Bytes
                     "hello, друг!".AsStreamReader()
                 ).AsStream();//.FullRead().Yield();
 
-            Assert.Equal(
+            AssertText.Equal(
                 "hello, друг!",
+                new TextMorph(
                     new ReaderAsBytes(
                         "hello, друг!".AsStreamReader()
                     )
-                    .AsText()
-                    .Str()
+                )
             );
         }
     }

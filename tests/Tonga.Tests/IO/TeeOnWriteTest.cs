@@ -16,16 +16,15 @@ namespace Tonga.Tests.IO
             var copy = new MemoryStream();
             String content = "Hello, товарищ!";
 
-            Assert.True(
+            AssertText.Equal(
                 new TeeOnRead(
-                    new AsConduit(content),
+                    content,
                     new TeeOnWrite(
-                        new AsConduit(baos),
-                        new AsConduit(copy)
+                        baos,
+                        copy
                     )
-                ).AsText()
-                .Str()
-                == Encoding.UTF8.GetString(copy.ToArray())
+                ),
+                Encoding.UTF8.GetString(copy.ToArray())
             );
         }
     }

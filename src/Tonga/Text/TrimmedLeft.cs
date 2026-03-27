@@ -14,7 +14,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// A <see cref="string"/> trimmed (removed whitespaces) on the left side.
     /// </summary>
     /// <param name="str">text to trim</param>
-    public TrimmedLeft(string str) : this(str.AsText())
+    public TrimmedLeft(string str) : this(new TextMorph(str))
     { }
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// </summary>
     /// <param name="str">text to trim</param>
     /// <param name="trimText">text that trims the text</param>
-    public TrimmedLeft(string str, char[] trimText) : this(str.AsText(), trimText)
+    public TrimmedLeft(string str, char[] trimText) : this(new TextMorph(str), trimText)
     { }
 
     /// <summary>
@@ -49,7 +49,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// <param name="text">text to trim</param>
     /// <param name="trimText">text that trims the text</param>
     public TrimmedLeft(IText text, Func<char[]> trimText) : base(
-        new AsText(() => text.Str().TrimStart(trimText()))
+        new TextMorph(() => text.Str().TrimStart(trimText()))
     )
     { }
 
@@ -58,7 +58,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// </summary>
     /// <param name="str">text to trim</param>
     /// <param name="stringToRemove">text that is removed from the text</param>
-    public TrimmedLeft(string str, string stringToRemove) : this(str.AsText(), stringToRemove.AsText())
+    public TrimmedLeft(string str, string stringToRemove) : this(new TextMorph(str), new TextMorph(stringToRemove))
     { }
 
     /// <summary>
@@ -66,7 +66,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// </summary>
     /// <param name="str">text to trim</param>
     /// <param name="textToRemove">text that is removed from the text</param>
-    public TrimmedLeft(string str, IText textToRemove) : this(str.AsText(), textToRemove)
+    public TrimmedLeft(string str, IText textToRemove) : this(new TextMorph(str), textToRemove)
     { }
 
     /// <summary>
@@ -74,7 +74,7 @@ public sealed class TrimmedLeft : TextEnvelope
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="stringToRemove">text that is removed from the text</param>
-    public TrimmedLeft(IText text, string stringToRemove) : this(text, stringToRemove.AsText())
+    public TrimmedLeft(IText text, string stringToRemove) : this(text, new TextMorph(stringToRemove))
     { }
 
     /// <summary>

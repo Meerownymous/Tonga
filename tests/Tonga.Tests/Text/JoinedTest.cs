@@ -10,13 +10,13 @@ public sealed class JoinedTest
     [Fact]
     public void JoinsStrings()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "hello world",
             new Joined(
                 " ",
                 "hello",
                 "world"
-            ).Str()
+            )
         );
     }
 
@@ -26,9 +26,9 @@ public sealed class JoinedTest
         Assert.Equal(
             "foo bar",
             new Joined(
-                " ".AsText(),
-                "foo".AsText(),
-                "bar".AsText()
+                " ",
+                "foo",
+                "bar"
             ).Str()
         );
     }

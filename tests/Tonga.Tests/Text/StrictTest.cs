@@ -19,9 +19,9 @@ namespace Tonga.Tests.Text
         public void ReturnsText()
         {
             var expected = "valid";
-            Assert.Equal(
+            AssertText.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "valid", "ending").Str()
+                new Strict(expected, "not valid", "also not", "valid", "ending")
             );
         }
 
@@ -29,9 +29,9 @@ namespace Tonga.Tests.Text
         public void IgnoresCase()
         {
             var expected = "LargeValid";
-            Assert.Equal(
+            AssertText.Equal(
                 expected,
-                new Strict(expected, "not valid", "also not", "LargeValid", "ending").Str()
+                new Strict(expected, "not valid", "also not", "LargeValid", "ending")
             );
         }
 
@@ -48,11 +48,9 @@ namespace Tonga.Tests.Text
         public void WorksWithList()
         {
             var expected = "TextWith!§$/()?`";
-            Assert.Equal(
+            AssertText.Equal(
                 expected,
-                new Strict(expected,
-                    ("NotValid", expected).AsEnumerable()
-                ).Str()
+                new Strict(expected, "NotValid", expected)
             );
         }
 
@@ -63,10 +61,10 @@ namespace Tonga.Tests.Text
             var counter = 0;
             var text =
                 new Strict(
-                    new AsText(() => expected),
+                    new TextMorph(() => expected),
                     new AsEnumerable<IText>(
-                        new AsText(() => counter++.ToString()),
-                        new AsText(expected)
+                        new TextMorph(() => counter++.ToString()),
+                        new TextMorph(expected)
                     )
                 );
             text.Str();
@@ -81,18 +79,18 @@ namespace Tonga.Tests.Text
         public void NotIgnoresCaseList()
         {
             var expected = "expected";
-            Assert.Equal(
+            AssertText.Equal(
                 expected,
                 new Strict(
-                    new AsText(expected),
+                    new TextMorph(expected),
                     false,
                     (
                         "Expected",
                         "Not Valid",
                         expected
                     ).AsEnumerable()
-                    .AsMapped(t => t.AsText())
-                ).Str()
+                    .AsMapped(t => new TextMorph(t))
+                )
             );
         }
 
@@ -100,17 +98,15 @@ namespace Tonga.Tests.Text
         public void IgnoresCaseList()
         {
             var expected = "expected";
-            Assert.Equal(
+            AssertText.Equal(
                 expected,
                 new Strict(
                     expected,
                     true,
-                    (
-                        "Not Valid",
-                        "As well not valid",
-                        "ExpEcteD"
-                    ).AsEnumerable()
-                ).Str()
+                    "Not Valid",
+                    "As well not valid",
+                    "ExpEcteD"
+                )
             );
         }
 
@@ -118,14 +114,14 @@ namespace Tonga.Tests.Text
         public void IgnoresCaseByDefault()
         {
             var expected = "expected";
-            Assert.Equal(
+            AssertText.Equal(
                 expected,
                 new Strict(
                     expected,
                     "Not Valid",
                     "As well not valid",
                     "ExpEcteD"
-                ).Str()
+                )
             );
         }
     }

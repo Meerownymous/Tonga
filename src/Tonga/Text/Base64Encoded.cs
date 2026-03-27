@@ -11,7 +11,7 @@ namespace Tonga.Text;
 public sealed class Base64Encoded(Func<string> origin) : TextEnvelope(
     new Bytes.Base64Encoded(
         new AsBytes(origin)
-    ).AsText()
+    )
 )
 {
     /// <summary>

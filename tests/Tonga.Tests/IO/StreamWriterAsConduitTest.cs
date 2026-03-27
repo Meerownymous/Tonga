@@ -24,16 +24,15 @@ public sealed class StreamWriterAsConduitTest
 
         //Create large file
         new FullRead(
-            new AsConduit(
-                new TeeOnReadStream(
-                    new MemoryStream(
+            new TeeOnReadStream(
+                new MemoryStream(
+                    new BytesMorph(
                         new global::Tonga.Text.Joined(",",
                             "Hello World".AsRepeated(1000)
-                        ).AsBytes()
-                        .Raw()
-                    ),
-                    new Uri(inputPath).AsStream()
-                )
+                        )
+                    ).Raw()
+                ),
+                new Uri(inputPath).AsStream()
             )
         ).Trigger();
 
@@ -42,9 +41,7 @@ public sealed class StreamWriterAsConduitTest
 
         new FullRead(
             new TeeOnRead(
-                new AsConduit(
-                    new Uri(Path.GetFullPath(inputPath))
-                ),
+                new Uri(Path.GetFullPath(inputPath)),
                 new StreamWriterAsConduit(
                     new StreamWriter(filestream)
                 )
@@ -52,16 +49,16 @@ public sealed class StreamWriterAsConduitTest
         ).Trigger();
 
         Assert.Equal(
-            new AsConduit(
-                    new Uri(Path.GetFullPath(inputPath))
-                )
-                .Length()
-                .Long(),
-            new AsConduit(
-                    new Uri(Path.GetFullPath(outputPath))
-                )
-                .Length()
-                .Long()
+            new ConduitMorph(
+                new Uri(Path.GetFullPath(inputPath))
+            )
+            .Length()
+            .Long(),
+            new ConduitMorph(
+                new Uri(Path.GetFullPath(outputPath))
+            )
+            .Length()
+            .Long()
         );
     }
 

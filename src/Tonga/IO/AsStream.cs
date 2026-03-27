@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Tonga.Bytes;
 
 namespace Tonga.IO;
@@ -62,7 +60,8 @@ public sealed class AsStream(Func<Stream> src) : Stream, IDisposable
     /// </summary>
     /// <param name="str">some string</param>
     public AsStream(String str) : this(
-        new AsBytes(str))
+        new AsBytes(str)
+    )
     { }
 
     /// <summary>

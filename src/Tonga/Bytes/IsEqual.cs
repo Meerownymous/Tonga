@@ -7,8 +7,7 @@ namespace Tonga.Bytes;
 /// <summary>
 /// Equality for <see cref="IBytes"/>
 /// </summary>
-public sealed class IsEqual(IBytes left, IBytes right) : FactEnvelope(
-    () =>
+public sealed class IsEqual(BytesMorph left, BytesMorph right) : FactEnvelope(() =>
     {
         var leftByte = left.Raw();
         var rightByte = right.Raw();
@@ -22,6 +21,16 @@ public sealed class IsEqual(IBytes left, IBytes right) : FactEnvelope(
                 break;
             }
         }
+
         return equal;
     }
-);
+)
+{
+    public IsEqual(IBytes left, IBytes right) : this(new BytesMorph(left), new BytesMorph(right))
+    {
+    }
+
+    public IsEqual(IBytes left, BytesMorph right) : this(new BytesMorph(left), new BytesMorph(right))
+    {
+    }
+}

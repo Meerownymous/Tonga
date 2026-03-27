@@ -11,9 +11,7 @@ namespace Tonga.Tests.Text
         public void MatchesText()
         {
             Assert.True(
-                "Im a text with a really good end!".AsText()
-                    .EndsWith("od end!".AsText())
-                    .IsTrue()
+                new EndsWith("Im a text with a really good end!", "od end!").IsTrue()
             );
         }
 
@@ -21,8 +19,7 @@ namespace Tonga.Tests.Text
         public void MatchesString()
         {
             Assert.True(
-                "Im a text with a really good end!".AsText()
-                    .EndsWith("od end!")
+                new EndsWith("Im a text with a really good end!", "od end!")
                     .IsTrue()
             );
         }
@@ -31,9 +28,7 @@ namespace Tonga.Tests.Text
         public void DoesntMatch()
         {
             Assert.False(
-                "Im a text with a really good end!"
-                    .AsText()
-                    .EndsWith("od end".AsText())
+                new EndsWith("Im a text with a really good end!", "od end")
                     .IsTrue()
             );
         }

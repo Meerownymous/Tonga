@@ -19,10 +19,9 @@ public sealed class VersionMap<Value>(IEnumerable<IPair<Version, Value>> pairs, 
         new ArgumentException(
             $"Cannot find value for version {version}, the version must be within: "
             +
-            available
-                .AsMapped(v => v.ToString())
-                .AsJoined(", ")
-                .Str()
+            new Joined(", ",
+                available.AsMapped(v => v.ToString())
+            )
         );
 
     /// <summary>

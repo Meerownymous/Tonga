@@ -55,11 +55,11 @@ namespace Tonga.Tests.IO
         {
             var baos = new MemoryStream();
             String content = "Hello, товарищ!";
-            Assert.Equal(
+            AssertText.Equal(
                 new TeeOnRead(
-                    new AsConduit(content),
-                    new AsConduit(baos)
-                ).AsText().Str(),
+                    content,
+                    baos
+                ),
                 Encoding.UTF8.GetString(baos.ToArray())
             );
         }
@@ -78,10 +78,10 @@ namespace Tonga.Tests.IO
             var str =
                 new TeeOnRead(
                     "Hello, друг!",
-                    new Uri(path).AsConduit()
-                ).AsText().Str();
+                    new Uri(path)
+                );
 
-            Assert.Equal(str, new Uri(path).AsText().Str());
+            AssertText.Equal(str, new Uri(path));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Tonga.Enumerable
     /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
     /// </summary>
     /// <typeparam name="T">type of elements</typeparam>
-    public sealed class Head<T>(IEnumerable<T> source, Func<int> limit) : IEnumerable<T>
+    public sealed class HeadSlice<T>(IEnumerable<T> source, Func<int> limit) : IEnumerable<T>
     {
         private readonly IEnumerable<T> result =
             new AsEnumerable<T>(() => Produced(source, limit));
@@ -17,7 +17,7 @@ namespace Tonga.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public Head(IEnumerable<T> enumerable) : this(enumerable, 1)
+        public HeadSlice(IEnumerable<T> enumerable) : this(enumerable, 1)
         { }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Tonga.Enumerable
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public Head(IEnumerable<T> enumerable, int limit) : this(
+        public HeadSlice(IEnumerable<T> enumerable, int limit) : this(
             enumerable,
             () => limit
         )
@@ -54,20 +54,20 @@ namespace Tonga.Enumerable
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
-        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable) => new Head<T>(enumerable);
+        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable) => new HeadSlice<T>(enumerable);
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable, int limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable, int limit) => new HeadSlice<T>(enumerable, limit);
 
         /// <summary>
         /// A <see cref="IEnumerable{T}"/> limited to an item maximum.
         /// </summary>
         /// <param name="enumerable">enumerable to limit</param>
         /// <param name="limit">maximum item count</param>
-        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable, Func<int> limit) => new Head<T>(enumerable, limit);
+        public static IEnumerable<T> AsHead<T>(this IEnumerable<T> enumerable, Func<int> limit) => new HeadSlice<T>(enumerable, limit);
     }
 }

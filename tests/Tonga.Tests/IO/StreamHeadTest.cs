@@ -19,10 +19,7 @@ public sealed class StreamHeadTest
 
         Assert.Equal(3L, skipped);
 
-        Assert.Contains(
-            "tS",
-            stream.AsText().Str()
-        );
+        AssertText.Contains("tS", stream);
     }
 
     [Fact]
@@ -37,8 +34,8 @@ public sealed class StreamHeadTest
 
         Assert.Equal(5L, skipped);
 
-        var input = stream.AsText().Str();
+        var input = stream;
 
-        Assert.Equal("", input);
+        AssertText.Equal("", input);
     }
 }

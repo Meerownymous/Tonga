@@ -12,7 +12,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                  "d41d8cd98f00b204e9800998ecf8427e",
                  new AsHex(
-                     new AsMD5Digest(new Tonga.IO.AsConduit(string.Empty))
+                     new AsMD5Digest(string.Empty)
                  ).Str()
             );
         }
@@ -23,7 +23,7 @@ namespace Tonga.Tests.IO
             Assert.Equal(
                 "ed076287532e86365e841e92bfc50d8c",
                 new AsHex(
-                    new AsMD5Digest(new Tonga.IO.AsConduit("Hello World!"))
+                    new AsMD5Digest("Hello World!")
                 ).Str()
             );
         }

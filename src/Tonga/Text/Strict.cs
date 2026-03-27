@@ -66,9 +66,9 @@ public sealed class Strict(IText candidate, IEnumerable<IText> valid, Func<Strin
     /// A strict text which can only be one of the specified valid texts.
     /// </summary>
     public Strict(string candidate, bool ignoreCase, IEnumerable<string> valid) : this(
-        candidate.AsText(),
+        new TextMorph(candidate),
         ignoreCase,
-        valid.AsMapped(str => str.AsText())
+        valid.AsMapped(str => new TextMorph(str))
     )
     { }
 
@@ -91,7 +91,7 @@ public sealed class Strict(IText candidate, IEnumerable<IText> valid, Func<Strin
     public Strict(IText candidate, bool ignoreCase, params string[] valid) : this(
         candidate,
         ignoreCase,
-        valid.AsMapped(str => str.AsText())
+        valid.AsMapped(str => new TextMorph(str))
     )
     { }
 

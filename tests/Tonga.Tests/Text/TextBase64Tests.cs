@@ -18,18 +18,14 @@ public sealed class TextBase64Tests
         using var tempFile = new TempFile("test.txt");
         new FullRead(
             new TeeOnRead(
-                str.AsText()
-                    .AsBytes()
-                    .AsBase64Encoded()
-                    .AsText()
-                    .Str(),
-                new Uri(tempFile.Value()).AsConduit()
+                new Base64Encoded(str),
+                new BytesMorph(new Uri(tempFile.Value()))
             )
         ).Trigger();
 
         Assert.True(
             new Comparable(
-                new Uri(tempFile.Value()).AsText()
+                new Uri(tempFile.Value())
             ).CompareTo(
                 new Base64Encoded(str)
             ) == 0
@@ -42,13 +38,9 @@ public sealed class TextBase64Tests
     [InlineData("A fancy text with € special character")]
     public void EncodesString(string text)
     {
-        Assert.Equal(
-            text.AsText()
-                .AsBytes()
-                .AsBase64Encoded()
-                .AsText()
-                .Str(),
-            new Base64Encoded(text).Str()
+        AssertText.Equal(
+            new Base64Encoded(new BytesMorph(text)),
+            new Base64Encoded(text)
         );
     }
 }

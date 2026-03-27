@@ -30,15 +30,17 @@ public class UnzippedFileTest
     [InlineData("File3")]
     public void ReturnsSelectedFile(string fileName)
     {
-        Assert.Contains(
+        AssertText.Contains(
             fileName,
-            new UnzippedFile(
-                new Resource(
-                    "Assets/Zip/ZipWithThreeFiles.zip",
-                    this.GetType()
-                ),
-                fileName
-            ).AsText().Str()
+            new ConduitMorph(
+                new UnzippedFile(
+                    new Resource(
+                        "Assets/Zip/ZipWithThreeFiles.zip",
+                        this.GetType()
+                    ),
+                    fileName
+                )
+            )
         );
     }
 

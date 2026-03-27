@@ -22,26 +22,22 @@ public sealed class WriterAsOutputStreamTest
 
                 //Create large file
                 new FullRead(
-                    new AsConduit(
-                        new TeeOnReadStream(
-                            new global::Tonga.Text.Joined(",",
-                                "Hello World".AsRepeated(1000)
-                            ).AsStream(),
-                            new Uri(inputPath).AsStream()
-                        )
+                    new TeeOnReadStream(
+                        new global::Tonga.Text.Joined(",",
+                            "Hello World".AsRepeated(1000)
+                        ).AsStream(),
+                        new Uri(inputPath).AsStream()
                     )
                 ).Trigger();
 
                 using (var tee =
-                       new AsConduit(
                            new TeeOnReadStream(
-                               new AsConduit(inputPath).Stream(),
+                               new ConduitMorph(inputPath).Stream(),
                                new WriterAsOutputStream(
                                    new StreamWriter(outputPath)
                                )
                            )
                        )
-                      )
                 {
                     new FullRead(tee, flush: true, close: false).Trigger();
                     Assert.Equal(

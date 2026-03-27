@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Tonga.Enumerable;
 
@@ -10,9 +11,9 @@ using Tonga.Enumerable;
 namespace Tonga.Text;
 
 /// <summary>
-/// A <see cref="IText"/> which has been splitted at the given string.
+/// A <see cref="IText"/> which has been split at the given string.
 /// </summary>
-public sealed class Split(IText text, IText rgx, bool remBlank = true) : EnumerableEnvelope<string>(
+public sealed class Split(TextMorph text, TextMorph rgx, bool remBlank = true) : EnumerableEnvelope<string>(
     () =>
     {
         IEnumerable<string> split =
@@ -28,39 +29,14 @@ public sealed class Split(IText text, IText rgx, bool remBlank = true) : Enumera
 )
 {
     /// <summary>
-    /// A <see cref="IText"/> which has been splitted at the given string.
+    /// A <see cref="IText"/> which has been split at the given string.
     /// </summary>
     /// <param name="text">text to split</param>
     /// <param name="rgx">regex to use for splitting</param>
-    /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
-    public Split(String text, String rgx, bool remBlank = true) : this(
-        text.AsText(),
-        rgx.AsText(),
-        remBlank
-    )
-    { }
-
-    /// <summary>
-    /// A <see cref="IText"/> which has been splitted at the given string.
-    /// </summary>
-    /// <param name="text">text to split</param>
-    /// <param name="rgx">regex to use for splitting</param>
-    /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
-    public Split(String text, IText rgx, bool remBlank = true) : this(
-        text.AsText(),
-        rgx,
-        remBlank)
-    { }
-
-    /// <summary>
-    /// A <see cref="IText"/> which has been splitted at the given string.
-    /// </summary>
-    /// <param name="text">text to split</param>
-    /// <param name="rgx">regex to use for splitting</param>
-    /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
-    public Split(IText text, String rgx, bool remBlank = true) : this(
-        text,
-        rgx.AsText(),
+    /// <param name="remBlank">switch to remove empty or whitespace strings from result or not</param>
+    public Split(IText text, IText rgx, bool remBlank = true) : this(
+        new TextMorph(text),
+        new TextMorph(rgx),
         remBlank
     )
     { }
@@ -68,33 +44,15 @@ public sealed class Split(IText text, IText rgx, bool remBlank = true) : Enumera
 
 public static partial class TextSmarts
 {
-    public static IEnumerable<string> AsSplit(this IText text, IText rgx, bool remBlank = true) =>
+    public static IEnumerable<string> SplitBy(this IText text, TextMorph rgx, bool remBlank = true) =>
         new Split(text, rgx, remBlank);
 
     /// <summary>
-    /// A <see cref="IText"/> which has been splitted at the given string.
+    /// A <see cref="IText"/> which has been split at the given string.
     /// </summary>
     /// <param name="text">text to split</param>
     /// <param name="rgx">regex to use for splitting</param>
-    /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
-    public static IEnumerable<string> AsSplit(this String text, String rgx, bool remBlank = true) =>
+    /// <param name="remBlank">switch to remove empty or whitespace strings from result or not</param>
+    public static IEnumerable<string> SplitBy(this string text, string rgx, bool remBlank = true) =>
         new Split(text, rgx, remBlank);
-
-    /// <summary>
-    /// A <see cref="IText"/> which has been splitted at the given string.
-    /// </summary>
-    /// <param name="text">text to split</param>
-    /// <param name="rgx">regex to use for splitting</param>
-    /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
-    public static IEnumerable<string> AsSplit(this String text, IText rgx, bool remBlank = true) =>
-        new Split(text, rgx, remBlank);
-
-    /// <summary>
-    /// A <see cref="IText"/> which has been splitted at the given string.
-    /// </summary>
-    /// <param name="text">text to split</param>
-    /// <param name="rgx">regex to use for splitting</param>
-    /// <param name="remBlank">switch to remove empty or whitspace stirngs from result or not</param>
-    public static IEnumerable<string> AsSplit(this IText text, String rgx, bool remBlank = true)  =>
-    new Split(text, rgx, remBlank);
 }

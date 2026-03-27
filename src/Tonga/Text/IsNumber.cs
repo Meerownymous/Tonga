@@ -7,26 +7,22 @@ namespace Tonga.Text
     /// <summary>
     /// Checks whether a given text is a number
     /// </summary>
-    public sealed class IsNumber : FactEnvelope
+    public sealed class IsNumber(TextMorph text, IFormatProvider format) : FactEnvelope(() =>
+
+        double.TryParse(
+            text.Str(),
+            NumberStyles.Any,
+            format,
+            out var unused
+        )
+    )
     {
         /// <summary>
         /// Checks whether the given text is a number
         /// </summary>
         /// <param name="text">the text</param>
-        public IsNumber(string text) : this(
-            new AsText(text),
-            NumberFormatInfo.InvariantInfo
-        )
-        { }
-
-        /// <summary>
-        /// Checks whether the given text is a number
-        /// </summary>
-        /// <param name="text">the text</param>
-        /// <param name="provider">number format provider</param>
-        public IsNumber(string text, IFormatProvider provider) : this(
-            new AsText(text),
-            provider
+        public IsNumber(TextMorph text) : this(
+            text, NumberFormatInfo.InvariantInfo
         )
         { }
 
@@ -35,8 +31,7 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">the text</param>
         public IsNumber(IText text) : this(
-            text,
-            NumberFormatInfo.InvariantInfo
+            new TextMorph(text), NumberFormatInfo.InvariantInfo
         )
         { }
 
@@ -45,15 +40,8 @@ namespace Tonga.Text
         /// </summary>
         /// <param name="text">the text</param>
         /// <param name="provider">number format provider</param>
-        public IsNumber(IText text, IFormatProvider provider) : base(
-            () =>
-                double.TryParse(
-                    text.Str(),
-                    NumberStyles.Any,
-                    provider,
-                    out var unused
-                )
-
+        public IsNumber(IText text, IFormatProvider provider) : this(
+            new TextMorph(text), provider
         )
         { }
     }

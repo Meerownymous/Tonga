@@ -17,22 +17,18 @@ public sealed class AsStreamTest
         String content = "Hello, товарищ!";
         File.WriteAllBytes(
             file.Value(),
-            content
-                .AsText(Encoding.UTF8)
-                .AsBytes()
-                .Raw()
+            new BytesMorph(
+                new TextMorph(content, Encoding.UTF8)
+            ).Raw()
         );
 
-        Assert.Equal(
+        AssertText.Equal(
             content,
             new ConduitAsBytes(
-                new AsConduit(
                     new AsStream(
                         new Uri(file.Value())
                     )
-                )
-            ).AsText()
-            .Str()
+            )
         );
     }
 
@@ -40,15 +36,15 @@ public sealed class AsStreamTest
     public void ReadsFromReader()
     {
         String content = "Hello, дорогой товарищ!";
-        Assert.Equal(
+        AssertText.Equal(
             content,
-            new AsConduit(
+            new ConduitMorph(
                 new AsStream(
                     new StreamReader(
-                        new AsConduit(content).Stream()
+                        new ConduitMorph(content).Stream()
                     )
                 )
-            ).AsText().Str()
+            )
         );
     }
 
@@ -56,14 +52,12 @@ public sealed class AsStreamTest
     public void ReadsFromReaderThroughSmallBuffer()
     {
         String content = "Hello, صديق!";
-        Assert.Equal(
+        AssertText.Equal(
             content,
             new StreamReader(
-                new AsConduit(content).Stream()
+                new ConduitMorph(content).Stream()
             )
             .AsStream()
-            .AsText()
-            .Str()
         );
     }
 
@@ -86,11 +80,11 @@ public sealed class AsStreamTest
         if (File.Exists(path)) File.Delete(path);
 
         String content = "Hello, товарищ!";
-        File.WriteAllBytes(path, new AsBytes(content.AsText(Encoding.UTF8)).Raw());
+        File.WriteAllBytes(path, new BytesMorph(new TextMorph(content, Encoding.UTF8)).Raw());
 
-        Assert.Equal(
+        AssertText.Equal(
             content,
-            new Uri(path).AsStream().AsText().Str()
+            new Uri(path).AsStream()
         );
     }
 }

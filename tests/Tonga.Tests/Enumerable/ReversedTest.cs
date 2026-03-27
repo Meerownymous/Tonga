@@ -9,13 +9,12 @@ namespace Tonga.Tests.Enumerable
         [Fact]
         public void ReversesIterable()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "dude world hello",
-                ("hello", "world", "dude")
-                .AsEnumerable()
-                .AsReversed()
-                .AsJoined(" ")
-                .Str()
+                new Joined(" ", ("hello", "world", "dude")
+                    .AsEnumerable()
+                    .AsReversed()
+                )
             );
         }
     }

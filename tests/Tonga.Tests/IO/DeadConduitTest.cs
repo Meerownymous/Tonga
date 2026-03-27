@@ -9,9 +9,9 @@ namespace Tonga.Tests.IO
         [Fact]
         public void ReadsEmptyContent()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 string.Empty,
-                new DeadConduit().AsText().Str()
+                new DeadConduit()
             );
         }
 

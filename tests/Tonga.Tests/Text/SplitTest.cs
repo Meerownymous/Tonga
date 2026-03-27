@@ -11,8 +11,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 ["Hello", "world!"],
-                "Hello world!"
-                    .AsSplit("\\s+")
+                new Split("Hello world!", "\\s+")
             );
         }
 
@@ -21,7 +20,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 [],
-                "".AsSplit("\n")
+                "".SplitBy("\n")
             );
         }
 
@@ -30,7 +29,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 ["Tonga", "OOP!"],
-                "Tonga OOP!".AsSplit("\\s")
+                "Tonga OOP!".SplitBy("\\s")
             );
         }
 
@@ -39,7 +38,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 ["Atoms", "Primitives!"],
-                "Atoms4Primitives!".AsSplit("\\d+")
+                "Atoms4Primitives!".SplitBy("\\d+")
             );
         }
 
@@ -48,7 +47,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 ["Split", "OOP"],
-                "Split#OOP!".AsSplit("\\W+")
+                "Split#OOP!".SplitBy("\\W+")
             );
         }
 
@@ -57,7 +56,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 2,
-                "Split##OOP!".AsSplit("\\W+").Length().Value()
+                "Split##OOP!".SplitBy("\\W+").Length().Value()
             );
         }
 
@@ -66,7 +65,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 3,
-                "Split##OOP!".AsSplit("\\W+",false).Length().Value()
+                "Split##OOP!".SplitBy("\\W+",false).Length().Value()
             );
         }
     }

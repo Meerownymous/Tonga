@@ -14,7 +14,7 @@ public sealed class TrimmedRight : TextEnvelope
     /// A <see cref="string"/> trimmed (removed whitespaces) on the right side.
     /// </summary>
     /// <param name="text">text to trim</param>
-    public TrimmedRight(string text) : this(text.AsText())
+    public TrimmedRight(string text) : this(new TextMorph(text))
     { }
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed class TrimmedRight : TextEnvelope
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="trimText">text that trims the text</param>
-    public TrimmedRight(string text, char[] trimText) : this(text.AsText(), trimText)
+    public TrimmedRight(string text, char[] trimText) : this(new TextMorph(text), trimText)
     { }
 
     /// <summary>
@@ -49,7 +49,7 @@ public sealed class TrimmedRight : TextEnvelope
     /// <param name="text">text to trim</param>
     /// <param name="trimText">text that trims the text</param>
     public TrimmedRight(IText text, Func<char[]> trimText) : base(
-        new AsText(() => text.Str().TrimEnd(trimText()))
+        new TextMorph(() => text.Str().TrimEnd(trimText()))
     )
     { }
 
@@ -58,7 +58,7 @@ public sealed class TrimmedRight : TextEnvelope
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="removeText">text that is removed from the text</param>
-    public TrimmedRight(string text, string removeText) : this(text.AsText(), removeText.AsText())
+    public TrimmedRight(string text, string removeText) : this(new TextMorph(text), new TextMorph(removeText))
     { }
 
     /// <summary>
@@ -66,7 +66,7 @@ public sealed class TrimmedRight : TextEnvelope
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="removeText">text that is removed from the text</param>
-    public TrimmedRight(string text, IText removeText) : this(text.AsText(), removeText)
+    public TrimmedRight(string text, IText removeText) : this(new TextMorph(text), removeText)
     { }
 
     /// <summary>
@@ -74,7 +74,7 @@ public sealed class TrimmedRight : TextEnvelope
     /// </summary>
     /// <param name="text">text to trim</param>
     /// <param name="removeText">text that is removed from the text</param>
-    public TrimmedRight(IText text, string removeText) : this(text, removeText.AsText())
+    public TrimmedRight(IText text, string removeText) : this(text, new TextMorph(removeText))
     { }
 
     /// <summary>
@@ -118,13 +118,13 @@ public static partial class TextSmarts
         /// A <see cref="string"/> trimmed (removed whitespaces) on the right side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public static IText AsTrimmedRight(this string text) => new TrimmedRight(text);
+        public static TextMorph AsTrimmedRight(this string text) => new TrimmedRight(text);
 
         /// <summary>
         /// An <see cref="IText"/> trimmed (removed whitespaces) on the right side.
         /// </summary>
         /// <param name="text">text to trim</param>
-        public static IText AsTrimmedRight(this IText text) =>
+        public static TextMorph AsTrimmedRight(this IText text) =>
             new TrimmedRight(text);
 
         /// <summary>
@@ -132,7 +132,7 @@ public static partial class TextSmarts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public static IText AsTrimmedRight(this string text, char[] trimText) =>
+        public static TextMorph AsTrimmedRight(this string text, char[] trimText) =>
             new TrimmedRight(text, trimText);
 
         /// <summary>
@@ -140,7 +140,7 @@ public static partial class TextSmarts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public static IText AsTrimmedRight(this IText text, char[] trimText) =>
+        public static TextMorph AsTrimmedRight(this IText text, char[] trimText) =>
             new TrimmedRight(text, trimText);
 
         /// <summary>
@@ -148,7 +148,7 @@ public static partial class TextSmarts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="trimText">text that trims the text</param>
-        public static IText AsTrimmedRight(this IText text, Func<char[]> trimText) =>
+        public static TextMorph AsTrimmedRight(this IText text, Func<char[]> trimText) =>
             new TrimmedRight(text, trimText);
 
         /// <summary>
@@ -156,7 +156,7 @@ public static partial class TextSmarts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public static IText AsTrimmedRight(this string text, string removeText) =>
+        public static TextMorph AsTrimmedRight(this string text, string removeText) =>
             new TrimmedRight(text, removeText);
 
         /// <summary>
@@ -164,7 +164,7 @@ public static partial class TextSmarts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public static IText AsTrimmedRight(this string text, IText removeText) =>
+        public static TextMorph AsTrimmedRight(this string text, IText removeText) =>
             new TrimmedRight(text, removeText);
 
         /// <summary>
@@ -172,7 +172,7 @@ public static partial class TextSmarts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public static IText AsTrimmedRight(this IText text, string removeText) =>
+        public static TextMorph AsTrimmedRight(this IText text, string removeText) =>
             new TrimmedRight(text, removeText);
 
         /// <summary>
@@ -180,7 +180,7 @@ public static partial class TextSmarts
         /// </summary>
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
-        public static IText AsTrimmedRight(this IText text, IText removeText) =>
+        public static TextMorph AsTrimmedRight(this IText text, IText removeText) =>
             new TrimmedRight(text, removeText);
 
         /// <summary>
@@ -189,6 +189,6 @@ public static partial class TextSmarts
         /// <param name="text">text to trim</param>
         /// <param name="removeText">text that is removed from the text</param>
         /// <param name="ignoreCase">Trim by disregarding case.</param>
-        public static IText AsTrimmedRight(this IText text, IText removeText, bool ignoreCase) =>
+        public static TextMorph AsTrimmedRight(this IText text, IText removeText, bool ignoreCase) =>
             new TrimmedRight(text, removeText, ignoreCase);
 }

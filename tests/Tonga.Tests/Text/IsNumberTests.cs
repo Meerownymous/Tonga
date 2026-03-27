@@ -1,3 +1,4 @@
+using Tonga.Fact;
 using Tonga.Text;
 using Xunit;
 
@@ -8,61 +9,60 @@ public sealed class IsNumberTests
     [Fact]
     public void DetectsNumber()
     {
-        Assert.True(
-            new IsNumber("1,234.56").IsTrue()
+        AssertFact.True(
+            new IsNumber("1,234.56")
         );
     }
 
     [Fact]
     public void DetectsCustomCultureNumber()
     {
-        Assert.True(
+        AssertFact.True(
             new IsNumber(
                 "1234,56",
                 new System.Globalization.NumberFormatInfo
                 {
                     NumberDecimalSeparator = ","
                 }
-            ).IsTrue()
+            )
         );
     }
 
     [Fact]
     public void DetectsNumberFromText()
     {
-        Assert.True(
-            new IsNumber("1,234.56".AsText()).IsTrue()
+        AssertFact.True(
+            new IsNumber("1,234.56")
         );
     }
 
     [Fact]
     public void DetectsCustomCultureNumberFromText()
     {
-        Assert.True(
+        AssertFact.True(
             new IsNumber(
-                "1234,56".AsText(),
+                "1234,56",
                 new System.Globalization.NumberFormatInfo
                 {
                     NumberDecimalSeparator = ","
                 }
-            ).IsTrue(),
-            "Can't read number from text using custom format provider"
+            )
         );
     }
 
     [Fact]
     public void DetectsNoNumber()
     {
-        Assert.False(
-            new IsNumber("not a number").IsTrue()
+        AssertFact.False(
+            new IsNumber("not a number")
         );
     }
 
     [Fact]
     public void DetectsNoNumberFromText()
     {
-        Assert.False(
-            new IsNumber("not a number".AsText()).IsTrue()
+        AssertFact.False(
+            new IsNumber("not a number")
         );
     }
 }

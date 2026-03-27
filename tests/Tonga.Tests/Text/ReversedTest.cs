@@ -10,18 +10,18 @@ namespace Tonga.Tests.Text
         [Fact]
         public void ReverseText()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "!olleH",
-                "Hello!".AsText().AsReversed().Str()
+                new Reversed("Hello!")
             );
         }
 
         [Fact]
         public void ReversedEmptyTextIsEmptyText()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "",
-                "".AsText().AsReversed().Str()
+                new Reversed("")
             );
         }
     }

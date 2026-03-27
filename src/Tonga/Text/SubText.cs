@@ -8,7 +8,7 @@ namespace Tonga.Text;
 /// <summary>
 /// Extracted subtext from a <see cref="IText"/>.
 /// </summary>
-public sealed class SubText(IText text, Func<int> start, Func<int> length) : TextEnvelope(
+public sealed class SubText(TextMorph text, Func<int> start, Func<int> length) : TextEnvelope(
     () =>
         text.Str()
             .Substring(
@@ -20,14 +20,14 @@ public sealed class SubText(IText text, Func<int> start, Func<int> length) : Tex
     /// <summary>
     /// Extracted subtext from a <see cref="string"/>.
     /// </summary>
-    public SubText(String str, int start) : this(str.AsText(), start)
+    public SubText(String str, int start) : this(new TextMorph(str), start)
     { }
 
     /// <summary>
     /// Extracted subtext from a <see cref="string"/>.
     /// </summary>
     public SubText(String str, int start, int length) : this(
-        str.AsText(),
+        new TextMorph(str),
         start,
         length
     )
@@ -37,7 +37,7 @@ public sealed class SubText(IText text, Func<int> start, Func<int> length) : Tex
     /// Extracted subtext from a <see cref="IText"/>.
     /// </summary>
     public SubText(IText text, int start) : this(
-        text,
+        new TextMorph(text),
         () => start,
         () => text.Str().Length - start
     )
@@ -47,7 +47,7 @@ public sealed class SubText(IText text, Func<int> start, Func<int> length) : Tex
     /// Extracted subtext from a <see cref="IText"/>.
     /// </summary>
     public SubText(IText text, int start, int length) : this(
-        text,
+        new TextMorph(text),
         () => start,
         () => length
     )
@@ -57,7 +57,7 @@ public sealed class SubText(IText text, Func<int> start, Func<int> length) : Tex
     /// Extracted subtext from a <see cref="IText"/>.
     /// </summary>
     public SubText(IText text, IScalar<Int32> start, IScalar<Int32> length) : this(
-        text,
+        new TextMorph(text),
         start.Value,
         length.Value
     )
@@ -94,5 +94,5 @@ public static partial class TextSmarts
     /// Extracted subtext from a <see cref="IText"/>.
     /// </summary>
     public static IText AsSubText(this IText text, Func<Int32> start, Func<Int32> length) =>
-        new SubText(text, start, length);
+        new SubText(new TextMorph(text), start, length);
 }

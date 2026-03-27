@@ -22,19 +22,18 @@ public sealed class AsStreamWriterTest
         using (var output = new AsStreamWriter(uri))
         {
             s =
-                new TeeOnRead(
-                    new AsConduit(content),
-                    new StreamWriterAsConduit(output)
-                ).AsText()
-                .Str();
+                new TextMorph(
+                    new TeeOnRead(
+                        content,
+                        new StreamWriterAsConduit(output)
+                    )
+                ).Str();
         }
 
         Assert.Equal(
             0,
             String.Compare(
-                new ConduitAsBytes(
-                    new AsConduit(uri)
-                ).AsText().Str(),
+                new TextMorph(new ConduitAsBytes(uri)).Str(),
                 s,
                 StringComparison.Ordinal
             )

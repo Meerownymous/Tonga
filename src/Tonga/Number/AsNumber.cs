@@ -69,7 +69,7 @@ public sealed class AsNumber : NumberEnvelope
     /// </summary>
     /// <param name="str">The string</param>
     /// <param name="provider">a number format provider</param>
-    public AsNumber(string str, IFormatProvider provider) : this(new AsText(str), provider)
+    public AsNumber(string str, IFormatProvider provider) : this(new TextMorph(str), provider)
     { }
 
     /// <summary>

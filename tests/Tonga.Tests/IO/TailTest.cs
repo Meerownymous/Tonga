@@ -15,11 +15,10 @@ namespace Tonga.Tests.IO
             byte[] bytes = new RandomBytes(size).ToArray();
 
             var b =
-                new AsBytes(bytes)
-                    .AsConduit()
-                    .AsTail(size - 1)
-                    .AsBytes()
-                    .Raw();
+                new BytesMorph(
+                    new ConduitMorph(bytes)
+                        .AsTail(size - 1)
+                ).Raw();
 
             var dest = new byte[bytes.Length - 1];
             Array.Copy(bytes, 1, dest, 0, bytes.Length - 1);
@@ -37,13 +36,13 @@ namespace Tonga.Tests.IO
             byte[] bytes = new RandomBytes(size).ToArray();
 
             var b =
-                new AsConduit(
-                    new AsBytes(bytes)
-                ).AsTail(size)
-                .AsBytes()
-                .Raw();
+                new BytesMorph(
+                    new ConduitMorph(
+                        bytes
+                    ).AsTail(size)
+                ).Raw();
 
-            Assert.Equal(
+            AssertBytes.Equal(
                 b,
                 bytes
             );
@@ -55,14 +54,12 @@ namespace Tonga.Tests.IO
             int size = 4;
             byte[] bytes = new RandomBytes(size).ToArray();
 
-            Assert.Equal(
-                new AsBytes(
-                    new Tail(
-                        new Tonga.IO.AsConduit(new AsBytes(bytes)),
-                        size,
-                        size
-                    )
-                ).Raw(),
+            AssertBytes.Equal(
+                new Tail(
+                    new Tonga.IO.ConduitMorph(new BytesMorph(bytes)),
+                    size,
+                    size
+                ),
                 bytes
             );
         }
@@ -73,13 +70,11 @@ namespace Tonga.Tests.IO
             int size = 4;
             byte[] bytes = new RandomBytes(size).ToArray();
 
-            Assert.Equal(
-                new AsBytes(
-                    new Tail(
-                        new AsConduit(new AsBytes(bytes)),
-                        size + 1
-                    )
-                ).Raw(),
+            AssertBytes.Equal(
+                new Tail(
+                    new ConduitMorph(bytes),
+                    size + 1
+                ),
                 bytes
             );
         }
@@ -92,15 +87,13 @@ namespace Tonga.Tests.IO
 
             var res = new byte[bytes.Length - 1];
             Array.Copy(bytes, 1, res, 0, bytes.Length - 1);
-            Assert.Equal(
-                new AsBytes(
-                    new Tail(
-                        new AsConduit(new AsBytes(bytes)),
-                        size - 1,
-                        size - 1
-                    )
-                ).Raw(),
-                res
+            AssertBytes.Equal(
+                res,
+                new Tail(
+                    bytes,
+                    size - 1,
+                    size - 1
+                )
             );
         }
 
@@ -112,9 +105,7 @@ namespace Tonga.Tests.IO
             Assert.Throws<ArgumentException>(
                 () =>
                 {
-                    new AsConduit(
-                        new AsBytes(bytes)
-                    ).AsTail(size,size - 1).AsBytes().Raw();
+                    new Tail(bytes, size, size - 1).Stream();
                 }
             );
         }

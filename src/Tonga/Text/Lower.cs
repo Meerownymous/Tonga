@@ -5,9 +5,12 @@ namespace Tonga.Text;
 /// <summary>
 /// A <see cref="IText"/> as lowercase.
 /// </summary>
-public sealed class Lower(IText text) : TextEnvelope(
-    () => text.Str().ToLower()
-);
+public sealed class Lower(TextMorph text) : TextEnvelope(() => text.Str().ToLower()
+)
+{
+    public Lower(IText text) : this(new TextMorph(text))
+    { }
+}
 
 public static partial class TextSmarts
 {

@@ -6,45 +6,38 @@ namespace Tonga.Tests.Text;
 public sealed class SubTextText
 {
     [Fact]
-    public void CutString()
+    public void CutsString()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "the_end",
-            "this_is:the_end"
-                .AsSubText(8)
-                .Str()
+            new SubText("this_is:the_end", 8)
         );
     }
 
     [Fact]
     public void CutStringwithLength()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "the",
-            "this_is:the_end"
-                .AsSubText(8,3)
-                .Str()
+            new SubText("this_is:the_end",8,3)
         );
     }
 
     [Fact]
     public void CutIText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "the_end",
-            "this_is:the_end".AsText()
-                .AsSubText(8)
-                .Str()
+            new SubText("this_is:the_end",8)
         );
     }
 
     [Fact]
     public void CutITextwithLength()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "the",
-                "this_is:the_end".AsText()
-                    .AsSubText(8, 3).Str()
+            new SubText("this_is:the_end",8, 3)
         );
     }
 }

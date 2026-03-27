@@ -9,20 +9,27 @@ namespace Tonga.Tests.Text
         [Fact]
         public void EmptyString()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 string.Empty,
-                new AsHex(new AsBytes(string.Empty.ToCharArray())).Str()
+                new AsHex(string.Empty.ToCharArray())
             );
         }
 
         [Fact]
         public void Sentence()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "5768617427732075702c20d0b4d180d183d0b33f",
-                new AsHex(
-                    new AsBytes("What's up, друг?")
-                ).Str()
+                new AsHex("What's up, друг?")
+            );
+        }
+
+        [Fact]
+        public void SentenceImplicit()
+        {
+            AssertText.Equal(
+                "5768617427732075702c20d0b4d180d183d0b33f",
+                new AsHex("What's up, друг?")
             );
         }
     }

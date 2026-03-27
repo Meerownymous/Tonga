@@ -20,10 +20,8 @@ public sealed class ConduitAsBytesTest
         Assert.Equal(
             text.Length * multiplier,
             new ConduitAsBytes(
-                text.AsEndless()
-                    .AsHead(multiplier)
-                    .AsJoined("")
-                    .AsConduit()
+                new Joined(" ", text.AsEndless()
+                    .AsHead(multiplier)).Str()
             ).Raw().Length
         );
     }
@@ -35,22 +33,18 @@ public sealed class ConduitAsBytesTest
         using var slow = new SlowInputStream(size);
         Assert.Equal(
             size,
-            new ConduitAsBytes(
-                slow.AsConduit()
-            ).Raw().Length
+            new ConduitAsBytes(slow).Raw().Length
         );
     }
 
     [Fact]
     public void ReadsInputIntoBytes()
     {
-        var content = "Hello, друг!";
-        Assert.Equal(
+        ConduitMorph content = "Hello, друг!";
+        AssertText.Equal(
             content,
             Encoding.UTF8.GetString(
-                new ConduitAsBytes(
-                    content.AsText().AsBytes().AsConduit()
-                ).Raw()
+                new ConduitAsBytes(content).Raw()
             )
         );
     }
@@ -62,12 +56,7 @@ public sealed class ConduitAsBytesTest
         Assert.Equal(
             content,
             Encoding.UTF8.GetString(
-                new ConduitAsBytes(
-                    content.AsText()
-                        .AsBytes()
-                        .AsConduit(),
-                    2
-                ).Raw()
+                new ConduitAsBytes(content, 2).Raw()
             )
         );
     }

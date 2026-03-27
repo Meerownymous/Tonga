@@ -1,6 +1,6 @@
+using Tonga.Bytes;
 using Tonga.IO;
 using Xunit;
-using Sticky = Tonga.Bytes.Sticky;
 
 namespace Tonga.Tests.Bytes
 {
@@ -10,14 +10,15 @@ namespace Tonga.Tests.Bytes
         public void RemembersInput()
         {
             var calls = 0;
-            var bytes =
-                new Sticky(() =>
-                    new AsConduit(() =>
-                    {
-                        ++calls;
-                        return new AsStream("");
-                    })
-                );
+
+            var bytes = new global::Tonga.Bytes.Sticky(
+                new BytesMorph(() =>
+                {
+                    ++calls;
+                    return "";
+                })
+            );
+
             bytes.Raw();
             bytes.Raw();
             Assert.Equal(1, calls);

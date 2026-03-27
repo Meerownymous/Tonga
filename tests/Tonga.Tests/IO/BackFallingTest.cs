@@ -11,15 +11,12 @@ namespace Tonga.Tests.IO
         [Fact]
         public void ReadsAlternativeInput()
         {
-            Assert.EndsWith(
+            AssertText.EndsWith(
                 "world!",
                 new BackFalling(
-                    new AsConduit(
-                        new Func<FileInfo>(() => throw new Exception())
-                    ),
-                    new AsConduit("hello, world!")
-                ).AsText()
-                .Str()
+                    new Func<FileInfo>(() => throw new Exception()),
+                    "hello, world!"
+                )
             );
         }
 

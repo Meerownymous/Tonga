@@ -10,18 +10,18 @@ namespace Tonga.Tests.Text
         [Fact]
         public void RotateRightText()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "o!Hell",
-                "Hello!".AsText().AsRotated(2).Str()
+                new Rotated("Hello!", 2)
             );
         }
 
         [Fact]
         public void RotateLeftText()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "i!H",
-                "Hi!".AsText().AsRotated(-1).Str()
+                new Rotated("Hi!", -1)
             );
         }
 
@@ -29,9 +29,9 @@ namespace Tonga.Tests.Text
         public void NoRotateWhenShiftZero()
         {
             var nonrotate = "Atoms!";
-            Assert.Equal(
+            AssertText.Equal(
                 nonrotate,
-                nonrotate.AsText().AsRotated(0).Str()
+                new Rotated(nonrotate,0)
             );
         }
 
@@ -39,18 +39,18 @@ namespace Tonga.Tests.Text
         public void NoRotateWhenShiftModZero()
         {
             var nonrotate = "Rotate";
-            Assert.Equal(
+            AssertText.Equal(
                 nonrotate,
-                nonrotate.AsText().AsRotated(nonrotate.Length).Str()
+                new Rotated(nonrotate, nonrotate.Length)
             );
         }
 
         [Fact]
         public void NoRotateWhenEmpty()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "",
-                "".AsText().AsRotated(2).Str()
+                new Rotated("", 2)
             );
         }
     }

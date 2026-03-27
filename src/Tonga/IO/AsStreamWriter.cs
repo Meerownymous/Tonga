@@ -18,20 +18,6 @@ public sealed class AsStreamWriter(Func<StreamWriter> tgt) : StreamWriter(new De
     private readonly Lazy<StreamWriter> target = new(tgt);
 
     /// <summary>
-    /// A <see cref="StreamWriter"/> to a file <see cref="Uri"/>.
-    /// </summary>
-    /// <param name="path">a file Uri. Get with Path.GetFullPath(relOrAbsPath) or prefix with file:/// </param>
-    public AsStreamWriter(Uri path) : this(new AsConduit(path))
-    { }
-
-    /// <summary>
-    /// A <see cref="StreamWriter"/> to a <see cref="Stream"/>.
-    /// </summary>
-    /// <param name="stream">the output stream</param>
-    public AsStreamWriter(Stream stream) : this(new AsConduit(stream))
-    { }
-
-    /// <summary>
     /// A <see cref="StreamWriter"/> to a <see cref="IConduit"/>.
     /// </summary>
     /// <param name="output">the output</param>

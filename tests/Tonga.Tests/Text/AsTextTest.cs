@@ -26,7 +26,7 @@ public sealed class AsTextTest
 
                 Assert.Equal(
                     content,
-                    new AsText(
+                    new TextMorph(
                         path,
                         Encoding.BigEndianUnicode
                     ).Str()
@@ -47,9 +47,9 @@ public sealed class AsTextTest
                 var content = "el file";
                 File.WriteAllText(uri.AbsolutePath, content);
 
-                Assert.Equal(
+                AssertText.Equal(
                     content,
-                    uri.AsText().Str()
+                    new TextMorph(uri)
                 );
             },
             uri
@@ -67,11 +67,12 @@ public sealed class AsTextTest
                 var content = "el file";
                 File.WriteAllText(path.AbsolutePath, content, Encoding.BigEndianUnicode);
 
-                Assert.Equal(
+                AssertText.Equal(
                     content,
-                    new FileInfo(path.AbsolutePath)
-                        .AsText(Encoding.BigEndianUnicode)
-                        .Str()
+                    new TextMorph(
+                        new FileInfo(path.AbsolutePath),
+                        Encoding.BigEndianUnicode
+                    )
                 );
             },
             path
@@ -89,10 +90,12 @@ public sealed class AsTextTest
                 var content = "el file";
                 File.WriteAllText(path.AbsolutePath, content);
 
-                Assert.Equal(
+                AssertText.Equal(
                     content,
-                    new FileInfo(path.AbsolutePath)
-                        .AsText(Encoding.UTF8).Str()
+                    new TextMorph(
+                        new FileInfo(path.AbsolutePath),
+                        Encoding.UTF8
+                    )
                 );
             },
             path
@@ -104,12 +107,9 @@ public sealed class AsTextTest
     {
         var content = "hello girl";
 
-        Assert.Equal(
+        AssertText.Equal(
             content,
-            content
-                .AsStream()
-                .AsText()
-                .Str()
+            new TextMorph(content.AsStream())
         );
     }
 
@@ -118,11 +118,12 @@ public sealed class AsTextTest
     {
         var content = "привет, друг!";
 
-        Assert.Equal(
+        AssertText.Equal(
             content,
-            content.AsConduit()
-                .AsText(Encoding.UTF8)
-                .Str()
+            new TextMorph(
+                new ConduitMorph(content),
+                Encoding.UTF8
+            )
         );
     }
 
@@ -130,11 +131,9 @@ public sealed class AsTextTest
     public void ReadsInputIntoTextWithDefaultCharset()
     {
         var content = "Hello, друг! with default charset";
-        Assert.Equal(
+        AssertText.Equal(
             content,
-            content.AsConduit()
-                .AsText()
-                .Str()
+            new TextMorph(content)
         );
     }
 
@@ -146,7 +145,7 @@ public sealed class AsTextTest
 
         Assert.Equal(
             content,
-            doub.AsText().Str()
+            new TextMorph(doub)
         );
     }
 
@@ -155,28 +154,25 @@ public sealed class AsTextTest
     {
         Assert.Equal(
             "0.2545",
-            0.2545.AsText(new CultureInfo("en-US"))
-            .Str()
+            new TextMorph(0.2545, new CultureInfo("en-US"))
         );
     }
 
     [Fact]
     public void ReadsFloatIntoText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             0.2545f.ToString(CultureInfo.InvariantCulture),
-            0.2545f.AsText()
-                .Str()
+            new TextMorph(2545f)
         );
     }
 
     [Fact]
     public void ReadsFloatWithNumberFormatIntoText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "0.2545",
-            0.2545f.AsText(new CultureInfo("en-US"))
-                .Str()
+            new TextMorph(0.2545f, new CultureInfo("en-US"))
         );
     }
 
@@ -185,9 +181,9 @@ public sealed class AsTextTest
     [InlineData(false, "False")]
     public void ReadsBoolIntoText(bool input, string expected)
     {
-        Assert.Equal(
+        AssertText.Equal(
             expected,
-            input.AsText().Str()
+            new TextMorph(input)
         );
     }
 
@@ -196,10 +192,9 @@ public sealed class AsTextTest
     [InlineData(false, "False")]
     public void ReadsBoolIntoTextWithCultureInfo(bool input, string expected)
     {
-        Assert.Equal(
+        AssertText.Equal(
             expected,
-            input.AsText(new CultureInfo("en-US"))
-                .Str()
+            new TextMorph(input, new CultureInfo("en-US"))
         );
     }
 
@@ -208,11 +203,11 @@ public sealed class AsTextTest
     {
         var content = "Hi, товарищ! with small buffer";
 
-        Assert.Equal(
+        AssertText.Equal(
             content,
-            content.AsConduit()
-                .AsText(2,Encoding.UTF8)
-                .Str()
+            new TextMorph(
+                new ConduitMorph(content), 2, Encoding.UTF8
+            )
         );
     }
 
@@ -221,11 +216,11 @@ public sealed class AsTextTest
     {
         var content = "Hello, товарищ! with default charset";
 
-        Assert.Equal(
+        AssertText.Equal(
             content,
-            content.AsConduit()
-                .AsText(2)
-                .Str()
+            new TextMorph(
+                new ConduitMorph(content), 2
+            )
         );
     }
 
@@ -233,10 +228,9 @@ public sealed class AsTextTest
     public void ReadsFromReader()
     {
         String source = "hello, друг!";
-        Assert.Equal(
-            Encoding.UTF8.GetString(new AsBytes(source).Raw()),
-            new StringReader(source).AsText(Encoding.UTF8)
-                .Str()
+        AssertText.Equal(
+            Encoding.UTF8.GetString(new BytesMorph(source).Raw()),
+            new TextMorph(new StringReader(source), Encoding.UTF8)
         );
     }
 
@@ -245,33 +239,32 @@ public sealed class AsTextTest
     public void ReadsFromReaderWithDefaultEncoding()
     {
         String source = "hello, друг! with default encoding";
-        Assert.Equal(
-            new StringReader(source)
-                .AsText()
-                .Str(),
-            Encoding.UTF8.GetString(new AsBytes(source).Raw())
+        AssertText.Equal(
+            new TextMorph(new StringReader(source)),
+            Encoding.UTF8.GetString(new BytesMorph(source).Raw())
         );
     }
 
     [Fact]
     public void readsEncodedArrayOfCharsIntoText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "O que sera que sera",
-            new[]
-            {
-                'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
-                ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a'
-            }.AsText(Encoding.UTF8).Str());
+            new TextMorph(
+                [
+                    'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
+                        ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a'
+                ], Encoding.UTF8).Str()
+            );
     }
 
     [Fact]
     public void ReadsAnArrayOfBytes()
     {
         byte[] bytes = [0xCA, 0xFE];
-        Assert.Equal(
+        AssertText.Equal(
             Encoding.UTF8.GetString(bytes),
-            bytes.AsText().Str()
+            new TextMorph(bytes)
         );
     }
 
@@ -279,11 +272,9 @@ public sealed class AsTextTest
     public void ReadsBytesWithEncoding()
     {
         byte[] bytes = [0xCA, 0xFE];
-        Assert.Equal(
+        AssertText.Equal(
             Encoding.ASCII.GetString(bytes),
-            new AsBytes(bytes)
-                .AsText(Encoding.ASCII)
-                .Str()
+            new TextMorph(new BytesMorph(bytes), Encoding.ASCII)
         );
     }
 
@@ -291,7 +282,7 @@ public sealed class AsTextTest
     public void ComparesWithASubtext()
     {
         Assert.True(
-            new Comparable("here to there".AsText()).CompareTo(
+            new Comparable("here to there").CompareTo(
                 new SubText("from here to there", 5)
             ) == 0
         );
@@ -302,36 +293,34 @@ public sealed class AsTextTest
     {
         String starts = "Name it, ";
         String ends = "then it exists!";
-        Assert.Equal(
+        AssertText.Equal(
             starts + ends,
-            new StringBuilder(starts)
-                .Append(ends)
-                .AsText()
-                .Str()
-
+            new TextMorph(
+                new StringBuilder(starts)
+                    .Append(ends)
+            )
         );
     }
 
     [Fact]
     public void PrintsStackTrace()
     {
-        Assert.Contains(
+        AssertText.Contains(
             "It doesn't work at all",
-            new IOException(
-                "It doesn't work at all"
-            ).AsText()
-            .Str()
+            new TextMorph(
+                new IOException(
+                    "It doesn't work at all"
+                )
+            )
         );
     }
 
     [Fact]
     public void ReadsLongIntoText()
     {
-        Assert.Equal(
+        AssertText.Equal(
             "68574581791096912",
-            68574581791096912
-                .AsText()
-                .Str()
+            new TextMorph(68574581791096912)
         );
     }
 }

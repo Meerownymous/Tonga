@@ -10,13 +10,7 @@ public sealed class MemoryCopyTest
     [Fact]
     public void MemorizesInput()
     {
-        var memoryInput =
-            new MemoryCopy(
-                new AsConduit(
-                    "This is my input!"
-                )
-            );
-
+        var memoryInput = new MemoryCopy("This is my input!");
         string memoryContent;
         using (var reader = new StreamReader(memoryInput.Stream()))
         {
@@ -29,11 +23,7 @@ public sealed class MemoryCopyTest
     [Fact]
     public void MemorizesEmptyInput()
     {
-
-        var memoryInput =
-            new MemoryCopy(
-                "".AsConduit()
-            );
+        var memoryInput = new MemoryCopy("");
 
         var memoryContent = "";
         using (var reader = new StreamReader(memoryInput.Stream()))

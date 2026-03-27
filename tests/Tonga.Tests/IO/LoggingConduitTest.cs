@@ -13,7 +13,7 @@ namespace Tonga.Tests.IO
         {
             var res =
                 new TeeOnRead(
-                    new AsConduit(""),
+                    "",
                     new LoggingOnReadConduit(
                         new ConsoleOutput(),
                         "memory"
@@ -41,7 +41,7 @@ namespace Tonga.Tests.IO
                        ).Stream()
                       )
                 {
-                    output.Write(new AsBytes("a").Raw(), 0, 1);
+                    output.Write(new BytesMorph("a").Raw(), 0, 1);
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Tonga.Tests.IO
         {
             using(var tempfile = new TempFile("txt"))
             {
-                var bytes = new AsBytes("Hello World!").Raw();
+                var bytes = new BytesMorph("Hello World!").Raw();
 
                 using (var append = new Appending(new Uri(tempfile.Value())))
                 {
@@ -83,9 +83,9 @@ namespace Tonga.Tests.IO
                     content = reader.ReadToEnd();
                 }
 
-                Assert.Equal(
+                AssertBytes.Equal(
                     bytes,
-                    new AsBytes(content).Raw()
+                    content
                 );
             }
         }
@@ -101,17 +101,17 @@ namespace Tonga.Tests.IO
                     new LoggingOnReadConduit(
                         append,
                         "text file"
-                    ).Stream();
+                    );
 
                     new FullRead(
                         new TeeOnRead(
                             new Resource("Assets/Txt/large-text.txt", this.GetType()),
-                            new AsConduit(output)
+                            output
                         )
                     ).Trigger();
                 }
 
-                var inputStream = new AsConduit(new Uri(tempfile.Value())).Stream();
+                var inputStream = new ConduitMorph(new Uri(tempfile.Value())).Stream();
                 string content;
                 string input;
                 using (var reader = new StreamReader(inputStream))

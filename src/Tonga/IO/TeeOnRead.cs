@@ -1,5 +1,3 @@
-
-
 using System;
 using System.IO;
 using Tonga.Bytes;
@@ -15,8 +13,7 @@ public sealed class TeeOnRead(IConduit source, IConduit output) : IConduit
     /// <see cref="IConduit"/> out of a file <see cref="Uri"/> which will be copied to <see cref="IConduit"/> while reading.
     /// </summary>
     public TeeOnRead(Uri input, Uri output) : this(
-        new AsConduit(input),
-        new AsConduit(output)
+        new AsConduit(input), new AsConduit(output)
     )
     { }
 

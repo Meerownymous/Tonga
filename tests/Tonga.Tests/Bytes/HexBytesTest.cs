@@ -1,4 +1,5 @@
 using Tonga.Bytes;
+using Tonga.IO;
 using Tonga.Text;
 using Xunit;
 
@@ -11,11 +12,9 @@ namespace Tonga.Tests.Bytes
         {
             Assert.Equal(
                 "foobar",
-                "666f6f626172"
-                    .AsText()
-                    .AsHexBytes()
-                    .AsText()
-                    .Str()
+                new TextMorph(
+                    new TextMorph("666f6f626172").AsHexBytes()
+                ).Str()
             );
         }
     }

@@ -1,3 +1,4 @@
+using Tonga.Fact;
 using Tonga.Text;
 using Xunit;
 
@@ -8,34 +9,32 @@ namespace Tonga.Tests.Text
         [Fact]
         public void ConvertsString()
         {
-            Assert.True(
-                new Tonga.Text.IsBlank(" ").IsTrue()
+            AssertFact.True(
+                new Tonga.Text.IsBlank(" ")
             );
         }
 
         [Fact]
         public void DoesntMatchEmpty()
         {
-            Assert.True(
-                new Tonga.Text.IsBlank(
-                    "".AsText()
-                ).IsTrue()
+            AssertFact.True(
+                new Tonga.Text.IsBlank("")
             );
         }
 
         [Fact]
         public void MatchesWhitespace()
         {
-            Assert.True(
-                new Tonga.Text.IsBlank("  ").IsTrue()
+            AssertFact.True(
+                new Tonga.Text.IsBlank("  ")
             );
         }
 
         [Fact]
         public void DoesntMatchNotWhitespace()
         {
-            Assert.False(
-                new Tonga.Text.IsBlank("not empty").IsTrue()
+            AssertFact.False(
+                new Tonga.Text.IsBlank("not empty")
             );
         }
     }

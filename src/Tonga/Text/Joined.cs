@@ -9,7 +9,7 @@ namespace Tonga.Text;
 /// <summary>
 /// A <see cref="IText"/> of texts joined together.
 /// </summary>
-public sealed class Joined(IText delimit, Func<IEnumerable<IText>> txts) : TextEnvelope(
+public sealed class Joined(TextMorph delimit, Func<IEnumerable<TextMorph>> txts) : TextEnvelope(
     () =>
         String.Join(
             delimit.Str(),
@@ -22,9 +22,9 @@ public sealed class Joined(IText delimit, Func<IEnumerable<IText>> txts) : TextE
     /// </summary>
     /// <param name="delimit">delimiter</param>
     /// <param name="strs">texts to join</param>
-    public Joined(String delimit, IEnumerable<string> strs) : this(
-        delimit.AsText(),
-        strs.AsMapped(str => str.AsText())
+    public Joined(IText delimit, IEnumerable<string> strs) : this(
+        new TextMorph(delimit),
+        () => strs.AsMapped(str => new TextMorph(str))
     )
     { }
 
@@ -33,67 +33,29 @@ public sealed class Joined(IText delimit, Func<IEnumerable<IText>> txts) : TextE
     /// </summary>
     /// <param name="delimit">delimiter</param>
     /// <param name="strs">texts to join</param>
-    public Joined(String delimit, params string[] strs) : this(
-        delimit.AsText(),
-        strs.AsMapped(str => str.AsText())
-    )
-    {
-    }
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    /// <param name="delimit">delimiter</param>
-    /// <param name="txts">texts to join</param>
-    public Joined(IText delimit, params IText[] txts) : this(delimit, txts.AsEnumerable)
-    {
-    }
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    /// <param name="delimit">delimiter</param>
-    /// <param name="txts">texts to join</param>
-    public Joined(String delimit, params IText[] txts) : this(
-        delimit.AsText(),
-        txts.AsEnumerable
-    )
-    {
-    }
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    /// <param name="delimit">delimiter</param>
-    /// <param name="txts">texts to join</param>
-    public Joined(String delimit, IEnumerable<IText> txts) : this(
-        delimit.AsText(),
-        () => txts
-    )
-    {
-    }
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    /// <param name="delimit">delimiter</param>
-    /// <param name="txts">texts to join</param>
-    public Joined(String delimit, Func<IEnumerable<IText>> txts) : this(
-        delimit.AsText(),
-        txts
-    )
-    {
-    }
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    /// <param name="delimit">delimiter</param>
-    /// <param name="txts">texts to join</param>
-    public Joined(IText delimit, IScalar<IEnumerable<IText>> txts) : this(
+    public Joined(TextMorph delimit, IEnumerable<IText> strs) : this(
         delimit,
-        txts.Value
+        () => strs.AsMapped(str => new TextMorph(str))
     )
+    { }
+
+    /// <summary>
+    /// Joins texts together with the delimiter between them.
+    /// </summary>
+    /// <param name="delimit">delimiter</param>
+    /// <param name="strs">texts to join</param>
+    public Joined(TextMorph delimit, IEnumerable<string> strs) : this(
+        delimit,
+        () => strs.AsMapped(str => new TextMorph(str))
+    )
+    { }
+
+    /// <summary>
+    /// Joins texts together with the delimiter between them.
+    /// </summary>
+    /// <param name="delimit">delimiter</param>
+    /// <param name="txts">texts to join</param>
+    public Joined(TextMorph delimit, params TextMorph[] txts) : this(delimit, txts.AsMapped(t => t.Str()))
     {
     }
 
@@ -102,10 +64,16 @@ public sealed class Joined(IText delimit, Func<IEnumerable<IText>> txts) : TextE
     /// </summary>
     /// <param name="delimit">delimiter</param>
     /// <param name="txts">texts to join</param>
-    public Joined(IText delimit, IEnumerable<IText> txts) : this(
-        delimit,
-        () => txts
-    )
+    public Joined(TextMorph delimit, params IText[] txts) : this(delimit, txts.AsMapped(t => t.Str()))
+    {
+    }
+
+    /// <summary>
+    /// Joins texts together with the delimiter between them.
+    /// </summary>
+    /// <param name="delimit">delimiter</param>
+    /// <param name="txts">texts to join</param>
+    public Joined(IText delimit, params IText[] txts) : this(delimit, txts.AsEnumerable().AsMapped(t => t.Str()))
     {
     }
 }
@@ -115,40 +83,10 @@ public static partial class TextSmarts
     /// <summary>
     /// Joins texts together with the delimiter between them.
     /// </summary>
-    public static Joined AsJoined(this IEnumerable<string> strs, string delimit) => new(delimit, strs);
+    public static IText AsJoined(this IText[] txts, IText delimit) => new Joined(delimit, txts);
 
     /// <summary>
     /// Joins texts together with the delimiter between them.
     /// </summary>
-    public static Joined AsJoined(this string[] strs, String delimit) => new(delimit, strs);
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    public static Joined AsJoined(this IText[] txts, IText delimit) => new(delimit, txts);
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    public static Joined AsJoined(this IText[] txts, String delimit) => new(delimit, txts);
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    public static Joined AsJoined(this IEnumerable<IText> txts, String delimit) => new(delimit, txts);
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    public static Joined AsJoined(this Func<IEnumerable<IText>> txts, String delimit) => new(delimit, txts);
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    public static Joined AsJoined(this IScalar<IEnumerable<IText>> txts, IText delimit) => new(delimit, txts);
-
-    /// <summary>
-    /// Joins texts together with the delimiter between them.
-    /// </summary>
-    public static Joined AsJoined(this IEnumerable<IText> txts, IText delimit) => new(delimit, txts);
+    public static IText AsJoined(this IEnumerable<string> txts, TextMorph delimit) => new Joined(delimit, txts);
 }

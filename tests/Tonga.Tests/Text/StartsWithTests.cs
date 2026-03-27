@@ -1,5 +1,6 @@
 
 
+using Tonga.Fact;
 using Tonga.Text;
 using Xunit;
 
@@ -10,29 +11,25 @@ namespace Tonga.Tests.Text
         [Fact]
         public void MatchesText()
         {
-            Assert.True(
-                "Im an text with a really good end!".AsText()
-                    .AsStartsWith("Im a")
-                    .IsTrue()
+            AssertFact.True(
+                new StartsWith("Im an text with a really good end!","Im a")
             );
         }
 
         [Fact]
         public void MatchesString()
         {
-            Assert.True(
-                "Im a text with a really good end!".AsText()
-                    .AsStartsWith("Im a")
-                    .IsTrue()
+            AssertFact.True(
+                new StartsWith("Im a text with a really good end!","Im a")
             );
         }
 
         [Fact]
         public void DoesntMatch()
         {
-            Assert.False("Im a text with a really good end!".AsText()
-                .AsStartsWith("m an")
-                .IsTrue());
+            AssertFact.False(
+                new StartsWith("Im a text with a really good end!","m an")
+            );
         }
     }
 }

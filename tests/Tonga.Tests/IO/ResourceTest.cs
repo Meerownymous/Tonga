@@ -10,22 +10,18 @@ namespace Tonga.Tests.IO
         [Fact]
         public void FindsResourceInAssembly()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "Hello from Embedded!",
-                new Resource("IO/Resources/test.txt", Assembly.GetExecutingAssembly())
-                    .AsText()
-                    .Str()
+                new TextMorph(new Resource("IO/Resources/test.txt", Assembly.GetExecutingAssembly()))
             );
         }
 
         [Fact]
         public void FindsResourceByType()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "Hello from Embedded!",
-                new Resource("IO/Resources/test.txt", this.GetType())
-                    .AsText()
-                    .Str()
+                new TextMorph(new Resource("IO/Resources/test.txt", this.GetType()))
             );
         }
 
@@ -34,14 +30,14 @@ namespace Tonga.Tests.IO
         [InlineData("IO/Resources/_1/A._2/_A_/__/_id_/__/_a_/__/_B_/__/_C_/__/_D_/__/_E_/__/_F_/__/_G_/__/_H_/__/_I_/__/_J_/__/_K_/__/test.txt")]
         public void FindsResourceWithSpecialCharactersNew(string name)
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "Hello from Embedded!",
-                new Resource(
-                    name,
-                    this.GetType()
+                new TextMorph(
+                    new Resource(
+                        name,
+                        this.GetType()
+                    )
                 )
-                .AsText()
-                .Str()
             );
         }
     }

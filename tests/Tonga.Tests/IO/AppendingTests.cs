@@ -19,18 +19,15 @@ namespace Tonga.Tests.IO
             var txt = "Hello, товарищ!";
             var conduit =
                 new TeeOnRead(txt,
-                    new Appending(
-                        new AsConduit(new Uri(file))
-                    )
+                    new Appending(new Uri(file))
                 );
 
-                new FullRead(conduit, close: false).Trigger();
+                new FullRead(conduit, flush: true, close: false).Trigger();
                 new FullRead(conduit).Trigger();
 
-                Assert.Equal(
+                AssertText.Equal(
                     txt + txt,
-                    new ConduitAsBytes(
-                        new AsConduit(new Uri(file))).AsText().Str()
+                    new ConduitAsBytes(new Uri(file))
                 );
         }
 
@@ -43,23 +40,18 @@ namespace Tonga.Tests.IO
             var txt = "Hello, Objects!";
             var tee =
                 new TeeOnRead(txt,
-                    new Appending(
-                        new AsConduit(new Uri(file.Value()))
-                    )
+                    new Appending(new Uri(file.Value()))
                 );
 
             new FullRead(tee, close: false).Trigger();
             new FullRead(tee, close: false).Trigger();
             tee.Stream().Close();
 
-            Assert.Equal(
+            AssertText.Equal(
                 txt + txt,
                 new ConduitAsBytes(
-                    new AsConduit(
-                        new FileInfo(file.Value())
-                    )
-                ).AsText()
-                .Str()
+                    new FileInfo(file.Value())
+                )
             );
         }
 

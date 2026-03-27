@@ -1,16 +1,21 @@
 
 
+using System.IO;
+using Tonga.Bytes;
+
 namespace Tonga.Text;
 
 /// <summary>
 /// Hexadecimal representation of Bytes.
 /// </summary>
-public sealed class AsHex : TextEnvelope
+public sealed class AsHex : TextMorph
 {
     private static readonly char[] HEX_CHARS =
     [
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
     ];
+
+    public AsHex(TextMorph text) : this(new AsBytes(text)) { }
 
     /// <summary>
     /// Hexadecimal representation of Bytes.

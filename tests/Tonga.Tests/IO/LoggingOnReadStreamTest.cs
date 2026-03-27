@@ -13,7 +13,7 @@ namespace Tonga.Tests.IO
             var stream =
                 new LoggingOnReadStream(
                     new MemoryStream(
-                        new AsBytes("").Raw()
+                        new BytesMorph("").Raw()
                     ),
                     ""
                 );

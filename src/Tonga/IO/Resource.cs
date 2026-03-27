@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Tonga.IO.Error;
 using Tonga.Scalar;
 
 namespace Tonga.IO

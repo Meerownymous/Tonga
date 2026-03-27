@@ -1,5 +1,4 @@
 using Tonga.Enumerable;
-using Tonga.List;
 using Tonga.Text;
 using Xunit;
 
@@ -15,7 +14,7 @@ namespace Tonga.Tests.Enumerable
                 "HELLO",
                 ("hello", "world", "damn")
                     .AsEnumerable()
-                    .AsMapped(input => new Upper(input.AsText()))
+                    .AsMapped(input => new Upper(input))
                     .ItemAt(0)
                     .Value()
                     .Str()
@@ -33,7 +32,7 @@ namespace Tonga.Tests.Enumerable
                             input =>
                             {
                                 mappings++;
-                                return input.AsText().AsUpper();
+                                return input.AsUpper();
                             }
                         );
 
@@ -77,7 +76,7 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Empty(
                 new None<string>()
-                    .AsMapped(input => input.AsText().AsUpper())
+                    .AsMapped(input => input.AsUpper())
             );
         }
 
@@ -88,8 +87,7 @@ namespace Tonga.Tests.Enumerable
                 "WORLD1",
                 ("hello", "world", "damn")
                     .AsEnumerable()
-                    .AsMapped((input, index) => new Upper((input + index)
-                    .AsText())
+                    .AsMapped((input, index) => new Upper(input + index)
                 ).ItemAt(1)
                 .Value()
                 .Str()

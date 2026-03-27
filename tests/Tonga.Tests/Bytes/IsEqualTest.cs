@@ -10,8 +10,8 @@ public sealed class IsEqualTest
     {
         Assert.True(
             new IsEqual(
-                3.2d.AsBytes(),
-                3.2d.AsBytes()
+                3.2d,
+                3.2d
             ).IsTrue()
         );
     }
@@ -21,8 +21,8 @@ public sealed class IsEqualTest
     {
         Assert.False(
             new IsEqual(
-                new AsBytes(1),
-                new AsBytes(3.2d)
+                1,
+                3.2d
             ).IsTrue()
         );
     }
@@ -32,8 +32,8 @@ public sealed class IsEqualTest
     {
         Assert.False(
             new IsEqual(
-                1.AsBytes(),
-                3.2d.AsBytes()
+                1,
+                3.2d
             ).IsTrue()
         );
     }

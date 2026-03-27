@@ -9,12 +9,9 @@ namespace Tonga.Tests.Text
         [Fact]
         public void ReplaceText()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "Hi!",
-                "Hello!"
-                    .AsText()
-                    .AsReplaced("ello", "i")
-                    .Str()
+                new Replaced("Hello!", "ello", "i")
             );
         }
 
@@ -22,18 +19,18 @@ namespace Tonga.Tests.Text
         public void NotReplaceTextWhenSubstringNotFound()
         {
             String text = "HelloAgain!";
-            Assert.Equal(
+            AssertText.Equal(
                 text,
-                text.AsText().AsReplaced("xyz", "i").Str()
+                new Replaced(text, "xyz", "i")
             );
         }
 
         [Fact]
         public void ReplacesAllOccurrences()
         {
-            Assert.Equal(
+            AssertText.Equal(
                 "one dog, two dogs, three dogs",
-                "one cat, two cats, three cats".AsText().AsReplaced("cat","dog").Str()
+                new Replaced("one cat, two cats, three cats", "cat","dog")
             );
         }
     }

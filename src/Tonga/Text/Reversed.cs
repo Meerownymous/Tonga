@@ -7,7 +7,7 @@ namespace Tonga.Text;
 /// <summary>
 /// A <see cref="IText"/> which has been reversed.
 /// </summary>
-public sealed class Reversed(IText text) : TextEnvelope(() =>
+public sealed class Reversed(TextMorph text) : TextEnvelope(() =>
     {
         char[] chararray = text.Str().ToCharArray();
         Array.Reverse(chararray);
@@ -19,7 +19,11 @@ public sealed class Reversed(IText text) : TextEnvelope(() =>
 
         return reverseTxt;
     }
-);
+)
+{
+    public Reversed(IText text) : this(new TextMorph(text))
+    { }
+}
 
 public static partial class TextSmarts
 {

@@ -14,7 +14,7 @@ public sealed class ListOfTest
         int size = 2;
         var list =
             new AsList<int>(
-                new Head<int>(
+                new HeadSlice<int>(
                     new Endless<int>(1),
                     () => Interlocked.Increment(ref size)
                 )

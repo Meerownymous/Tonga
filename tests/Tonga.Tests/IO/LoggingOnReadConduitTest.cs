@@ -8,13 +8,9 @@ namespace Tonga.Tests.IO
     public sealed class LoggingOnReadConduitTest
     {
         [Fact]
-        void ReadEmptyStream()
+        void ReadsEmptyStream()
         {
-            var input =
-                new LoggingOnReadConduit(
-                    "".AsConduit(),
-                    ""
-                );
+            var input = new LoggingOnReadConduit("","");
             Assert.Equal(
                 0,
                 input.Stream().ReadByte()
@@ -22,16 +18,15 @@ namespace Tonga.Tests.IO
         }
 
         [Fact]
-        void ReadByteByByte()
+        void ReadsByteByByte()
         {
             var input =
                 new LoggingOnReadConduit(
-                    new AsConduit(
-                        [
+                    new byte[]
+                        {
                             20,
                             10
-                        ]
-                    ),
+                        },
                     "ReadByteByByte"
                 );
 

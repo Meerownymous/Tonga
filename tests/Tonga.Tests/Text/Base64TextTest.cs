@@ -3,6 +3,7 @@ using Tonga.Bytes;
 using Tonga.IO;
 using Tonga.Text;
 using Xunit;
+using Base64Decoded = Tonga.Bytes.Base64Decoded;
 
 namespace Tonga.Tests.Text
 {
@@ -17,22 +18,14 @@ namespace Tonga.Tests.Text
             using var tempFile = new TempFile("test.txt");
             new FullRead(
                 new TeeOnRead(
-                    str.AsText()
-                        .AsBytes()
-                        .AsBase64Encoded()
-                        .AsText()
-                        .Str(),
-                    new AsConduit(new Uri(tempFile.Value()))
+                    new Tonga.Text.Base64Encoded(str),
+                    new ConduitMorph(new Uri(tempFile.Value()))
                 )
             ).Trigger();
 
-            Assert.True(
-                new Comparable(
-                    new Uri(tempFile.Value()).AsText()
-                        .AsBase64Decoded()
-                ).CompareTo(
-                    str.AsText()
-                ) == 0
+            AssertText.Equal(
+                new Base64Decoded(new Uri(tempFile.Value())),
+                str
             );
         }
     }

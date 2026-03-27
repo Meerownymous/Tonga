@@ -33,7 +33,7 @@ namespace Tonga.Tests.Text
             Assert.Equal(
                 "1. Formatted as txt",
                 new Formatted(
-                    "{0}. Formatted as {1}".AsText(), "1", "txt"
+                    "{0}. Formatted as {1}", "1", "txt"
                 ).Str()
             );
         }
@@ -58,8 +58,8 @@ namespace Tonga.Tests.Text
                 "This is a FormattedText test",
                 new Formatted(
                     "{0} is a {1} test",
-                    "This".AsText(),
-                    "FormattedText".AsText()
+                    "This",
+                    "FormattedText"
                 ).Str()
             );
 

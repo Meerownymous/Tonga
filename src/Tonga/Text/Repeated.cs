@@ -1,6 +1,3 @@
-
-
-using System;
 using System.Text;
 
 namespace Tonga.Text;
@@ -8,7 +5,7 @@ namespace Tonga.Text;
 /// <summary>
 /// A <see cref="IText"/> repeated multiple times.
 /// </summary>
-public sealed class Repeated(IText text, int count) : TextEnvelope(
+public sealed class Repeated(TextMorph text, int count) : TextEnvelope(
     () =>
     {
         StringBuilder output = new StringBuilder();
@@ -20,15 +17,7 @@ public sealed class Repeated(IText text, int count) : TextEnvelope(
     }
 )
 {
-    /// <summary>
-    /// A <see cref="IText"/>  repeated multiple times.
-    /// </summary>
-    /// <param name="text">text to repeat</param>
-    /// <param name="count">how often to repeat</param>
-    public Repeated(String text, int count) : this(
-        text.AsText(),
-        count
-    )
+    public Repeated(IText txt, int count) : this(new TextMorph(txt), count)
     { }
 }
 

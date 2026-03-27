@@ -16,8 +16,7 @@ public sealed class TeeTextReaderTest
 
         var reader = new TeeTextReader(
             new AsStreamReader(content),
-            new AsStreamWriter(
-                new AsConduit(baos))
+            new AsStreamWriter(baos)
         );
         int done = 0;
         while (done >= 0)
@@ -25,12 +24,9 @@ public sealed class TeeTextReaderTest
             done = reader.Read();
         }
         reader.Dispose();
-        Assert.True(
-            String.Compare(
-                baos.ToArray().AsStreamReader().AsText().Str(),
-                content,
-                StringComparison.Ordinal
-            ) == 0
+        AssertText.Equal(
+            baos.ToArray().AsStreamReader(),
+            content
         );
     }
 }

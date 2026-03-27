@@ -9,11 +9,7 @@ namespace Tonga.Tests.Text
         public void Compares()
         {
             Assert.True(
-                new Comparable(
-                    "Hallo Welt".AsText()
-                ).CompareTo(
-                    "Tschüss Welt".AsText()
-                ) <= -1
+                new Comparable("Hallo Welt").CompareTo("Tschüss Welt") <= -1
             );
         }
 
@@ -22,11 +18,7 @@ namespace Tonga.Tests.Text
         {
             Assert.False(
                 // ReSharper disable once SuspiciousTypeConversion.Global
-                new Comparable(
-                    "Timm".AsText()
-                ).Equals(
-                    "Jan-Peter".AsText()
-                )
+                new Comparable("Timm").Equals("Jan-Peter")
             );
         }
 
@@ -35,9 +27,7 @@ namespace Tonga.Tests.Text
         {
             Assert.Equal(
                 "Timm",
-                new Comparable(
-                    "Timm".AsText()
-                ).Str()
+                new Comparable("Timm").Str()
             );
         }
     }

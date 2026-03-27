@@ -11,7 +11,7 @@ namespace Tonga.Tests.Collection
         public void EmptyCollectionThrowsExeption()
         {
             Assert.Throws<Exception>(() =>
-                new None<bool>()
+                new Empty<bool>()
                     .AsCollection()
                     .AssertNotEmpty()
                     .GetEnumerator()
@@ -35,7 +35,7 @@ namespace Tonga.Tests.Collection
         public void EmptyCollectionThrowsCustomExeption()
         {
             Assert.Throws<OperationCanceledException>(() =>
-                new None<bool>()
+                new Empty<bool>()
                     .AsCollection()
                     .AssertNotEmpty(new OperationCanceledException())
                     .GetEnumerator()

@@ -47,7 +47,7 @@ namespace Tonga.Tests.Enumerable
         public void FailForEmptyCollection()
         {
             Assert.Throws<ArgumentException>(
-                () => new None<int>()
+                () => new Empty<int>()
                     .Sibling(1337)
                     .Value()
             );
@@ -59,7 +59,7 @@ namespace Tonga.Tests.Enumerable
             String fallback = "fallback";
             Assert.Equal(
                 fallback,
-                new None<string>()
+                new Empty<string>()
                     .Sibling("Not-there", 12, fallback)
                     .Value()
             );

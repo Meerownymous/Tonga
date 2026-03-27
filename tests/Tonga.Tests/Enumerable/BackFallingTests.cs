@@ -11,10 +11,10 @@ public sealed class BackFallingTests
         Assert.Equal(
             1137,
             new BackFalling<int>(
-                new None<int>(),
+                new Empty<int>(),
                 1137
             )
-            .First()
+            .FirstOne()
             .Value()
         );
     }

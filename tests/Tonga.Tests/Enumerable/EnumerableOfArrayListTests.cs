@@ -13,7 +13,7 @@ public class EnumerableOfArrayListTests
             "A",
             new EnumerableOfArrayList(
                     new ArrayList{ "A", "B", "C" }
-                ).First()
+                ).FirstOne()
                 .Value()
         );
 }

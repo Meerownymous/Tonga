@@ -20,6 +20,13 @@ public abstract class EnumerableEnvelope<T>(Func<IEnumerable<T>> origin) : IEnum
     { }
 
     /// <summary>
+    /// Envelope for Enumerable.
+    /// It bundles the methods offered by IEnumerable and enables scalar based ctors.
+    /// </summary>
+    public EnumerableEnvelope(EnumerableMorph<T> origin) :this(() => origin)
+    { }
+
+    /// <summary>
     /// Enumerator for this envelope.
     /// </summary>
     /// <returns>The enumerator</returns>

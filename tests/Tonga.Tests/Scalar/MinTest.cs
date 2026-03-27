@@ -10,7 +10,7 @@ namespace Tonga.Tests.Scalar
         public void MinAmongEmptyTest()
         {
             Assert.Throws<ArgumentException>(
-                () => new Min<int>(new None<int>()).Value()
+                () => new Min<int>(new Empty<int>()).Value()
             );
         }
 

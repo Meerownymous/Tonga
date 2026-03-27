@@ -72,4 +72,3 @@ namespace Tonga.Map
             new AsDictionary<Key, Value>(map);
     }
 }
-

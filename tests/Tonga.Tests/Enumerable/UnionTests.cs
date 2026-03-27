@@ -15,8 +15,8 @@ namespace Tonga.Tests.Enumerable
         {
             Assert.Empty(
                 new Union<string>(
-                    new None<string>(),
-                    new None<string>()
+                    new Empty<string>(),
+                    new Empty<string>()
                 )
             );
         }

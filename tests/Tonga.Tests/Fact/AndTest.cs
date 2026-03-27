@@ -49,7 +49,7 @@ public sealed class AndTest
     public void IsTrueOnEmptyEnumerable()
     {
         Assert.True(
-            new And(new None<IFact>())
+            new And(new Empty<IFact>())
                 .IsTrue()
         );
     }

@@ -27,7 +27,7 @@ public sealed class UnzippedFile(IConduit zip, string targetPath, bool leaveOpen
             )
             {
                 var zipEntry =
-                    new First<ZipArchiveEntry>(
+                    new FirstOne<ZipArchiveEntry>(
                         new Filtered<ZipArchiveEntry>(entry =>
                                 Path.GetFullPath(entry.FullName) == Path.GetFullPath(targetPath),
                             archive.Entries

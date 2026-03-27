@@ -10,7 +10,7 @@ namespace Tonga.Tests.Scalar
         public void RejectsEmpty()
         {
             Assert.Throws<ArgumentException>(
-                () => new Max<int>(new None<int>()).Value());
+                () => new Max<int>(new Empty<int>()).Value());
         }
 
         [Fact]

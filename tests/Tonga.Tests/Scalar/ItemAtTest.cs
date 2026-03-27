@@ -46,7 +46,7 @@ public sealed class ItemAtTests
         String fallback = "fallback";
         Assert.Equal(
             fallback,
-            new None<string>()
+            new Empty<string>()
                 .ItemAt(12, fallback)
                 .Value()
         );
@@ -56,7 +56,7 @@ public sealed class ItemAtTests
     public void FallbackShowsError()
     {
         Assert.Throws<InvalidOperationException>(() =>
-                new None<string>()
+                new Empty<string>()
                     .ItemAt(12,(ex, _) => throw ex)
                     .Value()
         );
@@ -66,7 +66,7 @@ public sealed class ItemAtTests
     public void FallbackShowsGivenErrorWithPosition()
     {
         Assert.Throws<NotFiniteNumberException>(() =>
-            new None<string>()
+            new Empty<string>()
                 .ItemAt(12, new NotFiniteNumberException("Cannot do this!"))
                 .Value()
         );
@@ -76,7 +76,7 @@ public sealed class ItemAtTests
     public void FallbackShowsGivenErrorForNegativePosition()
     {
         Assert.Throws<NotFiniteNumberException>(() =>
-            new None<string>()
+            new Empty<string>()
                 .ItemAt(-12,new NotFiniteNumberException("Cannot do this!"))
                 .Value()
         );

@@ -76,7 +76,7 @@ namespace Tonga.Tests.Enumerable
         public void TransformsEmptyList()
         {
             Assert.Empty(
-                new None<string>()
+                new Empty<string>()
                     .AsMapped(input => input.AsText().AsUpper())
             );
         }

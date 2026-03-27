@@ -31,7 +31,7 @@ namespace Tonga.Tests.Enumerable
         public void DoesntFindInEmtyList()
         {
             Assert.False(
-                new None<string>()
+                new Empty<string>()
                     .Contains(str => str == "elephant")
                     .IsTrue()
             );

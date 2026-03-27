@@ -3,14 +3,14 @@ using Xunit;
 
 namespace Tonga.Tests.Enumerable;
 
-public sealed class HasAnyTests
+public sealed class IsEmptyTests
 {
     [Fact]
     public void KnowsTrue()
     {
         Assert.True(
             1.AsSingle()
-                .HasAny()
+                .IsEmpty()
                 .IsTrue()
         );
     }
@@ -19,8 +19,8 @@ public sealed class HasAnyTests
     public void KnowsFalse()
     {
         Assert.False(
-            new None<int>()
-                .HasAny()
+            new Empty<int>()
+                .IsEmpty()
                 .IsTrue()
         );
     }

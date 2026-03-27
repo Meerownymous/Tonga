@@ -93,7 +93,7 @@ public sealed class ListOfTest
     {
         Assert.DoesNotContain(
             "item",
-            new None<string>()
+            new Empty<string>()
         );
     }
 }

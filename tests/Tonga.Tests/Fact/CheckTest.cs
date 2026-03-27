@@ -49,7 +49,7 @@ public sealed class CheckTest
     {
         Assert.True(
             new Check(
-                    new None<IFact>()
+                    new Empty<IFact>()
             )
             .IsTrue()
         );

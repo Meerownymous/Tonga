@@ -59,24 +59,6 @@ public sealed class Mapped<In, Out>(Func<In, int, Out> fnc, IEnumerable<In> src)
 public static partial class EnumerableSmarts
 {
     /// <summary>
-    /// </summary>
-    /// <param name="src">enumerable to map</param>
-    /// <param name="fnc">function used to map</param>
-    public static IEnumerable<Out> AsMapped<In, Out>(this In[] src, Func<In, Out> fnc) =>
-        new Mapped<In, Out>(fnc, src);
-
-    /// <summary>
-    /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see>
-    ///     <cref>IBiFunc{In, Index, Out}</cref>
-    /// </see>
-    /// function with index.
-    /// </summary>
-    /// <param name="src">enumerable to map</param>
-    /// <param name="fnc">function used to map</param>
-    public static IEnumerable<Out> AsMapped<In, Out>(this In[] src, Func<In, int, Out> fnc) =>
-        new Mapped<In, Out>(fnc, src);
-
-    /// <summary>
     /// Mapped content of an <see cref="IEnumerable{T}"/> to another type using the given <see cref="Func{In, Out}"/> function.
     /// </summary>
     /// <param name="src">enumerable to map</param>

@@ -13,6 +13,100 @@ dotnet add package Tonga
 
 Target: `net9.0`.
 
+## When code runs
+
+**Building objects runs nothing. Code runs when a materializing call is made.** Every type has one, named after what it hands back:
+
+| Type | Materializes with |
+|---|---|
+| `IText` | `Str()` |
+| `IScalar<T>` | `Value()` |
+| `IBytes` | `Raw()` |
+| `INumber` | `Int()`, `Long()`, `Double()`, `Float()` |
+| `IFact` | `IsTrue()`, `IsFalse()` |
+| `IConduit` | `Stream()` |
+| `IOptional<T>` | `Value()` |
+| `IPair<K,V>` | `Value()` |
+| `IEnumerable<T>` | `foreach`, `GetEnumerator()` |
+
+```csharp
+var text =
+    new Uri("https://example.org/data.txt")
+        .AsConduit()
+        .AsText();          // nothing requested, nothing read
+
+var content = text.Str();   // the request happens here
+```
+
+Composition therefore costs close to nothing: each step in a chain is one allocation holding a reference to the step before it. A chain of ten decorators that is never materialized does ten allocations and no work. Building a chain in a branch that turns out to be unused costs the allocations alone.
+
+**The `As` prefix marks composition.** A call named `As…` wraps and returns; it computes nothing:
+
+```csharp
+text.AsUpper()              // an uppercase text — nothing uppercased yet
+items.AsFiltered(…)         // a filtered sequence — nothing tested yet
+items.AsSorted()            // a sorted sequence — nothing compared yet
+conduit.AsText()            // a text over a stream — nothing read yet
+items.AsSticky()            // a buffered sequence — the buffer is still empty
+```
+
+The calls without the prefix hand back a different abstraction, and defer in the same way. `items.Length()` is an `IScalar<long>` that counts on `Value()`; `items.Contains(…)` is an `IFact` that searches on `IsTrue()`:
+
+```csharp
+var count = items.Length();   // nothing counted
+count.Value();                // counted here
+```
+
+**Enumerables** run per item where the operation allows it. `AsMapped` maps the current item while `MoveNext` advances, `AsFiltered` tests it there:
+
+```csharp
+var names =
+    people
+        .AsMapped(p => p.Name)          // p.Name not read yet
+        .AsFiltered(n => n.Length > 3);
+
+foreach (var name in names) { … }       // mapping and filtering run per item
+```
+
+`AsHead(3)` therefore reads three items, and `HasAtLeast(3)` stops after three.
+
+Operations that need every item before they can hand out the first one are the exception. `AsSorted`, `AsSortedBy` and `AsReversed` copy the source into a list and sort or reverse it — that work happens at the first step of the iteration, not spread across it:
+
+```csharp
+var sorted = items.AsSorted();   // nothing read, nothing compared
+
+var e = sorted.GetEnumerator();
+e.MoveNext();                    // the whole source is read and sorted here
+```
+
+They stay lazy in the sense that matters for composition: building the chain runs nothing. What changes is that the first `MoveNext` costs the whole sequence. The same holds for `Maximum`, `Minimum`, `AsReduced` and `Length`, which drain the source when their `Value()` is called.
+
+**Maps are lazy.** Constructing one runs nothing. The first access builds the key index; a value set up with a lambda runs when that key is asked for, and asking for one key leaves the others untouched:
+
+```csharp
+var config =
+    new AsMap<string, string>(
+        new AsPair<string, string>("host", () => "localhost"),
+        new AsPair<string, string>("secret", () => ReadSecretFromVault())
+    );
+
+var host = config["host"];     // ReadSecretFromVault has not been called
+```
+
+`Keys()` builds the index without materializing any value, and `Lazy(key)` hands back a `Func<Value>` that defers even the lookup.
+
+**To keep a result, close the chain with `AsSticky`.** It buffers what it wraps and serves later reads from the buffer:
+
+```csharp
+var names =
+    people
+        .AsMapped(p => p.Name)
+        .AsFiltered(n => n.Length > 3)
+        .AsSticky();           // computed once, on first enumeration
+```
+
+`AsSticky` is available for enumerables, lists, maps and scalars. Placing it at the end of a chain buffers once; without it, every pass recomputes. [Evaluation without default caching](#evaluation-without-default-caching) explains why this is the caller's decision.
+
 ## Principle
 
 Objects are results of behaviour. `Upper` is uppercase text, `Filtered` is a filtered sequence, `Maximum` is the greatest item of a sequence — each name says what the object is. Objects are composed by decoration, and the result is produced when it is asked for.

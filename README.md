@@ -238,11 +238,9 @@ LINQ methods return values. Tonga objects return objects that produce the value 
 
 ## Evaluation without default caching
 
-Yaapii.Atoms buffers by default since version 2.0: envelopes default to `live: false` and wrap themselves in a `Sticky`. The buffer is a `List<T>` plus a lock plus an end flag — per decorator.
+A library that buffers by default pays for it per decorator. Each envelope holds its own `List<T>`, lock and end flag, so a chain of four allocates four complete copies of the data and four locks, where one materialization at the end would do. The cost grows linearly with decorator depth, and on a single pass every buffer is filled and none is read again.
 
-A chain of four decorators therefore allocates four complete copies of the data, each with its own lock. One materialization at the end is enough for the result. The cost grows linearly with decorator depth. On a single pass all buffers are allocated and none is read a second time.
-
-Tonga evaluates lazily. `EnumerableEnvelope` passes through and allocates nothing. A buffer is placed where it is needed:
+Tonga evaluates lazily instead. `EnumerableEnvelope` passes through and allocates nothing. A buffer is placed where it is needed:
 
 ```csharp
 var names =
@@ -253,8 +251,6 @@ var names =
 ```
 
 The access pattern is known only at the call site. Whether an intermediate result is read once or several times cannot be determined by the library, so the decision belongs to the caller.
-
-**When porting from Atoms:** objects that were buffered there recompute on every pass here. Wherever a sequence is enumerated more than once, an `AsSticky` belongs.
 
 ## Fluent API and EO principles
 
@@ -284,31 +280,9 @@ A body consists of `new X(…)`. Anything beyond that belongs in the class. An e
 
 A missing `new` goes unnoticed at compile time: `AsStream(this byte[] bytes) => AsStream(bytes)` called itself and ran into endless recursion.
 
-## No fail objects
+## Checks are decorators
 
-Yaapii.Atoms has an `Error` namespace built on `IFail`:
-
-```csharp
-public interface IFail { void Go(); }
-```
-
-Along with `FailNull`, `FailWhen`, `FailZero`, `FailPrecise` and others. Tonga omits these objects for three reasons:
-
-**They are procedures.** The only method returns `void`. An object whose purpose is a side effect has no behaviour that can be queried, only an effect. That is a procedure in class syntax.
-
-**They are named after activities.** `FailWhen`, `FailNull` are imperatives. EO names objects for what they are, not for what they do.
-
-**They stand beside the value they guard.** A `FailNull` is constructed, `Go()` is called, and afterwards the code continues with the original object. The check is a separate step and can be left out. `FailPrecise` additionally models control flow as an object:
-
-```csharp
-public void Go()
-{
-    try { _origin.Go(); }
-    catch (Exception) { throw _precision; }
-}
-```
-
-In Tonga a check is a decorator around the value it checks. The decorator returns the value and stays part of the chain:
+A check belongs to the value it checks, as a decorator around it. The decorator returns the value and stays part of the chain:
 
 ```csharp
 public sealed class AssertNotEmpty<T>(IEnumerable<T> origin, Exception ex) : IEnumerable<T>
@@ -329,20 +303,27 @@ new Check(
 ).IsTrue();
 ```
 
+There are no standalone check objects. An interface of the shape
+
+```csharp
+public interface IFail { void Go(); }
+```
+
+with implementations named `FailNull`, `FailWhen` or `FailZero`, as Cactoos and its ports carry them, is rejected for three reasons.
+
+**They are procedures.** The only method returns `void`. An object whose purpose is a side effect has no behaviour that can be queried, only an effect. That is a procedure in class syntax.
+
+**They are named after activities.** `FailWhen` and `FailNull` are imperatives. EO names objects for what they are, not for what they do.
+
+**They stand beside the value they guard.** Such an object is constructed, `Go()` is called, and afterwards the code continues with the original value. The check is a separate step and can be left out.
+
 ## One stream interface
 
 Cactoos has `Input` and `Output` because Java splits streams into two hierarchies, `InputStream` and `OutputStream`. A Java type therefore states its direction.
 
 .NET has no such split. `System.IO.Stream` is one class covering both directions, and what a given stream permits is a runtime property: `CanRead`, `CanWrite`, `CanSeek`. Read-only streams exist (`File.OpenRead`, `new MemoryStream(buffer, writable: false)`), and they are the same type with `CanWrite` set to false.
 
-Yaapii.Atoms kept the two interfaces from the Java original, where they collapse into the same declaration:
-
-```csharp
-public interface IInput  { Stream Stream(); }
-public interface IOutput { Stream Stream(); }
-```
-
-The names differ, the contracts are identical, and either one hands out a `Stream` that may read, write or both. Tonga has one interface:
+Ported to .NET, the two Java interfaces collapse into the same declaration — same member, same return type, different name — and either one hands out a `Stream` that may read, write or both. Tonga has one interface:
 
 ```csharp
 public interface IConduit { Stream Stream(); }
@@ -378,11 +359,13 @@ Direction is read from the stream, which is where .NET keeps it.
 | Call form | nested constructors | constructors or a `…Smarts` chain |
 | Target | `netstandard2.0`, `net461` | `net9.0` |
 
+Objects that were buffered in Atoms recompute on every pass here; wherever a sequence is enumerated more than once, an `AsSticky` belongs.
+
 There is no automatic migration path. Names have changed (`AsString` → `Str`, `ManyOf` → `AsEnumerable`, `TextOf` → `AsText`, `First` → `FirstOne`, `None` → `Empty`), and the evaluation behaviour is inverted.
 
 ## What is missing
 
-There is no counterpart to `Sync`, `Solid`, `SyncList` or `Synced` from Atoms. Objects in Tonga are not guarded for concurrent access; `Sticky` is the only class holding a lock. For shared access from several threads the synchronization has to live outside.
+There are no synchronizing decorators. Objects in Tonga are not guarded for concurrent access; `Sticky` is the only class holding a lock. For shared access from several threads the synchronization has to live outside.
 
 ## License
 

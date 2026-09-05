@@ -16,9 +16,3 @@ public sealed class Check(IEnumerable<IFact> facts) : FactEnvelope(
     public Check(params IFact[] facts) : this(new AsEnumerable<IFact>(facts))
     { }
 }
-
-public static class FactCheckSmarts
-{
-    public static IFact Check(this Check check, params IFact[] facts) =>
-        new Check(facts);
-}

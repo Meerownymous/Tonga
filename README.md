@@ -15,7 +15,7 @@ Target: `net9.0`.
 
 ## Principle
 
-Every operation is an object. Objects are composed by decoration. A result is produced when it is asked for.
+Objects are results of behaviour. `Upper` is uppercase text, `Filtered` is a filtered sequence, `Maximum` is the greatest item of a sequence — each name says what the object is. Objects are composed by decoration, and the result is produced when it is asked for.
 
 ```csharp
 using Tonga.Enumerable;
@@ -105,8 +105,8 @@ LINQ has no counterpart here; the left column shows what is written otherwise.
 | Abstraction | Role |
 |---|---|
 | `IFact` | a statement that is true or false — composable through `And`, `Or`, `Not` |
-| `IPipe<In,Out>` | a transformation as an object, including `Conditional` and `Mux` |
-| `ITap` | a side effect as an object |
+| `IPipe<In,Out>` | a transformation, including `Conditional` and `Mux` |
+| `ITap` | a side effect |
 | `IConduit` | a stream source, decorable through `TeeOnRead`, `GZipCompressing`, `LoggingOnReadConduit` |
 | `IOptional` | a value that may be absent, without `null` |
 | `IMap` | an immutable mapping with `With` and `Lazy` |

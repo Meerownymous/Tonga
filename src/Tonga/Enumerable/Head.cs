@@ -40,7 +40,7 @@ namespace Tonga.Enumerable
             var max = limit();
             var taken = 0;
             var enumerator = source.GetEnumerator();
-            while (enumerator.MoveNext() && taken < max)
+            while (taken < max && enumerator.MoveNext())
             {
                 taken++;
                 yield return enumerator.Current;

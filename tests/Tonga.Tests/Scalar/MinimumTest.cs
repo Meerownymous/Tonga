@@ -1,5 +1,6 @@
 using System;
 using Tonga.Enumerable;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Scalar
@@ -34,6 +35,37 @@ namespace Tonga.Tests.Scalar
                     () => num,
                     () => 2
                  ).Value() == num);
+        }
+
+        [Fact]
+        public void FindsMinimumAmongScalarEnumerable()
+        {
+            Assert.Equal(
+                1,
+                new Minimum<int>(
+                    (1.AsScalar(), 7.AsScalar(), 3.AsScalar()).AsEnumerable()
+                ).Value()
+            );
+        }
+
+        [Fact]
+        public void FindsMinimumAsSmart()
+        {
+            Assert.Equal(
+                1,
+                (1, 7, 3).AsEnumerable().Minimum().Value()
+            );
+        }
+
+        [Fact]
+        public void FindsMinimumAmongFunctionsAsSmart()
+        {
+            Assert.Equal(
+                1,
+                new Func<int>[] { () => 1, () => 7, () => 3 }
+                    .Minimum()
+                    .Value()
+            );
         }
     }
 }

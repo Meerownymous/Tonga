@@ -13,7 +13,7 @@ Ziel: `net9.0`.
 
 ## Prinzip
 
-Jede Operation ist ein Objekt. Objekte werden dekoriert, nicht aufgerufen. Ein Ergebnis entsteht erst, wenn man danach fragt.
+Jede Operation ist ein Objekt. Objekte werden durch Dekoration zusammengesetzt. Ein Ergebnis entsteht bei der Abfrage.
 
 ```csharp
 using Tonga.Enumerable;
@@ -67,7 +67,7 @@ Beide Formen erzeugen dieselben Objekte. Die Extensions heißen `…Smarts` (`En
 | `!Any()` | `IsEmpty` | liefert `IFact` |
 | `Count() > n` | `HasMoreThan` | bricht ab, sobald entschieden |
 | `Count() < n` | `HasLessThan` | bricht ab, sobald entschieden |
-| `DefaultIfEmpty` | `AsBackFalling` | Ersatzquelle statt Ersatzwert |
+| `DefaultIfEmpty` | `AsBackFalling` | nimmt eine Ersatzquelle, keinen Ersatzwert |
 | `ToList` | `AsList` / `AsSticky` | |
 | `ToDictionary` | `AsDictionary` | |
 | — | `AsCycled`, `AsEndless`, `AsRepeated` | |
@@ -76,7 +76,7 @@ Beide Formen erzeugen dieselben Objekte. Die Extensions heißen `…Smarts` (`En
 | — | `Sibling` | Nachbar eines Elements |
 | — | `OnEach` | Lambda beim Weiterrücken |
 
-`AsSingle` ist die Konstruktion einer einelementigen Sequenz und hat mit `Single()` nichts zu tun.
+`AsSingle` konstruiert eine einelementige Sequenz. Es entspricht nicht LINQs `Single()`.
 
 ### Text
 
@@ -109,19 +109,19 @@ LINQ hat hier keine Entsprechung; die Spalte zeigt das, was man sonst schreibt.
 
 ### Unterschied im Rückgabetyp
 
-LINQ liefert Werte. Tonga liefert Objekte, die den Wert auf Anfrage herstellen. `AsFiltered` gibt kein gefiltertes Ergebnis zurück, sondern eine Sequenz, die beim Enumerieren filtert. `Length` gibt `IScalar<long>` zurück, nicht `long`. Damit bleibt die Kette bis zum letzten `.Value()` oder `.Str()` unausgewertet, und sie ist an jeder Stelle weiterdekorierbar.
+LINQ-Methoden liefern Werte. Tonga-Objekte liefern Objekte, die den Wert bei der Abfrage herstellen. `AsFiltered` gibt eine Sequenz zurück, die beim Enumerieren filtert. Der Rückgabetyp von `Length` ist `IScalar<long>`. Die Kette bleibt bis zum abschließenden `.Value()` oder `.Str()` unausgewertet und ist an jeder Stelle weiter dekorierbar.
 
-### Wenn beides im selben File liegt
+### Namenskonflikt mit System.Linq
 
 `Max` und `Min` existieren in Tonga und in `System.Linq` mit derselben Signatur auf `IEnumerable<T>`. Stehen beide `using` im selben File, ist der Aufruf mehrdeutig (CS0121). Entweder das LINQ-`using` weglassen oder die Klasse direkt bauen: `new Max<int>(items)`.
 
-## Warum kein Caching per Default
+## Auswertung ohne Default-Caching
 
 Yaapii.Atoms puffert seit Version 2.0 standardmäßig: Envelopes haben `live: false` als Vorgabe und wickeln sich selbst in ein `Sticky`. Der Puffer ist eine `List<T>` plus Lock plus Ende-Flag — pro Dekorator.
 
-Eine Kette aus vier Dekoratoren legt damit vier vollständige Kopien der Daten an, jede mit eigenem Lock, obwohl eine Materialisierung am Ende genügt. Der Aufwand wächst mit der Dekoratortiefe, also genau dort, wo objektorientierter Code tief wird. Wer die Kette nur einmal durchläuft, zahlt für Puffer, die nie ein zweites Mal gelesen werden.
+Eine Kette aus vier Dekoratoren legt damit vier vollständige Kopien der Daten an, jede mit eigenem Lock. Für das Ergebnis genügt eine Materialisierung am Ende. Der Aufwand wächst linear mit der Dekoratortiefe. Bei einmaligem Durchlauf werden alle Puffer angelegt und keiner ein zweites Mal gelesen.
 
-Tonga wertet deshalb lazy aus. `EnumerableEnvelope` reicht durch und belegt nichts. Wo ein Puffer hingehört, setzt man ihn:
+Tonga wertet daher lazy aus. `EnumerableEnvelope` reicht durch und allokiert nichts. Ein Puffer wird an der Stelle gesetzt, an der er gebraucht wird:
 
 ```csharp
 var names =
@@ -131,35 +131,35 @@ var names =
         .AsSticky();          // ein Puffer, an der Stelle, wo mehrfach gelesen wird
 ```
 
-Die Entscheidung liegt damit dort, wo die Information über das Zugriffsmuster liegt: an der Aufrufstelle. Eine Bibliothek kann nicht wissen, ob ein Zwischenergebnis einmal oder zehnmal gelesen wird.
+Das Zugriffsmuster ist nur an der Aufrufstelle bekannt. Ob ein Zwischenergebnis einmal oder mehrfach gelesen wird, kann die Bibliothek nicht bestimmen, deshalb liegt die Entscheidung beim Aufrufer.
 
 **Beim Portieren von Atoms beachten:** Objekte, die dort gepuffert waren, rechnen hier bei jedem Durchlauf neu. Wo eine Sequenz mehrfach enumeriert wird, gehört ein `AsSticky` hin.
 
-## Warum die Fluent-API EO nicht verletzt
+## Fluent-API und EO-Prinzipien
 
-Der Einwand liegt nahe: Extension-Methoden sind statisch, und EO lehnt statische Methoden ab.
+Extension-Methoden sind statisch, und EO lehnt statische Methoden ab. Das Verbot richtet sich gegen statische Methoden, die Verhalten tragen: Logik ohne Zustand und ohne Identität, die sich nicht ersetzen, dekorieren oder durch Austausch testen lässt.
 
-Der Grund für dieses Verbot ist, dass statische Methoden Verhalten tragen, das keinem Objekt gehört — Logik ohne Zustand, ohne Identität, nicht ersetzbar, nicht dekorierbar, nicht testbar durch Austausch. Genau das tun Tongas Extensions nicht. Jede besteht aus einer Zeile:
+Tongas Extensions tragen kein Verhalten. Jede besteht aus einer Zeile:
 
 ```csharp
 public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, Func<In, Out> fnc) =>
     new Mapped<In, Out>(fnc, src);
 ```
 
-Sie enthält keine Logik, keine Bedingung, keinen Zustand. Sie ruft einen Konstruktor auf. Das Verhalten liegt vollständig in `Mapped<In, Out>`, einer normalen, dekorierbaren, ersetzbaren Klasse.
+Sie enthält keine Logik, keine Bedingung und keinen Zustand; sie ruft einen Konstruktor auf. Das Verhalten liegt vollständig in `Mapped<In, Out>`, einer dekorierbaren und ersetzbaren Klasse.
 
-Damit ist die Extension Syntax, keine Implementierung:
+Daraus folgt für jede Extension:
 
 - **Kein verstecktes Verhalten.** Was `AsMapped` tut, steht in `Mapped`. Die Extension fügt nichts hinzu.
 - **Kein Zustand.** Nichts wird zwischen Aufrufen gehalten.
-- **Keine Kopplung.** `new Mapped<…>(…)` bleibt jederzeit gleichwertig möglich; jeder Test in diesem Repo, der die Klasse direkt baut, beweist das.
+- **Keine Kopplung.** `new Mapped<…>(…)` bleibt gleichwertig möglich. Die Tests in diesem Repo verwenden beide Formen.
 - **Keine Vererbung von Verhalten.** Die Extension kann nicht überschrieben werden, weil sie nichts entscheidet.
 
-Was sie leistet, ist Lesereihenfolge. Die verschachtelte Form zwingt zum Lesen von innen nach außen und stellt den letzten Schritt an den Anfang; die Typargumente muss man ausschreiben, weil Konstruktoren sie nicht herleiten. Die Kette liest sich in Ausführungsreihenfolge und leitet die Typen ab.
+Der Unterschied betrifft die Lesereihenfolge und die Typinferenz. Die verschachtelte Form wird von innen nach außen gelesen und führt den letzten Schritt zuerst auf; Typargumente sind auszuschreiben, da Konstruktoren sie nicht herleiten. Die Kettenform folgt der Ausführungsreihenfolge und leitet die Typen ab.
 
-Das Prinzip, das EO schützt — Verhalten gehört in Objekte —, bleibt unberührt. Was sich ändert, ist die Art, wie man die Objekte hinschreibt.
+Die EO-Regel, dass Verhalten in Objekten liegt, ist von der Schreibweise unberührt.
 
-## Warum es keine Fail-Objekte gibt
+## Keine Fail-Objekte
 
 Yaapii.Atoms hat einen `Error`-Namespace mit `IFail`:
 
@@ -167,13 +167,13 @@ Yaapii.Atoms hat einen `Error`-Namespace mit `IFail`:
 public interface IFail { void Go(); }
 ```
 
-Dazu `FailNull`, `FailWhen`, `FailZero`, `FailPrecise` und weitere. Diese Objekte sind in Tonga nicht enthalten, und zwar aus drei Gründen:
+Dazu `FailNull`, `FailWhen`, `FailZero`, `FailPrecise` und weitere. Tonga enthält diese Objekte aus drei Gründen nicht:
 
-**Sie sind Prozeduren.** Die einzige Methode gibt `void` zurück. Ein Objekt, dessen gesamter Zweck ein Seiteneffekt ist, hat kein Verhalten, das man abfragen kann — es hat nur eine Wirkung. Das ist eine Prozedur in Klassensyntax.
+**Sie sind Prozeduren.** Die einzige Methode gibt `void` zurück. Ein Objekt, dessen Zweck ein Seiteneffekt ist, hat kein abfragbares Verhalten, sondern nur eine Wirkung. Das entspricht einer Prozedur in Klassensyntax.
 
 **Sie sind nach Tätigkeiten benannt.** `FailWhen`, `FailNull` sind Imperative. EO benennt Objekte danach, was sie sind, nicht danach, was sie tun.
 
-**Sie stehen neben dem Wert, den sie schützen.** Man baut ein `FailNull`, ruft `Go()` und arbeitet danach mit dem ursprünglichen Objekt weiter. Die Prüfung ist damit ein separater Schritt, den man vergessen kann, und `FailPrecise` macht daraus vollends Kontrollfluss als Objekt:
+**Sie stehen neben dem Wert, den sie schützen.** Ein `FailNull` wird konstruiert, `Go()` wird gerufen, danach arbeitet der Code mit dem ursprünglichen Objekt weiter. Die Prüfung ist ein separater Schritt und kann ausgelassen werden. `FailPrecise` bildet zusätzlich Kontrollfluss als Objekt ab:
 
 ```csharp
 public void Go()
@@ -183,7 +183,7 @@ public void Go()
 }
 ```
 
-In Tonga ist eine Prüfung ein Dekorator um den geprüften Wert. Sie gibt den Wert zurück und liegt im Fluss:
+In Tonga ist eine Prüfung ein Dekorator um den geprüften Wert. Der Dekorator gibt den Wert zurück und bleibt Teil der Kette:
 
 ```csharp
 public sealed class AssertNotEmpty<T>(IEnumerable<T> origin, Exception ex) : IEnumerable<T>
@@ -195,7 +195,7 @@ new NullRejecting<string>(value).Value()           // prüft beim Auswerten
 text.AsStrict("red", "green", "blue").Str()        // prüft gegen erlaubte Werte
 ```
 
-Das Objekt kann nicht mehr ohne seine Prüfung verwendet werden, weil die Prüfung Teil des Objekts ist. Für Bedingungen ohne Wert dahinter gibt es `IFact` mit `Check`:
+Da die Prüfung Teil des Objekts ist, kann das Objekt nicht ohne sie verwendet werden. Für Bedingungen ohne zugehörigen Wert dient `IFact` mit `Check`:
 
 ```csharp
 new Check(

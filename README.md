@@ -15,21 +15,28 @@ Target: `net9.0`.
 
 ## Why Tonga
 
-EO in C# tends to fail at the call site. The object model is sound and the reading is not:
-
 ```csharp
-new ItemAt<IText>(new Mapped<string, IText>(fn, new AsEnumerable<string>(…)), 0).Value().Str()
+people
+    .AsFiltered(p => p.Age >= 18)
+    .AsMapped(p => p.Name)
+    .AsSorted()
+    .AsJoined(", ")
+    .Str();
 ```
 
-After a few weeks of that, a team writes methods again. Tonga keeps the objects and fixes the call site. The fluent surface is syntax and holds no behaviour: of 451 smarts, 449 are exactly `new X(…)`, and the two others compose wrappers that follow the same rule.
+A fluent chain, written the way any .NET developer writes one. What differs is underneath: there is no pipeline, no query engine, no builder. Every call is a constructor, and every step is an object you can name and hold:
 
-What that buys:
+```csharp
+var adults = people.AsFiltered(p => p.Age >= 18);   // a Filtered<Person>
+var names  = adults.AsMapped(p => p.Name);          // a Mapped<Person, string>
+```
 
-- **Objects named as results.** `Upper`, `Filtered`, `Maximum` — nouns for what comes out. A chain reads as a composition of things.
-- **Every step is a hook point.** Each link is an object with one method, so `AsSticky`, `LoggingOnReadConduit`, `RetryOnError`, `BackFalling` or `ExceptionSwap` wrap around any step without touching it.
-- **Your own types join in.** 14 envelope classes are the extension point. `MyConfig : MapEnvelope` is accepted wherever an `IMap` is, and gets the decorators with it. The library is meant to be extended with domain objects.
-- **Evaluation belongs to the caller.** Composition costs one allocation per step, work happens at materialization, buffering happens where `AsSticky` is placed.
-- **Small enough to read.** 208 public types, roughly 15,000 lines. For a library whose objects end up inside your own, that matters.
+That is what the chain buys you, and what a fluent API normally takes away:
+
+- **Wrap any step.** `AsSticky`, `RetryOnError`, `BackFalling` or `ExceptionSwap` go around any link, without touching the link or the rest of the chain.
+- **Replace any step.** Each link sits behind an interface with one method. A test double for an `IText` is a class returning a string — no mocking framework, no setup.
+- **Extend with your own types.** `MyConfig : MapEnvelope` is accepted wherever an `IMap` is, and composes with everything here.
+- **Nothing runs until you ask.** Building the chain allocates and computes nothing. The work starts at `Str()`.
 
 ### When it does not fit
 

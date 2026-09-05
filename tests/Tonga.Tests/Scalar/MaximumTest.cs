@@ -4,13 +4,13 @@ using Xunit;
 
 namespace Tonga.Tests.Scalar
 {
-    public sealed class MaxTest
+    public sealed class MaximumTest
     {
         [Fact]
         public void RejectsEmpty()
         {
             Assert.Throws<ArgumentException>(
-                () => new Max<int>(new Empty<int>()).Value());
+                () => new Maximum<int>(new Empty<int>()).Value());
         }
 
         [Fact]
@@ -19,7 +19,7 @@ namespace Tonga.Tests.Scalar
             int num = 10;
             Assert.Equal(
                 num,
-                new Max<int>(() => num).Value()
+                new Maximum<int>(() => num).Value()
             );
         }
 
@@ -29,7 +29,7 @@ namespace Tonga.Tests.Scalar
             int num = 10;
             Assert.Equal(
                 num,
-                new Max<int>(
+                new Maximum<int>(
                     () => num,
                     () => 0,
                     () => -1,

@@ -63,6 +63,8 @@ Both forms create the same objects. The extensions are named `…Smarts` (`Enume
 | `First` | `FirstOne` | overload with fallback |
 | `Last` | `LastOne` | |
 | `Count()` | `Length` | |
+| `Max()` | `Maximum` | |
+| `Min()` | `Minimum` | |
 | `Any(x => …)` | `Contains` | returns `IFact` |
 | `!Any()` | `IsEmpty` | returns `IFact` |
 | `Count() >= n` | `HasAtLeast` | stops as soon as the answer is known |
@@ -111,10 +113,6 @@ LINQ has no counterpart here; the left column shows what is written otherwise.
 ### Difference in return type
 
 LINQ methods return values. Tonga objects return objects that produce the value when it is asked for. `AsFiltered` returns a sequence that filters while being enumerated. The return type of `Length` is `IScalar<long>`. The chain stays unevaluated until the closing `.Value()` or `.Str()` and can be decorated further at any point.
-
-### Name clash with System.Linq
-
-`Max` and `Min` exist in Tonga and in `System.Linq` with the same signature on `IEnumerable<T>`. With both `using` directives in one file the call is ambiguous (CS0121). Either drop the LINQ `using` or construct the class directly: `new Max<int>(items)`.
 
 ## Evaluation without default caching
 

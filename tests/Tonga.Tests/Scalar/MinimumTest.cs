@@ -4,13 +4,13 @@ using Xunit;
 
 namespace Tonga.Tests.Scalar
 {
-    public sealed class MinTest
+    public sealed class MinimumTest
     {
         [Fact]
         public void MinAmongEmptyTest()
         {
             Assert.Throws<ArgumentException>(
-                () => new Min<int>(new Empty<int>()).Value()
+                () => new Minimum<int>(new Empty<int>()).Value()
             );
         }
 
@@ -19,7 +19,7 @@ namespace Tonga.Tests.Scalar
         {
             int num = 10;
             Assert.True(
-                new Min<int>(() => num).Value() == num,
+                new Minimum<int>(() => num).Value() == num,
                 "Can't find the smaller among one");
         }
 
@@ -28,7 +28,7 @@ namespace Tonga.Tests.Scalar
         {
             int num = -1;
             Assert.True(
-                new Min<int>(
+                new Minimum<int>(
                     () => 1,
                     () => 0,
                     () => num,

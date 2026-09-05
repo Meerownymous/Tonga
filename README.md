@@ -13,6 +13,32 @@ dotnet add package Tonga
 
 Target: `net9.0`.
 
+## Why Tonga
+
+EO in C# tends to fail at the call site. The object model is sound and the reading is not:
+
+```csharp
+new ItemAt<IText>(new Mapped<string, IText>(fn, new AsEnumerable<string>(…)), 0).Value().Str()
+```
+
+After a few weeks of that, a team writes methods again. Tonga keeps the objects and fixes the call site. The fluent surface is syntax and holds no behaviour: of 451 smarts, 449 are exactly `new X(…)`, and the two others compose wrappers that follow the same rule.
+
+What that buys:
+
+- **Objects named as results.** `Upper`, `Filtered`, `Maximum` — nouns for what comes out. A chain reads as a composition of things.
+- **Every step is a hook point.** Each link is an object with one method, so `AsSticky`, `LoggingOnReadConduit`, `RetryOnError`, `BackFalling` or `ExceptionSwap` wrap around any step without touching it.
+- **Your own types join in.** 14 envelope classes are the extension point. `MyConfig : MapEnvelope` is accepted wherever an `IMap` is, and gets the decorators with it. The library is meant to be extended with domain objects.
+- **Evaluation belongs to the caller.** Composition costs one allocation per step, work happens at materialization, buffering happens where `AsSticky` is placed.
+- **Small enough to read.** 208 public types, roughly 15,000 lines. For a library whose objects end up inside your own, that matters.
+
+### When it does not fit
+
+Measured as a utility library, LINQ and the BCL win on reach, tooling, framework coverage and runtime optimization. The gain here is not in the operations; it is in what the surrounding code looks like.
+
+The question that decides it: should the domain consist of objects that are decorated, or of data passed through functions? For the second, everything here is in the way.
+
+Also worth knowing before adopting: `net9.0` only, no concurrency guards ([What is missing](#what-is-missing)), and a 0.x version, so names still move between releases.
+
 ## Principle
 
 Objects are results of behaviour. `Upper` is uppercase text, `Filtered` is a filtered sequence, `Maximum` is the greatest item of a sequence — each name says what the object is. Objects are composed by decoration, and the result is produced when it is asked for.

@@ -3,17 +3,17 @@
 
 # Tonga
 
-Object-oriented primitives for .NET. Nachfolger von [Yaapii.Atoms](https://github.com/icarus-consulting/Yaapii.Atoms), in der Linie von [Cactoos](https://github.com/yegor256/cactoos). Folgt den Regeln der beiden [Elegant Objects](http://www.elegantobjects.org)-Bände.
+Object-oriented primitives for .NET. Successor of [Yaapii.Atoms](https://github.com/icarus-consulting/Yaapii.Atoms), in the line of [Cactoos](https://github.com/yegor256/cactoos). Follows the rules of both [Elegant Objects](http://www.elegantobjects.org) volumes.
 
 ```
 dotnet add package Tonga
 ```
 
-Ziel: `net9.0`.
+Target: `net9.0`.
 
-## Prinzip
+## Principle
 
-Jede Operation ist ein Objekt. Objekte werden durch Dekoration zusammengesetzt. Ein Ergebnis entsteht bei der Abfrage.
+Every operation is an object. Objects are composed by decoration. A result is produced when it is asked for.
 
 ```csharp
 using Tonga.Enumerable;
@@ -27,7 +27,7 @@ using Tonga.Text;
     .Str();                                     // "HELLO"
 ```
 
-Jedes Glied der Kette ist eine Klasse, die man auch direkt bauen kann:
+Every link of the chain is a class and can be constructed directly:
 
 ```csharp
 new ItemAt<IText>(
@@ -39,49 +39,49 @@ new ItemAt<IText>(
 ).Value().Str();
 ```
 
-Beide Formen erzeugen dieselben Objekte. Die Extensions heißen `…Smarts` (`EnumerableSmarts`, `TextSmarts`, `IOSmarts`, …) und kommen mit dem `using` des jeweiligen Namespaces.
+Both forms create the same objects. The extensions are named `…Smarts` (`EnumerableSmarts`, `TextSmarts`, `IOSmarts`, …) and arrive with the `using` of their namespace.
 
-## Gegen LINQ
+## Compared to LINQ
 
 ### Enumerable
 
-| LINQ | Tonga | Anmerkung |
+| LINQ | Tonga | Note |
 |---|---|---|
-| `Select` | `AsMapped` | Überladung mit Index vorhanden |
+| `Select` | `AsMapped` | overload with index available |
 | `Where` | `AsFiltered` | |
-| `OrderBy` | `AsSortedBy` | `AsSorted` sortiert ohne Schlüssel |
+| `OrderBy` | `AsSortedBy` | `AsSorted` sorts without a key |
 | `Take` | `AsHead` | |
 | `Skip` | `AsSkipped` | |
 | `Distinct` | `AsDistinct` | |
-| `Concat` | `AsJoined` | verbindet beliebig viele |
+| `Concat` | `AsJoined` | joins any number of sources |
 | `Reverse` | `AsReversed` | |
 | `Aggregate` | `AsReduced` | |
 | `Intersect` | `AsIntersection` | |
 | `Union` | `AsUnion` | |
 | `Chunk` | `AsPartitioned` | |
-| `ElementAt` | `ItemAt` | Überladung mit Fallback |
-| `First` | `FirstOne` | Überladung mit Fallback |
+| `ElementAt` | `ItemAt` | overload with fallback |
+| `First` | `FirstOne` | overload with fallback |
 | `Last` | `LastOne` | |
 | `Count()` | `Length` | |
-| `Any(x => …)` | `Contains` | liefert `IFact` |
-| `!Any()` | `IsEmpty` | liefert `IFact` |
-| `Count() >= n` | `HasAtLeast` | bricht ab, sobald entschieden |
-| `Count() > n` | `HasMoreThan` | bricht ab, sobald entschieden |
-| `Count() < n` | `HasLessThan` | bricht ab, sobald entschieden |
-| `DefaultIfEmpty` | `AsBackFalling` | nimmt eine Ersatzquelle, keinen Ersatzwert |
+| `Any(x => …)` | `Contains` | returns `IFact` |
+| `!Any()` | `IsEmpty` | returns `IFact` |
+| `Count() >= n` | `HasAtLeast` | stops as soon as the answer is known |
+| `Count() > n` | `HasMoreThan` | stops as soon as the answer is known |
+| `Count() < n` | `HasLessThan` | stops as soon as the answer is known |
+| `DefaultIfEmpty` | `AsBackFalling` | takes a fallback source, not a fallback value |
 | `ToList` | `AsList` / `AsSticky` | |
 | `ToDictionary` | `AsDictionary` | |
 | — | `AsCycled`, `AsEndless`, `AsRepeated` | |
-| — | `AsReplaced` | Elemente ersetzen, die eine Bedingung erfüllen |
-| — | `new Divergency<T>(…)` | symmetrische Differenz |
-| — | `Sibling` | Nachbar eines Elements |
-| — | `OnEach` | Lambda beim Weiterrücken |
+| — | `AsReplaced` | replaces items matching a condition |
+| — | `new Divergency<T>(…)` | symmetric difference |
+| — | `Sibling` | neighbour of an item |
+| — | `OnEach` | lambda invoked while advancing |
 
-`AsSingle` konstruiert eine einelementige Sequenz. Es entspricht nicht LINQs `Single()`.
+`AsSingle` constructs a one-item sequence. It is not the equivalent of LINQ's `Single()`.
 
 ### Text
 
-LINQ hat hier keine Entsprechung; die Spalte zeigt das, was man sonst schreibt.
+LINQ has no counterpart here; the left column shows what is written otherwise.
 
 | .NET | Tonga |
 |---|---|
@@ -96,89 +96,89 @@ LINQ hat hier keine Entsprechung; die Spalte zeigt das, was man sonst schreibt.
 | `Convert.ToBase64String` | `AsBase64Encoded` |
 | `s.Substring(…)` | `AsSubText` |
 
-### Was LINQ nicht hat
+### What LINQ does not have
 
-| Abstraktion | Rolle |
+| Abstraction | Role |
 |---|---|
-| `IFact` | Aussage, die wahr oder falsch ist — komponierbar über `And`, `Or`, `Not` |
-| `IPipe<In,Out>` | Transformation als Objekt, inklusive `Conditional` und `Mux` |
-| `ITap` | Seiteneffekt als Objekt |
-| `IConduit` | Stream-Quelle, dekorierbar über `TeeOnRead`, `GZipCompressing`, `LoggingOnReadConduit` |
-| `IOptional` | Wert, der fehlen darf, ohne `null` |
-| `IMap` | Unveränderliche Abbildung mit `With` und `Lazy` |
-| `IScalar` | Wert, der später entsteht — mit `RetryOnError`, `BackFalling`, `ExceptionSwap` |
+| `IFact` | a statement that is true or false — composable through `And`, `Or`, `Not` |
+| `IPipe<In,Out>` | a transformation as an object, including `Conditional` and `Mux` |
+| `ITap` | a side effect as an object |
+| `IConduit` | a stream source, decorable through `TeeOnRead`, `GZipCompressing`, `LoggingOnReadConduit` |
+| `IOptional` | a value that may be absent, without `null` |
+| `IMap` | an immutable mapping with `With` and `Lazy` |
+| `IScalar` | a value produced later — with `RetryOnError`, `BackFalling`, `ExceptionSwap` |
 
-### Unterschied im Rückgabetyp
+### Difference in return type
 
-LINQ-Methoden liefern Werte. Tonga-Objekte liefern Objekte, die den Wert bei der Abfrage herstellen. `AsFiltered` gibt eine Sequenz zurück, die beim Enumerieren filtert. Der Rückgabetyp von `Length` ist `IScalar<long>`. Die Kette bleibt bis zum abschließenden `.Value()` oder `.Str()` unausgewertet und ist an jeder Stelle weiter dekorierbar.
+LINQ methods return values. Tonga objects return objects that produce the value when it is asked for. `AsFiltered` returns a sequence that filters while being enumerated. The return type of `Length` is `IScalar<long>`. The chain stays unevaluated until the closing `.Value()` or `.Str()` and can be decorated further at any point.
 
-### Namenskonflikt mit System.Linq
+### Name clash with System.Linq
 
-`Max` und `Min` existieren in Tonga und in `System.Linq` mit derselben Signatur auf `IEnumerable<T>`. Stehen beide `using` im selben File, ist der Aufruf mehrdeutig (CS0121). Entweder das LINQ-`using` weglassen oder die Klasse direkt bauen: `new Max<int>(items)`.
+`Max` and `Min` exist in Tonga and in `System.Linq` with the same signature on `IEnumerable<T>`. With both `using` directives in one file the call is ambiguous (CS0121). Either drop the LINQ `using` or construct the class directly: `new Max<int>(items)`.
 
-## Auswertung ohne Default-Caching
+## Evaluation without default caching
 
-Yaapii.Atoms puffert seit Version 2.0 standardmäßig: Envelopes haben `live: false` als Vorgabe und wickeln sich selbst in ein `Sticky`. Der Puffer ist eine `List<T>` plus Lock plus Ende-Flag — pro Dekorator.
+Yaapii.Atoms buffers by default since version 2.0: envelopes default to `live: false` and wrap themselves in a `Sticky`. The buffer is a `List<T>` plus a lock plus an end flag — per decorator.
 
-Eine Kette aus vier Dekoratoren legt damit vier vollständige Kopien der Daten an, jede mit eigenem Lock. Für das Ergebnis genügt eine Materialisierung am Ende. Der Aufwand wächst linear mit der Dekoratortiefe. Bei einmaligem Durchlauf werden alle Puffer angelegt und keiner ein zweites Mal gelesen.
+A chain of four decorators therefore allocates four complete copies of the data, each with its own lock. One materialization at the end is enough for the result. The cost grows linearly with decorator depth. On a single pass all buffers are allocated and none is read a second time.
 
-Tonga wertet daher lazy aus. `EnumerableEnvelope` reicht durch und allokiert nichts. Ein Puffer wird an der Stelle gesetzt, an der er gebraucht wird:
+Tonga evaluates lazily. `EnumerableEnvelope` passes through and allocates nothing. A buffer is placed where it is needed:
 
 ```csharp
 var names =
     people
         .AsMapped(p => p.Name)
         .AsFiltered(n => n.Length > 3)
-        .AsSticky();          // ein Puffer, an der Stelle, wo mehrfach gelesen wird
+        .AsSticky();          // one buffer, where the data is read more than once
 ```
 
-Das Zugriffsmuster ist nur an der Aufrufstelle bekannt. Ob ein Zwischenergebnis einmal oder mehrfach gelesen wird, kann die Bibliothek nicht bestimmen, deshalb liegt die Entscheidung beim Aufrufer.
+The access pattern is known only at the call site. Whether an intermediate result is read once or several times cannot be determined by the library, so the decision belongs to the caller.
 
-**Beim Portieren von Atoms beachten:** Objekte, die dort gepuffert waren, rechnen hier bei jedem Durchlauf neu. Wo eine Sequenz mehrfach enumeriert wird, gehört ein `AsSticky` hin.
+**When porting from Atoms:** objects that were buffered there recompute on every pass here. Wherever a sequence is enumerated more than once, an `AsSticky` belongs.
 
-## Fluent-API und EO-Prinzipien
+## Fluent API and EO principles
 
-Grundannahme: eine Extension, die wrappt, ist ein Konstruktoraufruf ohne `new`. Zur Laufzeit besteht sie aus einer Allokation und einem Aufruf, wie die verschachtelte Form auch. Es entsteht kein zusätzliches Objekt, keine Indirektion und keine Kopie.
+Premise: an extension that wraps is a constructor call without `new`. At runtime it consists of one allocation and one call, the same as the nested form. No additional object, no indirection and no copy is created.
 
 ```csharp
 public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, Func<In, Out> fnc) =>
     new Mapped<In, Out>(fnc, src);
 ```
 
-Damit gilt für Extensions dieselbe Regel wie für Konstruktoren in EO: **nur wrappen, keine Code-Ausführung.** Der Rumpf enthält einen `new`-Aufruf und sonst nichts — keine Bedingung, keine Schleife, keine Berechnung, keinen Zustand.
+The rule that EO puts on constructors therefore applies to extensions as well: **wrapping only, no code execution.** The body holds one `new` call and nothing else — no condition, no loop, no computation, no state.
 
-Aus dieser Regel folgt:
+The rule has these consequences:
 
-- **Kein verstecktes Verhalten.** Was `AsMapped` tut, steht in `Mapped`. Die Extension fügt nichts hinzu.
-- **Nichts wird vorweggenommen.** Der Aufruf allokiert das Objekt; die Auswertung erfolgt weiterhin erst bei der Abfrage.
-- **Keine Kopplung.** `new Mapped<…>(…)` bleibt gleichwertig möglich. Die Tests in diesem Repo verwenden beide Formen.
-- **Nichts zu überschreiben.** Die Extension entscheidet nichts, deshalb gibt es kein Verhalten, das Vererbung betreffen könnte.
+- **No hidden behaviour.** What `AsMapped` does is in `Mapped`. The extension adds nothing.
+- **Nothing is done ahead of time.** The call allocates the object; evaluation still happens when the value is asked for.
+- **No coupling.** `new Mapped<…>(…)` remains equally available. The tests in this repository use both forms.
+- **Nothing to override.** The extension decides nothing, so there is no behaviour that inheritance could concern.
 
-EO verbietet statische Methoden, weil sie Verhalten tragen, das keinem Objekt gehört: Logik ohne Zustand und ohne Identität, die sich nicht ersetzen, dekorieren oder durch Austausch testen lässt. Eine Extension unter der obigen Regel trägt kein Verhalten. Das Verhalten liegt in `Mapped<In, Out>`, einer dekorierbaren und ersetzbaren Klasse.
+EO forbids static methods because they carry behaviour that belongs to no object: logic without state and without identity, which cannot be replaced, decorated or tested by substitution. An extension under the rule above carries no behaviour. The behaviour lives in `Mapped<In, Out>`, a decorable and replaceable class.
 
-Der Unterschied zur verschachtelten Form betrifft Lesereihenfolge und Typinferenz. Die verschachtelte Form wird von innen nach außen gelesen und führt den letzten Schritt zuerst auf; Typargumente sind auszuschreiben, da Konstruktoren sie nicht herleiten. Die Kettenform folgt der Ausführungsreihenfolge und leitet die Typen ab.
+The difference to the nested form concerns reading order and type inference. The nested form is read from the inside out and puts the last step first; type arguments have to be spelled out, since constructors do not infer them. The chained form follows execution order and infers the types.
 
-### Regel für neue Smarts
+### Rule for new smarts
 
-Ein Rumpf besteht aus `new X(…)`. Alles, was darüber hinausgeht, gehört in die Klasse. Eine Extension darf einen anderen Wrapper aufrufen, solange auch dieser die Regel einhält — `AsScalars` setzt sich so aus `AsMapped` und `AsScalar` zusammen.
+A body consists of `new X(…)`. Anything beyond that belongs in the class. An extension may call another wrapper as long as that one follows the rule too — `AsScalars` is composed of `AsMapped` and `AsScalar` in this way.
 
-Ein fehlendes `new` bleibt beim Kompilieren unbemerkt: `AsStream(this byte[] bytes) => AsStream(bytes)` rief sich selbst auf und lief in eine Endlosrekursion.
+A missing `new` goes unnoticed at compile time: `AsStream(this byte[] bytes) => AsStream(bytes)` called itself and ran into endless recursion.
 
-## Keine Fail-Objekte
+## No fail objects
 
-Yaapii.Atoms hat einen `Error`-Namespace mit `IFail`:
+Yaapii.Atoms has an `Error` namespace built on `IFail`:
 
 ```csharp
 public interface IFail { void Go(); }
 ```
 
-Dazu `FailNull`, `FailWhen`, `FailZero`, `FailPrecise` und weitere. Tonga enthält diese Objekte aus drei Gründen nicht:
+Along with `FailNull`, `FailWhen`, `FailZero`, `FailPrecise` and others. Tonga omits these objects for three reasons:
 
-**Sie sind Prozeduren.** Die einzige Methode gibt `void` zurück. Ein Objekt, dessen Zweck ein Seiteneffekt ist, hat kein abfragbares Verhalten, sondern nur eine Wirkung. Das entspricht einer Prozedur in Klassensyntax.
+**They are procedures.** The only method returns `void`. An object whose purpose is a side effect has no behaviour that can be queried, only an effect. That is a procedure in class syntax.
 
-**Sie sind nach Tätigkeiten benannt.** `FailWhen`, `FailNull` sind Imperative. EO benennt Objekte danach, was sie sind, nicht danach, was sie tun.
+**They are named after activities.** `FailWhen`, `FailNull` are imperatives. EO names objects for what they are, not for what they do.
 
-**Sie stehen neben dem Wert, den sie schützen.** Ein `FailNull` wird konstruiert, `Go()` wird gerufen, danach arbeitet der Code mit dem ursprünglichen Objekt weiter. Die Prüfung ist ein separater Schritt und kann ausgelassen werden. `FailPrecise` bildet zusätzlich Kontrollfluss als Objekt ab:
+**They stand beside the value they guard.** A `FailNull` is constructed, `Go()` is called, and afterwards the code continues with the original object. The check is a separate step and can be left out. `FailPrecise` additionally models control flow as an object:
 
 ```csharp
 public void Go()
@@ -188,19 +188,19 @@ public void Go()
 }
 ```
 
-In Tonga ist eine Prüfung ein Dekorator um den geprüften Wert. Der Dekorator gibt den Wert zurück und bleibt Teil der Kette:
+In Tonga a check is a decorator around the value it checks. The decorator returns the value and stays part of the chain:
 
 ```csharp
 public sealed class AssertNotEmpty<T>(IEnumerable<T> origin, Exception ex) : IEnumerable<T>
 ```
 
 ```csharp
-items.AssertNotEmpty().AsMapped(…)                 // prüft beim Enumerieren
-new NullRejecting<string>(value).Value()           // prüft beim Auswerten
-text.AsStrict("red", "green", "blue").Str()        // prüft gegen erlaubte Werte
+items.AssertNotEmpty().AsMapped(…)                 // checks while enumerating
+new NullRejecting<string>(value).Value()           // checks while evaluating
+text.AsStrict("red", "green", "blue").Str()        // checks against allowed values
 ```
 
-Da die Prüfung Teil des Objekts ist, kann das Objekt nicht ohne sie verwendet werden. Für Bedingungen ohne zugehörigen Wert dient `IFact` mit `Check`:
+Since the check is part of the object, the object cannot be used without it. For conditions with no value attached there is `IFact` with `Check`:
 
 ```csharp
 new Check(
@@ -209,9 +209,9 @@ new Check(
 ).IsTrue();
 ```
 
-## Kernabstraktionen
+## Core abstractions
 
-| Interface | Methode | Namespace mit Implementierungen |
+| Interface | Method | Namespace with implementations |
 |---|---|---|
 | `IText` | `Str()` | `Tonga.Text` |
 | `IScalar<T>` | `Value()` | `Tonga.Scalar` |
@@ -225,24 +225,24 @@ new Check(
 | `IMap<K,V>` | `this[K]`, `Keys()`, `Pairs()`, `With()` | `Tonga.Map` |
 | `IOptional<T>` | `Has()`, `Value()`, `IfHas()`, `IfNot()` | `Tonga.Optional` |
 
-## Unterschiede zu Yaapii.Atoms
+## Differences to Yaapii.Atoms
 
 | | Yaapii.Atoms | Tonga |
 |---|---|---|
-| Caching | sticky per Default, `Live`-Dekoratoren | lazy per Default, `AsSticky` bei Bedarf |
-| Funktionen | `IFunc`, `IBiFunc`, `IAction` | `System.Func` direkt |
-| Stream-Richtung | `IInput` und `IOutput` | `IConduit` für beide |
-| Fehlerprüfung | `IFail` im `Error`-Namespace | Dekoratoren am geprüften Wert |
-| Prädikate | `IScalar<bool>` | `IFact` |
-| Aufrufform | verschachtelte Konstruktoren | Konstruktoren oder `…Smarts`-Kette |
-| Ziel | `netstandard2.0`, `net461` | `net9.0` |
+| Caching | sticky by default, `Live` decorators | lazy by default, `AsSticky` where needed |
+| Functions | `IFunc`, `IBiFunc`, `IAction` | `System.Func` directly |
+| Stream direction | `IInput` and `IOutput` | `IConduit` for both |
+| Checks | `IFail` in the `Error` namespace | decorators on the checked value |
+| Predicates | `IScalar<bool>` | `IFact` |
+| Call form | nested constructors | constructors or a `…Smarts` chain |
+| Target | `netstandard2.0`, `net461` | `net9.0` |
 
-Es gibt keinen automatischen Migrationspfad. Namen haben sich geändert (`AsString` → `Str`, `ManyOf` → `AsEnumerable`, `TextOf` → `AsText`, `First` → `FirstOne`, `None` → `Empty`), und das Auswertungsverhalten ist umgekehrt.
+There is no automatic migration path. Names have changed (`AsString` → `Str`, `ManyOf` → `AsEnumerable`, `TextOf` → `AsText`, `First` → `FirstOne`, `None` → `Empty`), and the evaluation behaviour is inverted.
 
-## Was fehlt
+## What is missing
 
-Es gibt keine Entsprechung zu `Sync`, `Solid`, `SyncList` oder `Synced` aus Atoms. Objekte in Tonga sind für nebenläufigen Zugriff nicht abgesichert; `Sticky` ist die einzige Klasse mit einem Lock. Für geteilten Zugriff aus mehreren Threads muss die Synchronisation außerhalb liegen.
+There is no counterpart to `Sync`, `Solid`, `SyncList` or `Synced` from Atoms. Objects in Tonga are not guarded for concurrent access; `Sticky` is the only class holding a lock. For shared access from several threads the synchronization has to live outside.
 
-## Lizenz
+## License
 
-MIT. Siehe [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

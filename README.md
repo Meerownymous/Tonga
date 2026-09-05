@@ -65,6 +65,7 @@ Beide Formen erzeugen dieselben Objekte. Die Extensions heißen `…Smarts` (`En
 | `Count()` | `Length` | |
 | `Any(x => …)` | `Contains` | liefert `IFact` |
 | `!Any()` | `IsEmpty` | liefert `IFact` |
+| `Count() >= n` | `HasAtLeast` | bricht ab, sobald entschieden |
 | `Count() > n` | `HasMoreThan` | bricht ab, sobald entschieden |
 | `Count() < n` | `HasLessThan` | bricht ab, sobald entschieden |
 | `DefaultIfEmpty` | `AsBackFalling` | nimmt eine Ersatzquelle, keinen Ersatzwert |

@@ -13,6 +13,36 @@ dotnet add package Tonga
 
 Target: `net9.0`.
 
+## Principle
+
+Objects are results of behaviour. `Upper` is uppercase text, `Filtered` is a filtered sequence, `Maximum` is the greatest item of a sequence — each name says what the object is. Objects are composed by decoration, and the result is produced when it is asked for.
+
+```csharp
+using Tonga.Enumerable;
+using Tonga.Text;
+
+("hello", "world", "damn")
+    .AsEnumerable()
+    .AsMapped(word => word.AsText().AsUpper())
+    .ItemAt(0)
+    .Value()
+    .Str();                                     // "HELLO"
+```
+
+Every link of the chain is a class and can be constructed directly:
+
+```csharp
+new ItemAt<IText>(
+    new Mapped<string, IText>(
+        word => new Upper(new AsText(word)),
+        new AsEnumerable<string>("hello", "world", "damn")
+    ),
+    0
+).Value().Str();
+```
+
+Both forms create the same objects. The extensions are named `…Smarts` (`EnumerableSmarts`, `TextSmarts`, `IOSmarts`, …) and arrive with the `using` of their namespace.
+
 ## When code runs
 
 **Building objects runs nothing. Code runs when a materializing call is made.** Every type has one, named after what it hands back:
@@ -106,36 +136,6 @@ var names =
 ```
 
 `AsSticky` is available for enumerables, lists, maps and scalars. Placing it at the end of a chain buffers once; without it, every pass recomputes. [Evaluation without default caching](#evaluation-without-default-caching) explains why this is the caller's decision.
-
-## Principle
-
-Objects are results of behaviour. `Upper` is uppercase text, `Filtered` is a filtered sequence, `Maximum` is the greatest item of a sequence — each name says what the object is. Objects are composed by decoration, and the result is produced when it is asked for.
-
-```csharp
-using Tonga.Enumerable;
-using Tonga.Text;
-
-("hello", "world", "damn")
-    .AsEnumerable()
-    .AsMapped(word => word.AsText().AsUpper())
-    .ItemAt(0)
-    .Value()
-    .Str();                                     // "HELLO"
-```
-
-Every link of the chain is a class and can be constructed directly:
-
-```csharp
-new ItemAt<IText>(
-    new Mapped<string, IText>(
-        word => new Upper(new AsText(word)),
-        new AsEnumerable<string>("hello", "world", "damn")
-    ),
-    0
-).Value().Str();
-```
-
-Both forms create the same objects. The extensions are named `…Smarts` (`EnumerableSmarts`, `TextSmarts`, `IOSmarts`, …) and arrive with the `using` of their namespace.
 
 ## Compared to LINQ
 

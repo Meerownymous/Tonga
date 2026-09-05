@@ -209,6 +209,27 @@ new Check(
 ).IsTrue();
 ```
 
+## One stream interface
+
+Cactoos has `Input` and `Output` because Java splits streams into two hierarchies, `InputStream` and `OutputStream`. A Java type therefore states its direction.
+
+.NET has no such split. `System.IO.Stream` is one class covering both directions, and what a given stream permits is a runtime property: `CanRead`, `CanWrite`, `CanSeek`. Read-only streams exist (`File.OpenRead`, `new MemoryStream(buffer, writable: false)`), and they are the same type with `CanWrite` set to false.
+
+Yaapii.Atoms kept the two interfaces from the Java original, where they collapse into the same declaration:
+
+```csharp
+public interface IInput  { Stream Stream(); }
+public interface IOutput { Stream Stream(); }
+```
+
+The names differ, the contracts are identical, and either one hands out a `Stream` that may read, write or both. Tonga has one interface:
+
+```csharp
+public interface IConduit { Stream Stream(); }
+```
+
+Direction is read from the stream, which is where .NET keeps it.
+
 ## Core abstractions
 
 | Interface | Method | Namespace with implementations |
@@ -231,7 +252,7 @@ new Check(
 |---|---|---|
 | Caching | sticky by default, `Live` decorators | lazy by default, `AsSticky` where needed |
 | Functions | `IFunc`, `IBiFunc`, `IAction` | `System.Func` directly |
-| Stream direction | `IInput` and `IOutput` | `IConduit` for both |
+| Streams | `IInput` and `IOutput`, both declaring `Stream Stream()` | one `IConduit` |
 | Checks | `IFail` in the `Error` namespace | decorators on the checked value |
 | Predicates | `IScalar<bool>` | `IFact` |
 | Call form | nested constructors | constructors or a `…Smarts` chain |

@@ -34,7 +34,7 @@ namespace Tonga.Enumerable
         /// <summary>
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
-        /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
+        /// <param name="items">scalars of items to compare</param>
         public Minimum(params IScalar<T>[] items) : this(items.AsMapped(item => item.Value()))
         { }
 
@@ -60,9 +60,9 @@ namespace Tonga.Enumerable
         { }
 
         /// <summary>
-        /// Find the smallest item in the given scalars.
+        /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
-        /// <param name="items">items to compare</param>
+        /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
         public Minimum(params Func<T>[] items) : this(items.AsEnumerable())
         { }
     }
@@ -73,7 +73,7 @@ namespace Tonga.Enumerable
         /// Find the smallest item in a <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items"><see cref="Func{TResult}"/> functions which retrieve items to compare</param>
-        public static IScalar<T> Minimum<T>(params Func<T>[] items)
+        public static IScalar<T> Minimum<T>(this Func<T>[] items)
             where T : IComparable<T>
             => new Minimum<T>(items);
 

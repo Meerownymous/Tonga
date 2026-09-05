@@ -3,7 +3,9 @@
 
 # Tonga
 
-Object-oriented primitives for .NET. Successor of [Yaapii.Atoms](https://github.com/icarus-consulting/Yaapii.Atoms), in the line of [Cactoos](https://github.com/yegor256/cactoos). Follows the rules of both [Elegant Objects](http://www.elegantobjects.org) volumes.
+Object-oriented primitives for .NET, following the rules of both [Elegant Objects](http://www.elegantobjects.org) volumes.
+
+Tonga is a fork of [Yaapii.Atoms](https://github.com/icarus-consulting/Yaapii.Atoms). Both port [Cactoos](https://github.com/yegor256/cactoos) by Yegor Bugayenko from Java to .NET and adapt it to the platform. Tonga carries that further and builds on `System.Func`, extension methods, tuples and primary constructors. It also changes evaluation, checks and the call form — [Differences to Yaapii.Atoms](#differences-to-yaapiiatoms) lists them.
 
 ```
 dotnet add package Tonga

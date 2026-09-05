@@ -8,7 +8,7 @@ namespace Tonga.Enumerable
     /// The greatest item in the given <see cref="IEnumerable{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class Max<T>(IEnumerable<Func<T>> items) : ScalarEnvelope<T>(
+    public sealed class Maximum<T>(IEnumerable<Func<T>> items) : ScalarEnvelope<T>(
         () =>
         {
             var e = items.GetEnumerator();
@@ -34,7 +34,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params Func<T>[] items) : this(
+        public Maximum(params Func<T>[] items) : this(
             items
                 .AsEnumerable()
                 .AsMapped(item => item.Invoke())
@@ -45,7 +45,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(IEnumerable<T> items) : this(
+        public Maximum(IEnumerable<T> items) : this(
             items.AsMapped(item => new Func<T>(() => item))
         )
         { }
@@ -54,7 +54,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given items.
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params T[] items) : this(
+        public Maximum(params T[] items) : this(
             items.AsMapped(item => new Func<T>(() => item))
         )
         { }
@@ -63,7 +63,7 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public Max(params IScalar<T>[] items) : this(items.AsMapped(item => item.Value()))
+        public Maximum(params IScalar<T>[] items) : this(items.AsMapped(item => item.Value()))
         { }
     }
 
@@ -73,39 +73,39 @@ namespace Tonga.Enumerable
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> Max<T>(this Func<T>[] items) where T : IComparable<T>
-            => new Max<T>(items);
+        public static IScalar<T> Maximum<T>(this Func<T>[] items) where T : IComparable<T>
+            => new Maximum<T>(items);
 
         /// <summary>
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> Max<T>(this IEnumerable<T> items)
+        public static IScalar<T> Maximum<T>(this IEnumerable<T> items)
             where T : IComparable<T>
-            => new Max<T>(items);
+            => new Maximum<T>(items);
 
         /// <summary>
         /// The greatest item in the given items.
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> Max<T>(this T[] items)
+        public static IScalar<T> Maximum<T>(this T[] items)
             where T : IComparable<T>
-            => new Max<T>(items);
+            => new Maximum<T>(items);
 
         /// <summary>
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> Max<T>(this IScalar<T>[] items)
+        public static IScalar<T> Maximum<T>(this IScalar<T>[] items)
             where T : IComparable<T>
-            => new Max<T>(items);
+            => new Maximum<T>(items);
 
         /// <summary>
         /// The greatest item in the given <see cref="IEnumerable{T}"/>
         /// </summary>
         /// <param name="items">list of items</param>
-        public static IScalar<T> Max<T>(this IEnumerable<Func<T>> items)
+        public static IScalar<T> Maximum<T>(this IEnumerable<Func<T>> items)
             where T : IComparable<T>
-            => new Max<T>(items);
+            => new Maximum<T>(items);
     }
 }

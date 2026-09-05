@@ -20,12 +20,25 @@ namespace Tonga.Tests.Text
         [Fact]
         public void SeesDifferences()
         {
-            Assert.False(
-                // ReSharper disable once SuspiciousTypeConversion.Global
+            Assert.NotEqual(
+                0,
                 new Comparable(
                     "Timm".AsText()
-                ).Equals(
+                ).CompareTo(
                     "Jan-Peter".AsText()
+                )
+            );
+        }
+
+        [Fact]
+        public void SeesEquality()
+        {
+            Assert.Equal(
+                0,
+                new Comparable(
+                    "Timm".AsText()
+                ).CompareTo(
+                    "Timm".AsText()
                 )
             );
         }

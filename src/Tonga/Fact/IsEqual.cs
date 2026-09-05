@@ -52,7 +52,7 @@ namespace Tonga.Fact
         /// </summary>
         /// <param name="first">function to return first value to compare</param>
         /// <param name="second">function to return second value to compare</param>
-        public static IFact Equals<T>(this Func<T> first, Func<T> second)
+        public static IFact IsEqual<T>(this Func<T> first, Func<T> second)
             where T : IComparable<T>
             => new IsEqual<T>(first, second);
 
@@ -61,7 +61,7 @@ namespace Tonga.Fact
         /// </summary>
         /// <param name="first">first value to compare</param>
         /// <param name="second">second value to compare</param>
-        public static IFact Equals<T>(this T first, T second)
+        public static IFact IsEqual<T>(this T first, T second)
             where T : IComparable<T>
             => new IsEqual<T>(first, second);
 
@@ -70,7 +70,7 @@ namespace Tonga.Fact
         /// </summary>
         /// <param name="first">scalar of first value to compare</param>
         /// <param name="second">scalar of second value to compare</param>
-        public static IFact Equals<T>(this IScalar<T> first, IScalar<T> second)
+        public static IFact IsEqual<T>(this IScalar<T> first, IScalar<T> second)
             where T : IComparable<T>
             => new IsEqual<T>(first, second);
     }

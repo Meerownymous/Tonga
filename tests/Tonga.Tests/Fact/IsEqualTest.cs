@@ -1,4 +1,6 @@
+using System;
 using Tonga.Fact;
+using Tonga.Scalar;
 using Xunit;
 
 namespace Tonga.Tests.Fact
@@ -46,6 +48,38 @@ namespace Tonga.Tests.Fact
                 () => "world",
                 () => "worle"
             ).IsFalse());
+        }
+
+        [Fact]
+        public void ComparesValuesAsSmart()
+        {
+            Assert.True(
+                1.IsEqual(1).IsTrue()
+            );
+        }
+
+        [Fact]
+        public void SeesDifferenceAsSmart()
+        {
+            Assert.True(
+                "world".IsEqual("worle").IsFalse()
+            );
+        }
+
+        [Fact]
+        public void ComparesFunctionsAsSmart()
+        {
+            Assert.True(
+                ((Func<int>)(() => 1)).IsEqual(() => 1).IsTrue()
+            );
+        }
+
+        [Fact]
+        public void ComparesScalarsAsSmart()
+        {
+            Assert.True(
+                "hello".AsScalar().IsEqual("hello".AsScalar()).IsTrue()
+            );
         }
     }
 }

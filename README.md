@@ -137,27 +137,31 @@ Das Zugriffsmuster ist nur an der Aufrufstelle bekannt. Ob ein Zwischenergebnis 
 
 ## Fluent-API und EO-Prinzipien
 
-Extension-Methoden sind statisch, und EO lehnt statische Methoden ab. Das Verbot richtet sich gegen statische Methoden, die Verhalten tragen: Logik ohne Zustand und ohne Identität, die sich nicht ersetzen, dekorieren oder durch Austausch testen lässt.
-
-Tongas Extensions tragen kein Verhalten. Jede besteht aus einer Zeile:
+Grundannahme: eine Extension, die wrappt, ist ein Konstruktoraufruf ohne `new`. Zur Laufzeit besteht sie aus einer Allokation und einem Aufruf, wie die verschachtelte Form auch. Es entsteht kein zusätzliches Objekt, keine Indirektion und keine Kopie.
 
 ```csharp
 public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, Func<In, Out> fnc) =>
     new Mapped<In, Out>(fnc, src);
 ```
 
-Sie enthält keine Logik, keine Bedingung und keinen Zustand; sie ruft einen Konstruktor auf. Das Verhalten liegt vollständig in `Mapped<In, Out>`, einer dekorierbaren und ersetzbaren Klasse.
+Damit gilt für Extensions dieselbe Regel wie für Konstruktoren in EO: **nur wrappen, keine Code-Ausführung.** Der Rumpf enthält einen `new`-Aufruf und sonst nichts — keine Bedingung, keine Schleife, keine Berechnung, keinen Zustand.
 
-Daraus folgt für jede Extension:
+Aus dieser Regel folgt:
 
 - **Kein verstecktes Verhalten.** Was `AsMapped` tut, steht in `Mapped`. Die Extension fügt nichts hinzu.
-- **Kein Zustand.** Nichts wird zwischen Aufrufen gehalten.
+- **Nichts wird vorweggenommen.** Der Aufruf allokiert das Objekt; die Auswertung erfolgt weiterhin erst bei der Abfrage.
 - **Keine Kopplung.** `new Mapped<…>(…)` bleibt gleichwertig möglich. Die Tests in diesem Repo verwenden beide Formen.
-- **Keine Vererbung von Verhalten.** Die Extension kann nicht überschrieben werden, weil sie nichts entscheidet.
+- **Nichts zu überschreiben.** Die Extension entscheidet nichts, deshalb gibt es kein Verhalten, das Vererbung betreffen könnte.
 
-Der Unterschied betrifft die Lesereihenfolge und die Typinferenz. Die verschachtelte Form wird von innen nach außen gelesen und führt den letzten Schritt zuerst auf; Typargumente sind auszuschreiben, da Konstruktoren sie nicht herleiten. Die Kettenform folgt der Ausführungsreihenfolge und leitet die Typen ab.
+EO verbietet statische Methoden, weil sie Verhalten tragen, das keinem Objekt gehört: Logik ohne Zustand und ohne Identität, die sich nicht ersetzen, dekorieren oder durch Austausch testen lässt. Eine Extension unter der obigen Regel trägt kein Verhalten. Das Verhalten liegt in `Mapped<In, Out>`, einer dekorierbaren und ersetzbaren Klasse.
 
-Die EO-Regel, dass Verhalten in Objekten liegt, ist von der Schreibweise unberührt.
+Der Unterschied zur verschachtelten Form betrifft Lesereihenfolge und Typinferenz. Die verschachtelte Form wird von innen nach außen gelesen und führt den letzten Schritt zuerst auf; Typargumente sind auszuschreiben, da Konstruktoren sie nicht herleiten. Die Kettenform folgt der Ausführungsreihenfolge und leitet die Typen ab.
+
+### Regel für neue Smarts
+
+Ein Rumpf besteht aus `new X(…)`. Alles, was darüber hinausgeht, gehört in die Klasse. Eine Extension darf einen anderen Wrapper aufrufen, solange auch dieser die Regel einhält — `AsScalars` setzt sich so aus `AsMapped` und `AsScalar` zusammen.
+
+Ein fehlendes `new` bleibt beim Kompilieren unbemerkt: `AsStream(this byte[] bytes) => AsStream(bytes)` rief sich selbst auf und lief in eine Endlosrekursion.
 
 ## Keine Fail-Objekte
 

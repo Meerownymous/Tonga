@@ -176,7 +176,7 @@ public static partial class IOSmarts
     /// A stream out of a Byte array.
     /// </summary>
     /// <param name="bytes">a <see cref="byte"/> array</param>
-    public static Stream AsStream(this byte[] bytes) => AsStream(bytes);
+    public static Stream AsStream(this byte[] bytes) => new AsStream(bytes);
 
     /// <summary>
     /// A stream out of a Text.

@@ -68,6 +68,18 @@ public sealed class AsStreamTest
     }
 
     [Fact]
+    public void MakesDataFromByteArrayAvailable()
+    {
+        Assert.Equal(
+            "Hello!",
+            Encoding.UTF8.GetBytes("Hello!")
+                .AsStream()
+                .AsText()
+                .Str()
+        );
+    }
+
+    [Fact]
     public void MakesDataAvailable()
     {
         Assert.True(

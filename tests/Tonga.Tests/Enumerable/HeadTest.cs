@@ -33,6 +33,22 @@ namespace Tonga.Tests.Enumerable
         }
 
         [Fact]
+        public void ReadsNoMoreItemsThanTheLimit()
+        {
+            var advanced = 0;
+            Assert.Equal(
+                3,
+                new SumOf(
+                    (0, 1, 2, 3, 4)
+                        .AsEnumerable()
+                        .OnEach(_ => advanced++)
+                        .AsHead(3)
+                ).Int()
+            );
+            Assert.Equal(3, advanced);
+        }
+
+        [Fact]
         public void LimitOfZeroProducesEmptyEnumerable()
         {
             Assert.Empty(

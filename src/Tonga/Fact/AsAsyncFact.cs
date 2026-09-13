@@ -38,7 +38,7 @@ public static partial class AsFactSmarts
     /// <summary>
     /// An awaited condition as a fact.
     /// </summary>
-    public static IAsyncFact AsAsyncFact(this Func<ValueTask<bool>> condition) => new AsAsyncFact(condition);
+    public static IAsyncFact AsFact(this Func<ValueTask<bool>> condition) => new AsAsyncFact(condition);
 
     /// <summary>
     /// A sync <see cref="IFact"/> as an async fact.

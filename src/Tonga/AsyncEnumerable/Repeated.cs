@@ -79,18 +79,18 @@ public static partial class AsyncEnumerableSmarts
     /// <summary>
     /// A <see cref="IAsyncEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
-    public static IAsyncEnumerable<T> AsAsyncRepeated<T>(this IAsyncScalar<T> elm, int cnt) =>
+    public static IAsyncEnumerable<T> AsRepeated<T>(this IAsyncScalar<T> elm, int cnt) =>
         new Repeated<T>(elm, cnt);
 
     /// <summary>
     /// A <see cref="IAsyncEnumerable{T}"/> which repeats one element multiple times.
     /// </summary>
-    public static IAsyncEnumerable<T> AsAsyncRepeated<T>(this IAsyncScalar<T> elm, IScalar<int> cnt) =>
+    public static IAsyncEnumerable<T> AsRepeated<T>(this IAsyncScalar<T> elm, IScalar<int> cnt) =>
         new Repeated<T>(elm, cnt);
 
     /// <summary>
     /// A <see cref="IAsyncEnumerable{T}"/> which repeats what the given function delivers.
     /// </summary>
-    public static IAsyncEnumerable<T> AsAsyncRepeated<T>(this Func<ValueTask<T>> elm, int cnt) =>
+    public static IAsyncEnumerable<T> AsRepeated<T>(this Func<ValueTask<T>> elm, int cnt) =>
         new Repeated<T>(elm, cnt);
 }

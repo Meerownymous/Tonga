@@ -9,7 +9,7 @@ namespace Tonga.AsyncEnumerable;
 /// The first item of an <see cref="IAsyncEnumerable{T}"/> as an <see cref="IAsyncOptional{TValue}"/>.
 /// Nothing is read until the optional is awaited, and then no more than one matching item.
 /// </summary>
-public sealed class AsAsyncOptional<T> : IAsyncOptional<T>
+public sealed class AsOptional<T> : IAsyncOptional<T>
 {
     private readonly IAsyncEnumerable<T> source;
     private readonly Func<T, bool> condition;
@@ -19,18 +19,18 @@ public sealed class AsAsyncOptional<T> : IAsyncOptional<T>
     /// <summary>
     /// The first item of an <see cref="IAsyncEnumerable{T}"/> as an <see cref="IAsyncOptional{TValue}"/>.
     /// </summary>
-    public AsAsyncOptional(IAsyncEnumerable<T> source) : this(source, _ => true)
+    public AsOptional(IAsyncEnumerable<T> source) : this(source, _ => true)
     { }
 
     /// <summary>
     /// The first matching item of an <see cref="IAsyncEnumerable{T}"/> as an <see cref="IAsyncOptional{TValue}"/>.
     /// </summary>
-    public AsAsyncOptional(IAsyncEnumerable<T> source, Func<T, bool> condition) : this(
+    public AsOptional(IAsyncEnumerable<T> source, Func<T, bool> condition) : this(
         source, condition, (_, _) => default, _ => default
     )
     { }
 
-    private AsAsyncOptional(
+    private AsOptional(
         IAsyncEnumerable<T> source,
         Func<T, bool> condition,
         Func<T, CancellationToken, ValueTask> ifHas,
@@ -54,7 +54,7 @@ public sealed class AsAsyncOptional<T> : IAsyncOptional<T>
     }
 
     public IAsyncOptional<T> IfHas(Func<T, CancellationToken, ValueTask> then) =>
-        new AsAsyncOptional<T>(
+        new AsOptional<T>(
             this.source,
             this.condition,
             async (item, cancellation) =>
@@ -66,7 +66,7 @@ public sealed class AsAsyncOptional<T> : IAsyncOptional<T>
         );
 
     public IAsyncOptional<T> IfNot(Func<CancellationToken, ValueTask> then) =>
-        new AsAsyncOptional<T>(
+        new AsOptional<T>(
             this.source,
             this.condition,
             this.ifHas,
@@ -111,12 +111,12 @@ public static partial class AsyncEnumerableSmarts
     /// <summary>
     /// The first item of an <see cref="IAsyncEnumerable{T}"/> as an <see cref="IAsyncOptional{TValue}"/>.
     /// </summary>
-    public static IAsyncOptional<T> AsAsyncOptional<T>(this IAsyncEnumerable<T> source) =>
-        new AsAsyncOptional<T>(source);
+    public static IAsyncOptional<T> AsOptional<T>(this IAsyncEnumerable<T> source) =>
+        new AsOptional<T>(source);
 
     /// <summary>
     /// The first matching item of an <see cref="IAsyncEnumerable{T}"/> as an <see cref="IAsyncOptional{TValue}"/>.
     /// </summary>
-    public static IAsyncOptional<T> AsAsyncOptional<T>(this IAsyncEnumerable<T> source, Func<T, bool> condition) =>
-        new AsAsyncOptional<T>(source, condition);
+    public static IAsyncOptional<T> AsOptional<T>(this IAsyncEnumerable<T> source, Func<T, bool> condition) =>
+        new AsOptional<T>(source, condition);
 }

@@ -36,13 +36,13 @@ public static partial class ScalarSmarts
     /// <summary>
     /// Anything awaitable as a <see cref="IAsyncScalar{T}"/>.
     /// </summary>
-    public static IAsyncScalar<T> AsAsyncScalar<T>(this Func<ValueTask<T>> origin) =>
+    public static IAsyncScalar<T> AsScalar<T>(this Func<ValueTask<T>> origin) =>
         new AsAsyncScalar<T>(origin);
 
     /// <summary>
     /// Anything awaitable as a <see cref="IAsyncScalar{T}"/>.
     /// </summary>
-    public static IAsyncScalar<T> AsAsyncScalar<T>(this Func<CancellationToken, ValueTask<T>> origin) =>
+    public static IAsyncScalar<T> AsScalar<T>(this Func<CancellationToken, ValueTask<T>> origin) =>
         new AsAsyncScalar<T>(origin);
 
     /// <summary>
@@ -54,12 +54,12 @@ public static partial class ScalarSmarts
     /// <summary>
     /// A <see cref="Task{T}"/> producing function as a <see cref="IAsyncScalar{T}"/>.
     /// </summary>
-    public static IAsyncScalar<T> AsAsyncScalar<T>(this Func<Task<T>> origin) =>
+    public static IAsyncScalar<T> AsScalar<T>(this Func<Task<T>> origin) =>
         new AsAsyncScalar<T>(async () => await origin());
 
     /// <summary>
     /// A <see cref="Task{T}"/> producing function as a <see cref="IAsyncScalar{T}"/>.
     /// </summary>
-    public static IAsyncScalar<T> AsAsyncScalar<T>(this Func<CancellationToken, Task<T>> origin) =>
+    public static IAsyncScalar<T> AsScalar<T>(this Func<CancellationToken, Task<T>> origin) =>
         new AsAsyncScalar<T>(async cancellation => await origin(cancellation));
 }

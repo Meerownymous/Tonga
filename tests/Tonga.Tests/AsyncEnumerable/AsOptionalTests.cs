@@ -6,28 +6,28 @@ using Xunit;
 
 namespace Tonga.Tests.AsyncEnumerable;
 
-public sealed class AsAsyncOptionalTests
+public sealed class AsOptionalTests
 {
     [Fact]
     public async Task KnowsItHasAValue() =>
-        Assert.True(await (1, 2, 3).AsAsyncEnumerable().AsAsyncOptional().Has());
+        Assert.True(await (1, 2, 3).AsAsyncEnumerable().AsOptional().Has());
 
     [Fact]
     public async Task KnowsItHasNoValue() =>
-        Assert.False(await new Empty<int>().AsAsyncOptional().Has());
+        Assert.False(await new Empty<int>().AsOptional().Has());
 
     [Fact]
     public async Task DeliversTheFirstItem() =>
-        Assert.Equal(1, await (1, 2, 3).AsAsyncEnumerable().AsAsyncOptional().Value());
+        Assert.Equal(1, await (1, 2, 3).AsAsyncEnumerable().AsOptional().Value());
 
     [Fact]
     public async Task DeliversTheFirstMatchingItem() =>
-        Assert.Equal(3, await (1, 2, 3, 4).AsAsyncEnumerable().AsAsyncOptional(item => item > 2).Value());
+        Assert.Equal(3, await (1, 2, 3, 4).AsAsyncEnumerable().AsOptional(item => item > 2).Value());
 
     [Fact]
     public async Task ThrowsWhenEmpty() =>
         await Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await new Empty<int>().AsAsyncOptional().Value()
+            async () => await new Empty<int>().AsOptional().Value()
         );
 
     [Fact]
@@ -37,7 +37,7 @@ public sealed class AsAsyncOptionalTests
         await (1, 2, 3, 4, 5)
             .AsAsyncEnumerable()
             .OnEach((int _) => read++)
-            .AsAsyncOptional()
+            .AsOptional()
             .Value();
 
         Assert.Equal(1, read);
@@ -51,7 +51,7 @@ public sealed class AsAsyncOptionalTests
             (1, 2, 3)
                 .AsAsyncEnumerable()
                 .OnEach((int _) => read++)
-                .AsAsyncOptional();
+                .AsOptional();
 
         Assert.Equal(0, read);
         await optional.Value();
@@ -62,7 +62,7 @@ public sealed class AsAsyncOptionalTests
     public async Task ActsWhenItHasAValue()
     {
         var seen = 0;
-        await (7, 8).AsAsyncEnumerable().AsAsyncOptional().IfHas(item => seen = item).Has();
+        await (7, 8).AsAsyncEnumerable().AsOptional().IfHas(item => seen = item).Has();
         Assert.Equal(7, seen);
     }
 
@@ -70,7 +70,7 @@ public sealed class AsAsyncOptionalTests
     public async Task DoesNotActWhenItHasNoValue()
     {
         var acted = false;
-        await new Empty<int>().AsAsyncOptional().IfHas(_ => acted = true).Has();
+        await new Empty<int>().AsOptional().IfHas(_ => acted = true).Has();
         Assert.False(acted);
     }
 
@@ -78,7 +78,7 @@ public sealed class AsAsyncOptionalTests
     public async Task ActsWhenItHasNoValue()
     {
         var acted = false;
-        await new Empty<int>().AsAsyncOptional().IfNot(() => acted = true).Has();
+        await new Empty<int>().AsOptional().IfNot(() => acted = true).Has();
         Assert.True(acted);
     }
 
@@ -88,7 +88,7 @@ public sealed class AsAsyncOptionalTests
         var seen = 0;
         await (7, 8)
             .AsAsyncEnumerable()
-            .AsAsyncOptional()
+            .AsOptional()
             .IfHas(async item =>
             {
                 await Task.Yield();
@@ -107,7 +107,7 @@ public sealed class AsAsyncOptionalTests
 
         await (7, 8)
             .AsAsyncEnumerable()
-            .AsAsyncOptional()
+            .AsOptional()
             .IfHas(item => seen = item)
             .IfNot(() => missed = true)
             .Has();

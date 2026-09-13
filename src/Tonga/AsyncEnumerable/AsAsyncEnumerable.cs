@@ -98,10 +98,10 @@ public static partial class AsyncEnumerableSmarts
     public static IAsyncEnumerable<TItem> AsAsyncEnumerable<TItem>(this IEnumerable<TItem> source) =>
         new AsAsyncEnumerable<TItem>(source);
 
-    public static IAsyncEnumerable<TItem> AsAsyncEnumerable<TItem>(this Func<IAsyncEnumerable<TItem>> source) =>
+    public static IAsyncEnumerable<TItem> AsEnumerable<TItem>(this Func<IAsyncEnumerable<TItem>> source) =>
         new AsAsyncEnumerable<TItem>(source);
 
-    public static IAsyncEnumerable<TItem> AsAsyncEnumerable<TItem>(this IAsyncEnumerator<TItem> origin) =>
+    public static IAsyncEnumerable<TItem> AsEnumerable<TItem>(this IAsyncEnumerator<TItem> origin) =>
         new AsAsyncEnumerable<TItem>(origin);
 
     public static IAsyncEnumerable<TItem> AsAsyncEnumerable<TItem>(this (TItem a, TItem b) origin) =>

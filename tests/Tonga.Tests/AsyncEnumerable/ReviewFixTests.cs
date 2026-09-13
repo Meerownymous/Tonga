@@ -97,7 +97,7 @@ public sealed class ReviewFixTests
     public async Task OptionalValueRunsTheRegisteredAction()
     {
         var seen = 0;
-        await (7, 8).AsAsyncEnumerable().AsAsyncOptional().IfHas(item => seen = item).Value();
+        await (7, 8).AsAsyncEnumerable().AsOptional().IfHas(item => seen = item).Value();
         Assert.Equal(7, seen);
     }
 
@@ -106,7 +106,7 @@ public sealed class ReviewFixTests
     {
         var acted = false;
         await Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await new Empty<int>().AsAsyncOptional().IfNot(() => acted = true).Value()
+            async () => await new Empty<int>().AsOptional().IfNot(() => acted = true).Value()
         );
         Assert.True(acted);
     }

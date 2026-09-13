@@ -7,7 +7,7 @@ namespace Tonga.Optional;
 /// <summary>
 /// Shorter ways to act on an <see cref="IAsyncOptional{TValue}"/>.
 /// </summary>
-public static class AsyncOptionalSmarts
+public static partial class AsyncOptionalSmarts
 {
     /// <summary>
     /// Act on the value when it is there.

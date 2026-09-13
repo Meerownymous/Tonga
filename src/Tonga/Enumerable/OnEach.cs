@@ -12,12 +12,6 @@ public sealed class OnEach<T>(Action<T, int> action, IEnumerable<T> origin) : IE
     /// <summary>
     /// Enumerable which executes a given lambda function when advancing.
     /// </summary>
-    public OnEach(Action<int> lambda, IEnumerable<T> origin) : this((_, count) => lambda(count), origin)
-    { }
-
-    /// <summary>
-    /// Enumerable which executes a given lambda function when advancing.
-    /// </summary>
     public OnEach(Action<T> lambda, IEnumerable<T> origin) : this((item, _) => lambda(item), origin)
     { }
 
@@ -29,7 +23,7 @@ public sealed class OnEach<T>(Action<T, int> action, IEnumerable<T> origin) : IE
 
     public IEnumerator<T> GetEnumerator()
     {
-        var index = -1;
+        var index = 0;
         foreach (var item in origin)
         {
             action(item, index++);
@@ -61,12 +55,6 @@ public static partial class EnumerableSmarts
     /// Enumerable which executes a given lambda function when advancing.
     /// </summary>
     public static IEnumerable<T> OnEach<T>(this IEnumerable<T> origin, Action<T, int> lambda) =>
-        new OnEach<T>(lambda, origin);
-
-    /// <summary>
-    /// Enumerable which executes a given lambda function when advancing.
-    /// </summary>
-    public static IEnumerable<T> OnEach<T>(this IEnumerable<T> origin, Action<int> lambda) =>
         new OnEach<T>(lambda, origin);
 }
 

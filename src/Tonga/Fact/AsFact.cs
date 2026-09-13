@@ -29,7 +29,7 @@ public sealed class AsFact(Func<bool> condition, Action ifTrue, Action ifFalse) 
     }
 }
 
-public static class AsFactSmarts
+public static partial class AsFactSmarts
 {
     public static IFact AsFact(this Func<bool> condition) => new AsFact(condition);
 }

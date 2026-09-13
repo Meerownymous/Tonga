@@ -66,7 +66,7 @@ namespace Tonga.Tests.Enumerable
             Assert.True(
                 ("a", "b", "c", "d", "e", "f")
                     .AsEnumerable()
-                    .OnEach(_ => advanced++)
+                    .OnEach((string _) => advanced++)
                     .HasAtLeast(3)
                     .IsTrue()
             );

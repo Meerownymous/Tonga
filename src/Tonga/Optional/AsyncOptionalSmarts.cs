@@ -51,9 +51,8 @@ public static class AsyncOptionalSmarts
 
     /// <summary>
     /// A sync <see cref="IOptional{TValue}"/> as an async one.
+    /// The sync optional is consulted when the result is awaited, not when it is built.
     /// </summary>
     public static IAsyncOptional<TValue> AsAsyncOptional<TValue>(this IOptional<TValue> origin) =>
-        origin.Has()
-            ? new AsyncOptFull<TValue>(origin.Value())
-            : new AsyncOptEmpty<TValue>();
+        new AsyncOptSync<TValue>(origin);
 }

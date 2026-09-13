@@ -8,9 +8,24 @@ namespace Tonga.AsyncEnumerable;
 /// <summary>
 /// A <see cref="IAsyncEnumerable{T}"/> out of other objects.
 /// </summary>
-public sealed class AsAsyncEnumerable<T>(Func<CancellationToken, IAsyncEnumerator<T>> source) :
-    IAsyncEnumerable<T>
+public sealed class AsAsyncEnumerable<T> : IAsyncEnumerable<T>
 {
+    private readonly Func<CancellationToken, IAsyncEnumerator<T>> source;
+    private readonly bool owned;
+
+    /// <summary>
+    /// A <see cref="IAsyncEnumerable{T}"/> out of a function which retrieves an enumerator.
+    /// The enumerator is created here, so it is disposed here.
+    /// </summary>
+    public AsAsyncEnumerable(Func<CancellationToken, IAsyncEnumerator<T>> source) : this(source, true)
+    { }
+
+    private AsAsyncEnumerable(Func<CancellationToken, IAsyncEnumerator<T>> source, bool owned)
+    {
+        this.source = source;
+        this.owned = owned;
+    }
+
     /// <summary>
     /// A <see cref="IAsyncEnumerable{T}"/> out of an array.
     /// </summary>
@@ -43,13 +58,14 @@ public sealed class AsAsyncEnumerable<T>(Func<CancellationToken, IAsyncEnumerato
 
     /// <summary>
     /// A <see cref="IAsyncEnumerable{T}"/> out of a <see cref="IAsyncEnumerator{T}"/>.
+    /// The enumerator belongs to the caller, so it is not disposed here.
     /// </summary>
-    public AsAsyncEnumerable(IAsyncEnumerator<T> origin) : this(_ => origin)
+    public AsAsyncEnumerable(IAsyncEnumerator<T> origin) : this(_ => origin, false)
     { }
 
     public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellation = default)
     {
-        var enumerator = source(cancellation);
+        var enumerator = this.source(cancellation);
         try
         {
             while (await enumerator.MoveNextAsync())
@@ -57,7 +73,8 @@ public sealed class AsAsyncEnumerable<T>(Func<CancellationToken, IAsyncEnumerato
         }
         finally
         {
-            await enumerator.DisposeAsync();
+            if (this.owned)
+                await enumerator.DisposeAsync();
         }
     }
 

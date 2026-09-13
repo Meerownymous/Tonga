@@ -6,9 +6,16 @@ namespace Tonga.AsyncEnumerable;
 
 /// <summary>
 /// A <see cref="IAsyncEnumerable{T}"/> that starts from the beginning when ended.
+/// An empty source ends rather than cycling over nothing.
 /// </summary>
 public sealed class Cycled<T>(IAsyncEnumerable<T> enumerable) : IAsyncEnumerable<T>
 {
+    /// <summary>
+    /// The given items, starting over when ended.
+    /// </summary>
+    public Cycled(params T[] items) : this(items.AsAsyncEnumerable())
+    { }
+
     public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellation = default)
     {
         var copies = new List<T>();
@@ -17,6 +24,9 @@ public sealed class Cycled<T>(IAsyncEnumerable<T> enumerable) : IAsyncEnumerable
             copies.Add(item);
             yield return item;
         }
+
+        if (copies.Count == 0)
+            yield break;
 
         var current = -1;
         while (true)

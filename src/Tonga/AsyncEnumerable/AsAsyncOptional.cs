@@ -80,9 +80,14 @@ public sealed class AsAsyncOptional<T> : IAsyncOptional<T>
     public async ValueTask<T> Value(CancellationToken cancellation = default)
     {
         var (has, value) = await First(cancellation);
-        return has
-            ? value
-            : throw new InvalidOperationException("The Optional is empty.");
+        if (!has)
+        {
+            await this.ifNot(cancellation);
+            throw new InvalidOperationException("The Optional is empty.");
+        }
+
+        await this.ifHas(value, cancellation);
+        return value;
     }
 
     private async ValueTask<(bool has, T value)> First(CancellationToken cancellation)

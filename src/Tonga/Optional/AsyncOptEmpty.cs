@@ -43,6 +43,10 @@ public sealed class AsyncOptEmpty<TValue> : IAsyncOptional<TValue>
             true
         );
 
-    public ValueTask<TValue> Value(CancellationToken cancellation = default) =>
+    public async ValueTask<TValue> Value(CancellationToken cancellation = default)
+    {
+        if (this.acts)
+            await this.then(cancellation);
         throw new InvalidOperationException("The Optional is empty.");
+    }
 }

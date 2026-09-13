@@ -63,5 +63,11 @@ public sealed class AsyncOptFull<TValue> : IAsyncOptional<TValue>
 
     public IAsyncOptional<TValue> IfNot(Func<CancellationToken, ValueTask> then) => this;
 
-    public ValueTask<TValue> Value(CancellationToken cancellation = default) => this.value(cancellation);
+    public async ValueTask<TValue> Value(CancellationToken cancellation = default)
+    {
+        var value = await this.value(cancellation);
+        if (this.acts)
+            await this.then(value, cancellation);
+        return value;
+    }
 }

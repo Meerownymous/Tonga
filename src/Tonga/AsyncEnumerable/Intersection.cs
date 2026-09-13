@@ -15,7 +15,7 @@ public sealed class Intersection<T>(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b
     /// Intersection of two async enumerables.
     /// </summary>
     public Intersection(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b) : this(
-        a, b, new Comparison((left, right) => left.Equals(right))
+        a, b, EqualityComparer<T>.Default
     )
     { }
 
@@ -23,7 +23,21 @@ public sealed class Intersection<T>(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b
     /// Intersection of two async enumerables.
     /// </summary>
     public Intersection(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b, Func<T, T, bool> compare) : this(
-        a, b, new Comparison(compare)
+        a, b, new EqualityComparison<T>(compare)
+    )
+    { }
+
+    /// <summary>
+    /// Intersection of two sets of items.
+    /// </summary>
+    public Intersection(T[] a, T[] b) : this(a.AsAsyncEnumerable(), b.AsAsyncEnumerable())
+    { }
+
+    /// <summary>
+    /// Intersection of two sets of items.
+    /// </summary>
+    public Intersection(T[] a, T[] b, Func<T, T, bool> compare) : this(
+        a.AsAsyncEnumerable(), b.AsAsyncEnumerable(), compare
     )
     { }
 
@@ -41,12 +55,6 @@ public sealed class Intersection<T>(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b
                 yield return item;
             }
         }
-    }
-
-    private sealed class Comparison(Func<T, T, bool> comparison) : IEqualityComparer<T>
-    {
-        public bool Equals(T x, T y) => comparison(y, x);
-        public int GetHashCode(T obj) => 0;
     }
 }
 

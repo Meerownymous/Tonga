@@ -31,7 +31,7 @@ public sealed class AsAsyncScalar<T>(Func<CancellationToken, ValueTask<T>> origi
     public ValueTask<T> Value(CancellationToken cancellation = default) => origin(cancellation);
 }
 
-public static class AsyncScalarSmarts
+public static partial class ScalarSmarts
 {
     /// <summary>
     /// Anything awaitable as a <see cref="IAsyncScalar{T}"/>.

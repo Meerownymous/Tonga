@@ -30,6 +30,12 @@ public sealed class Filtered<T>(Func<T, CancellationToken, ValueTask<bool>> pass
     )
     { }
 
+    /// <summary>
+    /// The given items filtered by the given condition.
+    /// </summary>
+    public Filtered(Func<T, bool> pass, params T[] items) : this(pass, items.AsAsyncEnumerable())
+    { }
+
     public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellation = default)
     {
         await foreach (var item in src.WithCancellation(cancellation))

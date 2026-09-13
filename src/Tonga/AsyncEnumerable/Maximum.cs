@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Tonga.Scalar;
 
@@ -31,7 +32,22 @@ public sealed class Maximum<T>(IAsyncEnumerable<T> items) : AsyncScalarEnvelope<
             await e.DisposeAsync();
         }
     }
-) where T : IComparable<T>;
+) where T : IComparable<T>
+{
+    /// <summary>
+    /// The greatest of the given items.
+    /// </summary>
+    public Maximum(params T[] items) : this(items.AsAsyncEnumerable())
+    { }
+
+    /// <summary>
+    /// The greatest item delivered by the given scalars.
+    /// </summary>
+    public Maximum(IAsyncEnumerable<IAsyncScalar<T>> items) : this(
+        new Mapped<IAsyncScalar<T>, T>((item, _, cancellation) => item.Value(cancellation), items)
+    )
+    { }
+}
 
 public static partial class AsyncEnumerableSmarts
 {
@@ -39,5 +55,18 @@ public static partial class AsyncEnumerableSmarts
     /// The greatest item in the given <see cref="IAsyncEnumerable{T}"/>.
     /// </summary>
     public static IAsyncScalar<T> Maximum<T>(this IAsyncEnumerable<T> items) where T : IComparable<T> =>
+        new Maximum<T>(items);
+
+    /// <summary>
+    /// The greatest of the given items.
+    /// </summary>
+    public static IAsyncScalar<T> Maximum<T>(this T[] items) where T : IComparable<T> =>
+        new Maximum<T>(items);
+
+    /// <summary>
+    /// The greatest item delivered by the given scalars.
+    /// </summary>
+    public static IAsyncScalar<T> Maximum<T>(this IAsyncEnumerable<IAsyncScalar<T>> items)
+        where T : IComparable<T> =>
         new Maximum<T>(items);
 }

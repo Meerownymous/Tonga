@@ -17,6 +17,12 @@ public sealed class Sorted<T>(Comparer<T> cmp, IAsyncEnumerable<T> src) : IAsync
     public Sorted(IAsyncEnumerable<T> src) : this(Comparer<T>.Default, src)
     { }
 
+    /// <summary>
+    /// The given items sorted by default.
+    /// </summary>
+    public Sorted(params T[] src) : this(Comparer<T>.Default, src.AsAsyncEnumerable())
+    { }
+
     public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellation = default)
     {
         var sorted = new List<T>();

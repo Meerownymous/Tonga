@@ -33,7 +33,7 @@ public sealed class AsAsyncFact(Func<CancellationToken, ValueTask<bool>> conditi
         !await condition(cancellation);
 }
 
-public static class AsAsyncFactSmarts
+public static partial class AsFactSmarts
 {
     /// <summary>
     /// An awaited condition as a fact.

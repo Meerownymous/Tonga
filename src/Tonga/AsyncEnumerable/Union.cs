@@ -15,7 +15,7 @@ public class Union<T>(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b, IEqualityCom
     /// Union of two async enumerables.
     /// </summary>
     public Union(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b) : this(
-        a, b, new Comparison((left, right) => left.Equals(right))
+        a, b, EqualityComparer<T>.Default
     )
     { }
 
@@ -23,7 +23,7 @@ public class Union<T>(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b, IEqualityCom
     /// Union of two async enumerables.
     /// </summary>
     public Union(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b, Func<T, T, bool> compare) : this(
-        a, b, new Comparison(compare)
+        a, b, new EqualityComparison<T>(compare)
     )
     { }
 
@@ -35,12 +35,6 @@ public class Union<T>(IAsyncEnumerable<T> a, IAsyncEnumerable<T> b, IEqualityCom
             if (union.Add(element))
                 yield return element;
         }
-    }
-
-    private sealed class Comparison(Func<T, T, bool> comparison) : IEqualityComparer<T>
-    {
-        public bool Equals(T x, T y) => comparison(y, x);
-        public int GetHashCode(T obj) => 0;
     }
 }
 

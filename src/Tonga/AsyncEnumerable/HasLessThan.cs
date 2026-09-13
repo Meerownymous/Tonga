@@ -19,7 +19,7 @@ public sealed class HasLessThan<T>(int amount, IAsyncEnumerable<T> source) : Asy
         var enumerator = source.GetAsyncEnumerator(cancellation);
         try
         {
-            while (current <= amount && await enumerator.MoveNextAsync())
+            while (current < amount && await enumerator.MoveNextAsync())
                 current++;
         }
         finally

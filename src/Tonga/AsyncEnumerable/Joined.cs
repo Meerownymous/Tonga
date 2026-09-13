@@ -29,6 +29,26 @@ public sealed class Joined<T>(IAsyncEnumerable<IAsyncEnumerable<T>> items) : IAs
     public Joined(IEnumerable<IAsyncEnumerable<T>> items) : this(items.AsAsyncEnumerable())
     { }
 
+    /// <summary>
+    /// Join a <see cref="IAsyncEnumerable{T}"/> behind a single leading element.
+    /// </summary>
+    public Joined(T first, IAsyncEnumerable<T> lst, params T[] items) : this(
+        new AsAsyncEnumerable<T>(first),
+        lst,
+        new AsAsyncEnumerable<T>(items)
+    )
+    { }
+
+    /// <summary>
+    /// Join a <see cref="IAsyncEnumerable{T}"/> behind two leading elements.
+    /// </summary>
+    public Joined(T first, T second, IAsyncEnumerable<T> lst, params T[] items) : this(
+        new AsAsyncEnumerable<T>(first, second),
+        lst,
+        new AsAsyncEnumerable<T>(items)
+    )
+    { }
+
     public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellation = default)
     {
         await foreach (var enumerable in items.WithCancellation(cancellation))

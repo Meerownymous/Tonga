@@ -47,7 +47,7 @@ public sealed class ItemAt<T>(
                 await enumerator.DisposeAsync();
             }
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not OperationCanceledException)
         {
             result = fallback(ex, source);
         }

@@ -27,12 +27,6 @@ public sealed class OnEach<T>(Func<T, int, CancellationToken, ValueTask> action,
     /// <summary>
     /// Async enumerable which executes a given lambda function when advancing.
     /// </summary>
-    public OnEach(Action<int> lambda, IAsyncEnumerable<T> origin) : this((_, index) => lambda(index), origin)
-    { }
-
-    /// <summary>
-    /// Async enumerable which executes a given lambda function when advancing.
-    /// </summary>
     public OnEach(Action<T> lambda, IAsyncEnumerable<T> origin) : this((item, _) => lambda(item), origin)
     { }
 

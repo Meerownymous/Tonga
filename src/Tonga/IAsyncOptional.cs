@@ -11,7 +11,8 @@ namespace Tonga;
 /// <para>
 /// <see cref="IfHas"/> and <see cref="IfNot"/> only build the chain. The actions they
 /// take run when the optional is materialised, which is every time <see cref="Has"/>
-/// or <see cref="Value"/> is awaited.
+/// or <see cref="Value"/> is awaited. On <see cref="Value"/> they run before the value
+/// is handed back, and before the throw when there is none.
 /// </para>
 /// </summary>
 public interface IAsyncOptional<TValue>

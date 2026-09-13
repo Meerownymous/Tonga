@@ -33,7 +33,7 @@ public sealed class FirstOne<T>(
                 await filtered.DisposeAsync();
             }
         }
-        catch (Exception e)
+        catch (Exception e) when (e is not OperationCanceledException)
         {
             result = fallback(e, src);
         }
@@ -95,6 +95,22 @@ public sealed class FirstOne<T>(
         _ => true, src, fallback
     )
     { }
+
+    /// <summary>
+    /// First element in an <see cref="IAsyncEnumerable{T}"/> with a fallback function.
+    /// </summary>
+    public FirstOne(IAsyncEnumerable<T> src, Func<IAsyncEnumerable<T>, T> fallback) : this(
+        _ => true, src, (_, e) => fallback(e)
+    )
+    { }
+
+    /// <summary>
+    /// First element in an <see cref="IAsyncEnumerable{T}"/> with a fallback scalar.
+    /// </summary>
+    public FirstOne(IAsyncEnumerable<T> source, IScalar<T> fallback) : this(
+        _ => true, source, (_, _) => fallback.Value()
+    )
+    { }
 }
 
 public static partial class AsyncEnumerableSmarts
@@ -143,4 +159,34 @@ public static partial class AsyncEnumerableSmarts
         this IAsyncEnumerable<T> src, Func<Exception, IAsyncEnumerable<T>, T> fallback
     ) =>
         new FirstOne<T>(src, fallback);
+
+    /// <summary>
+    /// First element in an <see cref="IAsyncEnumerable{T}"/> with a fallback function.
+    /// </summary>
+    public static IAsyncScalar<T> FirstOne<T>(
+        this IAsyncEnumerable<T> src, Func<IAsyncEnumerable<T>, T> fallback
+    ) =>
+        new FirstOne<T>(src, fallback);
+
+    /// <summary>
+    /// First element in an <see cref="IAsyncEnumerable{T}"/> with a fallback scalar.
+    /// </summary>
+    public static IAsyncScalar<T> FirstOne<T>(this IAsyncEnumerable<T> source, IScalar<T> fallback) =>
+        new FirstOne<T>(source, fallback);
+
+    /// <summary>
+    /// First matching element in an <see cref="IAsyncEnumerable{T}"/> with a fallback function.
+    /// </summary>
+    public static IAsyncScalar<T> FirstOne<T>(
+        this IAsyncEnumerable<T> src, Func<T, bool> condition, Func<IAsyncEnumerable<T>, T> fallback
+    ) =>
+        new FirstOne<T>(condition, src, (_, e) => fallback(e));
+
+    /// <summary>
+    /// First matching element in an <see cref="IAsyncEnumerable{T}"/> with a fallback function.
+    /// </summary>
+    public static IAsyncScalar<T> FirstOne<T>(
+        this IAsyncEnumerable<T> src, Func<T, bool> condition, Func<Exception, IAsyncEnumerable<T>, T> fallback
+    ) =>
+        new FirstOne<T>(condition, src, fallback);
 }

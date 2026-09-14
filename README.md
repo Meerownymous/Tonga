@@ -5,13 +5,13 @@
 
 Object-oriented primitives for .NET, following the rules of both [Elegant Objects](http://www.elegantobjects.org) volumes.
 
-Tonga is a fork of [Yaapii.Atoms](https://github.com/icarus-consulting/Yaapii.Atoms). Both port [Cactoos](https://github.com/yegor256/cactoos) by Yegor Bugayenko from Java to .NET and adapt it to the platform. Tonga carries that further and builds on `System.Func`, extension methods, tuples and primary constructors. It also changes evaluation, checks and the call form — [Differences to Yaapii.Atoms](#differences-to-yaapiiatoms) lists them.
+Tonga is a fork of [Yaapii.Atoms](https://github.com/icarus-consulting/Yaapii.Atoms), and both of them port [Cactoos](https://github.com/yegor256/cactoos) by Yegor Bugayenko from Java to .NET. Tonga carries that further. It builds on `System.Func`, extension methods, tuples and primary constructors, and it changes evaluation, checks and the call form. [Differences to Yaapii.Atoms](#differences-to-yaapiiatoms) lists what moved.
 
 ```
 dotnet add package Tonga
 ```
 
-Target: `net9.0`.
+You need `net9.0`.
 
 ## Why Tonga
 
@@ -24,31 +24,31 @@ people
     .Str();
 ```
 
-A fluent chain, written the way any .NET developer writes one. What differs is underneath: there is no pipeline, no query engine, no builder. Every call is a constructor, and every step is an object you can name and hold:
+You read that like any other fluent chain in .NET. Underneath it there is no pipeline, no query engine and no builder. Every call is a constructor, and every step is an object you can name and hold on to:
 
 ```csharp
 var adults = people.AsFiltered(p => p.Age >= 18);   // a Filtered<Person>
 var names  = adults.AsMapped(p => p.Name);          // a Mapped<Person, string>
 ```
 
-That is what the chain buys you, and what a fluent API normally takes away:
+Here is what the chain gives you, and what a fluent API usually takes away:
 
-- **Wrap any step.** `AsSticky`, `RetryOnError`, `BackFalling` or `ExceptionSwap` go around any link, without touching the link or the rest of the chain.
-- **Replace any step.** Each link sits behind an interface with one method. A test double for an `IText` is a class returning a string — no mocking framework, no setup.
-- **Extend with your own types.** `MyConfig : MapEnvelope` is accepted wherever an `IMap` is, and composes with everything here.
+- **Wrap any step.** `AsSticky`, `RetryOnError`, `BackFalling` or `ExceptionSwap` go around any link. The link stays as it is and the rest of the chain does not notice.
+- **Replace any step.** Each link sits behind an interface with one method. Your test double for an `IText` is a class that returns a string. No mocking framework, no setup.
+- **Extend with your own types.** `MyConfig : MapEnvelope` is accepted wherever an `IMap` is, and it composes with everything here.
 - **Nothing runs until you ask.** Building the chain allocates and computes nothing. The work starts at `Str()`.
 
 ### When it does not fit
 
-Measured as a utility library, LINQ and the BCL win on reach, tooling, framework coverage and runtime optimization. The gain here is not in the operations; it is in what the surrounding code looks like.
+Measured as a utility library, LINQ and the BCL win on reach, tooling, framework coverage and runtime optimization. What you gain here shows up in the shape of the surrounding code, while the operations themselves stay ordinary.
 
-The question that decides it: should the domain consist of objects that are decorated, or of data passed through functions? For the second, everything here is in the way.
+So one question decides it for you: should your domain consist of objects that you decorate, or of data that you pass through functions? Answer with the second one and everything here is in your way.
 
-Also worth knowing before adopting: `net9.0` only, no concurrency guards ([What is missing](#what-is-missing)), and a 0.x version, so names still move between releases.
+Three more things to know before you adopt it: `net9.0` only, no concurrency guards ([What is missing](#what-is-missing)), and a 0.x version, so names still move between releases.
 
 ## Principle
 
-Objects are results of behaviour. `Upper` is uppercase text, `Filtered` is a filtered sequence, `Maximum` is the greatest item of a sequence — each name says what the object is. Objects are composed by decoration, and the result is produced when it is asked for.
+An object is the result of a behaviour. `Upper` is uppercase text. `Filtered` is a filtered sequence. `Maximum` is the greatest item of a sequence. Each name tells you what the object is. You compose objects by decorating them, and the result appears when you ask for it.
 
 ```csharp
 using Tonga.Enumerable;
@@ -62,7 +62,7 @@ using Tonga.Text;
     .Str();                                     // "HELLO"
 ```
 
-Every link of the chain is a class and can be constructed directly:
+Every link of that chain is a class, and you can construct it yourself:
 
 ```csharp
 new ItemAt<IText>(
@@ -74,11 +74,11 @@ new ItemAt<IText>(
 ).Value().Str();
 ```
 
-Both forms create the same objects. The extensions are named `…Smarts` (`EnumerableSmarts`, `TextSmarts`, `IOSmarts`, …) and arrive with the `using` of their namespace.
+Both forms create the same objects. We call the extensions `…Smarts` (`EnumerableSmarts`, `TextSmarts`, `IOSmarts`, …), and they arrive with the `using` of their namespace.
 
 ## When code runs
 
-**Building objects runs nothing. Code runs when a materializing call is made.** Every type has one, named after what it hands back:
+**Building objects runs nothing. Code runs when you make a materializing call.** Every type has one, named after what it hands back:
 
 | Type | Materializes with |
 |---|---|
@@ -101,9 +101,9 @@ var text =
 var content = text.Str();   // the request happens here
 ```
 
-Composition therefore costs close to nothing: each step in a chain is one allocation holding a reference to the step before it. A chain of ten decorators that is never materialized does ten allocations and no work. Building a chain in a branch that turns out to be unused costs the allocations alone.
+Composition costs you close to nothing. Each step in a chain is one allocation that holds a reference to the step before it. Build ten decorators and never materialize them, and you paid ten allocations for no work. Build a chain in a branch that turns out to be unused, and the allocations are the whole bill.
 
-**The `As` prefix marks composition.** A call named `As…` wraps and returns; it computes nothing:
+**The `As` prefix marks composition.** A call named `As…` wraps and returns, and it computes nothing:
 
 ```csharp
 text.AsUpper()              // an uppercase text — nothing uppercased yet
@@ -113,14 +113,14 @@ conduit.AsText()            // a text over a stream — nothing read yet
 items.AsSticky()            // a buffered sequence — the buffer is still empty
 ```
 
-The calls without the prefix hand back a different abstraction, and defer in the same way. `items.Length()` is an `IScalar<long>` that counts on `Value()`; `items.Contains(…)` is an `IFact` that searches on `IsTrue()`:
+Calls without the prefix hand you a different abstraction and defer in the same way. `items.Length()` is an `IScalar<long>` that counts on `Value()`. `items.Contains(…)` is an `IFact` that searches on `IsTrue()`:
 
 ```csharp
 var count = items.Length();   // nothing counted
 count.Value();                // counted here
 ```
 
-**Enumerables** run per item where the operation allows it. `AsMapped` maps the current item while `MoveNext` advances, `AsFiltered` tests it there:
+**Enumerables** work per item wherever the operation allows it. `AsMapped` maps the current item while `MoveNext` advances, and `AsFiltered` tests it there:
 
 ```csharp
 var names =
@@ -131,9 +131,9 @@ var names =
 foreach (var name in names) { … }       // mapping and filtering run per item
 ```
 
-`AsHead(3)` therefore reads three items, and `HasAtLeast(3)` stops after three.
+So `AsHead(3)` reads three items, and `HasAtLeast(3)` stops after three.
 
-Operations that need every item before they can hand out the first one are the exception. `AsSorted`, `AsSortedBy` and `AsReversed` copy the source into a list and sort or reverse it — that work happens at the first step of the iteration, not spread across it:
+A few operations need every item before they can hand out the first one. `AsSorted`, `AsSortedBy` and `AsReversed` copy the source into a list and sort or reverse it, and that work lands on the first step of the iteration:
 
 ```csharp
 var sorted = items.AsSorted();   // nothing read, nothing compared
@@ -142,9 +142,9 @@ var e = sorted.GetEnumerator();
 e.MoveNext();                    // the whole source is read and sorted here
 ```
 
-They stay lazy in the sense that matters for composition: building the chain runs nothing. What changes is that the first `MoveNext` costs the whole sequence. The same holds for `Maximum`, `Minimum`, `AsReduced` and `Length`, which drain the source when their `Value()` is called.
+They stay lazy in the sense that matters for composition, because building the chain still runs nothing. What you pay for is the first `MoveNext`, which costs you the whole sequence. `Maximum`, `Minimum`, `AsReduced` and `Length` behave the same way and drain the source when you call `Value()`.
 
-**Maps are lazy.** Constructing one runs nothing. The first access builds the key index; a value set up with a lambda runs when that key is asked for, and asking for one key leaves the others untouched:
+**Maps are lazy.** Constructing one runs nothing. The first access builds the key index. A value you set up with a lambda runs when somebody asks for that key, and asking for one key leaves the others untouched:
 
 ```csharp
 var config =
@@ -156,9 +156,9 @@ var config =
 var host = config["host"];     // ReadSecretFromVault has not been called
 ```
 
-`Keys()` builds the index without materializing any value, and `Lazy(key)` hands back a `Func<Value>` that defers even the lookup.
+`Keys()` builds the index and materializes no value. `Lazy(key)` hands you a `Func<Value>` and defers the lookup too.
 
-**To keep a result, close the chain with `AsSticky`.** It buffers what it wraps and serves later reads from the buffer:
+**To keep a result, close the chain with `AsSticky`.** It buffers what it wraps and serves later reads from that buffer:
 
 ```csharp
 var names =
@@ -168,7 +168,7 @@ var names =
         .AsSticky();           // computed once, on first enumeration
 ```
 
-`AsSticky` is available for enumerables, lists, maps and scalars. Placing it at the end of a chain buffers once; without it, every pass recomputes. [Evaluation without default caching](#evaluation-without-default-caching) explains why this is the caller's decision.
+You have `AsSticky` for enumerables, lists, maps and scalars. Put it at the end of a chain and the chain buffers once. Leave it out and every pass recomputes. [Evaluation without default caching](#evaluation-without-default-caching) says why we leave that to you.
 
 ## Compared to LINQ
 
@@ -208,11 +208,11 @@ var names =
 | — | `Sibling` | neighbour of an item |
 | — | `OnEach` | lambda invoked while advancing |
 
-`AsSingle` constructs a one-item sequence. It is not the equivalent of LINQ's `Single()`.
+Careful with `AsSingle`. It constructs a one-item sequence and has nothing to do with LINQ's `Single()`.
 
 ### Text
 
-LINQ has no counterpart here; the left column shows what is written otherwise.
+LINQ has no counterpart here, so the left column shows how you write it otherwise.
 
 | .NET | Tonga |
 |---|---|
@@ -241,13 +241,13 @@ LINQ has no counterpart here; the left column shows what is written otherwise.
 
 ### Difference in return type
 
-LINQ methods return values. Tonga objects return objects that produce the value when it is asked for. `AsFiltered` returns a sequence that filters while being enumerated. The return type of `Length` is `IScalar<long>`. The chain stays unevaluated until the closing `.Value()` or `.Str()` and can be decorated further at any point.
+A LINQ method returns a value. A Tonga object returns an object that produces the value once you ask for it. `AsFiltered` returns a sequence that filters while you enumerate it. `Length` returns an `IScalar<long>`. The chain stays unevaluated until you call `.Value()` or `.Str()`, and up to that moment you can decorate it further.
 
 ## Evaluation without default caching
 
-A library that buffers by default pays for it per decorator. Each envelope holds its own `List<T>`, lock and end flag, so a chain of four allocates four complete copies of the data and four locks, where one materialization at the end would do. The cost grows linearly with decorator depth, and on a single pass every buffer is filled and none is read again.
+Buffer by default and you pay for it per decorator. Each envelope keeps its own `List<T>`, its own lock and its own end flag, so a chain of four allocates four complete copies of your data and four locks, where one buffer at the end would have done the job. The cost grows linearly with decorator depth, and on a single pass every one of those buffers is filled and then never read again.
 
-Tonga evaluates lazily instead. `EnumerableEnvelope` passes through and allocates nothing. A buffer is placed where it is needed:
+So Tonga evaluates lazily. `EnumerableEnvelope` passes through and allocates nothing, and you place a buffer where you need one:
 
 ```csharp
 var names =
@@ -257,39 +257,39 @@ var names =
         .AsSticky();          // one buffer, where the data is read more than once
 ```
 
-The access pattern is known only at the call site. Whether an intermediate result is read once or several times cannot be determined by the library, so the decision belongs to the caller.
+You are the only one who knows the access pattern. The library cannot tell whether you read an intermediate result once or ten times, so we leave that decision with you.
 
 ## Fluent API and EO principles
 
-Premise: an extension that wraps is a constructor call without `new`. At runtime it consists of one allocation and one call, the same as the nested form. No additional object, no indirection and no copy is created.
+Start from this premise: an extension that wraps is a constructor call without `new`. At runtime it is one allocation and one call, exactly what the nested form costs. It creates no extra object, no indirection and no copy.
 
 ```csharp
 public static IEnumerable<Out> AsMapped<In, Out>(this IEnumerable<In> src, Func<In, Out> fnc) =>
     new Mapped<In, Out>(fnc, src);
 ```
 
-The rule that EO puts on constructors therefore applies to extensions as well: **wrapping only, no code execution.** The body holds one `new` call and nothing else — no condition, no loop, no computation, no state.
+So the rule EO puts on constructors applies to extensions as well: **wrapping only, no code execution.** The body holds one `new` call and nothing else — no condition, no loop, no computation, no state.
 
-The rule has these consequences:
+That rule has four consequences:
 
-- **No hidden behaviour.** What `AsMapped` does is in `Mapped`. The extension adds nothing.
-- **Nothing is done ahead of time.** The call allocates the object; evaluation still happens when the value is asked for.
-- **No coupling.** `new Mapped<…>(…)` remains equally available. The tests in this repository use both forms.
-- **Nothing to override.** The extension decides nothing, so there is no behaviour that inheritance could concern.
+- **No hidden behaviour.** Whatever `AsMapped` does, it does it in `Mapped`. The extension adds nothing.
+- **Nothing is done ahead of time.** The call allocates the object, and evaluation still waits until you ask for the value.
+- **No coupling.** `new Mapped<…>(…)` stays equally available. The tests in this repository use both forms.
+- **Nothing to override.** The extension decides nothing, so inheritance has no behaviour to concern itself with.
 
-EO forbids static methods because they carry behaviour that belongs to no object: logic without state and without identity, which cannot be replaced, decorated or tested by substitution. An extension under the rule above carries no behaviour. The behaviour lives in `Mapped<In, Out>`, a decorable and replaceable class.
+EO forbids static methods because they carry behaviour that belongs to no object: logic without state and without identity, which you cannot replace, decorate or test by substitution. An extension under the rule above carries no behaviour at all. The behaviour lives in `Mapped<In, Out>`, a class you can decorate and replace.
 
-The difference to the nested form concerns reading order and type inference. The nested form is read from the inside out and puts the last step first; type arguments have to be spelled out, since constructors do not infer them. The chained form follows execution order and infers the types.
+What separates the two forms is reading order and type inference. You read the nested form from the inside out, and it puts the last step first. You also spell out the type arguments there, because constructors do not infer them. The chained form follows execution order and infers the types for you.
 
 ### Rule for new smarts
 
-A body consists of `new X(…)`. Anything beyond that belongs in the class. An extension may call another wrapper as long as that one follows the rule too — `AsScalars` is composed of `AsMapped` and `AsScalar` in this way.
+Write the body as `new X(…)`. Anything beyond that belongs in the class. You may call another wrapper as long as that one follows the rule too — that is how `AsScalars` is composed of `AsMapped` and `AsScalar`.
 
-A missing `new` goes unnoticed at compile time: `AsStream(this byte[] bytes) => AsStream(bytes)` called itself and ran into endless recursion.
+Watch out for a missing `new`, because the compiler stays quiet about it. `AsStream(this byte[] bytes) => AsStream(bytes)` called itself and ran into endless recursion.
 
 ## Checks are decorators
 
-A check belongs to the value it checks, as a decorator around it. The decorator returns the value and stays part of the chain:
+A check belongs to the value it checks, so we build it as a decorator around that value. It returns the value and stays part of the chain:
 
 ```csharp
 public sealed class AssertNotEmpty<T>(IEnumerable<T> origin, Exception ex) : IEnumerable<T>
@@ -301,7 +301,7 @@ new NullRejecting<string>(value).Value()           // checks while evaluating
 text.AsStrict("red", "green", "blue").Str()        // checks against allowed values
 ```
 
-Since the check is part of the object, the object cannot be used without it. For conditions with no value attached there is `IFact` with `Check`:
+The check is part of the object, so you cannot use the object without it. For conditions with no value attached, take `IFact` with `Check`:
 
 ```csharp
 new Check(
@@ -310,33 +310,33 @@ new Check(
 ).IsTrue();
 ```
 
-There are no standalone check objects. An interface of the shape
+We have no standalone check objects. An interface of the shape
 
 ```csharp
 public interface IFail { void Go(); }
 ```
 
-with implementations named `FailNull`, `FailWhen` or `FailZero`, as Cactoos and its ports carry them, is rejected for three reasons.
+with implementations named `FailNull`, `FailWhen` or `FailZero`, the way Cactoos and its ports carry them, we rejected for three reasons.
 
-**They are procedures.** The only method returns `void`. An object whose purpose is a side effect has no behaviour that can be queried, only an effect. That is a procedure in class syntax.
+**They are procedures.** The only method returns `void`. An object whose purpose is a side effect gives you no behaviour to query, only an effect. Call that a procedure in class syntax.
 
-**They are named after activities.** `FailWhen` and `FailNull` are imperatives. EO names objects for what they are, not for what they do.
+**They are named after activities.** `FailWhen` and `FailNull` are imperatives. EO names an object for what it is.
 
-**They stand beside the value they guard.** Such an object is constructed, `Go()` is called, and afterwards the code continues with the original value. The check is a separate step and can be left out.
+**They stand beside the value they guard.** You construct such an object, you call `Go()`, and afterwards you continue with the original value. The check is a separate step, and somebody will leave it out.
 
 ## One stream interface
 
 Cactoos has `Input` and `Output` because Java splits streams into two hierarchies, `InputStream` and `OutputStream`. A Java type therefore states its direction.
 
-.NET has no such split. `System.IO.Stream` is one class covering both directions, and what a given stream permits is a runtime property: `CanRead`, `CanWrite`, `CanSeek`. Read-only streams exist (`File.OpenRead`, `new MemoryStream(buffer, writable: false)`), and they are the same type with `CanWrite` set to false.
+.NET does not split them. `System.IO.Stream` is one class covering both directions, and what a given stream permits is a runtime property: `CanRead`, `CanWrite`, `CanSeek`. Read-only streams exist — `File.OpenRead`, `new MemoryStream(buffer, writable: false)` — and they are the same type with `CanWrite` set to false.
 
-Ported to .NET, the two Java interfaces collapse into the same declaration — same member, same return type, different name — and either one hands out a `Stream` that may read, write or both. Tonga has one interface:
+Port the two Java interfaces to .NET and they collapse into the same declaration, with the same member and the same return type under a different name, and either of them hands you a `Stream` that may read, write or both. So Tonga has one interface:
 
 ```csharp
 public interface IConduit { Stream Stream(); }
 ```
 
-Direction is read from the stream, which is where .NET keeps it.
+You read the direction from the stream, which is where .NET keeps it.
 
 ## Core abstractions
 
@@ -366,13 +366,13 @@ Direction is read from the stream, which is where .NET keeps it.
 | Call form | nested constructors | constructors or a `…Smarts` chain |
 | Target | `netstandard2.0`, `net461` | `net9.0` |
 
-Objects that were buffered in Atoms recompute on every pass here; wherever a sequence is enumerated more than once, an `AsSticky` belongs.
+Objects that Atoms buffered for you recompute on every pass here. So wherever you enumerate a sequence more than once, an `AsSticky` belongs.
 
-There is no automatic migration path. Names have changed (`AsString` → `Str`, `ManyOf` → `AsEnumerable`, `TextOf` → `AsText`, `First` → `FirstOne`, `None` → `Empty`), and the evaluation behaviour is inverted.
+Do not expect an automatic migration path. Names have changed (`AsString` → `Str`, `ManyOf` → `AsEnumerable`, `TextOf` → `AsText`, `First` → `FirstOne`, `None` → `Empty`), and the evaluation behaviour is inverted.
 
 ## What is missing
 
-There are no synchronizing decorators. Objects in Tonga are not guarded for concurrent access; `Sticky` is the only class holding a lock. For shared access from several threads the synchronization has to live outside.
+We have no synchronizing decorators. Objects in Tonga are not guarded for concurrent access, and `Sticky` is the only class that holds a lock. Share one between threads and the synchronization is yours to arrange outside.
 
 ## License
 
